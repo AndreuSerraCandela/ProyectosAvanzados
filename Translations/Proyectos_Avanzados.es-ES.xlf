@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="es-ES" original="Proyectos_Avanzados">
+    <body>
+      <group id="body">
+        <trans-unit id="Codeunit 3200460114 - NamedType 2476940767" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The lines were successfully transferred to an invoice.</source>
+          <target>Las líneas se transfirieron correctamente a una factura.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 4179633877" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The lines were successfully transferred to an order.</source>
+          <target>Las líneas se transfirieron correctamente a una pedido.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text000_1</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The lines were not transferred to an invoice.</source>
+          <target>Las líneas no se transfirieron a una factura.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text001</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 1588457870" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The lines were not transferred to an invoice.</source>
+            <target>Las líneas no se transfirieron a una factura.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text001_1</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
+          <source>There was no %1 with a %2 larger than 0. No lines were transferred.</source>
+          <target>No hay ningún %1 con un %2 mayor que 0. No se transferirá ninguna línea.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text002</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 95063322" size-unit="char" translate="yes" xml:space="preserve">
+          <source>%1 may not be lower than %2 and may not exceed %3.</source>
+           <target>%1 no puede ser inferior a %2 ni puede superar %3.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text003</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 732759939" size-unit="char" translate="yes" xml:space="preserve">
+          <source>You must specify Invoice No. or New Invoice.</source>
+        <target>Debe especificar nº factura o nueva factura.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text004</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 1370456556" size-unit="char" translate="yes" xml:space="preserve">
+          <source>You must specify Credit Memo No. or New Invoice.</source>
+              <target>Debe especificar nº abono o nueva factura.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text005</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 2645849790" size-unit="char" translate="yes" xml:space="preserve">
+          <source>You must specify %1.</source>
+            <target>Se debe indicar %1.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text007</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 3283546407" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The lines were successfully transferred to a credit memo.</source>
+            <target>Las líneas se transfirieron correctamente a un abono.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text008</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 3921243024" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The selected planning lines must have the same %1.</source>
+           <target>Las líneas de planificación seleccionadas deben tener el mismo %1.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text009</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 1664139952" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The currency dates on all planning lines will be updated based on the invoice posting date because there is a difference in currency exchange rates. Recalculations will be based on the Exch. Calculation setup for the Cost and Price values for the job. Do you want to continue?</source>
+           <target>Las fechas de divisa de todas las líneas de planificación se actualizarán en función de la fecha de registro de la factura porque existe una diferencia en los tipos de cambio de divisa. Los nuevos cálculos se basarán en la opción Cálculo cambio de los valores de Coste y Precio del proyecto. ¿Desea continuar?</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text010</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 1026443335" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The currency exchange rate on all planning lines will be updated based on the exchange rate on the sales invoice. Do you want to continue?</source>
+      <target>El tipo cambio divisa de todas las líneas de planificación se actualizará en función del tipo de cambio de la factura de venta. ¿Desea continuar?</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text011</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 2939533186" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The %1 %2 does not exist anymore. A printed copy of the document was created before the document was deleted.</source>
+          <target>Ya no existe %1 %2. Se creó una copia impresa del documento antes de que se eliminara.</target>
+          <note from="Developer" annotates="general" priority="2">The Sales Invoice Header 103001 does not exist in the system anymore. A printed copy of the document was created before deletion.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text012</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 2983573584 - NamedType 3994261301" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Esta tarea tiene dependencias que no estan completadas</source>
+          <target state="needs-translation"/>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method OnBeforeRunWithCheck_Myb - NamedType Text_001</note>
+        </trans-unit>
+          <trans-unit id="Report 2421352948 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Job Transfer to Credit Memo Purch</source>
+             <target>Transf. proy. a Abono de compra</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf Credit Memo Purch - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2421352948 - Control 2346885236 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Options</source>
+            <target>Opciones</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf Credit Memo Purch - Control Options - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2421352948 - Control 2308431597 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of the credit memo that you want to append the lines to if you did not select the Create New Credit Memo field.</source>
+          <target>Especifica el número del abono al que desea anexar las líneas si no seleccionó el campo Crear nuevo abono.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf Credit Memo Purch - Control AppendToCreditMemoNo - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2421352948 - Control 2308431597 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Append to Credit Memo No.</source>
+           <target>Anexar a nº abono</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf Credit Memo Purch - Control AppendToCreditMemoNo - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2421352948 - Control 3484635769 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies if the batch job creates a new sales credit memo.</source>
+         <target>Especifica si el trabajo por lotes crea un nuevo abono de venta.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf Credit Memo Purch - Control CreateNewCreditMemo - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2421352948 - Control 3484635769 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Create New Credit Memo</source>
+         <target>Crear nuevo abono</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf Credit Memo Purch - Control CreateNewCreditMemo - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2421352948 - Control 1051547097 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the posting date of that credit memo if you filled the Append to Credit Memo No. field.</source>
+          <target>Especifica la fecha de registro del abono si rellenó el campo Anexar a n.º abono.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf Credit Memo Purch - Control CrMemoPostingDate - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2421352948 - Control 1051547097 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cr. Memo Posting Date</source>
+           <target>Fecha registro abono</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf Credit Memo Purch - Control CrMemoPostingDate - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2421352948 - Control 3037438984 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the posting date for the document.</source>
+           <target>Especifica la fecha de registro del documento.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf Credit Memo Purch - Control PostingDate - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2421352948 - Control 3037438984 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Posting Date</source>
+          <target>Fecha registro</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf Credit Memo Purch - Control PostingDate - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3294758663 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Job Transfer to Purcharse Invoice</source>
+          <target state="needs-translation"/>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Invoice - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3294758663 - Control 2346885236 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Options</source>
+          <target>Opciones</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Invoice - Control Options - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3294758663 - Control 242772616 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of the Purcharse invoice that you want to append the lines to if you did not select the Create New Purcharse Invoice field.</source>
+          <target state="needs-translation"/>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Invoice - Control AppendToPurcharseInvoiceNo - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 3294758663 - Control 242772616 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Append to Purcharse Invoice No.</source>
+          <target state="needs-translation"/>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Invoice - Control AppendToPurcharseInvoiceNo - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3294758663 - Control 4113648779 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies if the batch job creates a new Purcharse invoice.</source>
+           <target>Especifica si el trabajo por lotes crea una nueva factura de compra.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Invoice - Control CreateNewInvoice - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 3294758663 - Control 4113648779 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Create New Invoice</source>
+           <target>Crear nueva factura</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Invoice - Control CreateNewInvoice - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3294758663 - Control 3397461951 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, if you filled in the Append to Purcharse Invoice No. field, the posting date of the invoice.</source>          
+          <target>Si rellenó el campo Anexar a n.º factura compra, especifica la fecha de registro de la factura.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Invoice - Control InvoicePostingDate - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 3294758663 - Control 3397461951 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Invoice Posting Date</source>
+           <target>Fecha registro factura</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Invoice - Control InvoicePostingDate - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3294758663 - Control 3037438984 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the posting date for the document.</source>
+           <target>Especifica la fecha de registro del documento.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Invoice - Control PostingDate - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 3294758663 - Control 3037438984 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Posting Date</source>
+            <target>Fecha registro</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Invoice - Control PostingDate - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2481506902 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Job Transfer to Purcharse Order</source>
+          <target>Transf. proy. a pedido compra</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2481506902 - Control 2346885236 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Options</source>
+         <target>Opciones</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Control Options - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2481506902 - Control 242772616 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of the Purcharse Order that you want to append the lines to if you did not select the Create New Purcharse Order field.</source>
+          <target>Especifica el número de la Pedido de Compra a la que desea anexar las líneas si no seleccionó el campo Crear nueva Pedido de Compra.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Control AppendToPurcharseInvoiceNo - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2481506902 - Control 242772616 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Append to Purcharse Order No.</source>
+             <target>Anexar a nº pedido compra</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Control AppendToPurcharseInvoiceNo - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2481506902 - Control 4113648779 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies if the batch job creates a new Purcharse Order.</source>
+             <target>Especifica si el trabajo por lotes crea una nueva pedido de compra.</target>         
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Control CreateNewInvoice - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2481506902 - Control 4113648779 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Create New Order</source>
+            <target>Crear Nuevo Pedido</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Control CreateNewInvoice - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2481506902 - Control 3397461951 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, if you filled in the Append to Purcharse Order No. field, the posting date of the Order.</source>
+         <target>Si rellenó el campo Anexar a n.º pedido compras, especifica la fecha de registro del pedido.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Control InvoicePostingDate - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2481506902 - Control 3397461951 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order Posting Date</source>
+            <target>Fecha registro pedido</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Control InvoicePostingDate - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - Property 2879900210" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Blanket Purchase Order</source>
+          <target state="translated">Pedido abierto compra</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 1091728280" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Blanket Purchase Order No.</source>
+          <target state="translated">N.º pedido de compra abierto</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType BlanketPurchOrderNoCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 2609547522" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Buy-from Contact E-Mail</source>
+          <target state="translated">Correo electrónico de Compra a-Contacto</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType BuyFromContactEmailLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 2182502985" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Buy-from Contact Mobile Phone No.</source>
+          <target state="translated">N.º teléfono móvil de Compra a-Contacto</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType BuyFromContactMobilePhoneNoLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 2508934449" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Buy-from Contact Phone No.</source>
+          <target state="translated">N.º de teléfono de Compra a-Contacto</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType BuyFromContactPhoneNoLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 2438826717" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Account No.</source>
+          <target state="translated">Nº cuenta</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType CompanyInfoBankAccNoCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 1275674192" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bank</source>
+          <target state="translated">Banco</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType CompanyInfoBankNameCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 1454106313" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Giro No.</source>
+          <target state="translated">Nº giro postal</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType CompanyInfoGiroNoCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 1993225760" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Phone No.</source>
+          <target state="translated">Nº teléfono</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType CompanyInfoPhNoCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 2033451465" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>VAT Registration No.</source>
+          <target state="translated">CIF/NIF</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType CompanyInfoVatRegNoCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 2728513993" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Document Date</source>
+          <target state="translated">Fecha emisión documento</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType DocumentDateCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 595034892" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Email</source>
+          <target state="translated">Correo electrónico</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType EMailCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 2188076586" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Expected Date</source>
+          <target state="translated">Fecha esperada</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType ExpectedDateCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 973567044" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Header Dimensions</source>
+          <target state="translated">Dimensiones cabecera</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType HeaderDimensionsCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 2862688884" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Home Page</source>
+          <target state="translated">Página Web</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType HomePageCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 3701122699" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Line Dimensions</source>
+          <target state="translated">Dimensiones línea</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType LineDimensionsCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 650077689" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Page</source>
+          <target state="translated">Pág.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType PageCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 2079014799" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pay-to Contact E-Mail</source>
+          <target state="translated">Correo electrónico de Pago a-Atención</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType PayToContactEmailLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 3401923736" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pay-to Contact Mobile Phone No.</source>
+          <target state="translated">N.º teléfono móvil de Pago a-Atención</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType PayToContactMobilePhoneNoLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 1854022560" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pay-to Contact Phone No.</source>
+          <target state="translated">N.º de teléfono de Pago a-Atención</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType PayToContactPhoneNoLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 4228078996" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Expected Date</source>
+          <target state="translated">Fecha esperada</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType PurchLineExpectedReceiptDateCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 106863577" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Our No.</source>
+          <target state="translated">Nuestro n.º</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType PurchLineNoCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 1549249109" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No.</source>
+          <target state="translated">Nº</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType PurchLineVendItemNoCaptionLbl</note>
+        </trans-unit>
+         <trans-unit id="Report 2818844720 - NamedType 3901489671" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <target state="translated">Descripcion</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Pedido-Compra-Entiba - NamedType DescCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 203962742" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shipment Method</source>
+          <target state="translated">Condiciones envío</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType ShipmentMethodDescCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 232471621" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ship-to Address</source>
+          <target state="translated">Dirección de envío</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType ShiptoAddressCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 3752334001" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Blanket Purchase Order %1</source>
+          <target state="translated">Pedido abierto compra %1</target>
+          <note from="Developer" annotates="general" priority="2">%1 = Document No.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - NamedType Text002</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - ReportDataItem 2072992664 - Property 1806354803" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Blanket Purchase Order</source>
+          <target state="translated">Pedido abierto compra</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - ReportDataItem Purchase Header - Property RequestFilterHeading</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - Control 2346885236 - Property 2879900210" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Options</source>
+          <target state="translated">Opciones</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - Control Options - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - Control 3255118903 - Property 1295455071" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies whether to archive the order.</source>
+          <target state="translated">Especifica si debe archivarse el pedido.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - Control ArchiveDocument - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - Control 3255118903 - Property 2879900210" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Archive Document</source>
+          <target state="translated">Archivar documento</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - Control ArchiveDocument - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - Control 816368762 - Property 1295455071" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies if you want the program to log this interaction.</source>
+          <target state="translated">Especifica si desea que el programa registre esta interacción.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - Control LogInteraction - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - Control 816368762 - Property 2879900210" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Log Interaction</source>
+          <target state="translated">Log interacción</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - Control LogInteraction - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - Control 2578066365 - Property 1295455071" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies how many copies of the document to print.</source>
+          <target state="translated">Especifica cuántas copias del documento se van a imprimir.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - Control NoOfCopies - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - Control 2578066365 - Property 2879900210" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No. of Copies</source>
+          <target state="translated">Nº copias</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - Control NoOfCopies - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - Control 316520822 - Property 1295455071" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies if you want the printed report to show information that is only for internal use.</source>
+          <target state="translated">Especifica si desea que el informe impreso muestre información para uso interno exclusivamente.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - Control ShowInternalInfo - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - Control 316520822 - Property 2879900210" maxwidth="0" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Show Internal Information</source>
+          <target state="translated">Mostrar información interna</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Blanket Purchase Order - Control ShowInternalInfo - Property Caption</note>
+        </trans-unit>
+         <trans-unit id="Report 2818844720 - NamedType 1928308579" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Phone No.</source>
+           <target state="translated">Teléfono</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Pedido-Compra-Entiba - NamedType PhoneNoCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2818844720 - NamedType 694817936" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Amount</source>
+           <target state="translated">Importe</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Pedido-Compra-Entiba - NamedType AmtCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 2481506902 - Control 3037438984 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the posting date for the document.</source>
+         <target>Especifica la fecha de registro del documento.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Control PostingDate - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 2481506902 - Control 3037438984 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Posting Date</source>
+           <target>Fecha registro</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Control PostingDate - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Action 4049885189 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Funciones Compra</source>        
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Function Compras - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Action 3266581368 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Create a Purchase credit memo for the selected job planning line.</source>
+          <target>Permite crear un abono de purchase para la línea de planificación de trabajo seleccionada.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purcharse &amp;Credit Memo - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Action 3266581368 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Create Purchase &amp;Credit Memo</source>
+           <target>&amp;Crear abono compra</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purcharse &amp;Credit Memo - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Action 1388957642 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Use a batch job to help you create purchase invoices for the involved job tasks.</source>
+          <target>Permite usar un trabajo por lotes para que resulte más sencillo crear facturas de compra para las tareas de trabajo relacionadas.</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Invoice - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Action 1388957642 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Create &amp;Purchase Invoice</source>
+          <target>Crear &amp;Factura de Compra</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Invoice - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Action 1672799731 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Use a batch job to help you create purchase orders for the involved job tasks.</source>
+         <target>Permite usar un proceso para que resulte más sencillo crear pedidos de compra para las tareas del proyecto relacionadas.</target>         
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Order - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Action 1672799731 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Create &amp;Purchase Order</source>
+         <target>Crear &amp;Pedido de Compra</target>         
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Order - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 389914202 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Dependencia</source>
+          <target>Dependencia</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Dependencia - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 3781740971 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Tipo Tarea</source>
+          <target>Tipo Tareas</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Status Task - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1862886636 - Field 2117550607 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
+          <source>Cod_Proveedor</source>
+          <target>Cod. Proveedor</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Cod_Proveedor - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1862886636 - Field 1503256470 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
+          <source>Generar compras</source>
+          <target>Generar compras</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Generar Compra - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3543651433 - Field 1800052274 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1519909599">
+          <source>Job Contract Entry No.</source>
+                <target>Nº mov. contrato proyecto</target>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurcharseLine_Job - Field Job Contract Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3781740971 - EnumValue 1371923692 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source> </source>
+          <target state="needs-translation"/>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Status Task - EnumValue   - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3781740971 - EnumValue 4113018130 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Completado</source>
+          <target state="needs-translation"/>
+          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Status Task - EnumValue Completado - Property Caption</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
