@@ -2,7 +2,7 @@
   "id": "4cc7c1f9-6c82-4ed1-9ad8-dc1681ea3de1",
   "name": "Proyectos_Avanzados",
   "publisher": "MaybeCloud",
-  "version": "1.0.2.17",
+  "version": "1.0.2.18",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -13,16 +13,15 @@
   "dependencies": [],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "23.0.0.0",
+  "application": "23.1.0.0",
   "idRanges": [
     {
       "from": 50100,
       "to": 50149
     }
   ],
-  "contextSensitiveHelpUrl": "https://Planificaicon_Compra.com/help/",
-  "showMyCode": true,
-  "runtime": "12.0",
+  "contextSensitiveHelpUrl": "https://Planificaicon_Compra.com/help/",   
+  "runtime": "11.1",
   "features": ["TranslationFile"]
 
 }

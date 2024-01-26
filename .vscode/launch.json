@@ -9,8 +9,10 @@
             // "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e", //pargroup
             //  "tenant": "8d4a17f2-1b25-4d79-8174-3d100994f228",
             //   "environmentName": "Tech4PlusSanbox",
-            "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
-            "environmentName": "DesarrolloPargroupSanboxDic23",
+            //"tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
+            //"environmentName": "DesarrolloPargroupSanboxDic23",
+            "tenant": "ad3eed48-97cd-48ba-a291-b5dd63b6c37a", //entiba
+            "environmentName": "Desarrollo_Entiba",
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": "All",
