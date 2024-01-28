@@ -293,6 +293,21 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Nombre - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 947464476 - Control 2455730541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
+          <source>Specifies the value of the Fecha fin Tarea field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Fecha fin Tarea - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 947464476 - Control 3610891187 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
+          <source>Specifies the value of the Fecha inicio Tarea field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Fecha inicio Tarea - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 947464476 - Control 352425749 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
+          <source>Specifies the value of the WIP % field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control WIP % - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 4048657685 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
           <source>Specifies the value of the No. Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -368,10 +383,25 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Dependencia - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 2455730541 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Fecha fin Tarea</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Fecha fin Tarea - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 3610891187 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Fecha inicio Tarea</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Fecha inicio Tarea - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 3781740971 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>Tipo Tarea</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Status Task - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 352425749 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>WIP %</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field WIP % - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1862886636 - Field 2965034906 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
           <source>Cliente Facturación</source>
