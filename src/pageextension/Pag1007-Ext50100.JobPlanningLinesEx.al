@@ -2,7 +2,7 @@
 /// <summary>
 /// PageExtension JobPlanningLinesEx (ID 50100) extends Record Job Planning Lines.
 /// </summary>
-pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines"
+pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
 #pragma warning restore DOC0101
 {
     layout

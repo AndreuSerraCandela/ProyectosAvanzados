@@ -228,6 +228,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Order - Control PostingDate - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3134381272 - Control 2165121140 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4219821699">
+          <source>Specifies the value of the Mostrar en lineas de planif. field.</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GLAccountCardProyectosAvanzado - Control Mostrar en lineas de planif. - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 923825371 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Pedido Compra</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -357,6 +362,11 @@
           <source>Invoice Legal Text</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Invoice Legal Text - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3315447413 - Field 2165121140 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 4274826855">
+          <source>Mostrar en lineas de planif.</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension GLAccountProyectosAvanzados - Field Mostrar en lineas de planif. - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2512212003 - Field 1621130396 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2818324089">
           <source>Cód Oferta Job</source>
