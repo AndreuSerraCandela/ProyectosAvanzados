@@ -75,6 +75,14 @@ tableextension 50100 "LineasPlanificacion" extends "Job Planning Line"//1003
             DataClassification = ToBeClassified;
             TableRelation = Categorias;
         }
+        field(90003; "Importe Inicial Venta"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(90004; "Importe Inicial Coste"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
 
 
     }

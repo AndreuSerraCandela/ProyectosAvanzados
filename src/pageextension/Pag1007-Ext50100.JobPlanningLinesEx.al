@@ -64,6 +64,14 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
             {
                 ApplicationArea = All;
             }
+            field("Importe Inicial Coste"; Rec."Importe Inicial Coste")
+            {
+                ApplicationArea = All;
+            }
+            field("Importe Inicial Venta"; Rec."Importe Inicial Venta")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 
@@ -142,6 +150,23 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                         CreatePurcharseQuote();
                     end;
                 }
+                action("Ver Comparativa Ofertas")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Ver Comparativa Ofertas';
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    PromotedIsBig = true;
+                    ToolTip = 'Muestra la comparativa de ofertas para la línea de planificación de trabajo seleccionada.';
+                    trigger OnAction()
+                    var
+                        Quotes: Record "Purchase Header";
+                    begin
+                        Quotes.SETRANGE("No. Proyecto", Rec."Job No.");
+                        Page.RunModal(Page::"Comparativo Ofertas", qUOTES);
+
+                    end;
+                }
                 action("Calcular nueva estimación")
                 {
                     Image = Calculate;
@@ -157,12 +182,18 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                         HistJobPlanningLine: Record "Hist. Job Planning Line";
                         Ver: Integer;
                     begin
+
                         JobPlanningLine.SetRange("Job No.", Rec."Job No.");
                         HistJobPlanningLine.SetRange("Job No.", Rec."Job No.");
                         if HistJobPlanningLine.FindLast() then
                             Ver := HistJobPlanningLine."Version No." + 1
                         else
                             Ver := 1;
+                        if Ver = 1 then begin
+                            JobPlanningLine."Importe Inicial Venta" := JobPlanningLine."Total Price";
+                            JobPlanningLine."Importe Inicial Coste" := JobPlanningLine."Total Cost";
+                            JobPlanningLine.Modify();
+                        end;
                         if JobPlanningLine.FindSet() then
                             repeat
                                 HistJobPlanningLine.TransferFields(JobPlanningLine);
