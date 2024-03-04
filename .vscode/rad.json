@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[{"Id":50107,"Kind":16,"Name":"JobCard","Namespace":""},{"Id":50110,"Kind":17,"Name":"JobMyb","Namespace":""}],"Removed":[]}
+﻿{"Added":[{"Id":50113,"Kind":12,"Name":"Job Status History","Namespace":""},{"Id":50102,"Kind":10,"Name":"Job Status History","Namespace":""}],"Modified":[{"Id":50110,"Kind":17,"Name":"JobMyb","Namespace":""},{"Id":50100,"Kind":17,"Name":"LineasPlanificacion","Namespace":""},{"Id":50107,"Kind":16,"Name":"JobCard","Namespace":""}],"Removed":[]}
