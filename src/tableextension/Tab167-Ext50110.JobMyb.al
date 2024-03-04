@@ -27,6 +27,8 @@ tableextension 50110 "JobMyb" extends Job //167
             Caption = 'Project Status', comment = 'ESP="Estado Proyecto"';
             DataClassification = ToBeClassified;
             trigger OnValidate()
+            var
+                Hist: Record "Job Status History";
             begin
                 case "Project Status" of
                     "Project Status"::"In Quote":
@@ -57,7 +59,12 @@ tableextension 50110 "JobMyb" extends Job //167
                 end;
                 if Rec.Status <> xRec.Status then
                     Rec.Modify();
-
+                Hist."Job No." := rec."No.";
+                Hist."New Status" := rec."Project Status";
+                Hist."Old Status" := xRec."Project Status";
+                Hist."Date&Time" := CurrentDateTime;
+                Hist."User ID" := UserId;
+                Hist.Insert();
             end;
         }
     }
