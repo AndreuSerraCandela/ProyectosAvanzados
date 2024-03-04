@@ -44,6 +44,18 @@ pageextension 50107 "JobCard" extends "Job Card" //88
 
 
             }
+            action("Quote Job")
+            {
+
+                ApplicationArea = all;
+                // Caption = 'Purchase  Order';
+                Caption = 'Oferta Compra';
+                Image = Purchase;
+                RunObject = Page "Purchase Quotes";
+                RunPageLink = "No. Proyecto" = FIELD("No.");
+
+
+            }
             action("Return Job")
             {
 

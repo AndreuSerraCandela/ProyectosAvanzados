@@ -218,6 +218,43 @@ codeunit 50100 "ProcesosProyectos"
             CreatePurchaseOrderLines(JobPlanningLine."Job No.", JobPlanningLine, InvoiceNo, NewInvoice, PostingDate);
         end;
     end;
+    /// <summary>
+    /// CreatePurchaseOrder.
+    /// </summary>
+    /// <param name="JobPlanningLine">Record "Job Planning Line".</param>
+    procedure CreatePurchaseQuote(JobPlanningLine: Record "Job Planning Line");
+    var
+        PurchaseHeader: Record "Purchase Header";
+
+        GetPurchaseQuoteNo: Report "Job Transf.to Purch. Quote";
+        //GetSalesCrMemoNo	Report	Job Transfer to Credit Memo	
+        GetSalesCrMemoNo: Report "Job Transf Credit Memo Purch";
+        Done: Boolean;
+        NewInvoice: Boolean;
+        PostingDate: Date;
+        InvoiceNo: code[20];
+        IsHandled: Boolean;
+
+    begin
+
+        GetPurchaseQuoteNo.SetVendor(JobPlanningLine."Job No.");
+        GetPurchaseQuoteNo.RUNMODAL;
+        IsHandled := FALSE;
+        OnBeforeGetInvoiceNo(JobPlanningLine, Done, NewInvoice, PostingDate, InvoiceNo, IsHandled);
+        IF NOT IsHandled THEN
+            GetPurchaseQuoteNo.GetInvoiceNo(Done, NewInvoice, PostingDate, InvoiceNo);
+
+
+        IF Done THEN BEGIN
+            IF (PostingDate = 0D) AND NewInvoice THEN
+                ERROR(Text007, PurchaseHeader.FIELDCAPTION("Posting Date"));
+            IF (InvoiceNo = '') AND NOT NewInvoice THEN BEGIN
+
+                ERROR(Text004);
+            END;
+            CreatePurchaseQuoteLines(JobPlanningLine."Job No.", JobPlanningLine, InvoiceNo, NewInvoice, PostingDate);
+        end;
+    end;
 
     /// <summary>
     /// CreatePurchaseOrderLines.
@@ -294,6 +331,126 @@ codeunit 50100 "ProcesosProyectos"
         IF NewOrder THEN
             //CreatePurchaseHeader(Job, PostingDate, JobPlanningLine)
             CreatePurchaseHeaderOrder(Job, PostingDate, JobPlanningLine)
+        ELSE
+            TestPurchaseHeader(PurchaseHeader, Job, Prov."No.");
+        IF JobPlanningLine.FIND('-') THEN
+            REPEAT
+                IF TransferLine(JobPlanningLine) THEN BEGIN
+                    IF JobPlanningLine.Type IN [JobPlanningLine.Type::Resource,
+                                                JobPlanningLine.Type::Item,
+                                                JobPlanningLine.Type::"G/L Account"]
+                    THEN
+                        JobPlanningLine.TESTFIELD("No.");
+
+
+                    //OnCreatePurchaseInvoiceLinesOnBeforeCreatePurchaseLine(JobPlanningLine, PurchaseHeader, PurchaseHeader2, NewInvoice);
+                    CreatePurchaseLine(JobPlanningLine, JobPlanningLine."Line No.", JobPlanningLine."Job No.", JobPlanningLine."Job Task No.");
+                    /*
+                                        JobPlanningLineInvoice.InitFromJobPlanningLine(JobPlanningLine);
+                                        IF NewInvoice THEN
+                                            JobPlanningLineInvoice.InitFromPurchase(PurchaseHeader, PostingDate, PurchaseLine."Line No.")
+                                        ELSE
+                                            JobPlanningLineInvoice.InitFromPurchase(PurchaseHeader, PurchaseHeader."Posting Date", PurchaseLine."Line No.");
+                                        JobPlanningLineInvoice.INSERT;
+
+                                        JobPlanningLine.UpdateQtyToTransfer;
+                                        JobPlanningLine.MODIFY;
+                                        */
+                END;
+            UNTIL JobPlanningLine.NEXT = 0;
+        /*
+                IF NoOfPurchaseLinesCreated = 0 THEN
+                    ERROR(Text002, JobPlanningLine.TABLECAPTION, JobPlanningLine.FIELDCAPTION("Qty. to Transfer to Invoice"));
+        */
+
+        COMMIT;
+        if JobPlanningLine.FindFirst() then
+            repeat
+                JobPlanningLine."Generar Compra" := false;
+                JobPlanningLine.Modify();
+            until JobPlanningLine.Next() = 0;
+        Commit();
+
+        MESSAGE(Text000_1);
+
+        // OnAfterCreateSalesInvoiceLines(PurchaseHeader, NewInvoice);
+    end;
+
+    /// <summary>
+    /// CreatePurchaseQuoteLines.
+    /// </summary>
+    /// <param name="JobNo">code[20].</param>
+    /// <param name="JobPlanningLineSource">VAR Record "Job Planning Line".</param>
+    /// <param name="OrderNo">Code[20].</param>
+    /// <param name="NewOrder">Boolean.</param>
+    /// <param name="PostingDate">Date.</param>
+    procedure CreatePurchaseQuoteLines(JobNo: code[20]; var JobPlanningLineSource: Record "Job Planning Line"; QuoteNo: Code[20]; NewQuote: Boolean; PostingDate: Date)
+    var
+        Job: Record Job;
+        JobInvCurrency: Boolean;
+        IsHandled: Boolean;
+        Cust: Record Customer;
+        Prov: Record Vendor;
+        // PurchaseHeader2: Record "Purchase Header";
+        JobPlanningLine: Record "Job Planning Line";
+        JobPlanningLineInvoice: Record "Job Planning Line Invoice";
+        LineCounter: Integer;
+    begin
+
+
+        //OnBeforeCreatePurchaseInvoiceLines(JobPlanningLine,InvoiceNo,NewInvoice,PostingDate,CreditMemo);
+
+        CLEARALL;
+        Job.GET(JobNo);
+        IF Job.Blocked = Job.Blocked::All THEN
+            Job.TestBlocked;
+        IF Job."Currency Code" = '' THEN
+            JobInvCurrency := Job."Invoice Currency Code" <> '';
+        Job.TESTFIELD("Bill-to Customer No.");
+
+        IsHandled := FALSE;
+        //OnCreateSalesInvoiceLinesOnBeforeGetCustomer(JobPlanningLine, Cust, IsHandled);
+        IF NOT IsHandled THEN
+            //Cust.GET(Job."Bill-to Customer No.");
+            Prov.get(JobPlanningLineSource.Cod_Proveedor);
+
+        PurchaseHeader2."Document Type" := PurchaseHeader2."Document Type"::Quote;
+
+        IF NOT NewQuote THEN
+            PurchaseHeader2.GET(PurchaseHeader2."Document Type", QuoteNo);
+
+        PurchaseHeader := PurchaseHeader2;
+        //JobPlanningLine.Copy(JobPlanningLineSource);
+        //*myb
+        JobPlanningLine.SetRange(JobPlanningLine."Job No.", JobPlanningLineSource."Job No.");
+        JobPlanningLine.SetRange(JobPlanningLine."Job Task No.", JobPlanningLineSource."Job Task No.");
+        //JobPlanningLine.SetRange(JobPlanningLine."Line No.", JobPlanningLineSource."Line No.");
+        JobPlanningLine.SetRange(Cod_Proveedor, JobPlanningLineSource.Cod_Proveedor);
+        JobPlanningLine.SetRange("Generar Compra", true);
+        //MYB
+        JobPlanningLine.SetCurrentKey("Job No.", "Job Task No.", "Line No.");
+
+        IF JobPlanningLine.FIND('-') THEN;
+        //     REPEAT
+        //         IF TransferLine(JobPlanningLine) THEN BEGIN
+        //             LineCounter := LineCounter + 1;
+        //             IF JobPlanningLine."Job No." <> JobNo THEN
+        //                 ERROR(Text009, JobPlanningLine.FIELDCAPTION("Job No."));
+        //             IF NewQuote THEN
+        //                 TestExchangeRate(JobPlanningLine, PostingDate)
+        //             ELSE
+        //                 TestExchangeRate(JobPlanningLine, PurchaseHeader."Posting Date");
+        //         END;
+        //     UNTIL JobPlanningLine.NEXT = 0;
+
+        // IF LineCounter = 0 THEN
+        //     ERROR(Text002,
+        //       JobPlanningLine.TABLECAPTION,
+        //       JobPlanningLine.FIELDCAPTION("Qty. to Transfer to Invoice"));
+
+        IF NewQuote THEN
+            //CreatePurchaseHeader(Job, PostingDate, JobPlanningLine)
+            CreatePurchaseHeaderQuote(Job, PostingDate, JobPlanningLine)
         ELSE
             TestPurchaseHeader(PurchaseHeader, Job, Prov."No.");
         IF JobPlanningLine.FIND('-') THEN
@@ -601,9 +758,54 @@ codeunit 50100 "ProcesosProyectos"
         PurchaseHeader."Document Type" := PurchaseHeader2."Document Type";
 
         IF PurchaseHeader."Document Type" = PurchaseHeader."Document Type"::Order THEN
-            PurchaseSetup.TESTFIELD("Invoice Nos.");
+            PurchaseSetup.TESTFIELD("Order Nos.");
         IF PurchaseHeader."Document Type" = PurchaseHeader2."Document Type"::"Return Order" THEN
-            PurchaseSetup.TESTFIELD("Credit Memo Nos.");
+            PurchaseSetup.TESTFIELD("Return Order Nos.");
+        PurchaseHeader."Posting Date" := PostingDate;
+        OnBeforeInsertPurchaseHeader(PurchaseHeader, Job);
+        PurchaseHeader.INSERT(TRUE);
+        //**
+        // JobPlanningLine.TestField(Cod_Proveedor, '');
+        // JobPlanningLine.TestField("Job No.", '');
+        //**
+        Prov.get(JobPlanningLine.Cod_Proveedor);
+        Job.Get(JobPlanningLine."Job No.");
+
+        //Prov.TESTFIELD(JobPlanningLine.Cod_Proveedor, '');
+        //**
+        //  Cust.GET(Job."Bill-to Customer No.");
+        //  Cust.TESTFIELD("Bill-to Customer No.", '');
+        //origan**
+        // PurchaseHeader.VALIDATE("Sell-to Customer No.", Job."Bill-to Customer No.");
+        PurchaseHeader.Validate("Buy-from Vendor No.", JobPlanningLine.Cod_Proveedor);
+        IF Job."Currency Code" <> '' THEN
+            PurchaseHeader.VALIDATE("Currency Code", Job."Currency Code")
+        ELSE
+            PurchaseHeader.VALIDATE("Currency Code", Job."Invoice Currency Code");
+        IF PostingDate <> 0D THEN
+            PurchaseHeader.VALIDATE("Posting Date", PostingDate);
+
+        PurchaseHeader.Validate("No. Proyecto", JobPlanningLine."Job No.");
+
+        IsHandled := FALSE;
+        OnCreatePurchaseHeaderOnBeforeUpdatePurchaseHeader(PurchaseHeader, Job, IsHandled);
+        IF NOT IsHandled THEN
+            UpdatePurchaseHeader(PurchaseHeader, Job);
+        OnBeforeModifyPurchaseHeader(PurchaseHeader, Job);
+        PurchaseHeader.MODIFY(TRUE);
+    end;
+
+    procedure CreatePurchaseHeaderQuote(Job: Record Job; PostingDate: Date; var JobPlanningLine: Record "Job Planning Line")
+    var
+        PurchaseSetup: Record "Purchases & Payables Setup";
+        IsHandled: Boolean;
+    begin
+        PurchaseSetup.GET;
+        PurchaseHeader.INIT;
+        PurchaseHeader."Document Type" := PurchaseHeader2."Document Type";
+
+        IF PurchaseHeader."Document Type" = PurchaseHeader."Document Type"::Quote THEN
+            PurchaseSetup.TESTFIELD("Quote Nos.");
         PurchaseHeader."Posting Date" := PostingDate;
         OnBeforeInsertPurchaseHeader(PurchaseHeader, Job);
         PurchaseHeader.INSERT(TRUE);

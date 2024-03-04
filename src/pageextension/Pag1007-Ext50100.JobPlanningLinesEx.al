@@ -117,6 +117,71 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                         CreatePurcharseInvoice(true);
                     end;
                 }
+                action("Create Purchase Quote")
+                {
+                    ApplicationArea = Jobs;
+                    Caption = 'Create &Purchase Quote';
+                    Ellipsis = true;
+                    Image = Quote;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    PromotedIsBig = true;
+                    ToolTip = 'Use a batch job to help you create purchase orders for the involved job tasks.';
+
+                    trigger OnAction()
+                    begin
+                        // CreatePurcharseInvoice(false);
+                        CreatePurcharseQuote();
+                    end;
+                }
+                action("Calcular nueva estimación")
+                {
+                    Image = Calculate;
+                    ApplicationArea = All;
+                    Caption = 'Calcular nueva estimación';
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    PromotedIsBig = true;
+                    ToolTip = 'Calcula la nueva estimación de costes y horas para la línea de planificación de trabajo seleccionada.';
+                    trigger OnAction()
+                    var
+                        JobPlanningLine: Record "Job Planning Line";
+                        HistJobPlanningLine: Record "Hist. Job Planning Line";
+                        Ver: Integer;
+                    begin
+                        JobPlanningLine.SetRange("Job No.", Rec."Job No.");
+                        HistJobPlanningLine.SetRange("Job No.", Rec."Job No.");
+                        if HistJobPlanningLine.FindLast() then
+                            Ver := HistJobPlanningLine."Version No." + 1
+                        else
+                            Ver := 1;
+                        if JobPlanningLine.FindSet() then
+                            repeat
+                                HistJobPlanningLine.TransferFields(JobPlanningLine);
+                                HistJobPlanningLine."Version No." := Ver;
+                                HistJobPlanningLine.INSERT;
+                            until JobPlanningLine.NEXT = 0;
+                    end;
+
+
+                }
+                action("Ver Estimaciones")
+                {
+                    Image = History;
+                    ApplicationArea = All;
+                    Caption = 'Ver Estimaciones';
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    PromotedIsBig = true;
+                    ToolTip = 'Muestra las estimaciones de costes y horas para la línea de planificación de trabajo seleccionada.';
+                    trigger OnAction()
+                    var
+                        HistJobPlanningLine: Record "Hist. Job Planning Line";
+                    begin
+                        HistJobPlanningLine.SETRANGE("Job No.", Rec."Job No.");
+                        Page.RunModal(0, HistJobPlanningLine);
+                    end;
+                }
             }
         }
     }
@@ -152,6 +217,14 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
         JobPlanningLine.COPY(Rec);
         CurrPage.SETSELECTIONFILTER(JobPlanningLine);
         JobCreateInvoice.CreatePurchaseOrder(JobPlanningLine);
+    end;
+
+    procedure CreatePurcharseQuote();
+    begin
+        rec.TESTFIELD("Line No.");
+        JobPlanningLine.COPY(Rec);
+        CurrPage.SETSELECTIONFILTER(JobPlanningLine);
+        JobCreateInvoice.CreatePurchaseQuote(JobPlanningLine);
     end;
 
     var

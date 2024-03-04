@@ -1,0 +1,111 @@
+table 50101 "Hist. Job Planning Line"
+{
+    DrillDownPageId = 50112;
+    LookupPageId = 50112;
+    fields
+    {
+        field(1; "Line No."; Integer)
+        {
+            Caption = 'Line No.';
+            Editable = false;
+        }
+        field(22; "Version Date"; Date)
+        {
+            Caption = 'Version Date';
+            Editable = false;
+        }
+        field(23; "Version No."; Integer)
+        {
+            Caption = 'Version No.';
+            Editable = false;
+        }
+        field(5; Type; Enum "Job Planning Line Type")
+        {
+            Caption = 'Type';
+            Editable = false;
+
+        }
+        field(7; "No."; Code[20])
+        {
+            Editable = false;
+            Caption = 'No.';
+            TableRelation = if (Type = const(Resource)) Resource
+            else
+            if (Type = const(Item)) Item where(Blocked = const(false))
+            else
+            if (Type = const("G/L Account")) "G/L Account"
+            else
+            if (Type = const(Text)) "Standard Text";
+
+
+        }
+        field(8; Description; Text[100])
+        {
+            Editable = false;
+            Caption = 'Description';
+
+
+        }
+        field(2; "Job No."; Code[20])
+        {
+            Editable = false;
+            Caption = 'Job No.';
+            NotBlank = true;
+            TableRelation = Job;
+        }
+        field(9; Quantity; Decimal)
+        {
+            Editable = false;
+            Caption = 'Quantity';
+            DecimalPlaces = 0 : 5;
+
+
+        }
+        field(11; "Direct Unit Cost (LCY)"; Decimal)
+        {
+            Editable = false;
+            AutoFormatType = 2;
+            Caption = 'Direct Unit Cost (LCY)';
+
+
+        }
+        field(12; "Unit Cost (LCY)"; Decimal)
+        {
+            Editable = false;
+            AutoFormatType = 2;
+            Caption = 'Unit Cost (LCY)';
+
+
+
+        }
+        field(13; "Total Cost (LCY)"; Decimal)
+        {
+            Editable = false;
+            AutoFormatType = 1;
+            Caption = 'Total Cost (LCY)';
+
+        }
+        field(14; "Unit Price (LCY)"; Decimal)
+        {
+            AutoFormatType = 2;
+            Caption = 'Unit Price (LCY)';
+            Editable = false;
+
+
+        }
+        field(15; "Total Price (LCY)"; Decimal)
+        {
+            AutoFormatType = 1;
+            Caption = 'Total Price (LCY)';
+            Editable = false;
+        }
+    }
+    keys
+    {
+        key(PK; "Line No.", "Job No.", "Version No.")
+        {
+            Clustered = true;
+        }
+
+    }
+}
