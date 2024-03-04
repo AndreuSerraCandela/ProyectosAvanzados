@@ -37,6 +37,7 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
         {
             DataClassification = ToBeClassified;
         }
+
     }
 
 }

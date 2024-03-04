@@ -31,6 +31,21 @@ pageextension 50101 "JobTaskLinesSubformEX" extends "Job Task Lines Subform" //1
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the WIP % field.';
             }
+            field("Pedidos Pendientes"; PedidosPendientes())
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the WIP Amount field.';
+                trigger OnDrillDown()
+                var
+                    PurchLine: Record "Purchase Line";
+                begin
+                    PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
+                    PurchLine.SetRange("Job No.", Rec."Job No.");
+                    PurchLine.SetRange("Job Task No.", Rec."Job Task No.");
+                    PurchLine.SetFilter("Outstanding Amount", '<>%1', 0);
+                    Page.RunModal(0, PurchLine);
+                end;
+            }
 
         }
     }
@@ -38,4 +53,17 @@ pageextension 50101 "JobTaskLinesSubformEX" extends "Job Task Lines Subform" //1
     actions
     {
     }
+
+    local procedure PedidosPendientes(): Decimal
+    var
+        PurchLine: Record "Purchase Line";
+    begin
+        PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
+        PurchLine.SetRange("Job No.", Rec."Job No.");
+        PurchLine.SetRange("Job Task No.", Rec."Job Task No.");
+        PurchLine.CalcSums("Outstanding Amount");
+        If PurchLine.FindFirst() then exit(PurchLine."Outstanding Amount");
+
+
+    end;
 }
