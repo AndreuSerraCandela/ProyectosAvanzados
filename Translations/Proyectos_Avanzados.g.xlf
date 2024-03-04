@@ -253,6 +253,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control Cód Oferta Job - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Control 648142515 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Specifies the value of the Project Status field.</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Estado Proyecto"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control Project Status - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 4049885189 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
           <source>Funciones Compra</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -372,6 +377,11 @@
           <source>Cód Oferta Job</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobMyb - Field Cód Oferta Job - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2512212003 - Field 648142515 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2818324089">
+          <source>Project Status</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Estado Proyecto"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobMyb - Field Project Status - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1627283316 - Field 2436487638 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2556642749">
           <source>Cód. Proyecto Obligatorios en Documentos Pedido/Factura</source>
@@ -507,6 +517,31 @@
           <source>No.Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension SalesInvoiceHeaderMyB - Field No.Proyecto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1205813099 - EnumValue 93591275 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Awarded as a guarantee</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Adjudicado en garantía"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Estado Proyecto - EnumValue Awarded as a guarantee - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1205813099 - EnumValue 3249959526 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Awarded Finished</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Adjudicado finalizado"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Estado Proyecto - EnumValue Awarded Finished - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1205813099 - EnumValue 2540351151 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Awarded in execution</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Adjudicado en ejecucion"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Estado Proyecto - EnumValue Awarded in execution - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1205813099 - EnumValue 3611082495 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>In Quote</source>
+          <note from="Developer" annotates="general" priority="2">ESP="En oferta"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Estado Proyecto - EnumValue In Quote - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1205813099 - EnumValue 3464940791 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Not awarded</source>
+          <note from="Developer" annotates="general" priority="2">ESP="No adjudicado"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Estado Proyecto - EnumValue Not awarded - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 3781740971 - EnumValue 1371923692 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source> </source>
