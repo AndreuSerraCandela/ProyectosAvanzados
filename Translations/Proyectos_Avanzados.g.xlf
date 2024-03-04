@@ -565,7 +565,7 @@
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 3266581368 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
           <source>Create Purchase &amp;Credit Memo</source>
-          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Developer" annotates="general" priority="2">ESP="Crear Abono Compra"</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purcharse &amp;Credit Memo - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 1388957642 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
@@ -575,7 +575,7 @@
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 1388957642 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
           <source>Create &amp;Purchase Invoice</source>
-          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Developer" annotates="general" priority="2">ESP="Crear Factura Compra"</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Invoice - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 1672799731 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
@@ -585,7 +585,7 @@
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 1672799731 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
           <source>Create &amp;Purchase Order</source>
-          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Developer" annotates="general" priority="2">ESP="Crear Pedido Compra"</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Order - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 758892351 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
