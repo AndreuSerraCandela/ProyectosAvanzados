@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-﻿{"Added":[],"Modified":[{"Id":50100,"Kind":17,"Name":"LineasPlanificacion","Namespace":""}],"Removed":[]}
-=======
-﻿{"Added":[],"Modified":[{"Id":50100,"Kind":17,"Name":"LineasPlanificacion","Namespace":""},{"Id":50104,"Kind":17,"Name":"GLAccountProyectosAvanzados","Namespace":""}],"Removed":[]}
->>>>>>> cca5e4e61d635c41679280210d9a93a643ff8de4
+﻿{"Added":[],"Modified":[{"Id":50107,"Kind":16,"Name":"JobCard","Namespace":""},{"Id":50110,"Kind":17,"Name":"JobMyb","Namespace":""}],"Removed":[]}

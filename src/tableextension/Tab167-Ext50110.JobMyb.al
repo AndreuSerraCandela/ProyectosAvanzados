@@ -21,6 +21,45 @@ tableextension 50110 "JobMyb" extends Job //167
 
             end;
         }
+        field(50300; "Project Status"; Enum "Estado Proyecto")
+        {
+            //Caption = '';
+            Caption = 'Project Status', comment = 'ESP="Estado Proyecto"';
+            DataClassification = ToBeClassified;
+            trigger OnValidate()
+            begin
+                case "Project Status" of
+                    "Project Status"::"In Quote":
+                        begin
+                            rec.Validate(Status, Status::Quote);
+                        end;
+                    "Project Status"::"Awarded in execution":
+                        begin
+                            Status := Status::Open;
+
+                        end;
+                    "Project Status"::"Awarded Finished":
+                        begin
+                            Status := Status::Completed;
+
+                        end;
+                    "Project Status"::"Awarded as a guarantee":
+                        begin
+                            Status := Status::Open;
+
+                        end;
+                    "Project Status"::"Not awarded":
+                        begin
+                            Status := Status::Completed;
+
+                        end;
+
+                end;
+                if Rec.Status <> xRec.Status then
+                    Rec.Modify();
+
+            end;
+        }
     }
     procedure AddOfertaaProyecto()
     var

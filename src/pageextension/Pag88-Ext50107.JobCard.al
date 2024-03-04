@@ -12,6 +12,15 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 ToolTip = 'Specifies the value of the Cód Oferta Job field.';
             }
         }
+        addafter("Sell-to Customer Name")
+        {
+
+            field("Project Status"; Rec."Project Status")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Project Status field.', Comment = 'ESP="Estado Proyecto"';
+            }
+        }
     }
 
     actions
