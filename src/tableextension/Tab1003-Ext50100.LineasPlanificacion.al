@@ -70,16 +70,7 @@ tableextension 50100 "LineasPlanificacion" extends "Job Planning Line"//1003
             Caption = 'Cliente Facturación';
             TableRelation = "Customer";
         }
-        modify("No.")
-        {
-            TableRelation = if (Type = const(Resource)) Resource
-            else
-            if (Type = const(Item)) Item where(Blocked = const(false))
-            else
-            if (Type = const("G/L Account")) "G/L Account" where("Mostrar en lineas de planif." = const(true))
-            else
-            if (Type = const(Text)) "Standard Text";
-        }
+
     }
 
 
