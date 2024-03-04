@@ -77,7 +77,8 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 action("Create Purchase Invoice")
                 {
                     ApplicationArea = Jobs;
-                    Caption = 'Create &Purchase Invoice';
+                    // Caption = 'Create &Purchase Invoice';
+                    Caption = 'Create &Purchase Invoice', comment = 'ESP="Crear Factura Compra"';
                     Ellipsis = true;
                     Image = JobPurchaseInvoice;
                     Promoted = true;
@@ -93,7 +94,8 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 action("Create Purchase Order")
                 {
                     ApplicationArea = Jobs;
-                    Caption = 'Create &Purchase Order';
+                    //  Caption = 'Create &Purchase Order';
+                    Caption = 'Create &Purchase Order', comment = 'ESP="Crear Pedido Compra"';
                     Ellipsis = true;
                     Image = JobPurchaseInvoice;
                     Promoted = true;
@@ -110,7 +112,8 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 action("Create Purcharse &Credit Memo")
                 {
                     ApplicationArea = Jobs;
-                    Caption = 'Create Purchase &Credit Memo';
+                    //Caption = 'Create Purchase &Credit Memo';
+                    Caption = 'Create Purchase &Credit Memo', comment = 'ESP="Crear Abono Compra"';
                     Ellipsis = true;
                     Image = CreditMemo;
                     Promoted = true;
