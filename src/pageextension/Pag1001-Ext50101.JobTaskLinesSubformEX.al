@@ -31,6 +31,7 @@ pageextension 50101 "JobTaskLinesSubformEX" extends "Job Task Lines Subform" //1
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the WIP % field.';
             }
+
         }
     }
 

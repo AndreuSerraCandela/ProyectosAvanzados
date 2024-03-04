@@ -48,6 +48,11 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 ApplicationArea = all;
                 Visible = false;
             }
+            field(Categoría; Rec.Categorias)
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Categoría field.';
+            }
         }
         addafter(Quantity)
         {
