@@ -12,6 +12,16 @@ tableextension 50109 "PurchHeader" extends "Purchase Header" //38
         {
             DataClassification = ToBeClassified;
         }
+        field(90002; Categorias; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Categorias;
+        }
+        field(90003; Aceptada; Boolean)
+        {
+            DataClassification = ToBeClassified;
+
+        }
     }
 
 

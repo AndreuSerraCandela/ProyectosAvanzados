@@ -70,6 +70,12 @@ tableextension 50100 "LineasPlanificacion" extends "Job Planning Line"//1003
             Caption = 'Cliente Facturación';
             TableRelation = "Customer";
         }
+        field(90002; Categorias; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Categorias;
+        }
+
 
     }
 

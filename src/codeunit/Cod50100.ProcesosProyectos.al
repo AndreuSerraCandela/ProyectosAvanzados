@@ -484,6 +484,9 @@ codeunit 50100 "ProcesosProyectos"
         */
 
         COMMIT;
+        PurchaseHeader.GET(PurchaseHeader."Document Type", PurchaseHeader."No.");
+        PurchaseHeader.Categorias := JobPlanningLine.Categorias;
+        PurchaseHeader.MODIFY();
         if JobPlanningLine.FindFirst() then
             repeat
                 JobPlanningLine."Generar Compra" := false;

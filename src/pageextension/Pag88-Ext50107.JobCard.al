@@ -76,6 +76,16 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 RunPageLink = "No. Proyecto" = FIELD("No.");
                 ToolTip = 'Filter purchase order for jobs';
             }
+            action("Comparativa Ofertas")
+            {
+                ApplicationArea = All;
+                Caption = 'Comparativa Ofertas';
+                Image = Purchase;
+                RunObject = Page "Comparativo Ofertas";
+                RunPageLink = "No. Proyecto" = FIELD("No.");
+                ToolTip = 'Comparativa de ofertas';
+
+            }
         }
         // Add changes to page actions here
     }
