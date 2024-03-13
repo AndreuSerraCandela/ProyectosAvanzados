@@ -1249,21 +1249,21 @@ codeunit 50100 "ProcesosProyectos"
 
         JobSetup.Get();
         if JobSetup.DimensionJobProveedor then begin
-            with JobTaskDimension do begin
-                SetRange("Job No.", JobNo);
-                SetRange("Job Task No.", JobTaskNo);
-                if FindSet then begin
-                    repeat
-                        DimValue.Get("Dimension Code", "Dimension Value Code");
-                        TempDimSetEntry."Dimension Code" := "Dimension Code";
-                        TempDimSetEntry."Dimension Value Code" := "Dimension Value Code";
-                        TempDimSetEntry."Dimension Value ID" := DimValue."Dimension Value ID";
-                        TempDimSetEntry.Insert(true);
-                    until Next() = 0;
-                    NewDimSetID := DimensionManagement.GetDimensionSetID(TempDimSetEntry);
-                    DimensionManagement.UpdateGlobalDimFromDimSetID(NewDimSetID, GlobalDimVal1, GlobalDimVal2);
-                end;
+            //with JobTaskDimension do begin
+            JobTaskDimension.SetRange("Job No.", JobNo);
+            JobTaskDimension.SetRange("Job Task No.", JobTaskNo);
+            if JobTaskDimension.FindSet then begin
+                repeat
+                    DimValue.Get(JobTaskDimension."Dimension Code", JobTaskDimension."Dimension Value Code");
+                    TempDimSetEntry."Dimension Code" := JobTaskDimension."Dimension Code";
+                    TempDimSetEntry."Dimension Value Code" := JobTaskDimension."Dimension Value Code";
+                    TempDimSetEntry."Dimension Value ID" := DimValue."Dimension Value ID";
+                    TempDimSetEntry.Insert(true);
+                until JobTaskDimension.Next() = 0;
+                NewDimSetID := DimensionManagement.GetDimensionSetID(TempDimSetEntry);
+                DimensionManagement.UpdateGlobalDimFromDimSetID(NewDimSetID, GlobalDimVal1, GlobalDimVal2);
             end;
+            //end;
             IsHandled := JobSetup.DimensionJobProveedor;
         end;
 

@@ -14,7 +14,7 @@ tableextension 50110 "JobMyb" extends Job //167
                 // if rec."Cód Oferta Job" <> xRec."Cód Oferta Job" then begin
                 LinePlani.SetFilter(LinePlani."Job No.", rec."No.");
                 LinePlani.SetFilter(LinePlani."Cód Oferta Job", '%1', '');
-                if LinePlani.FindSet(true, false) then begin
+                if LinePlani.FindSet() then begin
                     LinePlani.ModifyAll("Cód Oferta Job", rec."Cód Oferta Job");
                 end;
                 //end;
@@ -65,6 +65,22 @@ tableextension 50110 "JobMyb" extends Job //167
                 Hist."Date&Time" := CurrentDateTime;
                 Hist."User ID" := UserId;
                 Hist.Insert();
+            end;
+        }
+        field(50102; "Versión Base"; Integer)
+        {
+            DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                HistJobPlanningLine: Record "Hist. Job Planning Line";
+                Ver: Integer;
+            begin
+                HistJobPlanningLine.SetRange("Job No.", Rec."No.");
+                if HistJobPlanningLine.FindLast() then
+                    Ver := HistJobPlanningLine."Version No.";
+                if rec."Versión Base" = 0 then
+                    rec."Versión Base" := 1;
+                if rec."Versión Base" > Ver then Rec."Versión Base" := Ver;
             end;
         }
     }
