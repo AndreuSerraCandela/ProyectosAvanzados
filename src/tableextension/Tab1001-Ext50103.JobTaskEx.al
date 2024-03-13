@@ -47,12 +47,17 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
         {
             DataClassification = ToBeClassified;
         }
+        field(50102; "Versión Base"; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
         field(50006; "Venta Inicial"; Decimal)
         {
             //DataClassification = ToBeClassified;
             FieldClass = FlowField;
             CalcFormula = sum("Hist. Job Planning Line"."Total Price (LCY)" where("Job No." = field("Job No."),
-                                                                                         "Job Task No." = field("Job Task No."), "Version No." = const(1)));
+                                                                                         "Job Task No." = field("Job Task No."), "Version No." = field("Versión Base")));
             AutoFormatType = 1;
             BlankZero = true;
             Editable = false;
@@ -61,7 +66,8 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
         {
             //  DataClassification = ToBeClassified;
             FieldClass = FlowField;
-            CalcFormula = sum("Hist. Job Planning Line"."Total Cost (LCY)" where("Job No." = field("Job No."), "Job Task No." = field("Job Task No."), "Version No." = const(1)));
+            CalcFormula = sum("Hist. Job Planning Line"."Total Cost (LCY)" where("Job No." = field("Job No."),
+            "Job Task No." = field("Job Task No."), "Version No." = field("Versión Base")));
             AutoFormatType = 1;
             BlankZero = true;
             Editable = false;
