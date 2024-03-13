@@ -22,6 +22,37 @@ page 50115 "Comparativo Ofertas" //50
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Descripcion Proyecto field.';
                 }
+                field("Buy-from Vendor No."; Rec."Buy-from Vendor No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the number of the vendor who delivers the products.';
+                }
+                field("Buy-from Vendor Name"; Rec."Buy-from Vendor Name")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the vendor who delivers the products.';
+                }
+                field("Requested Receipt Date"; Rec."Requested Receipt Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the date that you want the vendor to deliver your order. The field is used to calculate the latest date you can order, as follows: requested receipt date - lead time calculation = order date. If you do not need delivery on a specific date, you can leave the field blank.';
+                }
+                field("Promised Receipt Date"; Rec."Promised Receipt Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the date that the vendor has promised to deliver the order.';
+                }
+                field("Posting Date"; Rec."Posting Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the date when the posting of the purchase document will be recorded.';
+                }
+                field("Document Date"; Rec."Document Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the date when the related document was created.';
+                }
+
                 field(Categoría; Rec.Categorias)
                 {
                     ApplicationArea = All;

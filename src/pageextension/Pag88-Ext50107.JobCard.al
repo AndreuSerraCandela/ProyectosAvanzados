@@ -10,6 +10,7 @@ pageextension 50107 "JobCard" extends "Job Card" //88
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Cód Oferta Job field.';
+                Visible = false;
             }
         }
         addafter("Sell-to Customer Name")

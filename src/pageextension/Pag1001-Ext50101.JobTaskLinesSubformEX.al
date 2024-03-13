@@ -5,7 +5,7 @@ pageextension 50101 "JobTaskLinesSubformEX" extends "Job Task Lines Subform" //1
 {
     layout
     {
-        addfirst(Control1)
+        addafter("Job Task No.")
         {
             field(Dependencia; Rec.Dependencia)
             {
@@ -31,6 +31,18 @@ pageextension 50101 "JobTaskLinesSubformEX" extends "Job Task Lines Subform" //1
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the WIP % field.';
             }
+            field("Venta Inicial"; Rec."Venta Inicial")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Venta Inicial field.';
+                Editable = false;
+            }
+            field("Coste Inicial"; Rec."Coste Inicial")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Coste Inicial field.';
+                Editable = false;
+            }
             field("Pedidos Pendientes"; PedidosPendientes())
             {
                 ApplicationArea = All;
@@ -48,6 +60,7 @@ pageextension 50101 "JobTaskLinesSubformEX" extends "Job Task Lines Subform" //1
             }
 
         }
+
     }
 
     actions

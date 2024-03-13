@@ -24,11 +24,18 @@ pageextension 50105 "PurchaseOrder" extends "Purchase Order" //50
             trigger OnDrillDown()
             var
                 PurchaseQuote: Record "Purchase Header";
+                PurchaQuoteArchiva: Record "Purchase Header Archive";
             begin
-                PurchaseQuote.SetRange("Document Type", PurchaseQuote."Document Type"::Quote);
-                PurchaseQuote.SetRange("No.", Rec."Quote No.");
-                if PurchaseQuote.FindFirst then
-                    Page.RunModal(Page::"Purchase Quotes", PurchaseQuote);
+
+                PurchaQuoteArchiva.SetRange("Document Type", PurchaQuoteArchiva."Document Type"::Quote);
+                PurchaQuoteArchiva.SetRange("No.", Rec."Quote No.");
+                if PurchaQuoteArchiva.Findlast() then
+                    Page.RunModal(Page::"Purchase Quote Archives", PurchaQuoteArchiva);
+
+                // PurchaseQuote.SetRange("Document Type", PurchaseQuote."Document Type"::Quote);
+                // PurchaseQuote.SetRange("No.", Rec."Quote No.");
+                // if PurchaseQuote.FindFirst then
+                //     Page.RunModal(Page::"Purchase Quotes", PurchaseQuote);
             end;
         }
     }

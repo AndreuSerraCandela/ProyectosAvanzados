@@ -3,6 +3,11 @@
   <file datatype="xml" source-language="en-US" target-language="en-US" original="Proyectos_Avanzados">
     <body>
       <group id="body">
+        <trans-unit id="Table 3377152574 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Categorias</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Categorias - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3377152574 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Code</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -12,6 +17,11 @@
           <source>Description</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Categorias - Field Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3928990288 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Hist. Job Planning Line</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 3928990288 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Description</source>
@@ -24,9 +34,14 @@
           <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Direct Unit Cost (LCY) - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 3928990288 - Field 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Job No.</source>
+          <source>No. Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Job No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3928990288 - Field 561421623 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Proyecto No. Tarea</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Job Task No. - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 3928990288 - Field 3320823955 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Line No.</source>
@@ -77,6 +92,11 @@
           <source>Version No.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Version No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3585282139 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Job Status History</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Job Status History - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 3585282139 - Field 2096489369 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Date&amp;Time</source>
@@ -183,10 +203,25 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Categorías - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 674155481 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Comparativo Ofertas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 674155481 - Control 1148871529 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the value of the Aceptada field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Aceptada - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 674155481 - Control 3230600482 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the name of the vendor who delivers the products.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Buy-from Vendor Name - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 674155481 - Control 3792369418 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of the vendor who delivers the products.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Buy-from Vendor No. - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 674155481 - Control 3010097039 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the value of the Categorias field.</source>
@@ -198,10 +233,30 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Descripcion Proyecto - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 674155481 - Control 580412389 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date when the related document was created.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Document Date - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="Page 674155481 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the value of the No. Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control No. Proyecto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 674155481 - Control 3710982960 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date when the posting of the purchase document will be recorded.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Posting Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 674155481 - Control 429198581 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date that the vendor has promised to deliver the order.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Promised Receipt Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 674155481 - Control 1602222300 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date that you want the vendor to deliver your order. The field is used to calculate the latest date you can order, as follows: requested receipt date - lead time calculation = order date. If you do not need delivery on a specific date, you can leave the field blank.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Requested Receipt Date - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 674155481 - Control 4231276579 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the sum of the value in the Line Amount Excl. VAT field on all lines in the document minus any discount amount in the Invoice Discount Amount field.</source>
@@ -233,6 +288,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Total VAT Amount - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 1072554384 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Hist. Job planning line</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Hist. Job planning line - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 1072554384 - Control 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Description</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -247,6 +307,11 @@
           <source>Job No.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Hist. Job planning line - Control Job No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1072554384 - Control 561421623 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No. tarea proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Hist. Job planning line - Control Job Task No. - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1072554384 - Control 3320823955 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Line No.</source>
@@ -297,6 +362,11 @@
           <source>Version No.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Hist. Job planning line - Control Version No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3585282139 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Job Status History</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Status History - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 2421352948 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Job Transfer to Credit Memo Purch</source>
@@ -464,7 +534,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Quote - Control AppendToPurcharseInvoiceNo - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Report 3716762690 - Control 242772616 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Append to Purcharse Quote No.</source>
+          <source>Anexar en Oferta Compra</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Quote - Control AppendToPurcharseInvoiceNo - Property Caption</note>
         </trans-unit>
@@ -474,7 +544,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Quote - Control CreateNewInvoice - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Report 3716762690 - Control 4113648779 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Create New Quote</source>
+          <source>Crear Nueva Oferta</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Quote - Control CreateNewInvoice - Property Caption</note>
         </trans-unit>
@@ -484,7 +554,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Quote - Control InvoicePostingDate - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Report 3716762690 - Control 3397461951 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Quote Posting Date</source>
+          <source>Oferta Fecha Registro</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Quote - Control InvoicePostingDate - Property Caption</note>
         </trans-unit>
@@ -494,7 +564,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Quote - Control PostingDate - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Report 3716762690 - Control 3037438984 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Posting Date</source>
+          <source>Fecha Registro</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Quote - Control PostingDate - Property Caption</note>
         </trans-unit>
@@ -502,6 +572,11 @@
           <source>Specifies the value of the Mostrar en lineas de planif. field.</source>
           <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension GLAccountCardProyectosAvanzado - Control Mostrar en lineas de planif. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Action 5247870 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Asignar Oferta</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Asignar Oferta - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 905736243 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Comparativa de ofertas</source>
@@ -564,8 +639,8 @@
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purcharse &amp;Credit Memo - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 3266581368 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
-          <source>Create Purchase &amp;Credit Memo</source>
-          <note from="Developer" annotates="general" priority="2">ESP="Crear Abono Compra"</note>
+          <source>Crear Abono Compra</source>
+          <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purcharse &amp;Credit Memo - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 1388957642 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
@@ -574,8 +649,8 @@
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Invoice - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 1388957642 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
-          <source>Create &amp;Purchase Invoice</source>
-          <note from="Developer" annotates="general" priority="2">ESP="Crear Factura Compra"</note>
+          <source>Crear Factura Compra</source>
+          <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Invoice - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 1672799731 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
@@ -584,8 +659,8 @@
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Order - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 1672799731 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
-          <source>Create &amp;Purchase Order</source>
-          <note from="Developer" annotates="general" priority="2">ESP="Crear Pedido Compra"</note>
+          <source>Crear Pedido Compra</source>
+          <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Order - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 758892351 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
@@ -594,7 +669,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Quote - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 758892351 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
-          <source>Create &amp;Purchase Quote</source>
+          <source>Crear Oferta Compra</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Create Purchase Quote - Property Caption</note>
         </trans-unit>
@@ -633,6 +708,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Categoría - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 947464476 - Control 3677023465 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
+          <source>Specifies the value of the Coste Inicial field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Coste Inicial - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 947464476 - Control 2455730541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
           <source>Specifies the value of the Fecha fin Tarea field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -647,6 +727,11 @@
           <source>Specifies the value of the WIP Amount field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Pedidos Pendientes - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 947464476 - Control 1410835643 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
+          <source>Specifies the value of the Venta Inicial field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Venta Inicial - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 947464476 - Control 352425749 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
           <source>Specifies the value of the WIP % field.</source>
@@ -748,6 +833,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobSetup - Field No. serie Ofertas en Proyectos - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 3677023465 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Coste Inicial</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Coste Inicial - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 389914202 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>Dependencia</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -772,6 +862,11 @@
           <source>Tipo Tarea</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Status Task - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 1410835643 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Venta Inicial</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Venta Inicial - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 352425749 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>WIP %</source>

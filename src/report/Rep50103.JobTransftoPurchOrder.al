@@ -20,7 +20,8 @@ report 50103 "Job Transf.to Purch. Quote"
                     field(CreateNewInvoice; NewInvoice)
                     {
                         ApplicationArea = Jobs;
-                        Caption = 'Create New Quote';
+                        Caption = 'Crear Nueva Oferta';
+                        //  Caption = 'Create New Quote', comment = 'ESP="Crear Nueva Oferta"';
                         ToolTip = 'Specifies if the batch job creates a new Purcharse Quote.';
 
                         trigger OnValidate()
@@ -36,7 +37,8 @@ report 50103 "Job Transf.to Purch. Quote"
                     field(PostingDate; PostingDate)
                     {
                         ApplicationArea = Jobs;
-                        Caption = 'Posting Date';
+                        Caption = 'Fecha Registro';
+                        //Caption = 'Posting Date', comment = 'ESP="Fecha Registro"';
                         ToolTip = 'Specifies the posting date for the document.';
 
                         trigger OnValidate()
@@ -48,7 +50,8 @@ report 50103 "Job Transf.to Purch. Quote"
                     field(AppendToPurcharseInvoiceNo; InvoiceNo)
                     {
                         ApplicationArea = Jobs;
-                        Caption = 'Append to Purcharse Quote No.';
+                        Caption = 'Anexar en Oferta Compra';
+                        //Caption = 'Append to Purcharse Quote No.', comment = 'ESP="Anexar en Oferta Compra"';
                         ToolTip = 'Specifies the number of the Purcharse Quote that you want to append the lines to if you did not select the Create New Purcharse Quote field.';
 
                         trigger OnLookup(var Text: Text): Boolean
@@ -87,7 +90,8 @@ report 50103 "Job Transf.to Purch. Quote"
                     field(InvoicePostingDate; InvoicePostingDate)
                     {
                         ApplicationArea = Jobs;
-                        Caption = 'Quote Posting Date';
+                        Caption = 'Oferta Fecha Registro';
+                        //Caption = 'Quote Posting Date', comment = 'ESP="Oferta Fecha Registro"';
                         Editable = false;
                         ToolTip = 'Specifies, if you filled in the Append to Purcharse Quote No. field, the posting date of the Quote.';
 

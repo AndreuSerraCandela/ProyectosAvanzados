@@ -78,6 +78,8 @@ tableextension 50100 "LineasPlanificacion" extends "Job Planning Line"//1003
         field(90003; "Importe Inicial Venta"; Decimal)
         {
             DataClassification = ToBeClassified;
+
+
         }
         field(90004; "Importe Inicial Coste"; Decimal)
         {

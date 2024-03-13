@@ -52,6 +52,12 @@ page 50112 "Hist. Job planning line"
                     Caption = 'Job No.';
 
                 }
+                field("Job Task No."; rec."Job Task No.")
+                {
+                    Editable = false;
+                    //Caption = 'Job Task No.';
+                    Caption = 'No. tarea proyecto';
+                }
                 field(Quantity; Rec.Quantity)
                 {
                     Editable = false;

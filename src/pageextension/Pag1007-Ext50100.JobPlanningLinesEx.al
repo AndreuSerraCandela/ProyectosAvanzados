@@ -85,8 +85,8 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 action("Create Purchase Invoice")
                 {
                     ApplicationArea = Jobs;
-                    // Caption = 'Create &Purchase Invoice';
-                    Caption = 'Create &Purchase Invoice', comment = 'ESP="Crear Factura Compra"';
+                    Caption = 'Crear Factura Compra';
+                    // Caption = 'Create &Purchase Invoice', comment = 'ESP="Crear Factura Compra"';
                     Ellipsis = true;
                     Image = JobPurchaseInvoice;
                     Promoted = true;
@@ -102,8 +102,8 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 action("Create Purchase Order")
                 {
                     ApplicationArea = Jobs;
-                    //  Caption = 'Create &Purchase Order';
-                    Caption = 'Create &Purchase Order', comment = 'ESP="Crear Pedido Compra"';
+                    Caption = 'Crear Pedido Compra';
+                    // Caption = 'Create &Purchase Order', comment = 'ESP="Crear Pedido Compra"';
                     Ellipsis = true;
                     Image = JobPurchaseInvoice;
                     Promoted = true;
@@ -120,8 +120,8 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 action("Create Purcharse &Credit Memo")
                 {
                     ApplicationArea = Jobs;
-                    //Caption = 'Create Purchase &Credit Memo';
-                    Caption = 'Create Purchase &Credit Memo', comment = 'ESP="Crear Abono Compra"';
+                    Caption = 'Crear Abono Compra';
+                    // Caption = 'Create Purchase &Credit Memo', comment = 'ESP="Crear Abono Compra"';
                     Ellipsis = true;
                     Image = CreditMemo;
                     Promoted = true;
@@ -136,7 +136,8 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 action("Create Purchase Quote")
                 {
                     ApplicationArea = Jobs;
-                    Caption = 'Create &Purchase Quote';
+                    Caption = 'Crear Oferta Compra';
+                    // Caption = 'Create &Purchase Quote', comment = 'ESP="Crear Oferta Compra"';
                     Ellipsis = true;
                     Image = Quote;
                     Promoted = true;
@@ -184,12 +185,15 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                     begin
 
                         JobPlanningLine.SetRange("Job No.", Rec."Job No.");
+
+
                         HistJobPlanningLine.SetRange("Job No.", Rec."Job No.");
                         if HistJobPlanningLine.FindLast() then
                             Ver := HistJobPlanningLine."Version No." + 1
                         else
                             Ver := 1;
                         if Ver = 1 then begin
+                            if JobPlanningLine.FindFirst() then;
                             JobPlanningLine."Importe Inicial Venta" := JobPlanningLine."Total Price";
                             JobPlanningLine."Importe Inicial Coste" := JobPlanningLine."Total Cost";
                             JobPlanningLine.Modify();
@@ -197,8 +201,9 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                         if JobPlanningLine.FindSet() then
                             repeat
                                 HistJobPlanningLine.TransferFields(JobPlanningLine);
+                                HistJobPlanningLine."Version Date" := Today();
                                 HistJobPlanningLine."Version No." := Ver;
-                                HistJobPlanningLine.INSERT;
+                                if not HistJobPlanningLine.INSERT() then;
                             until JobPlanningLine.NEXT = 0;
                     end;
 

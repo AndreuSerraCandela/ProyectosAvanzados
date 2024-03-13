@@ -49,9 +49,17 @@ table 50101 "Hist. Job Planning Line"
         field(2; "Job No."; Code[20])
         {
             Editable = false;
-            Caption = 'Job No.';
+            //Caption = 'Job No.';
+            Caption = 'No. Proyecto';
             NotBlank = true;
             TableRelation = Job;
+        }
+        field(1000; "Job Task No."; Code[20])
+        {
+            // Caption = 'Job Task No.';
+            Caption = 'Proyecto No. Tarea';
+            NotBlank = true;
+            TableRelation = "Job Task"."Job Task No." where("Job No." = field("Job No."));
         }
         field(9; Quantity; Decimal)
         {
