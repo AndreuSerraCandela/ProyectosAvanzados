@@ -20,6 +20,11 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Project Status field.', Comment = 'ESP="Estado Proyecto"';
             }
+            field("Versión Base"; Rec."Versión Base")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Versión Base field.', Comment = 'ESP="Versión Base"';
+            }
         }
     }
 
@@ -36,6 +41,69 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                     rec.AddOfertaaProyecto();
                 end;
             }
+            action("Calcular nueva estimación")
+            {
+                Image = Calculate;
+                ApplicationArea = All;
+                Caption = 'Calcular nueva estimación';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                ToolTip = 'Calcula la nueva estimación de costes y horas para la línea de planificación de trabajo seleccionada.';
+                trigger OnAction()
+                var
+                    JobPlanningLine: Record "Job Planning Line";
+                    HistJobPlanningLine: Record "Hist. Job Planning Line";
+                    Job: Record Job;
+                    Ver: Integer;
+                begin
+                    Job.Get(Rec."No.");
+                    If Job."Versión Base" = 0 Then Job."Versión Base" := 1;
+                    JobPlanningLine.SetRange("Job No.", Rec."No.");
+                    HistJobPlanningLine.SetRange("Job No.", Rec."No.");
+                    if HistJobPlanningLine.FindLast() then
+                        Ver := HistJobPlanningLine."Version No." + 1
+                    else
+                        Ver := 1;
+                    if JobPlanningLine.FindSet() then
+                        repeat
+                            HistJobPlanningLine.TransferFields(JobPlanningLine);
+                            HistJobPlanningLine."Version No." := Ver;
+                            HistJobPlanningLine.INSERT;
+                        until JobPlanningLine.NEXT = 0;
+
+                    if JobPlanningLine.FindSet() then
+                        repeat
+                            HistJobPlanningLine.SetRange("Version No.", job."Versión Base");
+                            HistJobPlanningLine.SETRANGE("Line No.", JobPlanningLine."Line No.");
+                            HistJobPlanningLine.FindFirst();
+                            JobPlanningLine."Importe Inicial Venta" := HistJobPlanningLine."Total Price";
+                            JobPlanningLine."Importe Inicial Coste" := HistJobPlanningLine."Total Cost";
+                            JobPlanningLine.Modify();
+                        until JobPlanningLine.NEXT = 0;
+
+                end;
+
+
+            }
+            action("Ver Estimaciones")
+            {
+                Image = History;
+                ApplicationArea = All;
+                Caption = 'Ver Estimaciones';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                ToolTip = 'Muestra las estimaciones de costes y horas para la línea de planificación de trabajo seleccionada.';
+                trigger OnAction()
+                var
+                    HistJobPlanningLine: Record "Hist. Job Planning Line";
+                begin
+                    HistJobPlanningLine.SETRANGE("Job No.", Rec."No.");
+                    Page.RunModal(0, HistJobPlanningLine);
+                end;
+            }
+
 
         }
         addlast("&Job")

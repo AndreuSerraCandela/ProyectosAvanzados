@@ -67,6 +67,22 @@ tableextension 50110 "JobMyb" extends Job //167
                 Hist.Insert();
             end;
         }
+        field(50102; "Versión Base"; Integer)
+        {
+            DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                HistJobPlanningLine: Record "Hist. Job Planning Line";
+                Ver: Integer;
+            begin
+                HistJobPlanningLine.SetRange("Job No.", Rec."No.");
+                if HistJobPlanningLine.FindLast() then
+                    Ver := HistJobPlanningLine."Version No.";
+                if rec."Versión Base" = 0 then
+                    rec."Versión Base" := 1;
+                if rec."Versión Base" > Ver then Rec."Versión Base" := Ver;
+            end;
+        }
     }
     procedure AddOfertaaProyecto()
     var

@@ -21,6 +21,11 @@ pageextension 50101 "JobTaskLinesSubformEX" extends "Job Task Lines Subform" //1
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Fecha inicio Tarea field.';
             }
+            field("Dias Tarea"; Rec."Dias Tarea")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Dias Tarea field.';
+            }
             field("Fecha fin Tarea"; Rec."Fecha fin Tarea")
             {
                 ApplicationArea = All;

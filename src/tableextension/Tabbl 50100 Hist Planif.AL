@@ -99,6 +99,28 @@ table 50101 "Hist. Job Planning Line"
             Caption = 'Total Price (LCY)';
             Editable = false;
         }
+        field(1003; "Total Cost"; Decimal)
+        {
+            AutoFormatExpression = Rec."Currency Code";
+            AutoFormatType = 1;
+            Caption = 'Total Cost';
+            Editable = false;
+        }
+        field(1023; "Currency Code"; Code[10])
+        {
+            Caption = 'Currency Code';
+            Editable = false;
+            TableRelation = Currency;
+
+
+        }
+        field(1005; "Total Price"; Decimal)
+        {
+            AutoFormatExpression = Rec."Currency Code";
+            AutoFormatType = 1;
+            Caption = 'Total Price';
+            Editable = false;
+        }
     }
     keys
     {
