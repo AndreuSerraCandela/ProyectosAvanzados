@@ -21,7 +21,7 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Project Status field.', Comment = 'ESP="Estado Proyecto"';
             }
-            field("Versión Base"; Rec."Versión Base")
+            field("Versión Base"; rec."Versión Base")
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Versión Base field.', Comment = 'ESP="Versión Base"';
@@ -78,8 +78,10 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                             HistJobPlanningLine.SetRange("Version No.", job."Versión Base");
                             HistJobPlanningLine.SETRANGE("Line No.", JobPlanningLine."Line No.");
                             HistJobPlanningLine.FindFirst();
-                            JobPlanningLine."Importe Inicial Venta" := HistJobPlanningLine."Total Price";
-                            JobPlanningLine."Importe Inicial Coste" := HistJobPlanningLine."Total Cost";
+                            // JobPlanningLine."Importe Inicial Venta" := HistJobPlanningLine."Total Price";
+                            // JobPlanningLine."Importe Inicial Coste" := HistJobPlanningLine."Total Cost";
+                            JobPlanningLine."Importe Inicial Venta" := HistJobPlanningLine."Total Price (LCY)";
+                            JobPlanningLine."Importe Inicial Coste" := HistJobPlanningLine."Total Cost (LCY)";
                             JobPlanningLine.Modify();
                         until JobPlanningLine.NEXT = 0;
 

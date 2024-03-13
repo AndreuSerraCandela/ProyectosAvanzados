@@ -47,7 +47,6 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
         {
             DataClassification = ToBeClassified;
         }
-<<<<<<< HEAD
         field(50006; "Venta Inicial"; Decimal)
         {
             //DataClassification = ToBeClassified;
@@ -66,8 +65,8 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
             AutoFormatType = 1;
             BlankZero = true;
             Editable = false;
-=======
-        field(50006; "Dias Tarea"; Integer)
+        }
+        field(50008; "Dias Tarea"; Integer)
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()
@@ -76,7 +75,6 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
                     CalculaFechas(1, false, "Fecha inicio Tarea", "Fecha fin Tarea", "Dias Tarea");
                 Modify();
             end;
->>>>>>> fad56f5486045c65ac7705566491ad8025edfc33
         }
 
     }

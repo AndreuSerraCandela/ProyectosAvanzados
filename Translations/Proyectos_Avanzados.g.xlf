@@ -23,6 +23,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3928990288 - Field 4198939294 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Currency Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Currency Code - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3928990288 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Description</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -58,10 +63,20 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Quantity - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3928990288 - Field 3996842083 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Total Cost</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Total Cost - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3928990288 - Field 4172042866 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Total Cost (LCY)</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Total Cost (LCY) - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3928990288 - Field 2812148497 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Total Price</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Total Price - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 3928990288 - Field 3243911172 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Total Price (LCY)</source>
@@ -578,6 +593,26 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Asignar Oferta - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Action 4242026930 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Calcula la nueva estimación de costes y horas para la línea de planificación de trabajo seleccionada.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Calcular nueva estimación - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Action 4242026930 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Calcular nueva estimación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Calcular nueva estimación - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Action 1607032973 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Muestra las estimaciones de costes y horas para la línea de planificación de trabajo seleccionada.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Ver Estimaciones - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Action 1607032973 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Ver Estimaciones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Ver Estimaciones - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 905736243 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Comparativa de ofertas</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -617,6 +652,11 @@
           <source>Specifies the value of the Project Status field.</source>
           <note from="Developer" annotates="general" priority="2">ESP="Estado Proyecto"</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control Project Status - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Control 1702163037 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Specifies the value of the Versión Base field.</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Versión Base"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control Versión Base - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 4049885189 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
           <source>Funciones Compra</source>
@@ -712,6 +752,11 @@
           <source>Specifies the value of the Coste Inicial field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Coste Inicial - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 947464476 - Control 2793488656 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
+          <source>Specifies the value of the Dias Tarea field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Dias Tarea - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 947464476 - Control 2455730541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
           <source>Specifies the value of the Fecha fin Tarea field.</source>
@@ -818,6 +863,11 @@
           <note from="Developer" annotates="general" priority="2">ESP="Estado Proyecto"</note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobMyb - Field Project Status - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2512212003 - Field 1702163037 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2818324089">
+          <source>Versión Base</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobMyb - Field Versión Base - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 1627283316 - Field 2436487638 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2556642749">
           <source>Cód. Proyecto Obligatorios en Documentos Pedido/Factura</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -842,6 +892,11 @@
           <source>Dependencia</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Dependencia - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 2793488656 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Dias Tarea</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Dias Tarea - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 2455730541 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>Fecha fin Tarea</source>

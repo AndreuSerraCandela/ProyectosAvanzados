@@ -194,15 +194,12 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                             Ver := HistJobPlanningLine."Version No." + 1
                         else
                             Ver := 1;
-<<<<<<< HEAD
                         if Ver = 1 then begin
                             if JobPlanningLine.FindFirst() then;
                             JobPlanningLine."Importe Inicial Venta" := JobPlanningLine."Total Price";
                             JobPlanningLine."Importe Inicial Coste" := JobPlanningLine."Total Cost";
                             JobPlanningLine.Modify();
                         end;
-=======
->>>>>>> fad56f5486045c65ac7705566491ad8025edfc33
                         if JobPlanningLine.FindSet() then
                             repeat
                                 HistJobPlanningLine.TransferFields(JobPlanningLine);
@@ -216,8 +213,10 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                                 HistJobPlanningLine.SetRange("Version No.", job."Versión Base");
                                 HistJobPlanningLine.SETRANGE("Line No.", JobPlanningLine."Line No.");
                                 HistJobPlanningLine.FindFirst();
-                                JobPlanningLine."Importe Inicial Venta" := HistJobPlanningLine."Total Price";
-                                JobPlanningLine."Importe Inicial Coste" := HistJobPlanningLine."Total Cost";
+                                // JobPlanningLine."Importe Inicial Venta" := HistJobPlanningLine."Total Price";
+                                // JobPlanningLine."Importe Inicial Coste" := HistJobPlanningLine."Total Cost";
+                                JobPlanningLine."Importe Inicial Venta" := HistJobPlanningLine."Total Price (LCY)";
+                                JobPlanningLine."Importe Inicial Coste" := HistJobPlanningLine."Total Cost (LCY)";
                                 JobPlanningLine.Modify();
                             until JobPlanningLine.NEXT = 0;
 
