@@ -14,7 +14,7 @@ tableextension 50110 "JobMyb" extends Job //167
                 // if rec."Cód Oferta Job" <> xRec."Cód Oferta Job" then begin
                 LinePlani.SetFilter(LinePlani."Job No.", rec."No.");
                 LinePlani.SetFilter(LinePlani."Cód Oferta Job", '%1', '');
-                if LinePlani.FindSet(true, false) then begin
+                if LinePlani.FindSet() then begin
                     LinePlani.ModifyAll("Cód Oferta Job", rec."Cód Oferta Job");
                 end;
                 //end;
