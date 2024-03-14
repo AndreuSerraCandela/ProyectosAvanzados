@@ -212,7 +212,11 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                             repeat
                                 HistJobPlanningLine.SetRange("Version No.", job."Versión Base");
                                 HistJobPlanningLine.SETRANGE("Line No.", JobPlanningLine."Line No.");
-                                HistJobPlanningLine.FindFirst();
+                                if Not HistJobPlanningLine.FindFirst() Then begin
+                                    HistJobPlanningLine.TransferFields(JobPlanningLine);
+                                    HistJobPlanningLine."Version No." := job."Versión Base";
+                                    HistJobPlanningLine.INSERT;
+                                end;
                                 // JobPlanningLine."Importe Inicial Venta" := HistJobPlanningLine."Total Price";
                                 // JobPlanningLine."Importe Inicial Coste" := HistJobPlanningLine."Total Cost";
                                 JobPlanningLine."Importe Inicial Venta" := HistJobPlanningLine."Total Price (LCY)";
