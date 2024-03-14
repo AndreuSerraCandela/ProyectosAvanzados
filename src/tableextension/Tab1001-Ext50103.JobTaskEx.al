@@ -98,17 +98,21 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
                 FechaFin := FechaInicio + Dias
             else
                 Dias := FechaFin - FechaInicio;
-            JobTaskNiv.SetRange("Job No.", Rec."Job No.");
-            JobTaskNiv.SetRange(Dependencia, Rec."Job Task No.");
-            if JobTaskNiv.FindSet() then begin
-                JobTaskNiv.CalculaFechas(Nivel + 1, ActualizarDependencias, FechaInicio, FechaFin, Dias);
-                JobTaskNiv.Modify();
+            if ActualizarDependencias then begin
+                JobTaskNiv.SetRange("Job No.", Rec."Job No.");
+                JobTaskNiv.SetRange(Dependencia, Rec."Job Task No.");
+                if JobTaskNiv.FindSet() then begin
+                    JobTaskNiv."Fecha inicio Tarea" := FechaFin + Dias;
+                    JobTaskNiv.CalculaFechas(Nivel + 1, ActualizarDependencias, JobTaskNiv."Fecha inicio Tarea", JobTaskNiv."Fecha fin Tarea", JobTaskNiv."Dias Tarea");
+                    JobTaskNiv.Modify();
+                end;
             end;
         end else begin
             JobTaskNiv.SetRange("Job No.", Rec."Job No.");
             JobTaskNiv.SetRange(Dependencia, Rec."Job Task No.");
             if JobTaskNiv.FindSet() then begin
-                JobTaskNiv.CalculaFechas(Nivel + 1, ActualizarDependencias, FechaInicio, FechaFin, Dias);
+                JobTaskNiv."Fecha inicio Tarea" := FechaFin + Dias;
+                JobTaskNiv.CalculaFechas(Nivel + 1, ActualizarDependencias, JobTaskNiv."Fecha inicio Tarea", JobTaskNiv."Fecha fin Tarea", JobTaskNiv."Dias Tarea");
                 JobTaskNiv.Modify();
             end;
         end;
