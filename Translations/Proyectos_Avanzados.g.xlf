@@ -608,10 +608,10 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Crear Almacen de Proyecto - Property Caption</note>
         </trans-unit>
-        <trans-unit id="PageExtension 1863770389 - Action 83442455 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
-          <source>Historico Estados</source>
+        <trans-unit id="PageExtension 1863770389 - Action 1864968723 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Movimiento de Almacen de proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Historico Estados - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Movimiento de Almacen de proyecto - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 1607032973 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Muestra las estimaciones de costes y horas para la línea de planificación de trabajo seleccionada.</source>
@@ -622,6 +622,11 @@
           <source>Ver Estimaciones</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Ver Estimaciones - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Action 83442455 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Historico Estados</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Historico Estados - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 905736243 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Comparativa de ofertas</source>

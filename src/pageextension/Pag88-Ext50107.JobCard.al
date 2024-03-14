@@ -119,21 +119,7 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 end;
             }
 
-            action("Historico Estados")
-            {
-                ApplicationArea = All;
-                Image = Status;
-                Caption = 'Historico Estados';
 
-                trigger OnAction()
-                var
-                    HistorioStatus: Record "Job Status History";
-                begin
-                    HistorioStatus.SetRange("Job No.", Rec."No.");
-                    Page.RunModal(50113, HistorioStatus);
-
-                end;
-            }
             action("Crear Almacen de Proyecto")
             {
                 Caption = 'Crear Almacen de Proyecto';
@@ -149,8 +135,34 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                     CodProyecto.CreateJobLocation(Rec);
                 end;
             }
+            action("Movimiento de Almacen de proyecto")
+            {
+                ApplicationArea = All;
 
+                trigger OnAction()
+                begin
 
+                end;
+            }
+
+        }
+        addlast(History)
+        {
+            action("Historico Estados")
+            {
+                ApplicationArea = All;
+                Image = Status;
+                Caption = 'Historico Estados';
+
+                trigger OnAction()
+                var
+                    HistorioStatus: Record "Job Status History";
+                begin
+                    HistorioStatus.SetRange("Job No.", Rec."No.");
+                    Page.RunModal(50113, HistorioStatus);
+
+                end;
+            }
         }
         addlast("&Job")
 
