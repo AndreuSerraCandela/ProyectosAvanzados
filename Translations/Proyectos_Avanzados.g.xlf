@@ -379,7 +379,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page Hist. Job planning line - Control Version No. - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3585282139 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Job Status History</source>
+          <source>Histórico de cambios de estado de proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Status History - Property Caption</note>
         </trans-unit>
@@ -922,6 +922,11 @@
           <source>Venta Inicial</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Venta Inicial - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 1702163037 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Versión Base</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Versión Base - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 352425749 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>WIP %</source>
