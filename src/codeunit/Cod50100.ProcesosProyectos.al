@@ -1166,6 +1166,25 @@ codeunit 50100 "ProcesosProyectos"
 
     end;
 
+    procedure CreateJobLocation(pJob: Record Job)
+    var
+        Location: Record Location;
+        FinLocation: Record Location;
+        RJob: Record Job;
+    begin
+        // FinLocation.SetRange(Code, pJob."No.");
+        pJob.TestField(pJob."Nomemglatura Proyecto");
+        FinLocation.SetRange(Code, pJob."Nomemglatura Proyecto");
+        if not FinLocation.FindFirst() then begin
+            Location.Reset();
+            Location.Validate(Code, pJob."Nomemglatura Proyecto");
+            Location.Name := pJob.Description;
+            Location.Insert();
+
+        end;
+
+    end;
+
 
     /// <summary>
     /// GetJobPlanningLineInvoices.

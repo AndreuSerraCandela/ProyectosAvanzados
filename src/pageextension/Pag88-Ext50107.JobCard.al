@@ -12,6 +12,13 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 ToolTip = 'Specifies the value of the Cód Oferta Job field.';
                 Visible = false;
             }
+            field("Nomemglatura Proyecto"; Rec."Nomemglatura Proyecto")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Nomenglatura Proyecto almacen field.';
+            }
+
+
         }
         addafter("Sell-to Customer Name")
         {
@@ -108,6 +115,37 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 begin
                     HistJobPlanningLine.SETRANGE("Job No.", Rec."No.");
                     Page.RunModal(0, HistJobPlanningLine);
+                end;
+            }
+
+            action("Historico Estados")
+            {
+                ApplicationArea = All;
+                Image = Status;
+                Caption = 'Historico Estados';
+
+                trigger OnAction()
+                var
+                    HistorioStatus: Record "Job Status History";
+                begin
+                    HistorioStatus.SetRange("Job No.", Rec."No.");
+                    Page.RunModal(50113, HistorioStatus);
+
+                end;
+            }
+            action("Crear Almacen de Proyecto")
+            {
+                Caption = 'Crear Almacen de Proyecto';
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+
+                trigger OnAction()
+                var
+                    CodProyecto: Codeunit ProcesosProyectos;
+                begin
+                    CodProyecto.CreateJobLocation(Rec);
                 end;
             }
 
