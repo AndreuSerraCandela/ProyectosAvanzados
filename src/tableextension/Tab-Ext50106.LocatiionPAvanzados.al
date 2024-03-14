@@ -6,6 +6,7 @@ tableextension 50106 LocatiionPAvanzados extends Location
         {
             Caption = 'No.Proyecto';
             DataClassification = ToBeClassified;
+
         }
     }
 }

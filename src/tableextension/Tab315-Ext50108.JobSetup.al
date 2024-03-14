@@ -25,6 +25,12 @@ tableextension 50108 "JobSetup" extends "Jobs Setup" //315
             //'Especifica el código de la serie numérica que se va a utilizar para asignar números de ofertas a los proyectos.';
             Caption = 'No. Serie Ofertas en Proyectos';
         }
+        field(50103; "No.Serie Almacen de Proyecto"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "No. Series";
+            Caption = 'No. Serie Almacen en Pryectos';
+        }
     }
 
     var

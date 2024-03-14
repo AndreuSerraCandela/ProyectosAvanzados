@@ -653,15 +653,15 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Return Job - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Control 4228486331 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Specifies the value of the Nomenglatura Proyecto almacen field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control Cod Almacen de Proyecto - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Control 1621130396 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Specifies the value of the Cód Oferta Job field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control Cód Oferta Job - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 1863770389 - Control 4084271087 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
-          <source>Specifies the value of the Nomenglatura Proyecto almacen field.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control Nomemglatura Proyecto - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Control 648142515 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Specifies the value of the Project Status field.</source>
@@ -858,6 +858,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control No. serie Ofertas en Proyectos - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3078122788 - Control 1845197146 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2556642749">
+          <source>Specifies the value of the No. Serie Almacen en Pryectos field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control No.Serie Almacen de Proyecto - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="TableExtension 3460046866 - Field 3982937649 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
           <source>Invoice Legal Text</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -868,15 +873,15 @@
           <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension GLAccountProyectosAvanzados - Field Mostrar en lineas de planif. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2512212003 - Field 4228486331 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2818324089">
+          <source>Cod.Almacen Proyecto almacen</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobMyb - Field Cod Almacen de Proyecto - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2512212003 - Field 1621130396 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2818324089">
           <source>Cód Oferta Job</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobMyb - Field Cód Oferta Job - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="TableExtension 2512212003 - Field 4084271087 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2818324089">
-          <source>Nomenglatura Proyecto almacen</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobMyb - Field Nomemglatura Proyecto - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2512212003 - Field 648142515 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2818324089">
           <source>Project Status</source>
@@ -902,6 +907,11 @@
           <source>No. Serie Ofertas en Proyectos</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobSetup - Field No. serie Ofertas en Proyectos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1627283316 - Field 1845197146 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2556642749">
+          <source>No. Serie Almacen en Pryectos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobSetup - Field No.Serie Almacen de Proyecto - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 3677023465 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>Coste Inicial</source>

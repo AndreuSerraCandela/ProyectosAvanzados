@@ -12,10 +12,11 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 ToolTip = 'Specifies the value of the Cód Oferta Job field.';
                 Visible = false;
             }
-            field("Nomemglatura Proyecto"; Rec."Nomemglatura Proyecto")
+            field("Cod Almacen de Proyecto"; Rec."Cod Almacen de Proyecto")
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Nomenglatura Proyecto almacen field.';
+                Editable = false;
             }
 
 
