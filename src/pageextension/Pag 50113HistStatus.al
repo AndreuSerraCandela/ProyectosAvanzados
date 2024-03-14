@@ -1,6 +1,6 @@
 page 50113 "Job Status History"
 {
-    Caption = 'Histórico ce cambios de estado de proyecto';
+    Caption = 'Histórico de cambios de estado de proyecto';
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
