@@ -17,6 +17,7 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Nomenglatura Proyecto almacen field.';
                 Editable = false;
+                DrillDown = true;
             }
 
 
