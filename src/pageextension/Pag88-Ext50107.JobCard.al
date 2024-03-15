@@ -140,7 +140,12 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 ApplicationArea = All;
 
                 trigger OnAction()
+                var
+                    // Pag92JobLEntries: Page "Job Ledger Entries";
+                    MovProyecto: record "Job Ledger Entry";
                 begin
+                    MovProyecto.SetRange("Location Code", rec."Cod Almacen de Proyecto");
+                    page.RunModal(92, MovProyecto);
 
                 end;
             }
