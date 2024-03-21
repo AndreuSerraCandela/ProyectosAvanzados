@@ -12,6 +12,15 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 ToolTip = 'Specifies the value of the Cód Oferta Job field.';
                 Visible = false;
             }
+            field("Cod Almacen de Proyecto"; Rec."Cod Almacen de Proyecto")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Nomenglatura Proyecto almacen field.';
+                Editable = false;
+                DrillDown = true;
+            }
+
+
         }
         addafter("Sell-to Customer Name")
         {
@@ -112,6 +121,54 @@ pageextension 50107 "JobCard" extends "Job Card" //88
             }
 
 
+            action("Crear Almacen de Proyecto")
+            {
+                Caption = 'Crear Almacen de Proyecto';
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+
+                trigger OnAction()
+                var
+                    CodProyecto: Codeunit ProcesosProyectos;
+                begin
+                    CodProyecto.CreateJobLocation(Rec);
+                end;
+            }
+            action("Movimiento de Almacen de proyecto")
+            {
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    // Pag92JobLEntries: Page "Job Ledger Entries";
+                    MovProyecto: record "Job Ledger Entry";
+                begin
+                    MovProyecto.SetRange("Location Code", rec."Cod Almacen de Proyecto");
+                    page.RunModal(92, MovProyecto);
+
+                end;
+            }
+
+        }
+        addlast(History)
+        {
+            action("Historico Estados")
+            {
+                ApplicationArea = All;
+                Image = Status;
+                Caption = 'Historico Estados';
+
+                trigger OnAction()
+                var
+                    HistorioStatus: Record "Job Status History";
+                begin
+                    HistorioStatus.SetRange("Job No.", Rec."No.");
+                    Page.RunModal(50113, HistorioStatus);
+
+                end;
+            }
         }
         addlast("&Job")
 

@@ -67,10 +67,12 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
             field("Importe Inicial Coste"; Rec."Importe Inicial Coste")
             {
                 ApplicationArea = All;
+                Visible = false;
             }
             field("Importe Inicial Venta"; Rec."Importe Inicial Venta")
             {
                 ApplicationArea = All;
+                Visible = false;
             }
         }
     }

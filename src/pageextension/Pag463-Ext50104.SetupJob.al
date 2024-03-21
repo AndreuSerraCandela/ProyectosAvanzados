@@ -27,6 +27,11 @@ pageextension 50104 "SetupJob" extends "Jobs Setup" //463
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the specifica el código de la serie numérica que se va a utilizar para asignar números de ofertas a los proyectos. field.';
             }
+            field("No.Serie Almacen de Proyecto"; Rec."No.Serie Almacen de Proyecto")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the No. Serie Almacen en Pryectos field.';
+            }
         }
     }
 }

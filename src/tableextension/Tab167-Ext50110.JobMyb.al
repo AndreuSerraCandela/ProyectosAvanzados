@@ -86,6 +86,11 @@ tableextension 50110 "JobMyb" extends Job //167
                 JobTask.ModifyAll("Versión Base", rec."Versión Base");
             end;
         }
+        field(50103; "Cod Almacen de Proyecto"; code[10])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Cod.Almacen Proyecto almacen';
+        }
     }
     procedure AddOfertaaProyecto()
     var

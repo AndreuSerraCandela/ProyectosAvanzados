@@ -1166,6 +1166,46 @@ codeunit 50100 "ProcesosProyectos"
 
     end;
 
+    procedure CreateJobLocation(pJob: Record Job)
+    var
+        Location: Record Location;
+        FinLocation: Record Location;
+        RJob: Record Job;
+        JobsSetup: Record "Jobs Setup";
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+    begin
+        JobsSetup.Get();
+        JobsSetup.TestField("No.Serie Almacen de Proyecto");
+        if pJob."Cod Almacen de Proyecto" = '' then
+            NoSeriesMgt.InitSeries(JobsSetup."No.Serie Almacen de Proyecto", '', 0D, pjob."Cod Almacen de Proyecto", JobsSetup."No.Serie Almacen de Proyecto");
+        pJob.Modify();
+
+        FinLocation.SetRange(Code, pJob."Cod Almacen de Proyecto");
+        if not FinLocation.FindFirst() then begin
+            Location.Reset();
+            Location.Validate(Code, pJob."Cod Almacen de Proyecto");
+            Location.Validate("No proyecto", pJob."No.");
+            Location.Name := pJob.Description;
+            Location.Insert();
+
+        end;
+
+    end;
+
+    // FinLocation.SetRange(Code, pJob."No.");
+    // pJob.TestField(pJob."Nomemglatura Proyecto");
+    // FinLocation.SetRange(Code, pJob."Nomemglatura Proyecto");
+    // if not FinLocation.FindFirst() then begin
+    //     Location.Reset();
+    //     Location.Validate(Code, pJob."Nomemglatura Proyecto");
+    //     Location.Validate("No proyecto", pJob."No.");
+    //     Location.Name := pJob.Description;
+    //     Location.Insert();
+
+    // end;
+
+
+
 
     /// <summary>
     /// GetJobPlanningLineInvoices.
