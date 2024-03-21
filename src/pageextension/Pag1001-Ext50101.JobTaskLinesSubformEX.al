@@ -12,6 +12,16 @@ pageextension 50101 "JobTaskLinesSubformEX" extends "Job Task Lines Subform" //1
                 ApplicationArea = all;
 
             }
+            field("Tipo Dependencia fecha"; "Tipo Dependencia fecha")
+            {
+                ApplicationArea = all;
+
+            }
+            field(Retardo; Retardo)
+            {
+                ApplicationArea = all;
+
+            }
             field("Status Task"; Rec."Status Task")
             {
                 ApplicationArea = all;
