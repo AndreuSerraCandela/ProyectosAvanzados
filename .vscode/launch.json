@@ -14,8 +14,8 @@
             //"environmentName": "DesarrolloPargroupSanboxDic23",
             // "tenant": "ad3eed48-97cd-48ba-a291-b5dd63b6c37a", //entiba
             // "environmentName": "Desarrollo_Entiba",
-            "tenant": "fe659371-d016-40ff-a31c-a52888650f25",
-            "environmentName": "DesarrolloTech4Plus2",
+            //"tenant": "fe659371-d016-40ff-a31c-a52888650f25",
+            //"environmentName": "DesarrolloTech4Plus2",
 
 
             "startupObjectId": 22,
