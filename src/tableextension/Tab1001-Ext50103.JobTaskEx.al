@@ -146,8 +146,9 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
                 If ("Fecha inicio Tarea" <> 0D) and (("Fecha fin Tarea" <> 0D) or ("Dias Tarea" <> 0)) then
                     if "Fecha inicio Tarea" = 0D then "Fecha inicio Tarea" := "Fecha fin Tarea";
                 "Fecha fin Tarea" := "Fecha inicio Tarea" + "Dias Tarea";
-                CalculaFechas();
                 Modify();
+                CalculaFechas();
+                ;
             end;
         }
 
@@ -159,7 +160,8 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
         JobTaskNiv: Record "Job Task";
 
     begin
-
+        Modify();
+        Commit;
         JobTaskNiv.SetRange("Job No.", Rec."Job No.");
         JobTaskNiv.SetRange(Dependencia, Rec."Job Task No.");
         if JobTaskNiv.FindSet() then
