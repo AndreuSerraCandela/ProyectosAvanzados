@@ -55,7 +55,7 @@ codeunit 50100 "ProcesosProyectos"
                 JobTaskDependiente.SetRange("Job No.", JobTask."Job No.");
                 JobTaskDependiente.SetRange(JobTaskDependiente."Job Task No.", JobTask.Dependencia);
                 if JobTaskDependiente.FindFirst() then begin
-                    if not (JobTaskDependiente."Status Task" = JobTaskDependiente."Status Task"::Completado) then
+                    if not (JobTaskDependiente."Status Task" = JobTaskDependiente."Status Task"::Completada) then
                         Error('Esta tarea tiene dependencias que no estan completadas');
                 end
             end;
@@ -124,7 +124,7 @@ codeunit 50100 "ProcesosProyectos"
                 JobTaskDependiente.SetRange("Job No.", JobTask."Job No.");
                 JobTaskDependiente.SetRange(JobTaskDependiente."Job Task No.", JobTask.Dependencia);
                 if JobTaskDependiente.FindFirst() then begin
-                    if not (JobTaskDependiente."Status Task" = JobTaskDependiente."Status Task"::Completado) then
+                    if not (JobTaskDependiente."Status Task" = JobTaskDependiente."Status Task"::Completada) then
                         Error(Text_001);
                 end
             end;

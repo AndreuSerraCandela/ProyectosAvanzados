@@ -954,7 +954,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Retardo - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 3781740971 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
-          <source>Tipo Tarea</source>
+          <source>Estado Tarea</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Status Task - Property Caption</note>
         </trans-unit>
@@ -977,6 +977,11 @@
           <source>WIP %</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field WIP % - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 352425749 - Method 2126772001 - NamedType 1659764731" size-unit="char" translate="yes" xml:space="preserve" al-object-target="TableExtension 2012152121">
+          <source>¿Desea cambiar el estado de la tarea a completada?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field WIP % - Method OnValidate - NamedType MensajeLbl</note>
         </trans-unit>
         <trans-unit id="TableExtension 1862886636 - Field 2965034906 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
           <source>Cliente Facturación</source>
@@ -1128,10 +1133,25 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Enum Status Task - EnumValue   - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Enum 3781740971 - EnumValue 4113018130 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Completado</source>
+        <trans-unit id="Enum 3781740971 - EnumValue 3591984478 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Anulada</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Enum Status Task - EnumValue Completado - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Status Task - EnumValue Anulada - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3781740971 - EnumValue 905687352 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bloqueada</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Status Task - EnumValue Bloqueada - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3781740971 - EnumValue 2604643288 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Comenzada</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Status Task - EnumValue Comenzada - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3781740971 - EnumValue 286838428 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Completada</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Status Task - EnumValue Completada - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 3020659669 - EnumValue 1371923692 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source> </source>

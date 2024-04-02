@@ -6,7 +6,7 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
         field(50000; "Status Task"; Enum "Status Task")
         {
             DataClassification = ToBeClassified;
-            Caption = 'Tipo Tarea';
+            Caption = 'Estado Tarea';
             // ValuesAllowed = ' ', "Completado";
 
         }
@@ -112,6 +112,14 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
         field(50004; "WIP %"; Decimal)
         {
             DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                MensajeLbl: Label '¿Desea cambiar el estado de la tarea a completada?';
+            begin
+                if "WIP %" = 100 then
+                    if Confirm(MensajeLbl, true) then
+                        Rec.Validate("Status Task", "Status Task"::Completada);
+            end;
         }
         field(50102; "Versión Base"; Integer)
         {
