@@ -66,6 +66,7 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                     HistJobPlanningLine: Record "Hist. Job Planning Line";
                     Job: Record Job;
                     Ver: Integer;
+                    MenEstimacionLbl: Label '¿Se ha generado la nueva estimacion %1, a fecha %2?';
                 begin
                     Job.Get(Rec."No.");
                     If Job."Versión Base" = 0 Then Job."Versión Base" := 1;
@@ -90,6 +91,7 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                                 HistJobPlanningLine.TransferFields(JobPlanningLine);
                                 HistJobPlanningLine."Version No." := job."Versión Base";
                                 HistJobPlanningLine.INSERT;
+                                Message(MenEstimacionLbl, Job."Versión Base", Today());
                             end;
                             // JobPlanningLine."Importe Inicial Venta" := HistJobPlanningLine."Total Price";
                             // JobPlanningLine."Importe Inicial Coste" := HistJobPlanningLine."Total Cost";

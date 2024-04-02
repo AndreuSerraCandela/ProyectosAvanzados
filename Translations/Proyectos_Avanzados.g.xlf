@@ -603,6 +603,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Calcular nueva estimación - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Action 4242026930 - Method 1377591017 - NamedType 2029324388" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1863770389">
+          <source>¿Se ha generado la nueva estimacion %1, a fecha %2?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Calcular nueva estimación - Method OnAction - NamedType MenEstimacionLbl</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 2302188122 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Crear Almacen de Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
