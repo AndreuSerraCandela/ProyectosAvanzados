@@ -24,3 +24,17 @@ enum 50300 "Estado Proyecto"
         Caption = 'Not awarded', comment = 'ESP="No adjudicado"';
     }
 }
+enum 50301 "Tipo Partida"
+
+{
+    value(0; "Capítulo")
+    {
+        Caption = 'Capítulo', comment = 'ESP="Capítulo"';
+    }
+
+    value(1; "Subcapítulo")
+    {
+        Caption = 'Subcapítulo', comment = 'ESP="Subcapítulo"';
+    }
+
+}

@@ -15,10 +15,20 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
             DataClassification = ToBeClassified;
             Caption = 'Dependencia';
             TableRelation = "Job Task"."Job Task No." where("Job No." = field("Job No."));
+            trigger OnValidate()
+            begin
+                if "Tipo Dependencia fecha" = TipoFecha::" " then
+                    "Tipo Dependencia fecha" := TipoFecha::"De fin a inicio";
+                Validate("Retardo", Rec.Retardo);
+            end;
 
         }
         field(50010; "Tipo Dependencia fecha"; Enum TipoFecha)
         {
+            trigger OnValidate()
+            begin
+                Validate("Retardo", Rec.Retardo);
+            end;
 
         }
         field(50011; "Retardo"; Integer)
@@ -158,6 +168,13 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
                 CalculaFechas();
                 ;
             end;
+        }
+        field(50009; "Tipo Partida"; Enum "Tipo Partida")
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Tipo Partida';
+            // ValuesAllowed = ' ', "Completado";
+
         }
 
     }
