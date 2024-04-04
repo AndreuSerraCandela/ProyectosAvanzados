@@ -31,6 +31,15 @@ tableextension 50108 "JobSetup" extends "Jobs Setup" //315
             TableRelation = "No. Series";
             Caption = 'No. Serie Almacen en Pryectos';
         }
+        field(50104; "Digitos Capítulo"; Integer)
+        {
+
+        }
+        field(50105; "Digitos Subcapítulo"; Integer)
+        { }
+        field(50106; "Prefijo Capítulo"; Code[10])
+        { }
+
     }
 
     var
