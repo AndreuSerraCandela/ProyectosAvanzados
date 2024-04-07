@@ -109,7 +109,7 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 BEGIN
                     JobSetup.GET;
                     CurrPage.JobTaskLines.Page.GetRecord(JobTaskSub);
-
+                    JobTaskSub.SetRange("Job No.", Rec."No.");
                     IF JobTaskSub.COUNT() = 0 THEN BEGIN
                         NewOriginType := 0;
                         NewOriginCode := Rec."No.";
@@ -191,6 +191,7 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 BEGIN
                     JobSetup.GET;
                     CurrPage.JobTaskLines.Page.GetRecord(JobTaskSub);
+                    JobTaskSub.SetRange("Job No.", Rec."No.");
                     IF JobTaskSub.COUNT() = 0 THEN
                         EXIT;
                     if JobTaskSub."Job Task No." = '' THEN
