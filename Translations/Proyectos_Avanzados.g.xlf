@@ -383,6 +383,386 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Status History - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 3008278152 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Job Task Lines Subform</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 4263906807 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the sum for items that have been received but have not yet been invoiced. The value in the Amt. Rcd. Not Invoiced (LCY) field is used for entries in the Purchase Line table of document type Order to calculate and update the contents of this field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Amt. Rcd. Not Invoiced - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 1546456287 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, in the local currency, the total billable cost for the job task that has been invoiced during the time period in the Posting Date Filter field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Contract (Invoiced Cost) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 4176871437 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, in the local currency, the total billable price for the job task that has been invoiced during the time period in the Posting Date Filter field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Contract (Invoiced Price) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3132786318 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, in local currency, the total billable cost for the job task during the time period in the Planning Date Filter field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Contract (Total Cost) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 2438777144 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, in the local currency, the total billable price for the job task during the time period in the Planning Date Filter field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Contract (Total Price) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3677023465 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Coste Inicial field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Coste Inicial - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies a description of the job task. You can enter anything that is meaningful in describing the task. The description is copied and used in descriptions on the job planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Description - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 2793488656 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Dias Tarea field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Dias Tarea - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3412557385 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the estimate at completion (EAC) total cost for a job task line. If the Apply Usage Link check box on the job is selected, then the EAC (Total Cost) field is calculated as follows: Usage (Total Cost) + Remaining (Total Cost).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control EAC (Total Cost) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3412557385 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>EAC (Total Cost)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control EAC (Total Cost) - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3952068675 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the estimate at completion (EAC) total price for a job task line. If the Apply Usage Link check box on the job is selected, then the EAC (Total Price) field is calculated as follows: Usage (Total Price) + Remaining (Total Price).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control EAC (Total Price) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3952068675 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>EAC (Total Price)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control EAC (Total Price) - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 2649176925 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the end date for the job task. The date is based on the date on the related job planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control End Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 2455730541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Fecha fin Tarea field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Fecha fin Tarea - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3610891187 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Fecha inicio Tarea field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Fecha inicio Tarea - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 1303377601 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the code for the global dimension that is linked to the record or entry for analysis purposes. Two global dimensions, typically for the company's most important activities, are available on all cards, documents, reports, and lists.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Global Dimension 1 Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 1337243520 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the code for the global dimension that is linked to the record or entry for analysis purposes. Two global dimensions, typically for the company's most important activities, are available on all cards, documents, reports, and lists.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Global Dimension 2 Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 1908272084 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of the related job.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Job No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 4185613972 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the job posting group of the task.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Job Posting Group - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 561421623 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of the related job task.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Job Task No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 395609334 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the purpose of the account. Newly created accounts are automatically assigned the Posting account type, but you can change this. Choose the field to select one of the following five options:</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Job Task Type - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 598900193 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the sum of outstanding orders, in local currency, for this job task. The value of the Outstanding Amount (LCY) field is used for entries in the Purchase Line table of document type Order to calculate and update the contents of this field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Outstanding Orders - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3456178121 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the WIP Amount field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Pedidos Pendientes - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 1558886936 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the remaining total cost (LCY) as the sum of costs from job planning lines associated with the job task. The calculation occurs when you have specified that there is a usage link between the job ledger and the job planning lines.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Remaining (Total Cost) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 2110643326 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the remaining total price (LCY) as the sum of prices from job planning lines associated with the job task. The calculation occurs when you have specified that there is a usage link between the job ledger and the job planning lines.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Remaining (Total Price) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 2890855359 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, in the local currency, the total budgeted cost for the job task during the time period in the Planning Date Filter field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Schedule (Total Cost) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 2890855359 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Presupuesto (Coste Total)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Schedule (Total Cost) - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3812295981 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, in local currency, the total budgeted price for the job task during the time period in the Planning Date Filter field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Schedule (Total Price) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3812295981 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Presupuesto (Precio Total)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Schedule (Total Price) - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 474480784 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the start date for the job task. The date is based on the date on the related job planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Start Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 478049462 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies an interval or a list of job task numbers.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Totaling - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3854027455 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, in local currency, the total cost of the usage of items, resources and general ledger expenses posted on the job task during the time period in the Posting Date Filter field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Usage (Total Cost) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 330380333 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, in the local currency, the total price of the usage of items, resources and general ledger expenses posted on the job task during the time period in the Posting Date Filter field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Usage (Total Price) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 1410835643 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Venta Inicial field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Venta Inicial - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 352425749 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the WIP % field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control WIP % - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 4038478403 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the name of the Work in Process calculation method that is associated with a job. The value in this field comes from the WIP method specified on the job card.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control WIP Method - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3122450771 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the job tasks you want to group together when calculating Work In Process (WIP) and Recognition.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control WIP-Total - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 1735507514 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Linea</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Line - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 2971975375 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>&amp;Dimensiones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &amp;Dimensions - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 1990766644 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View or edit dimensions for a group of records. You can assign dimension codes to transactions to distribute costs and analyze historical information.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Dimensions-&amp;Multiple - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 1990766644 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dimensionws-&amp;Multiples</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Dimensions-&amp;Multiple - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3052331206 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View or edit the single set of dimensions that are set up for the selected record.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Dimensions-&amp;Single - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3052331206 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dimensiones-&amp;Individual</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Dimensions-&amp;Single - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 1343998147 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>&amp;Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &amp;Job - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 100870816 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Indentar+</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Indentar+ - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3927050518 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Indentar-</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Indentar- - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 674850633 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View all planning lines for the job. You use this window to plan what items, resources, and general ledger expenses that you expect to use on a job (budget) or you can specify what you actually agreed with your customer that he should pay for the job (billable).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action JobPlanningLines - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 674850633 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Líneas &amp;Plannificación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action JobPlanningLines - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 398785862 - Method 1377591017 - NamedType 233689959" size-unit="char" translate="yes" xml:space="preserve">
+          <source>--- Nuevo ---</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Nuevo Capítulo - Method OnAction - NamedType TPP001</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 1326118442 - Method 1377591017 - NamedType 233689959" size-unit="char" translate="yes" xml:space="preserve">
+          <source>--- Nuevo ---</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Nuevo Subcapítulo - Method OnAction - NamedType TPP001</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3324780168 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Documentos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Documents - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 4050618829 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Use a batch job to help you create sales invoices for the involved job tasks.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Create &amp;Sales Invoice - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 4050618829 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Crear &amp;Factura de Venta</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Create &amp;Sales Invoice - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3399490578 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View sales invoices or sales credit memos that are related to the selected job task.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action SalesInvoicesCreditMemos - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3399490578 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Facturas de &amp;Venta y Abonos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action SalesInvoicesCreditMemos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3106002577 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>F&amp;unciones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action F&amp;unctions - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3945077981 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>&amp;Copiar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &amp;Copy - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 885358904 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Use a batch job to help you copy planning lines from one job task to another. You can copy from a job task within the job you are working with or from a job task linked to a different job.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Copy Job Planning Lines &amp;from... - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 885358904 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Copy Job Planning Lines &amp;from...</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Copy Job Planning Lines &amp;from... - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 90055723 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Use a batch job to help you copy planning lines from one job task to another. You can copy from a job task within the job you are working with or from a job task linked to a different job.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Copy Job Planning Lines &amp;to... - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 90055723 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Copiar lineas de planificación &amp;a...</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Copy Job Planning Lines &amp;to... - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 2405366898 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>W&amp;IP</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &lt;Action13&gt; - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 2110699876 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Run the Job Calculate WIP batch job.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &lt;Action48&gt; - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 2110699876 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>&amp;Calcular WIP</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &lt;Action48&gt; - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 220956323 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Run the Job Post WIP to G/L batch job.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &lt;Action49&gt; - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 220956323 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>&amp;Registrar WIP en contabilidad</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &lt;Action49&gt; - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 686033493 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Move the selected lines in one position to show that the tasks are subcategories of other tasks. Job tasks that are totaled are the ones that lie between one pair of corresponding Begin-Total and End-Total job tasks.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &lt;Action7&gt; - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 686033493 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>I&amp;ndentar Tareas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &lt;Action7&gt; - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3745339449 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Use a batch job to help you move planning lines on a job from one date interval to another.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Change &amp;Dates - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3745339449 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cambiar &amp;Fechas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Change &amp;Dates - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 764173592 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Split planning lines of type Budget and Billable into two separate planning lines: Budget and Billable.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Split &amp;Planning Lines - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 764173592 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>&amp;Dividir Líneas de Planificación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Split &amp;Planning Lines - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 4201773078 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Históricos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action History - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3682772746 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View the job ledger entries.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Job Ledger E&amp;ntries - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3682772746 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>&amp;Movimientos de Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Job Ledger E&amp;ntries - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Report 2421352948 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Job Transfer to Credit Memo Purch</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -588,15 +968,15 @@
           <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension GLAccountCardProyectosAvanzado - Control Mostrar en lineas de planif. - Property ToolTip</note>
         </trans-unit>
-        <trans-unit id="PageExtension 1863770389 - Action 398785862 - Method 1377591017 - NamedType 233689959" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1863770389">
-          <source>--- Nuevo ---</source>
+        <trans-unit id="PageExtension 1863770389 - Action 2818324089 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Nuevo Capítulo - Method OnAction - NamedType TPP001</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Job - Property Caption</note>
         </trans-unit>
-        <trans-unit id="PageExtension 1863770389 - Action 1326118442 - Method 1377591017 - NamedType 233689959" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1863770389">
-          <source>--- Nuevo ---</source>
+        <trans-unit id="PageExtension 1863770389 - Action 3994797191 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Tareas</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Nuevo Subcapítulo - Method OnAction - NamedType TPP001</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Task - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 5247870 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Asignar Oferta</source>
@@ -693,6 +1073,11 @@
           <note from="Developer" annotates="general" priority="2">ESP="Versión Base"</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control Versión Base - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Control 1543839911 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Tareas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control JobTaskLines2 - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 4049885189 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
           <source>Funciones Compra</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -782,51 +1167,6 @@
           <source>Specifies the value of the Categoría field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Categoría - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 947464476 - Action 100870816 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
-          <source>Indentar+</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Action Indentar+ - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 947464476 - Action 3927050518 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
-          <source>Indentar-</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Action Indentar- - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 947464476 - Control 3677023465 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
-          <source>Specifies the value of the Coste Inicial field.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Coste Inicial - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 947464476 - Control 2793488656 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
-          <source>Specifies the value of the Dias Tarea field.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Dias Tarea - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 947464476 - Control 2455730541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
-          <source>Specifies the value of the Fecha fin Tarea field.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Fecha fin Tarea - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 947464476 - Control 3610891187 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
-          <source>Specifies the value of the Fecha inicio Tarea field.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Fecha inicio Tarea - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 947464476 - Control 3456178121 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
-          <source>Specifies the value of the WIP Amount field.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Pedidos Pendientes - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 947464476 - Control 1410835643 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
-          <source>Specifies the value of the Venta Inicial field.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control Venta Inicial - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 947464476 - Control 352425749 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2077750279">
-          <source>Specifies the value of the WIP % field.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobTaskLinesSubformEX - Control WIP % - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 4048657685 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
           <source>Specifies the value of the No. Proyecto field.</source>
