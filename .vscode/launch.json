@@ -6,6 +6,7 @@
             "request": "launch",
             "type": "al",
             "environmentType": "Sandbox",
+<<<<<<< HEAD
             // "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e", //pargroup
             //  "tenant": "8d4a17f2-1b25-4d79-8174-3d100994f228",
             //"tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
@@ -24,6 +25,11 @@
             //  "tenant": "fe659371-d016-40ff-a31c-a52888650f25",
             //  "environmentName": "DesarrolloTech4Plus2",
 
+=======
+           "tenant": "cfe8200f-dc0e-4d6a-8164-a55d7626cce2",
+
+            "environmentName": "Demos_Maybe",
+>>>>>>> f445e56ef48d8955209414d8020b14a1339eb5cc
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": true,

@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ﻿{"Added":[],"Modified":[],"Removed":[]}
+=======
+﻿{"Added":[{"Id":50116,"Kind":12,"Name":"Job Task Lines Subform Ext","Namespace":""}],"Modified":[{"Id":50110,"Kind":17,"Name":"JobMyb","Namespace":""},{"Id":50107,"Kind":16,"Name":"JobCard","Namespace":""}],"Removed":[{"Id":1001,"Kind":12,"Name":"Job Task Lines Subform","Namespace":""}]}
+>>>>>>> f445e56ef48d8955209414d8020b14a1339eb5cc

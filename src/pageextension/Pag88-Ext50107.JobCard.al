@@ -1,7 +1,9 @@
 pageextension 50107 "JobCard" extends "Job Card" //88
 {
+
     layout
     {
+
         // Add changes to page layout here
         addafter("Your Reference")
         {
@@ -21,6 +23,7 @@ pageextension 50107 "JobCard" extends "Job Card" //88
             }
 
 
+
         }
         addafter("Sell-to Customer Name")
         {
@@ -36,6 +39,26 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 ToolTip = 'Specifies the value of the Versión Base field.', Comment = 'ESP="Versión Base"';
             }
         }
+        modify(JobTaskLines)
+        {
+            Visible = TareasEstandard;
+        }
+        addafter("JobTaskLines")
+        {
+            part(JobTaskLines2; "Job Task Lines Subform ext")
+            {
+                ApplicationArea = Jobs;
+                Caption = 'Tareas';
+                SubPageLink = "Job No." = field("No.");
+                SubPageView = sorting("Job Task No.")
+                              order(Ascending);
+                UpdatePropagation = Both;
+                Visible = not TareasEstandard;
+                Editable = JobTaskLinesEditable2;
+                Enabled = JobTaskLinesEditable2;
+            }
+
+        }
     }
 
     actions
@@ -43,313 +66,193 @@ pageextension 50107 "JobCard" extends "Job Card" //88
 
         addlast("&Job")
         {
-            // Action("Indentar-")
+            // action("Nuevo Capítulo")
             // {
 
-            //     ShortCutKey = 'Ctrl+Left';
-            //     ToolTipML = ENU = '(Ctrl+Left)',
-            //                      ESP = '(Ctrl+Izquierda)';
+            //     ShortCutKey = 'Shift+Ctrl+N';
+            //     CaptionML = ENU = 'New Chapter',
+            //             ESP = 'Nuevo capítulo';
             //     ApplicationArea = All;
             //     Promoted = true;
+            //     PromotedCategory = Category10;
             //     PromotedIsBig = true;
-            //     Image = CancelIndent;
+            //     Image = NewBranch;
             //     PromotedOnly = true;
             //     trigger OnAction()
+            //     VAR
+            //         JobSetup: Record 315;
+            //         JobTask: Record "Job Task";
+            //         JobTaskSub: Record "Job Task";
+            //         ApplyFilter: Text[100];
+            //         NewOriginType: Integer;
+            //         NewOriginCode: Code[20];
+            //         NewCode: Code[20];
+            //         NewIndent: Integer;
+            //         TPP001: label '--- Nuevo ---';
             //     BEGIN
-            //         IF Rec.COUNT() = 0 THEN
+            //         JobSetup.GET;
+            //         CurrPage.JobTaskLines2.Page.GetRecord(JobTaskSub);
+            //         JobTaskSub.SetRange("Job No.", Rec."No.");
+            //         IF JobTaskSub.COUNT() = 0 THEN BEGIN
+            //             NewOriginType := 0;
+            //             NewOriginCode := Rec."No.";
+            //             NewCode := '1';
+
+            //             NewCode := JobSetup."Prefijo Capítulo" + '.' + PADSTR('', JobSetup."Digitos Capítulo" - STRLEN(NewCode), '0') + NewCode;
+
+            //             NewIndent := 0;
+            //             JobTask.INIT;
+            //             JobTask.VALIDATE("Job No.", NewOriginCode);
+            //             JobTask.VALIDATE("Job Task No.", NewCode);
+            //             JobTask.VALIDATE(Description, TPP001);
+            //             JobTask.VALIDATE("Tipo Partida", JobTaskSub."Tipo Partida"::Capítulo);
+            //             JobTask."Job Task Type" := JobTaskSub."Job Task Type"::Total;
+            //             JobTask.VALIDATE(Totaling, NewCode + '..' + PADSTR(NewCode, 20 - (STRLEN(NewCode) + 2), '9'));
+            //             JobTask.INSERT;
+            //             CurrPage.UPDATE;
+            //             //Rec.GET(NewOriginCode, NewCode);
             //             EXIT;
-            //         IF Rec.Indentation > 0 THEN
-            //             Rec.Indentation -= 1;
-            //         Rec.MODIFY;
-            //         CurrPage.UPDATE
+            //         END;
+            //         if JobTaskSub."Job Task No." = '' THEN
+            //             Error('Situese en una partida para añadir un capítulo');
+            //         // Estamos en cap tulo y hay que a adir un cap tulo
+            //         IF JobTaskSub."Tipo Partida" = JobTaskSub."Tipo Partida"::"Capítulo" THEN BEGIN
+            //             // Le quitamos un d gito, buscamos el  ltimo e intentamos incrementarlo
+            //             ApplyFilter := COPYSTR(JobTaskSub."Job Task No.", 1, (STRLEN(JobTaskSub."Job Task No.") - 1)) + '?';
+            //             JobTask.RESET;
+            //             JobTask.SETRANGE(JobTask."Job No.", Rec."No.");
+            //             IF ApplyFilter <> '?' THEN
+            //                 JobTask.SETFILTER(JobTask."Job Task No.", '%1', ApplyFilter);
+            //             JobTask.SETRANGE(JobTask."Tipo Partida", JobTask."Tipo Partida"::Capítulo);
+            //             IF JobTask.FINDLAST THEN BEGIN
+            //                 NewOriginCode := JobTask."Job No.";
+            //                 NewCode := INCSTR(JobTask."Job Task No.");
+            //                 NewIndent := JobTask.Indentation;
+            //                 JobTask.RESET;
+            //                 IF NOT JobTask.GET(NewOriginCode, NewCode) THEN BEGIN
+            //                     JobTask.INIT;
+            //                     JobTask.VALIDATE("Job No.", NewOriginCode);
+            //                     JobTask.VALIDATE("Job Task No.", NewCode);
+            //                     JobTask.VALIDATE(Description, TPP001);
+            //                     JobTask.VALIDATE("Tipo Partida", JobTaskSub."Tipo Partida"::"Capítulo");
+            //                     JobTask.VALIDATE(Indentation, NewIndent);
+            //                     JobTask."Job Task Type" := JobTaskSub."Job Task Type"::Total;
+            //                     JobTask.VALIDATE(Totaling, NewCode + '..' + PADSTR(NewCode, 20 - (STRLEN(NewCode) + 2), '9'));
+            //                     // JobTask.VALIDATE(JobTask."Created Date Time", CURRENTDATETIME);
+            //                     // JobTask.VALIDATE(JobTask."Created Date", TODAY);
+            //                     JobTask.INSERT;
+            //                     CurrPage.UPDATE;
+            //                     //Rec.GET(NewOriginCode, NewCode);
+            //                 END;
+            //             END;
+            //         END;
             //     END;
             // }
-            // action("Indentar+")
+            // action("Nuevo Subcapítulo")
             // {
 
-            //     ShortCutKey = 'Ctrl+Right';
-            //     ToolTipML = ENU = '(Ctrl+Right)',
-            //                         ESP = '(Ctrl+Derecha)';
-            //     ApplicationArea = All;
+            //     ShortCutKey = 'Shift+Ctrl+H';
+            //     CaptionML = ENU = 'New Sub Chapter',
+            //                 ESP = 'Nuevo subcapÍtulo';
+            //     ApplicationArea = ALL;
             //     Promoted = true;
             //     PromotedIsBig = true;
-            //     Image = Indent;
+            //     Image = NewBranch;
+            //     PromotedCategory = Category10;
             //     PromotedOnly = true;
             //     trigger OnAction()
+            //     VAR
+            //         JobSetup: Record 315;
+            //         JobTask: Record "Job Task";
+            //         JobTaskSub: Record "Job Task";
+            //         ApplyFilter: Text[100];
+            //         NewOriginType: Integer;
+            //         NewOriginCode: Code[20];
+            //         NewCode: Code[20];
+            //         NewIndent: Integer;
+            //         TPP001: Label '--- Nuevo ---';
             //     BEGIN
-            //         IF Rec.COUNT() = 0 THEN
+            //         JobSetup.GET;
+            //         CurrPage.JobTaskLines2.Page.GetRecord(JobTaskSub);
+            //         JobTaskSub.SetRange("Job No.", Rec."No.");
+            //         IF JobTaskSub.COUNT() = 0 THEN
             //             EXIT;
-            //         Rec.Indentation += 1;
-            //         Rec.MODIFY;
-            //         CurrPage.UPDATE
+            //         if JobTaskSub."Job Task No." = '' THEN
+            //             Error('Situese en una partida para añadir un capítulo');
+            //         // Estamos en cap tulo y hay que a adir un cap tulo
+            //         IF JobTaskSub."Tipo Partida" = JobTaskSub."Tipo Partida"::"Capítulo" THEN BEGIN
+            //             IF STRLEN(JobTaskSub."Job Task No.") + JobSetup."Digitos Subcapítulo" > 20 THEN
+            //                 ERROR('Ancho para códigos de capítulos excedido');
+
+            //             ApplyFilter := JobTaskSub."Job Task No." + '?*';
+            //             JobTask.RESET;
+            //             JobTask.SETRANGE(JobTask."Job No.", JobTaskSub."Job No.");
+            //             IF ApplyFilter <> '?*' THEN
+            //                 JobTask.SETFILTER(JobTask."Job Task No.", '%1', ApplyFilter);
+            //             JobTask.SETRANGE(JobTask."Tipo Partida", JobTask."Tipo Partida"::"Subcapítulo");
+            //             IF JobTask.FINDLAST THEN BEGIN
+            //                 NewOriginCode := JobTask."Job No.";
+            //                 NewCode := INCSTR(JobTask."Job Task No.");
+            //                 NewIndent := JobTask.Indentation;
+            //             END
+            //             ELSE BEGIN
+            //                 NewOriginCode := JobTaskSub."Job No.";
+            //                 NewCode := JobTaskSub."Job Task No." + '.' + PADSTR('', JobSetup."Digitos Capítulo" - STRLEN('0'), '0') + '1';
+            //                 NewIndent := JobTaskSub.Indentation + 1;
+            //             END;
+            //             JobTask.RESET;
+            //             IF NOT JobTask.GET(NewOriginCode, NewCode) THEN BEGIN
+            //                 JobTask.INIT;
+            //                 JobTask.VALIDATE("Job No.", NewOriginCode);
+            //                 JobTask.VALIDATE("Job Task No.", NewCode);
+            //                 JobTask.VALIDATE(Description, TPP001);
+            //                 JobTask.VALIDATE("Tipo Partida", JobTaskSub."Tipo Partida"::"Subcapítulo");
+            //                 JobTask.VALIDATE(Indentation, NewIndent);
+            //                 //JobTask.VALIDATE(Totaling, NewCode + '..' + PADSTR(NewCode, 20 - (STRLEN(NewCode) + 2), '9'));
+            //                 JobTask.INSERT;
+            //                 CurrPage.UPDATE;
+
+            //             END;
+            //         END;
             //     END;
             // }
-            action("Nuevo Capítulo")
+            action("Tareas estándar")
             {
-
-                ShortCutKey = 'Shift+Ctrl+N';
-                CaptionML = ENU = 'New Chapter',
-                        ESP = 'Nuevo capítulo';
+                ShortCutKey = 'Shift+Ctrl+T';
+                CaptionML = ENU = 'Standard Tasks',
+                            ESP = 'Tareas estándar';
                 ApplicationArea = All;
-                Promoted = true;
-                PromotedIsBig = true;
-                Image = NewBranch;
-                PromotedOnly = true;
+                // Promoted = true;
+                // PromotedCategory = New;
+                // PromotedIsBig = true;
+                Image = Task;
+                // PromotedOnly = true;
                 trigger OnAction()
-                VAR
-                    JobSetup: Record 315;
-                    JobTask: Record "Job Task";
-                    JobTaskSub: Record "Job Task";
-                    ApplyFilter: Text[100];
-                    NewOriginType: Integer;
-                    NewOriginCode: Code[20];
-                    NewCode: Code[20];
-                    NewIndent: Integer;
-                    TPP001: label '--- Nuevo ---';
-                BEGIN
-                    JobSetup.GET;
-                    CurrPage.JobTaskLines.Page.GetRecord(JobTaskSub);
-                    JobTaskSub.SetRange("Job No.", Rec."No.");
-                    IF JobTaskSub.COUNT() = 0 THEN BEGIN
-                        NewOriginType := 0;
-                        NewOriginCode := Rec."No.";
-                        NewCode := '1';
-
-                        NewCode := JobSetup."Prefijo Capítulo" + '.' + PADSTR('', JobSetup."Digitos Capítulo" - STRLEN(NewCode), '0') + NewCode;
-
-                        NewIndent := 0;
-                        JobTask.INIT;
-                        JobTask.VALIDATE("Job No.", NewOriginCode);
-                        JobTask.VALIDATE("Job Task No.", NewCode);
-                        JobTask.VALIDATE(Description, TPP001);
-                        JobTask.VALIDATE("Tipo Partida", JobTaskSub."Tipo Partida"::Capítulo);
-                        JobTask."Job Task Type" := JobTaskSub."Job Task Type"::Total;
-                        JobTask.VALIDATE(Totaling, NewCode + '..' + PADSTR(NewCode, 20 - (STRLEN(NewCode) + 2), '9'));
-                        JobTask.INSERT;
-                        CurrPage.UPDATE;
-                        //Rec.GET(NewOriginCode, NewCode);
-                        EXIT;
-                    END;
-                    if JobTaskSub."Job Task No." = '' THEN
-                        Error('Situese en una partida para añadir un capítulo');
-                    // Estamos en cap tulo y hay que a adir un cap tulo
-                    IF JobTaskSub."Tipo Partida" = JobTaskSub."Tipo Partida"::"Capítulo" THEN BEGIN
-                        // Le quitamos un d gito, buscamos el  ltimo e intentamos incrementarlo
-                        ApplyFilter := COPYSTR(JobTaskSub."Job Task No.", 1, (STRLEN(JobTaskSub."Job Task No.") - 1)) + '?';
-                        JobTask.RESET;
-                        JobTask.SETRANGE(JobTask."Job No.", Rec."No.");
-                        IF ApplyFilter <> '?' THEN
-                            JobTask.SETFILTER(JobTask."Job Task No.", '%1', ApplyFilter);
-                        JobTask.SETRANGE(JobTask."Tipo Partida", JobTask."Tipo Partida"::Capítulo);
-                        IF JobTask.FINDLAST THEN BEGIN
-                            NewOriginCode := JobTask."Job No.";
-                            NewCode := INCSTR(JobTask."Job Task No.");
-                            NewIndent := JobTask.Indentation;
-                            JobTask.RESET;
-                            IF NOT JobTask.GET(NewOriginCode, NewCode) THEN BEGIN
-                                JobTask.INIT;
-                                JobTask.VALIDATE("Job No.", NewOriginCode);
-                                JobTask.VALIDATE("Job Task No.", NewCode);
-                                JobTask.VALIDATE(Description, TPP001);
-                                JobTask.VALIDATE("Tipo Partida", JobTaskSub."Tipo Partida"::"Capítulo");
-                                JobTask.VALIDATE(Indentation, NewIndent);
-                                JobTask."Job Task Type" := JobTaskSub."Job Task Type"::Total;
-                                JobTask.VALIDATE(Totaling, NewCode + '..' + PADSTR(NewCode, 20 - (STRLEN(NewCode) + 2), '9'));
-                                // JobTask.VALIDATE(JobTask."Created Date Time", CURRENTDATETIME);
-                                // JobTask.VALIDATE(JobTask."Created Date", TODAY);
-                                JobTask.INSERT;
-                                CurrPage.UPDATE;
-                                //Rec.GET(NewOriginCode, NewCode);
-                            END;
-                        END;
-                    END;
-                END;
+                begin
+                    TareasEstandard := not TareasEstandard;
+                    CurrPage.JobTaskLines2.Page.cargaProyecto(Rec."No.");
+                end;
             }
-            action("Nuevo Subcapítulo")
+
+        }
+
+        addlast(Promoted)
+        {
+            group(Task)
             {
+                Image = Task;
+                Caption = 'Tareas';
+                actionref(Tareas_ref; "Tareas estándar") { }
 
-                ShortCutKey = 'Shift+Ctrl+H';
-                CaptionML = ENU = 'New Sub Chapter',
-                            ESP = 'Nuevo subcapÍtulo';
-                ApplicationArea = ALL;
-                Promoted = true;
-                PromotedIsBig = true;
-                Image = NewBranch;
-                PromotedCategory = New;
-                PromotedOnly = true;
-                trigger OnAction()
-                VAR
-                    JobSetup: Record 315;
-                    JobTask: Record "Job Task";
-                    JobTaskSub: Record "Job Task";
-                    ApplyFilter: Text[100];
-                    NewOriginType: Integer;
-                    NewOriginCode: Code[20];
-                    NewCode: Code[20];
-                    NewIndent: Integer;
-                    TPP001: Label '--- Nuevo ---';
-                BEGIN
-                    JobSetup.GET;
-                    CurrPage.JobTaskLines.Page.GetRecord(JobTaskSub);
-                    JobTaskSub.SetRange("Job No.", Rec."No.");
-                    IF JobTaskSub.COUNT() = 0 THEN
-                        EXIT;
-                    if JobTaskSub."Job Task No." = '' THEN
-                        Error('Situese en una partida para añadir un capítulo');
-                    // Estamos en cap tulo y hay que a adir un cap tulo
-                    IF JobTaskSub."Tipo Partida" = JobTaskSub."Tipo Partida"::"Capítulo" THEN BEGIN
-                        IF STRLEN(JobTaskSub."Job Task No.") + JobSetup."Digitos Subcapítulo" > 20 THEN
-                            ERROR('Ancho para códigos de capítulos excedido');
-
-                        ApplyFilter := JobTaskSub."Job Task No." + '?*';
-                        JobTask.RESET;
-                        JobTask.SETRANGE(JobTask."Job No.", JobTaskSub."Job No.");
-                        IF ApplyFilter <> '?*' THEN
-                            JobTask.SETFILTER(JobTask."Job Task No.", '%1', ApplyFilter);
-                        JobTask.SETRANGE(JobTask."Tipo Partida", JobTask."Tipo Partida"::"Subcapítulo");
-                        IF JobTask.FINDLAST THEN BEGIN
-                            NewOriginCode := JobTask."Job No.";
-                            NewCode := INCSTR(JobTask."Job Task No.");
-                            NewIndent := JobTask.Indentation;
-                        END
-                        ELSE BEGIN
-                            NewOriginCode := JobTaskSub."Job No.";
-                            NewCode := JobTaskSub."Job Task No." + '.' + PADSTR('', JobSetup."Digitos Capítulo" - STRLEN('0'), '0') + '1';
-                            NewIndent := JobTaskSub.Indentation + 1;
-                        END;
-                        JobTask.RESET;
-                        IF NOT JobTask.GET(NewOriginCode, NewCode) THEN BEGIN
-                            JobTask.INIT;
-                            JobTask.VALIDATE("Job No.", NewOriginCode);
-                            JobTask.VALIDATE("Job Task No.", NewCode);
-                            JobTask.VALIDATE(Description, TPP001);
-                            JobTask.VALIDATE("Tipo Partida", JobTaskSub."Tipo Partida"::"Subcapítulo");
-                            JobTask.VALIDATE(Indentation, NewIndent);
-                            //JobTask.VALIDATE(Totaling, NewCode + '..' + PADSTR(NewCode, 20 - (STRLEN(NewCode) + 2), '9'));
-                            JobTask.INSERT;
-                            CurrPage.UPDATE;
-
-                        END;
-                    END;
-                END;
             }
-            //   { 1000000002;2 ;Action    ;
-            //                   Name=NewUnit;
-            //                   ShortCutKey=Shift+Ctrl+U;
-            //                   CaptionML=[ENU=New Unit;
-            //                              ESP=Nueva unidad];
-            //                   ApplicationArea=#Jobs;
-            //                   Promoted=true;
-            //                   PromotedIsBig=true;
-            //                   Image=NewItem;
-            //                   PromotedOnly=true;
-            //                   trigger OnAction() VAR
-            //                              JobsSetup@1000000008 : Record 315;
-            //                              JobTask : Record "Job Task";
-            //                              ApplyFilter : Text[100];
-            //                              NewOriginType : Integer;
-            //                              NewOriginCode : Code[20];
-            //                              NewCode : Code[20];
-            //                              NewIndent : Integer;
-            //                              TPP001: TextConst 'ENU=--- New ---;ESP=--- Nuevo ---';
-            //                            BEGIN
-
-            //                               IF COUNT() = 0 THEN
-            //                                EXIT;
-
-            //                               // Estamos en cap tulo y hay que a adir una unidad
-            //                               IF "Tipo Partida" = "Tipo Partida"::"Capítulo" THEN
-            //                                BEGIN
-            //                                  // Le quitamos un d gito, buscamos el  ltimo e intentamos incrementarlo
-            //                                  ApplyFilter := Code + '*';
-            //                                  JobTask.RESET;
-            //                              //    JobTask.SETRANGE(JobTask."Origin Type", "Origin Type");
-            //                                  JobTask.SETRANGE(JobTask."Job No.", "Job No.");
-            //                                  JobTask.SETFILTER(JobTask."Job Task No.", '%1', ApplyFilter);
-            //                                  JobTask.SETRANGE(JobTask."Tipo Partida", JobTask."Tipo Partida"::Unit);
-            //                                  IF JobTask.FINDLAST THEN
-            //                                    BEGIN
-            //                              //        NewOriginType := JobTask."Origin Type";
-            //                                      NewOriginCode := JobTask."Job No.";
-            //                                      NewCode := INCSTR(JobTask."Job Task No.");
-            //                                      NewIndent := JobTask.Indentation;
-            //                                    END
-            //                                  ELSE
-            //                                    BEGIN
-            //                                      JobsSetup.GET;
-            //                                      JobsSetup.TESTFIELD(JobsSetup."Work Unit Code Characters");
-            //                              //        NewOriginType := "Origin Type";
-            //                                      NewOriginCode := "Job No.";
-            //                                      IF JobsSetup."Work Unit Code Characters" = 0 THEN
-            //                                        NewCode := PADSTR(Code, 9, '0') + '1'
-            //                                      ELSE
-            //                                        NewCode := PADSTR(Code, JobsSetup."Work Unit Code Characters"-1, '0') + '1';
-            //                                      NewIndent := Indentation+1;
-            //                                    END;
-            //                                  JobTask.RESET;
-            //                                  IF NOT JobTask.GET(NewOriginCode, NewCode) THEN
-            //                                    BEGIN
-            //                                      JobTask.INIT;
-            //                              //        JobTask.VALIDATE("Origin Type", NewOriginType);
-            //                                      JobTask.VALIDATE("Job No.", NewOriginCode);
-            //                                      JobTask.VALIDATE(Code, NewCode);
-            //                                      JobTask.VALIDATE(Description, TPP001);
-            //                                      JobTask.VALIDATE("Tipo Partida", "Tipo Partida"::Unit);
-            //                                      JobTask.VALIDATE(Indentation, NewIndent);
-            //                                      JobTask.VALIDATE(JobTask."Created Date Time", CURRENTDATETIME);
-            //                                      JobTask.VALIDATE(JobTask."Created Date", TODAY);
-            //                                      JobTask.INSERT;
-            //                                      CurrPage.UPDATE;
-            //                                      Rec.GET(NewOriginCode, NewCode);
-            //                                    END
-            //                                  END
-            //                                ELSE
-            //                                BEGIN
-            //                                // Estamos en unidad y hay que a adir una unidad
-            //                                // Le quitamos dos d gitos, buscamos el  ltimo e intentamos incrementarlo
-            //                                ApplyFilter := COPYSTR(Code, 1, STRLEN(Code)-2) + '*';
-            //                                JobTask.RESET;
-            //                              //  JobTask.SETRANGE(JobTask."Origin Type", "Origin Type");
-            //                                JobTask.SETRANGE(JobTask."Job No.", "Job No.");
-            //                                JobTask.SETFILTER(JobTask."Job Task No.", '%1', ApplyFilter);
-            //                                JobTask.SETRANGE(JobTask."Tipo Partida", JobTask."Tipo Partida"::Unit);
-            //                                IF JobTask.FINDLAST THEN
-            //                                  BEGIN
-            //                              //      NewOriginType := JobTask."Origin Type";
-            //                                    NewOriginCode := JobTask."Job No.";
-            //                                    NewCode := INCSTR(JobTask."Job Task No.");
-            //                                    NewIndent := JobTask.Indentation;
-            //                                  END
-            //                                  ELSE
-            //                                  BEGIN
-            //                               //        JobsSetup.GET;
-            //                               //        JobsSetup.TESTFIELD(JobsSetup."Work Unit Code Characters");
-            //                               //        NewOriginType := "Origin Type";
-            //                               //        NewOriginCode := "Origin Code";
-            //                               //        NewCode := PADSTR(Code, JobsSetup."Work Unit Code Characters"-1, '0') + '1';
-            //                               //        NewIndent := Indentation+1;
-            //                                  END;
-            //                                JobTask.RESET;
-            //                                IF NOT JobTask.GET(NewOriginCode, NewCode) THEN
-            //                                  BEGIN
-            //                                    JobTask.INIT;
-            //                              //      JobTask.VALIDATE("Origin Type", NewOriginType);
-            //                                    JobTask.VALIDATE("Job No.", NewOriginCode);
-            //                                    JobTask.VALIDATE(Code, NewCode);
-            //                                    JobTask.VALIDATE(Description, TPP001);
-            //                                    JobTask.VALIDATE("Tipo Partida", "Tipo Partida"::Unit);
-            //                                    JobTask.VALIDATE(Indentation, NewIndent);
-            //                                    JobTask.VALIDATE(JobTask."Created Date Time", CURRENTDATETIME);
-            //                                    JobTask.VALIDATE(JobTask."Created Date", TODAY);
-            //                                    JobTask.INSERT;
-            //                                    CurrPage.UPDATE;
-            //                                    Rec.GET(NewOriginCode, NewCode);
-            //                                  END;
-            //                               END;
-
-            //                            END;
-            //                             }
-
+            group(Job)
+            {
+                Image = Job;
+                Caption = 'Proyecto';
+                actionref(crearalmacen_ref; "Crear Almacen de Proyecto") { }
+                actionref(VerEstimaciones; "Ver Estimaciones") { }
+                actionref(CrearNuevaEstimacion; "Calcular nueva estimación") { }
+            }
 
         }
 
@@ -370,9 +273,6 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 Image = Calculate;
                 ApplicationArea = All;
                 Caption = 'Calcular nueva estimación';
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 ToolTip = 'Calcula la nueva estimación de costes y horas para la línea de planificación de trabajo seleccionada.';
                 trigger OnAction()
                 var
@@ -423,9 +323,6 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 Image = History;
                 ApplicationArea = All;
                 Caption = 'Ver Estimaciones';
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 ToolTip = 'Muestra las estimaciones de costes y horas para la línea de planificación de trabajo seleccionada.';
                 trigger OnAction()
                 var
@@ -441,9 +338,9 @@ pageextension 50107 "JobCard" extends "Job Card" //88
             {
                 Caption = 'Crear Almacen de Proyecto';
                 ApplicationArea = All;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
+                // Promoted = true;
+                // PromotedCategory = Process;
+                // PromotedIsBig = true;
 
                 trigger OnAction()
                 var
@@ -534,10 +431,28 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 ToolTip = 'Comparativa de ofertas';
 
             }
+
         }
+
+
+
         // Add changes to page actions here
     }
+    trigger OnAfterGetRecord()
+    begin
+        JobTaskLinesEditable2 := Rec.CalcJobTaskLinesEditable();
+        CurrPage.JobTaskLines2.Page.cargaProyecto(Rec."No.");
+
+    end;
+
+    trigger OnOpenPage()
+    begin
+        TareasEstandard := false;
+
+    end;
 
     var
+        TareasEstandard: Boolean;
         myInt: Integer;
+        JobTaskLinesEditable2: Boolean;
 }
