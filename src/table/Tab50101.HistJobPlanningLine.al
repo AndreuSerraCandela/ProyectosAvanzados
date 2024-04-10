@@ -132,7 +132,7 @@ table 50101 "Hist. Job Planning Line"
     }
     keys
     {
-        key(PK; "Line No.", "Job No.", "Version No.")
+        key(PK; "Line No.", "Job No.", "Job Task No.", "Version No.")
         {
             Clustered = true;
         }
