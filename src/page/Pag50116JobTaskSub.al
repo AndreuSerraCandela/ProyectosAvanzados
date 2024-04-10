@@ -426,43 +426,43 @@ page 50116 "Job Task Lines Subform Ext"
                                 Proyecto := Rec."Job No.";
 
                             if JobTaskSub."Job Task No." = '' THEN
-                                Error('Situese en una partida para añadir un capítulo');
+                                Error('Situese en una partida para añadir un sub-capítulo');
                             // Estamos en cap tulo y hay que a adir un cap tulo
-                            IF JobTaskSub."Tipo Partida" = JobTaskSub."Tipo Partida"::"Capítulo" THEN BEGIN
-                                IF STRLEN(JobTaskSub."Job Task No.") + JobSetup."Digitos Subcapítulo" > 20 THEN
-                                    ERROR('Ancho para códigos de capítulos excedido');
+                            //   IF JobTaskSub."Tipo Partida" = JobTaskSub."Tipo Partida"::"Capítulo" THEN BEGIN
+                            IF STRLEN(JobTaskSub."Job Task No.") + JobSetup."Digitos Subcapítulo" > 20 THEN
+                                ERROR('Ancho para códigos de capítulos excedido');
 
-                                ApplyFilter := JobTaskSub."Job Task No." + '?*';
-                                JobTask.RESET;
-                                JobTask.SETRANGE(JobTask."Job No.", JobTaskSub."Job No.");
-                                IF ApplyFilter <> '?*' THEN
-                                    JobTask.SETFILTER(JobTask."Job Task No.", '%1', ApplyFilter);
-                                JobTask.SETRANGE(JobTask."Tipo Partida", JobTask."Tipo Partida"::"Subcapítulo");
-                                IF JobTask.FINDLAST THEN BEGIN
-                                    NewOriginCode := JobTask."Job No.";
-                                    NewCode := INCSTR(JobTask."Job Task No.");
-                                    NewIndent := JobTask.Indentation;
-                                END
-                                ELSE BEGIN
-                                    NewOriginCode := JobTaskSub."Job No.";
-                                    NewCode := JobTaskSub."Job Task No." + '.' + PADSTR('', JobSetup."Digitos Capítulo" - STRLEN('0'), '0') + '1';
-                                    NewIndent := JobTaskSub.Indentation + 1;
-                                END;
-                                JobTask.RESET;
-                                IF NOT JobTask.GET(NewOriginCode, NewCode) THEN BEGIN
-                                    JobTask.INIT;
-                                    JobTask.VALIDATE("Job No.", NewOriginCode);
-                                    JobTask.VALIDATE("Job Task No.", NewCode);
-                                    JobTask.VALIDATE(Description, TPP001);
-                                    JobTask.VALIDATE("Tipo Partida", JobTaskSub."Tipo Partida"::"Subcapítulo");
-                                    JobTask.VALIDATE(Indentation, NewIndent);
-                                    //JobTask.VALIDATE(Totaling, NewCode + '..' + PADSTR(NewCode, 20 - (STRLEN(NewCode) + 2), '9'));
-                                    JobTask.INSERT;
-                                    CurrPage.UPDATE;
+                            ApplyFilter := JobTaskSub."Job Task No." + '?*';
+                            JobTask.RESET;
+                            JobTask.SETRANGE(JobTask."Job No.", JobTaskSub."Job No.");
+                            IF ApplyFilter <> '?*' THEN
+                                JobTask.SETFILTER(JobTask."Job Task No.", '%1', ApplyFilter);
+                            JobTask.SETRANGE(JobTask."Tipo Partida", JobTask."Tipo Partida"::"Subcapítulo");
+                            IF JobTask.FINDLAST THEN BEGIN
+                                NewOriginCode := JobTask."Job No.";
+                                NewCode := INCSTR(JobTask."Job Task No.");
+                                NewIndent := JobTask.Indentation;
+                            END
+                            ELSE BEGIN
+                                NewOriginCode := JobTaskSub."Job No.";
+                                NewCode := JobTaskSub."Job Task No." + '.' + PADSTR('', JobSetup."Digitos Subcapítulo" - STRLEN('0'), '0') + '1';
+                                NewIndent := JobTaskSub.Indentation + 1;
+                            END;
+                            JobTask.RESET;
+                            IF NOT JobTask.GET(NewOriginCode, NewCode) THEN BEGIN
+                                JobTask.INIT;
+                                JobTask.VALIDATE("Job No.", NewOriginCode);
+                                JobTask.VALIDATE("Job Task No.", NewCode);
+                                JobTask.VALIDATE(Description, TPP001);
+                                JobTask.VALIDATE("Tipo Partida", JobTaskSub."Tipo Partida"::"Subcapítulo");
+                                JobTask.VALIDATE(Indentation, NewIndent);
+                                //JobTask.VALIDATE(Totaling, NewCode + '..' + PADSTR(NewCode, 20 - (STRLEN(NewCode) + 2), '9'));
+                                JobTask.INSERT;
+                                CurrPage.UPDATE;
 
-                                END;
                             END;
                         END;
+                        // END;
                     }
 
                     Action("Indentar-")
