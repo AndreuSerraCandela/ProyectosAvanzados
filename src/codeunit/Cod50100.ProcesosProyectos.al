@@ -3,6 +3,7 @@
 /// </summary>
 codeunit 50100 "ProcesosProyectos"
 {
+    Permissions = TableData "G/L Budget Entry" = rimd;
     trigger OnRun()
     begin
     end;
@@ -1272,6 +1273,77 @@ codeunit 50100 "ProcesosProyectos"
         end;
 
         // OnAfterOpenSalesInvoice(JobPlanningLineInvoice);
+    end;
+
+    internal procedure CrearPresupuesto(Rec: Record Job)
+    var
+        JSetup: Record "Jobs Setup";
+        Setup: Record "General Ledger Setup";
+        Dimension: Record "Dimension Value";
+        BudgetEntry: Record "G/L Budget Entry";
+        JobPlaningLine: Record "Job Planning Line";
+        Res: Record Resource;
+        Item: Record Item;
+        Customer: Record Customer;
+        GroupSetup: Record "General Posting Setup";
+        Linea: Integer;
+    begin
+        Customer.Get(Rec."Bill-to Customer No.");
+        BudgetEntry.SetRange("Job No.", Rec."No.");
+        BudgetEntry.DeleteAll();
+        JobPlaningLine.SetRange("Job No.", Rec."No.");
+        JobPlaningLine.SetRange("Line Type", JobPlaningLine."Line Type"::"Both Budget and Billable", JobPlaningLine."Line Type"::"Budget");
+        If BudgetEntry.FindLast() then Linea := BudgetEntry."Entry No." else Linea := 1;
+        Setup.Get();
+        JSetup.Get();
+
+        if JobPlaningLine.FindSet() then
+            repeat
+                BudgetEntry.Init();
+                BudgetEntry."Entry No." := Linea;
+                BudgetEntry.Date := JobPlaningLine."Planning Date";
+                BudgetEntry."Job No." := Rec."No.";
+                BudgetEntry."Budget Name" := Job."Cód. Presupuesto";
+                BudgetEntry.Validate("Global Dimension 1 Code", Job."Global Dimension 1 Code");
+                BudgetEntry.Validate("Global Dimension 2 Code", Job."Global Dimension 2 Code");
+                if JSetup."Dimension Proyecto" <> '' Then begin
+                    If JSetup."Dimension Proyecto" = Setup."Global Dimension 1 Code" Then
+                        BudgetEntry.Validate("Global Dimension 1 Code", Job."No.");
+                    If JSetup."Dimension Proyecto" = Setup."Global Dimension 2 Code" Then
+                        BudgetEntry.Validate("Global Dimension 2 Code", Job."No.");
+                    if JSetup."Dimension Proyecto" = Setup."Shortcut Dimension 3 Code" Then
+                        BudgetEntry.Validate("Budget Dimension 3 Code", Job."No.");
+                    if JSetup."Dimension Proyecto" = Setup."Shortcut Dimension 4 Code" Then
+                        BudgetEntry.Validate("Budget Dimension 4 Code", Job."No.");
+
+
+                end;
+                BudgetEntry.Validate(Amount, JobPlaningLine."Total Cost");
+                Case JobPlaningLine.Type Of
+                    "Job Planning Line Type"::"G/L Account":
+                        begin
+                            BudgetEntry."G/L Account No." := JobPlaningLine."No.";
+
+                        end;
+                    "Job Planning Line Type"::"Resource":
+                        begin
+                            Res.Get(JobPlaningLine."No.");
+                            GroupSetup.Get(Customer."Gen. Bus. Posting Group", Res."Gen. Prod. Posting Group");
+                            BudgetEntry."G/L Account No." := GroupSetup."Purch. Account";
+                        end;
+                    "Job Planning Line Type"::Item:
+                        begin
+                            Item.Get(JobPlaningLine."No.");
+                            GroupSetup.Get(Customer."Gen. Bus. Posting Group", Item."Gen. Prod. Posting Group");
+                            BudgetEntry."G/L Account No." := GroupSetup."Purch. Account";
+                        end;
+
+                End;
+                BudgetEntry.Description := JobPlaningLine.Description;
+                if BudgetEntry.Amount <> 0 then
+                    BudgetEntry.Insert(true);
+            until JobPlaningLine.Next() = 0;
+
     end;
 
 

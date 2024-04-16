@@ -33,6 +33,11 @@ pageextension 50104 "SetupJob" extends "Jobs Setup" //463
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Prefijo que se va a utilizar para asignar números de capítulos a los proyectos. field.';
             }
+            field("Dimension Proyecto"; Rec."Dimension Proyecto")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Dimension Proyecto field.';
+            }
 
         }
         addlast(Numbering)

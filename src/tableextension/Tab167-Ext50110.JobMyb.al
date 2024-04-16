@@ -91,6 +91,18 @@ tableextension 50110 "JobMyb" extends Job //167
             DataClassification = ToBeClassified;
             Caption = 'Cod.Almacen Proyecto almacen';
         }
+        field(50104; "Cód. Presupuesto"; Code[10])
+        {
+            TableRelation = "G/L budget Name".Name;
+            trigger OnValidate()
+            var
+                BudgetEntry: Record "G/L Budget Entry";
+            begin
+                if rec."Cód. Presupuesto" <> '' then begin
+                    rec."Cód. Presupuesto" := rec."Cód. Presupuesto";
+                end;
+            end;
+        }
     }
     procedure AddOfertaaProyecto()
     var

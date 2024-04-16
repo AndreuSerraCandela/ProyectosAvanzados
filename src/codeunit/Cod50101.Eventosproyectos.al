@@ -5,6 +5,27 @@ codeunit 50101 "Eventos-proyectos"
 
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Job", 'OnAfterInsertEvent', '', false, false)]
+    local procedure OnAfterInsertEvent(var Rec: Record Job)
+    var
+        Dimension: Record Dimension;
+        DimensionValue: Record "Dimension Value";
+        SetupJob: Record "Jobs Setup";
+    begin
+        SetupJob.Get();
+        If setupJob."Dimension Proyecto" <> '' then begin
+            Dimension.Get(setupJob."Dimension Proyecto");
+            If Not DimensionValue.Get(SetupJob."Dimension Proyecto", Rec."No.") then begin
+                DimensionValue.Validate("Dimension Code", SetupJob."Dimension Proyecto");
+                DimensionValue.Validate(Code, Rec."No.");
+                DimensionValue.Validate(Name, Copystr(Rec.Description, 1, MaxStrLen(DimensionValue.Name)));
+
+                DimensionValue.Insert(true);
+            end;
+
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Create-Invoice", 'OnCreateSalesHeaderOnBeforeCheckBillToCustomerNo', '', false, false)]
     local procedure OnCreateSalesHeaderOnBeforeCheckBillToCustomerNo(var SalesHeader: Record "Sales Header"; Job: Record Job; JobPlanningLine: Record "Job Planning Line"; var IsHandled: Boolean)
     begin

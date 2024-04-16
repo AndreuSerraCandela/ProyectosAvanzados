@@ -39,6 +39,12 @@ tableextension 50108 "JobSetup" extends "Jobs Setup" //315
         { }
         field(50106; "Prefijo Capítulo"; Code[10])
         { }
+        field(50107; "Dimension Proyecto"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Dimension;
+            Caption = 'Dimension Proyecto';
+        }
 
     }
 

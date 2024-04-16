@@ -21,6 +21,13 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 Editable = false;
                 DrillDown = true;
             }
+            field("Cód. Presupuesto"; Rec."Cód. Presupuesto")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Cód. Presupuesto field.';
+                Editable = true;
+                DrillDown = true;
+            }
 
 
 
@@ -231,6 +238,18 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                 begin
                     TareasEstandard := not TareasEstandard;
                     CurrPage.JobTaskLines2.Page.cargaProyecto(Rec."No.");
+                end;
+            }
+            action("Crear Presupuesto")
+            {
+                ApplicationArea = All;
+                Caption = 'Crear Presupuesto';
+                Image = LedgerBudget;
+                trigger OnAction()
+                var
+                    CodProyecto: Codeunit ProcesosProyectos;
+                begin
+                    CodProyecto.CrearPresupuesto(Rec);
                 end;
             }
 
