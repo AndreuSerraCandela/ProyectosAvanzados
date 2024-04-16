@@ -65,6 +65,10 @@ tableextension 50100 "LineasPlanificacion" extends "Job Planning Line"//1003
         {
             DataClassification = ToBeClassified;
         }
+        field(50015; "Naturaleza Contable"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
         field(90001; "Bill-to Customer No."; Code[20])
         {
             Caption = 'Cliente Facturación';
