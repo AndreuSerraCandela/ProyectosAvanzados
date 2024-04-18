@@ -1275,7 +1275,7 @@ codeunit 50100 "ProcesosProyectos"
         // OnAfterOpenSalesInvoice(JobPlanningLineInvoice);
     end;
 
-    internal procedure CrearPresupuesto(Rec: Record Job)
+    internal procedure CrearPresupuesto(var Rec: Record Job)
     var
         JSetup: Record "Jobs Setup";
         Setup: Record "General Ledger Setup";
