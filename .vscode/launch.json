@@ -22,11 +22,20 @@
 
             // "tenant": "cfe8200f-dc0e-4d6a-8164-a55d7626cce2",
             // "tenant": "fe659371-d016-40ff-a31c-a52888650f25",
+<<<<<<< HEAD
             //  "environmentName": "DesarrolloTech4Plus2",
+=======
+            // "environmentName": "DesarrolloTech4Plus2",
+>>>>>>> 1506c4cbebe714cdd024ec00d03d19f6cfe216f9
 
             "tenant": "cfe8200f-dc0e-4d6a-8164-a55d7626cce2",
 
+<<<<<<< HEAD
             "environmentName": "Demos_Maybe",
+=======
+            //     "environmentName": "Demos_Maybe",
+            "environmentName": "sandbox",
+>>>>>>> 1506c4cbebe714cdd024ec00d03d19f6cfe216f9
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": true,
