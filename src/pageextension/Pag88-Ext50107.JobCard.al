@@ -49,13 +49,14 @@ pageextension 50107 "JobCard" extends "Job Card" //88
         modify(JobTaskLines)
         {
             Visible = TareasEstandard;
+            Caption = 'Tareas Estándar';
         }
         addafter("JobTaskLines")
         {
             part(JobTaskLines2; "Job Task Lines Subform ext")
             {
                 ApplicationArea = Jobs;
-                Caption = 'Tareas';
+                Caption = 'Arbol Tareas';
                 SubPageLink = "Job No." = field("No.");
                 SubPageView = sorting("Job Task No.")
                               order(Ascending);

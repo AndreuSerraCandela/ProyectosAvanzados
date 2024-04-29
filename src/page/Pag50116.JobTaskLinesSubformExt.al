@@ -795,7 +795,7 @@ page 50116 "Job Task Lines Subform Ext"
     trigger OnAfterGetRecord()
     begin
         DescriptionIndent := Rec.Indentation;
-        StyleIsStrong := Rec."Job Task Type" <> "Job Task Type"::Posting;
+        StyleIsStrong := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo; //Rec."Job Task Type" <> "Job Task Type"::Posting;
         CodeEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
         DescriptionEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
         DescriptionIndent := Rec.Indentation;
@@ -805,7 +805,7 @@ page 50116 "Job Task Lines Subform Ext"
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
         Rec.ClearTempDim();
-        StyleIsStrong := Rec."Job Task Type" <> "Job Task Type"::Posting;
+        StyleIsStrong := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;// Rec."Job Task Type" <> "Job Task Type"::Posting;
     end;
 
     local procedure PedidosPendientes(): Decimal
