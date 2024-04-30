@@ -1109,9 +1109,14 @@
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control Versión Base - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Control 1543839911 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
-          <source>Tareas</source>
+          <source>Arbol Tareas</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Control JobTaskLines2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Change 419395161 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Tareas Estándar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Change JobTaskLines - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 4049885189 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
           <source>Funciones Compra</source>
