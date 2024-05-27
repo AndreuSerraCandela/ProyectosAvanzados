@@ -104,6 +104,10 @@ page 50112 "Hist. Job planning line"
                     Caption = 'Total Price (LCY)';
                     Editable = false;
                 }
+                field("Cód.Estimacion"; Rec."Cód.Estimacion")
+                {
+                    ToolTip = 'Specifies the value of the Cód.Estimacion field.', Comment = '%';
+                }
             }
         }
     }

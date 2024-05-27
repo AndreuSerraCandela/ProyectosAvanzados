@@ -28,6 +28,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Currency Code - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3928990288 - Field 2512140858 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cód.Estimacion</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Hist. Job Planning Line - Field Cód.Estimacion - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3928990288 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Description</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -323,10 +328,25 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Total VAT Amount - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 3354071981 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Estimacion</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Estimacion"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page DialogoEstimacion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3354071981 - Control 1507860224 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cód. Estimacion</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Código Estimacion"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page DialogoEstimacion - Control CodEstimacion - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 1072554384 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Hist. Job planning line</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Hist. Job planning line - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1072554384 - Control 2512140858 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Cód.Estimacion field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Hist. Job planning line - Control Cód.Estimacion - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 1072554384 - Control 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Description</source>

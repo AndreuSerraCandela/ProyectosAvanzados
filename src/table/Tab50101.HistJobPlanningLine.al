@@ -129,6 +129,11 @@ table 50101 "Hist. Job Planning Line"
             Caption = 'Total Price';
             Editable = false;
         }
+        field(50100; "Cód.Estimacion"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            //este codigo se rellena en la accion del boton que lo pone el usuario;
+        }
     }
     keys
     {

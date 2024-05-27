@@ -301,7 +301,17 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                     Job: Record Job;
                     Ver: Integer;
                     MenEstimacionLbl: Label '¿Se ha generado la nueva estimacion %1, a fecha %2?';
+                    CodEstimacion: Code[20];
+                    Dialogo: Page DialogoEstimacion;
                 begin
+                    if Dialogo.RunModal() = Action::OK then begin
+                        //  if Confirm('Desea rellenar el codigo de estimacion %1', false, CodEstimacion) then;
+                        CodEstimacion := Dialogo.GetValueCode();
+                    end;
+
+
+                    //Message('Rellene el codigo estimacion %1', CodEstimacion);
+
                     Job.Get(Rec."No.");
                     If Job."Versión Base" = 0 Then Job."Versión Base" := 1;
                     JobPlanningLine.SetRange("Job No.", Rec."No.");
@@ -313,7 +323,9 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                     if JobPlanningLine.FindSet() then
                         repeat
                             HistJobPlanningLine.TransferFields(JobPlanningLine);
+                            HistJobPlanningLine."Cód.Estimacion" := CodEstimacion;
                             HistJobPlanningLine."Version No." := Ver;
+                            HistJobPlanningLine."Version Date" := Today();
                             HistJobPlanningLine.INSERT;
                         until JobPlanningLine.NEXT = 0;
 
@@ -324,6 +336,8 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                             if Not HistJobPlanningLine.FindFirst() Then begin
                                 HistJobPlanningLine.TransferFields(JobPlanningLine);
                                 HistJobPlanningLine."Version No." := job."Versión Base";
+                                HistJobPlanningLine."Cód.Estimacion" := CodEstimacion;
+                                HistJobPlanningLine."Version Date" := Today();
                                 HistJobPlanningLine.INSERT;
                                 Message(MenEstimacionLbl, Job."Versión Base", Today());
                             end;
