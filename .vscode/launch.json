@@ -13,7 +13,8 @@
             // "environmentName": "DesarrolloGantt",
             //"environmentName": "DesarrolloPargroupSanboxDic23",
             "tenant": "ad3eed48-97cd-48ba-a291-b5dd63b6c37a", //entiba
-            "environmentName": "TestEntiba_Mayo",
+            //"environmentName": "TestEntiba_Mayo",
+            "environmentName": "PowerBI",
             // "environmentName": "Desarrollo_Entiba",
 
             // "tenant": "cfe8200f-dc0e-4d6a-8164-a55d7626cce2",
