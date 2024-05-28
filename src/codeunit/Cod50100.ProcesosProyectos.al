@@ -1291,6 +1291,7 @@ codeunit 50100 "ProcesosProyectos"
         Customer.Get(Rec."Bill-to Customer No.");
         BudgetEntry.SetRange("Job No.", Rec."No.");
         BudgetEntry.DeleteAll();
+        BudgetEntry.SetRange("Job No.");
         JobPlaningLine.SetRange("Job No.", Rec."No.");
         JobPlaningLine.SetFilter("Line Type", '%1|%2', JobPlaningLine."Line Type"::"Both Budget and Billable", JobPlaningLine."Line Type"::"Budget");
         If BudgetEntry.FindLast() then Linea := BudgetEntry."Entry No." else Linea := 1;
