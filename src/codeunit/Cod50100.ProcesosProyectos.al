@@ -1349,6 +1349,7 @@ codeunit 50100 "ProcesosProyectos"
                     repeat
                         Linea += 1;
                         BudgetEntry."Entry No." := Linea;
+                        
                     until BudgetEntry.Insert(true);
             end;
 
