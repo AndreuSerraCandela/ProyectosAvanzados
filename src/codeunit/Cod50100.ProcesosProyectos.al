@@ -1294,7 +1294,7 @@ codeunit 50100 "ProcesosProyectos"
         BudgetEntry.SetRange("Job No.");
         JobPlaningLine.SetRange("Job No.", Rec."No.");
         JobPlaningLine.SetFilter("Line Type", '%1|%2', JobPlaningLine."Line Type"::"Both Budget and Billable", JobPlaningLine."Line Type"::"Budget");
-        If BudgetEntry.FindLast() then Linea := BudgetEntry."Entry No." else Linea := 1;
+        If BudgetEntry.FindLast() then Linea := BudgetEntry."Entry No." + 1 else Linea := 1;
         Setup.Get();
         JSetup.Get();
 
@@ -1343,8 +1343,14 @@ codeunit 50100 "ProcesosProyectos"
             BudgetEntry.Validate(Amount, JobPlaningLine."Total Cost");
 
             BudgetEntry.Description := JobPlaningLine.Description;
-            if BudgetEntry.Amount <> 0 then
-                BudgetEntry.Insert(true);
+            if BudgetEntry.Amount <> 0 then begin
+
+                if not BudgetEntry.Insert(true) then
+                    repeat
+                        Linea += 1;
+                        BudgetEntry."Entry No." := Linea;
+                    until BudgetEntry.Insert(true);
+            end;
 
         until JobPlaningLine.Next() = 0;
         Message('Se ha generado el presupuesto para este proyecto');
