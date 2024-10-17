@@ -38,6 +38,11 @@ pageextension 50104 "SetupJob" extends "Jobs Setup" //463
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Dimension Proyecto field.';
             }
+            field("Dias a Sumar"; Rec."Dias a Sumar")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Dias a Sumar field.';
+            }
 
         }
         addlast(Numbering)

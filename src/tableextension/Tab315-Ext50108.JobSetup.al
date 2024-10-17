@@ -45,6 +45,11 @@ tableextension 50108 "JobSetup" extends "Jobs Setup" //315
             TableRelation = Dimension;
             Caption = 'Dimension Proyecto';
         }
+        field(50108; "Dias a Sumar"; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Dias a Sumar';
+        }
 
     }
 

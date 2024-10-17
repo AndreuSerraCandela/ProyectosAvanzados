@@ -1278,6 +1278,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control Cód. Proyecto Obligatorio - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3078122788 - Control 455504362 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2556642749">
+          <source>Specifies the value of the Dias a Sumar field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control Dias a Sumar - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 3078122788 - Control 1025398810 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2556642749">
           <source>Specifies the value of the Número de dígitos que se van a utilizar para asignar números de capítulos a los proyectos. field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1357,6 +1362,11 @@
           <source>Cód. Proyecto Obligatorios en Documentos Pedido/Factura</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobSetup - Field Cód. Proyecto Obligatorio - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1627283316 - Field 455504362 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2556642749">
+          <source>Dias a Sumar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobSetup - Field Dias a Sumar - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1627283316 - Field 1025398810 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2556642749">
           <source>Digitos Capítulo</source>
