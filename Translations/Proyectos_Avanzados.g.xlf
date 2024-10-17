@@ -803,6 +803,456 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Job Ledger E&amp;ntries - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 4238079284 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pendiente facturar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
+          <source>This job planning line was automatically generated. Do you want to continue?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - NamedType Text001</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The %1 was successfully transferred to a %2.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - NamedType Text002</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2814799924 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the bin where the selected item will be put away or picked in warehouse and inventory processes. If you specify a bin code in the To-Job Bin Code field on the Location page, that bin will be suggested when you choose the location.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Bin Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1050534848 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies whether this line is a billable line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Contract Line - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 767741487 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the method that will be used for cost calculation in the item journal line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Cost Calculation Method - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 4104509477 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date that will be used to find the exchange rate for the currency in the Currency Date field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Currency Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the name of the resource, item, or G/L account to which this entry applies. You can change the description.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Description - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 47657272 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies information in addition to the description.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Description 2 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3086747513 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the cost, in the local currency, of one unit of the selected item or resource.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Direct Unit Cost (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 486908828 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies a document number for the planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Document No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 633819257 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the vendor's or customer's trade type to link transactions made for this business partner with the appropriate general ledger account according to the general posting setup.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Gen. Bus. Posting Group - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2139693550 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the item's product type to link transactions made for this item with the appropriate general ledger account according to the general posting setup.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Gen. Prod. Posting Group - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 381588874 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, in local currency, the sales amount that was invoiced for this planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Invoiced Amount (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1508823551 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies, in the local currency, the cost amount that was invoiced for this planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Invoiced Cost Amount (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1800052274 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the entry number of the job planning line that the sales line is linked to.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Job Contract Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1908272084 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of the related job.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Job No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 561421623 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of the related job task.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Job Task No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3286668834 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the entry number of the job ledger entry associated with the job planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Ledger Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2105177955 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the entry type of the job ledger entry associated with the planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Ledger Entry Type - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3582421358 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount that will be posted to the job ledger.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Line Amount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3576043015 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount in the local currency that will be posted to the job ledger.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Line Amount (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2702998682 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the discount percentage that is granted for the item on the line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Line Discount % - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1206454073 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the discount amount that is granted for the item on the line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Line Discount Amount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3320823955 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the planning line's entry number.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Line No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 158172202 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the type of planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Line Type - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2161572060 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies a location code for an item.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Location Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1482668068 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the lot number that is applied to the posted item if the planning line was created from the posting of a job journal line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Lot No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 4200184881 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of the account to which the resource, item or general ledger account is posted, depending on your selection in the Type field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 4263389294 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies that the job is overdue. </source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Overdue - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 4263389294 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Overdue</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Overdue - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3260337296 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date that is planned to deliver the item connected to the job planning line. For a resource, the planned delivery date is the date that the resource performs services with respect to the job.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Planned Delivery Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3324850299 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date of the planning line. You can use the planning date for filtering the totals of the job, for example, if you want to see the scheduled usage for a specific month of the year.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Planning Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 672142357 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount that has been posted to the job ledger. This field is only filled in if the Apply Usage Link check box selected on the job card.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Posted Line Amount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2560226240 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount in the local currency that has been posted to the job ledger. This field is only filled in if the Apply Usage Link check box selected on the job card.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Posted Line Amount (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2996064852 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the total cost that has been posted to the job ledger, if the Usage Link check box has been selected.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Posted Total Cost - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 585392561 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the total cost (LCY) that has been posted to the job ledger, if the Usage Link check box has been selected.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Posted Total Cost (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3428108069 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the method that will be used for price calculation in the item journal line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Price Calculation Method - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2683185145 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the quantity that been posted through a sales invoice.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Qty. Invoiced - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1789440078 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the quantity of the item you have picked for the job planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Qty. Picked - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3604387874 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the base quantity of the item you have picked for the job planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Qty. Picked (Base) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 411522717 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the quantity that has been posted to the job ledger, if the Usage Link check box has been selected.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Qty. Posted - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2330918820 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the quantity that remains to be invoiced. It is calculated as Quantity - Qty. Invoiced.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Qty. to Invoice - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2993675156 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the quantity you want to transfer to the sales invoice or credit memo. The value in this field is calculated as Quantity - Qty. Transferred to Invoice.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Qty. to Transfer to Invoice - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 875188644 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the quantity you want to transfer to the job journal. Its default value is calculated as quantity minus the quantity that has already been posted, if the Apply Usage Link check box has been selected.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Qty. to Transfer to Journal - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1743157636 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the quantity that has been transferred to a sales invoice or credit memo.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Qty. Transferred to Invoice - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2704404533 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of units of the resource, item, or general ledger account that should be specified on the planning line. If you later change the No., the quantity you have entered remains on the line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Quantity - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3179217921 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the quantity expressed in the base units of measure.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Quantity (Base) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 4096577874 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount that will be posted to the job ledger.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Remaining Line Amount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1599070131 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount in the local currency that will be posted to the job ledger.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Remaining Line Amount (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3089617546 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the remaining quantity of the resource, item, or G/L Account that remains to complete a job. The quantity is calculated as the difference between Quantity and Qty. Posted.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Remaining Qty. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3802912407 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the remaining total cost for the planning line. The total cost is in the job currency, which comes from the Currency Code field in the Job Card.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Remaining Total Cost - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 285001966 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the remaining total cost (LCY) for the planning line. The amount is in the local currency.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Remaining Total Cost (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2562415929 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the quantity of the item that is reserved for the job planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Reserved Quantity - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3028007241 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies whether or not a reservation can be made for items on the current line. The field is not applicable if the Type field is set to Resource, Cost, or G/L Account.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control ReserveName - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 47037625 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the serial number that is applied to the posted item if the planning line was created from the posting of a job journal line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Serial No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2283884360 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies that an entry has been created by Business Central and is related to a job ledger entry. The check box is selected automatically.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control System-Created Entry - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3996842083 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the total cost for the planning line. The total cost is in the job currency, which comes from the Currency Code field in the Job Card.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Total Cost - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 4172042866 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the total cost for the planning line. The amount is in the local currency.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Total Cost (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2812148497 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the total price in the job currency on the planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Total Price - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3243911172 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the total price on the planning line. The total price is in the local currency.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Total Price (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1878130204 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the type of account to which the planning line relates.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Type - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 381961415 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the cost of one unit of the item or resource on the line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Unit Cost - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 68186622 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the cost, in LCY, of one unit of the item or resource on the line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Unit Cost (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2385270358 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies how each unit of the item or resource is measured, such as in pieces or hours. By default, the value in the Base Unit of Measure field on the item or resource card is inserted.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Unit of Measure Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2937233469 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the price of one unit of the item or resource. You can enter a price manually or have it entered according to the Price/Profit Calculation field on the related card.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Unit Price - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1708449288 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the price, in LCY, of one unit of the item or resource. You can enter a price manually or have it entered according to the Price/Profit Calculation field on the related card.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Unit Price (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 1244498335 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies whether the Usage Link field applies to the job planning line. When this check box is selected, usage entries are linked to the job planning line. Selecting this check box creates a link to the job planning line from places where usage has been posted, such as the job journal or a purchase line. You can select this check box only if the line type of the job planning line is Budget or Both Budget and Billable.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Usage Link - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 2708250016 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the ID of the user who posted the entry, to be used, for example, in the change log.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control User ID - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3450651614 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the variant of the item on the line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Variant Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3618073952 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies which work type the resource applies to. Prices are updated based on this entry.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Work Type Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 1140384542 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Job Planning &amp;Line</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Job Planning &amp;Line - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 3647306376 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View all reservations that are made for the item, either manually or automatically.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action &amp;Reservation Entries - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 3647306376 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>&amp;Reservation Entries</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action &amp;Reservation Entries - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 2034013985 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Action133</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Action133 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 428343473 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View job ledger entries related to the job planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Linked Job Ledger E&amp;ntries - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 428343473 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Linked Job Ledger E&amp;ntries</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Linked Job Ledger E&amp;ntries - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 1137230472 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Calculate the shipment and delivery dates based on the item's known and expected availability dates, and then promise the dates to the customer.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action OrderPromising - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 1137230472 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order &amp;Promising</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action OrderPromising - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 3106002577 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>F&amp;unctions</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action F&amp;unctions - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 3032874946 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Action123</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Action123 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 1396317368 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Action130</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Action130 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 1939736624 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Get an overview of demand planning related to jobs, such as the availability of spare parts or other items that you may use in a job. For example, you can determine whether the item you need is in stock, and if it is not, you can determine when the item will be in stock.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action DemandOverview - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 1939736624 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>&amp;Demand Overview</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action DemandOverview - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 1673074985 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tracks the connection of a supply to its corresponding demand. This can help you find the original demand that created a specific production order or purchase order.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Order &amp;Tracking - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 1673074985 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Order &amp;Tracking</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Order &amp;Tracking - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 1383705759 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pendiente facturar Mes actual</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Pendiente facturar Mes actual - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 2942131221 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pendiente facturar Mes anterior</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Pendiente facturar Mes anterior - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 3383493608 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Process</source>
+          <note from="Developer" annotates="general" priority="2">Generated from the PromotedActionCategories property index 1.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Category_Process - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4238079284 - Action 2234406979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Report</source>
+          <note from="Developer" annotates="general" priority="2">Generated from the PromotedActionCategories property index 2.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Category_Report - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Report 2421352948 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Job Transfer to Credit Memo Purch</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1137,6 +1587,11 @@
           <source>Tareas Estándar</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Change JobTaskLines - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2900412208 - Action 3906122219 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2273701615">
+          <source>Pendiente de facturar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobListExt - Action Pendiente de facturar - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 4049885189 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
           <source>Funciones Compra</source>

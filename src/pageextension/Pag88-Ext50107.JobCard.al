@@ -303,6 +303,7 @@ pageextension 50107 "JobCard" extends "Job Card" //88
                     MenEstimacionLbl: Label '¿Se ha generado la nueva estimacion %1, a fecha %2?';
                     CodEstimacion: Code[20];
                     Dialogo: Page DialogoEstimacion;
+                    page1007: Page 1007;
                 begin
                     if Dialogo.RunModal() = Action::OK then begin
                         //  if Confirm('Desea rellenar el codigo de estimacion %1', false, CodEstimacion) then;
