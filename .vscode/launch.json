@@ -12,9 +12,9 @@
             // "tenant": "020a7edc-d29a-4bce-b041-34c1fdc5381f",
             // "environmentName": "DesarrolloGantt",
             //"environmentName": "DesarrolloPargroupSanboxDic23",
-            "tenant": "ad3eed48-97cd-48ba-a291-b5dd63b6c37a", //entiba
+            //"tenant": "ad3eed48-97cd-48ba-a291-b5dd63b6c37a", //entiba
             // "environmentName": "TestEntiba_Mayo",
-            "environmentName": "PowerBI",
+            "environmentName": "sandbox24",
             //"environmentName": "DesarrolloEntiba_280520024",
             // "environmentName": "Desarrollo_Entiba",
 
