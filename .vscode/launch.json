@@ -6,18 +6,20 @@
             "request": "launch",
             "type": "al",
             "environmentType": "Sandbox",
+            // "environmentName": "Desarrollo_052124",
             // "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e", //pargroup
             //  "tenant": "8d4a17f2-1b25-4d79-8174-3d100994f228",
-            // "environmentName": "Desarrollo_052124",
-            // "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
+
+
             // "tenant": "020a7edc-d29a-4bce-b041-34c1fdc5381f",
             // "environmentName": "DesarrolloGantt",
             //"environmentName": "DesarrolloPargroupSanboxDic23",
-            //  "environmentName": "zz_Entiba_nov",
-            //  "tenant": "ad3eed48-97cd-48ba-a291-b5dd63b6c37a", //entiba
+            "environmentName": "DesarrolloEntiba_280520024",
+
+            "tenant": "ad3eed48-97cd-48ba-a291-b5dd63b6c37a", //entiba
             // "environmentName": "DesarrolloTech4Plus2",
-            "environmentName": "DesarrolloGantt",
-            "tenant": "fe659371-d016-40ff-a31c-a52888650f25",
+            //"environmentName": "DesarrolloGantt",
+            //"tenant": "fe659371-d016-40ff-a31c-a52888650f25",
             //   "environmentName": "PowerBI",
             //"tenant": "ad3eed48-97cd-48ba-a291-b5dd63b6c37a", //entiba
             // "environmentName": "TestEntiba_Mayo",
