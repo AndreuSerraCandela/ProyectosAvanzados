@@ -15,8 +15,8 @@
 
   ],
   "screenshots": [],
-  "platform": "1.0.0.0",
-  "application": "23.1.0.0",
+  "platform": "25.0.0.0",
+  "application": "25.0.0.0",
   "idRanges": [
     {
       "from": 50100,
@@ -24,7 +24,7 @@
     }
   ],
   "contextSensitiveHelpUrl": "https://Planificaicon_Compra.com/help/",   
-  "runtime": "11.1",  
+  "runtime": "15.0",  
   "features": [ "GenerateCaptions","TranslationFile"]
 
 }
