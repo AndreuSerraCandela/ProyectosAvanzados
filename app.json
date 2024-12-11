@@ -24,7 +24,15 @@
     }
   ],
   "contextSensitiveHelpUrl": "https://Planificaicon_Compra.com/help/",   
+<<<<<<< HEAD
   "runtime": "13.0",  
+=======
+<<<<<<< HEAD
+  "runtime": "15.0",  
+=======
+  "runtime": "13.1",  
+>>>>>>> 434196e0f036799824f0583b450c1f222c5f56b2
+>>>>>>> ee517eeae0667c40da8718f9eaf9dee79855b27a
   "features": [ "GenerateCaptions","TranslationFile"]
 
 }
