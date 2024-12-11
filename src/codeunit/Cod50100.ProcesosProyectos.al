@@ -1,6 +1,8 @@
 /// <summary>
 /// Codeunit ProcesosProyectos (ID 50100).
 /// </summary>
+/// 
+
 codeunit 50100 "ProcesosProyectos"
 {
     Permissions = TableData "G/L Budget Entry" = rimd;
@@ -960,7 +962,8 @@ codeunit 50100 "ProcesosProyectos"
               DimSetIDArr[5],
               PurchaseLine."Shortcut Dimension 1 Code",
               PurchaseLine."Shortcut Dimension 2 Code",
-              SourceCodeSetup.Purchases,
+             // SourceCodeSetup.Purchases,
+             SourceCodeSetup."Primary Key",
               DATABASE::Job);
             //DATABASE::JOB);
             PurchaseLine."Dimension Set ID" :=
@@ -1349,7 +1352,7 @@ codeunit 50100 "ProcesosProyectos"
                     repeat
                         Linea += 1;
                         BudgetEntry."Entry No." := Linea;
-                        
+
                     until BudgetEntry.Insert(true);
             end;
 
