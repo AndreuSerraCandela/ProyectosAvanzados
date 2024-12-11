@@ -10,8 +10,7 @@
   "help": "",
   "url": "",
   "logo": "",
-  "dependencies": [
-    
+  "dependencies": [   
 
   ],
   "screenshots": [],
@@ -24,7 +23,7 @@
     }
   ],
   "contextSensitiveHelpUrl": "https://Planificaicon_Compra.com/help/",   
-  "runtime": "13.1",  
+ "runtime": "13.0",    
   "features": [ "GenerateCaptions","TranslationFile"]
 
 }
