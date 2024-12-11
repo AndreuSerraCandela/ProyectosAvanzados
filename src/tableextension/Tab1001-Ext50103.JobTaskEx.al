@@ -203,7 +203,7 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
     end;
 
 
-    local procedure CalculaFestivo(FechainicioTarea: Date): date
+    procedure CalculaFestivo(FechainicioTarea: Date): date
     var
         Festivo: Record "Base Calendar Change";
         Dia: Integer;
