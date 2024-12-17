@@ -94,6 +94,10 @@ codeunit 50100 "ProcesosProyectos"
         JobPlaningLine: Record "Job Planning Line";
     begin
         If JobPlaningLine.get(PurchLine."Job No.", PurchLine."Job Task No.", PurchLine."Job Planning Line No.") Then begin
+            if PurchLine."Document Type" = PurchLine."Document Type"::Quote then begin
+                JobPlaningLine."Cantidad en Oferta Compra" += PurchLine.Quantity;
+                JobPlaningLine."Nº documento Compra" := PurchLine."Document No.";
+            end;
             if PurchLine."Document Type" = PurchLine."Document Type"::Order then begin
                 JobPlaningLine."Cantidad en Pedido Compra" += PurchLine.Quantity;
                 JobPlaningLine."Nº documento Compra" := PurchLine."Document No.";
@@ -912,6 +916,8 @@ codeunit 50100 "ProcesosProyectos"
             PurchaseLine.Validate("Unit of Measure Code", JobPlanningLine2."Unit of Measure Code");
             //PurchaseLine.Validate(Quantity, Factor * JobPlanningLine."Qty. to Transfer to Invoice");
             case PurchaseHeader2."Document Type" of
+                PurchaseHeader2."Document Type"::Quote:
+                    PurchaseLine.Validate(Quantity, Factor * (JobPlanningLine2.Quantity - JobPlanningLine."Cantidad en Oferta Compra"));
                 PurchaseHeader2."Document Type"::Order:
                     PurchaseLine.Validate(Quantity, Factor * (JobPlanningLine2.Quantity - JobPlanningLine."Cantidad en Pedido Compra"));
                 PurchaseHeader2."Document Type"::Invoice, PurchaseHeader2."Document Type"::"Credit Memo":
@@ -923,9 +929,7 @@ codeunit 50100 "ProcesosProyectos"
                 PurchaseLine.Validate("Bin Code", JobPlanningLine2."Bin Code");
             if JobInvCurrency then begin
                 Currency.Get(PurchaseLine."Currency Code");
-                // PurchaseLine.Validate("Unit Price",
-                //   Round(JobPlanningLine."Unit Price" * PurchaseHeader."Currency Factor",
-                //     Currency."Unit-Amount Rounding Precision"));
+
                 PurchaseLine.Validate("Unit Cost",
                   Round(JobPlanningLine2."Unit Cost" * PurchaseHeader."Currency Factor",
                     Currency."Unit-Amount Rounding Precision"));

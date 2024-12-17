@@ -6,6 +6,9 @@
       "request": "launch",
       "type": "al",
       "environmentType": "Sandbox",
+      "environmentName": "ZZ_DIC24_TECH4PLUS",
+      "tenant": "fe659371-d016-40ff-a31c-a52888650f25",
+
       //   "environmentName": "ZZ_ProyectoAvanzados",
       //  "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e", //pargroup
       //  "tenant": "8d4a17f2-1b25-4d79-8174-3d100994f228",

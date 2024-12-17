@@ -56,6 +56,16 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
         }
         addafter(Quantity)
         {
+            field("Cantidad en Oferta Compra"; Rec."Cantidad en Oferta Compra")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Cantidad en Oferta Compra field.', Comment = '%';
+            }
+            field("Cantidad en Pedido Compra"; Rec."Cantidad en Pedido Compra")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Cantidad en Pedido Compra field.', Comment = '%';
+            }
             field("Cantidad a tr a Factura Compra"; Rec."Cantidad a tr a Factura Compra")
             {
                 ApplicationArea = All;
@@ -74,6 +84,7 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 ApplicationArea = All;
                 Visible = false;
             }
+
         }
     }
 
