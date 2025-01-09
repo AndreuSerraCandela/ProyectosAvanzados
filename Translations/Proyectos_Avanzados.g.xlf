@@ -503,6 +503,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Coste Inicial - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3096838928 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Dependencia2 field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Dependencia2 - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="Page 3008278152 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies a description of the job task. You can enter anything that is meaningful in describing the task. The description is copied and used in descriptions on the job planning line.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1922,6 +1927,11 @@
           <source>Dependencia</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Dependencia - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 3096838928 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Dependencia2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Dependencia2 - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 2793488656 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>Dias Tarea</source>
