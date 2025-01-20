@@ -6,7 +6,7 @@
       "request": "launch",
       "type": "al",
       "environmentType": "Sandbox",
-      "environmentName": "ZZ_DIC24_TECH4PLUS",
+      "environmentName": "CopiaProd241226",
       "tenant": "fe659371-d016-40ff-a31c-a52888650f25",
 
       //   "environmentName": "ZZ_ProyectoAvanzados",

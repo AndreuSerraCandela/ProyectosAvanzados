@@ -32,11 +32,23 @@ table 50114 "Dependecias de Tareas"
                         JobTask."Tipo Dependencia fecha" := TipoFecha::"De fin a inicio";
                 END;
                 //JobTask.Validate("Retardo", JobTask.Retardo);
-                CalcularRetardo(JobTask, rec."Cód. Tarea", Rec."Tareas Dependiente");
+                CalcularFechaTarea(JobTask, rec."Cód. Tarea", Rec."Tareas Dependiente");
 
 
             end;
         }
+
+        field(7; "Tipo Dependencia fecha"; Enum TipoFecha)
+        {
+            DataClassification = ToBeClassified;
+            //  TableRelation = "Job Task"."Tipo Dependencia fecha" where("Job No." = field("Job No."), "Job Task No." = field("Tareas Dependiente"));
+
+        }
+        field(8; "Retraso"; Integer)
+        {
+            DataClassification = ToBeClassified;
+        }
+
 
     }
 
@@ -52,41 +64,168 @@ table 50114 "Dependecias de Tareas"
 
 
 
-    procedure CalcularRetardo(var jobTask: Record "Job Task"; CodTarea: Code[20]; tareaDependencia: code[20])
+    procedure CalcularFechaTarea(var jobTask: Record "Job Task"; CodTarea: Code[20]; tareaDependencia: code[20])
     var
+        ConfSetup: Record "Jobs Setup";
         jobTask2: Record "Job Task";
+        jobTask3: Record "Job Task";
         jobSetup: Record "Jobs Setup";
         TareasTemporales: Record "Job Task" temporary;
         TareaDependiente: Record "Dependecias de Tareas";
         FechaTareInicio: Date;
         FechaTareaFin: Date;
+        FechaTarea: Date;
+        cliente: Record Customer;
+        pTipoFecha: Enum TipoFecha;
     begin
+        ConfSetup.Get();
+
+        TareaDependiente.SetCurrentKey("Tipo Dependencia fecha");
+        TareaDependiente.Ascending;
         TareaDependiente.SetRange("Job No.", jobTask."Job No.");
         TareaDependiente.SetRange("Cód. Tarea", CodTarea);
         if TareaDependiente.FindFirst() then begin
             repeat
-                TareasTemporales.Validate("Job No.", TareaDependiente."Job No.");
-                TareasTemporales.Validate("Job Task No.", TareaDependiente."Tareas Dependiente");
-                GetDatosTarea(TareaDependiente."Job No.", TareaDependiente."Tareas Dependiente", jobTask2);
-                TareasTemporales := jobTask2;
-                //TareasTemporales."Tipo Dependencia fecha" := jobTask2."Tipo Dependencia fecha";
-                //tare
-                // if not TareasTemporales.FindFirst() then
-                TareasTemporales.Insert();
+                Case TareaDependiente."Tipo Dependencia fecha" of
+                    TipoFecha::"De fin a inicio":
+                        begin
+                            //(var jobNo: Code[20]; var Tarea: Code[20]; var pJobTareas: Record "Job Task")
+                            GetDatosTarea(jobTask."Job No.", TareaDependiente."Tareas Dependiente", jobTask2);
+                            if FechaTareaFin = 0D then
+                                FechaTareaFin := jobTask2.CalculaFestivo(jobTask2."Fecha fin Tarea");
+                            IF FechaTareaFin < jobTask2."Fecha fin Tarea" then
+                                FechaTareaFin := jobTask2.CalculaFestivo(jobTask2."Fecha fin Tarea");
+
+                            FechaTareaFin := FechaTareaFin + 1 + TareaDependiente.Retraso;
+                            FechaTareaFin := jobTask2.CalculaFestivo(FechaTareaFin);
+                            pTipoFecha := TareaDependiente."Tipo Dependencia fecha";
+                        end;
+
+                    TipoFecha::"De fin a fin":
+                        begin
+                            //(var jobNo: Code[20]; var Tarea: Code[20]; var pJobTareas: Record "Job Task")
+                            GetDatosTarea(jobTask."Job No.", TareaDependiente."Tareas Dependiente", jobTask2);
+                            if FechaTareaFin = 0D then
+                                FechaTareaFin := jobTask2.CalculaFestivo(jobTask2."Fecha fin Tarea");
+                            IF FechaTareaFin < jobTask2."Fecha fin Tarea" then
+                                FechaTareaFin := jobTask2.CalculaFestivo(jobTask2."Fecha fin Tarea");
+
+                            FechaTareaFin := FechaTareaFin + 1 + TareaDependiente.Retraso;
+                            FechaTareaFin := jobTask2.CalculaFestivo(FechaTareaFin);
+                            pTipoFecha := TareaDependiente."Tipo Dependencia fecha";
+                        end;
+                    TipoFecha::"De inicio a fin":
+                        begin
+                            GetDatosTarea(jobTask."Job No.", TareaDependiente."Tareas Dependiente", jobTask2);
+                            if FechaTareInicio = 0D then
+                                FechaTareInicio := jobTask2.CalculaFestivo(jobTask2."Fecha inicio Tarea");
+                            IF FechaTareInicio < jobTask2."Fecha inicio Tarea" then
+                                FechaTareInicio := jobTask2.CalculaFestivo(jobTask2."Fecha inicio Tarea");
+
+                            FechaTareInicio := FechaTareInicio + 1 + TareaDependiente.Retraso;
+                            FechaTareInicio := jobTask2.CalculaFestivo(FechaTareInicio);
+                            pTipoFecha := TareaDependiente."Tipo Dependencia fecha";
+                        end;
+
+                    TipoFecha::"De inicio a inicio":
+                        begin
+                            GetDatosTarea(jobTask."Job No.", TareaDependiente."Tareas Dependiente", jobTask2);
+                            if FechaTareInicio = 0D then
+                                FechaTareInicio := jobTask2.CalculaFestivo(jobTask2."Fecha inicio Tarea");
+                            IF FechaTareInicio < jobTask2."Fecha inicio Tarea" then
+                                FechaTareInicio := jobTask2.CalculaFestivo(jobTask2."Fecha inicio Tarea");
+
+                            FechaTareInicio := FechaTareInicio + 1 + TareaDependiente.Retraso;
+                            FechaTareInicio := jobTask2.CalculaFestivo(FechaTareInicio);
+                            pTipoFecha := TareaDependiente."Tipo Dependencia fecha";
+                        end;
+                end;
             until TareaDependiente.Next() = 0;
 
+
+            if FechaTareaFin < FechaTareInicio then begin
+                FechaTarea := FechaTareInicio;
+            end else
+                FechaTarea := FechaTareaFin;
+
+            jobTask3.SetRange("Job No.", jobTask."Job No.");
+            jobTask3.SetRange("Job Task No.", CodTarea);
+            IF jobTask3.FindFirst() then begin
+                case pTipoFecha of
+                    pTipoFecha::"De inicio a fin":
+                        begin
+                            jobTask3.Validate(jobTask3."Fecha fin Tarea", FechaTarea);
+
+                            IF jobTask3."Fecha inicio Tarea" = 0D then
+                                jobTask3.Validate("Fecha inicio Tarea", FechaTarea);
+
+                            if jobTask3."Dias Tarea" <> 0 then begin
+                                jobTask3."Fecha inicio Tarea" := jobTask3."Fecha inicio Tarea" - jobTask3."Dias Tarea";
+                                // jobTask3.Validate(jobTask3."Fecha inicio Tarea");
+                            end else begin
+                                jobTask3."Fecha inicio Tarea" := jobTask3."Fecha inicio Tarea" - ConfSetup."Dias a Sumar";
+                            end;
+                        end;
+                    pTipoFecha::"De fin a fin":
+                        begin
+                            jobTask3.Validate(jobTask3."Fecha fin Tarea", FechaTarea);
+
+                            IF jobTask3."Fecha inicio Tarea" = 0D then
+                                jobTask3.Validate("Fecha inicio Tarea", FechaTarea);
+
+                            if jobTask3."Dias Tarea" <> 0 then begin
+                                jobTask3."Fecha inicio Tarea" := jobTask3."Fecha inicio Tarea" - jobTask3."Dias Tarea";
+                                //jobTask3.Validate(jobTask3."Fecha inicio Tarea");
+                            end else begin
+                                jobTask3."Fecha inicio Tarea" := jobTask3."Fecha inicio Tarea" - ConfSetup."Dias a Sumar";
+                            end;
+
+                        end;
+                    pTipoFecha::"De fin a inicio":
+                        begin
+                            jobTask3.Validate(jobTask3."Fecha inicio Tarea", FechaTarea);
+
+                            if jobTask3."Fecha fin Tarea" = 0D then
+                                jobTask3.Validate(jobTask3."Fecha fin Tarea", jobTask3."Fecha inicio Tarea");
+
+                            if jobTask3."Dias Tarea" <> 0 then begin
+                                jobTask3."Fecha fin Tarea" := jobTask3."Fecha fin Tarea" + jobTask3."Dias Tarea";
+                                // jobTask3.Validate(jobTask3."Fecha fin Tarea");
+                            end else begin
+                                jobTask3."Fecha fin Tarea" := jobTask3."Fecha fin Tarea" + ConfSetup."Dias a Sumar";
+                            end;
+                        end;
+                    pTipoFecha::"De inicio a inicio":
+                        begin
+                            jobTask3.Validate(jobTask3."Fecha inicio Tarea", FechaTarea);
+
+                            if jobTask3."Fecha fin Tarea" = 0D then
+                                jobTask3.Validate(jobTask3."Fecha fin Tarea", jobTask3."Fecha inicio Tarea");
+
+                            if jobTask3."Dias Tarea" <> 0 then begin
+                                jobTask3."Fecha fin Tarea" := jobTask3."Fecha fin Tarea" + jobTask3."Dias Tarea";
+                                //  jobTask3.Validate(jobTask3."Fecha fin Tarea");
+                            end else begin
+                                jobTask3."Fecha fin Tarea" := jobTask3."Fecha fin Tarea" + ConfSetup."Dias a Sumar";
+                            end;
+                        end;
+                end;
+
+                jobTask3.Modify();
+            END;
+
         end;
-        TareasTemporales.SetCurrentKey("Fecha inicio Tarea");
-        TareasTemporales.SetRange("Job No.", jobTask."Job No.");
-        if TareasTemporales.FindFirst() then
-            FechaTareInicio := TareasTemporales."Fecha inicio Tarea";
+        // TareasTemporales.SetCurrentKey("Fecha inicio Tarea");
+        // TareasTemporales.SetRange("Job No.", jobTask."Job No.");
+        // if TareasTemporales.FindFirst() then
+        //     FechaTareInicio := TareasTemporales."Fecha inicio Tarea";
 
 
-        TareasTemporales.SetCurrentKey("Fecha fin Tarea");
-        TareasTemporales.Ascending(false);
-        TareasTemporales.SetRange("Job No.", jobTask."Job No.");
-        if TareasTemporales.FindFirst() then
-            FechaTareaFin := TareasTemporales."Fecha fin Tarea";
+        // TareasTemporales.SetCurrentKey("Fecha fin Tarea");
+        // TareasTemporales.Ascending(false);
+        // TareasTemporales.SetRange("Job No.", jobTask."Job No.");
+        // if TareasTemporales.FindFirst() then
+        //     FechaTareaFin := TareasTemporales."Fecha fin Tarea";
         //FechaTareaFin
 
         // TareasTemporales.SetCurrentKey("Fecha inicio Tarea", "Fecha fin Tarea");
@@ -131,48 +270,50 @@ table 50114 "Dependecias de Tareas"
         //     TareasTemporales.Modify();
         // end;
 
+        /*
+                jobTask2.SetRange("Job No.", jobTask."Job No.");
+                jobTask2.SetRange("Job Task No.", CodTarea);
+                if jobTask2.FindFirst() then begin
+                    FechaTareInicio := jobTask2."Fecha inicio Tarea";
+                    // if jobTask2.Get(jobTask."Job No.", jobTask.Dependencia) then begin
+                    Case jobTask2."Tipo Dependencia fecha" of
+                        TipoFecha::"De fin a inicio":
+                            begin
+                                jobTask2."Fecha inicio Tarea" := jobTask."Fecha fin Tarea" + jobTask.Retardo + jobSetup."Dias a Sumar";
+                                jobTask2."Fecha inicio Tarea" := jobTask.CalculaFestivo(jobTask."Fecha inicio Tarea");
 
-        jobTask2.SetRange("Job No.", jobTask."Job No.");
-        jobTask2.SetRange("Job Task No.", CodTarea);
-        if jobTask2.FindFirst() then begin
-            // if jobTask2.Get(jobTask."Job No.", jobTask.Dependencia) then begin
-            Case jobTask2."Tipo Dependencia fecha" of
-                TipoFecha::"De fin a inicio":
-                    begin
-                        jobTask2."Fecha inicio Tarea" := jobTask."Fecha fin Tarea" + jobTask.Retardo + jobSetup."Dias a Sumar";
-                        jobTask2."Fecha inicio Tarea" := jobTask.CalculaFestivo(jobTask."Fecha inicio Tarea");
-
-                        jobTask2."Fecha fin Tarea" := jobTask."Fecha inicio tarea" + jobTask."Dias Tarea";
-                        jobTask2."Fecha fin Tarea" := jobTask.CalculaFestivo(jobTask."Fecha fin Tarea");
+                                jobTask2."Fecha fin Tarea" := jobTask."Fecha inicio tarea" + jobTask."Dias Tarea";
+                                jobTask2."Fecha fin Tarea" := jobTask.CalculaFestivo(jobTask."Fecha fin Tarea");
+                            end;
+                        TipoFecha::"De inicio a inicio":
+                            begin
+                                jobTask2."Fecha inicio Tarea" := jobTask."Fecha inicio Tarea" + jobTask.Retardo + jobSetup."Dias a Sumar";
+                                jobTask2."Fecha inicio Tarea" := jobTask.CalculaFestivo(jobTask."Fecha inicio Tarea");
+                                jobTask2."Fecha fin Tarea" := jobTask."Fecha inicio Tarea" + jobTask."Dias Tarea";
+                                jobTask2."Fecha fin Tarea" := jobTask.CalculaFestivo(jobTask."Fecha fin Tarea");
+                            end;
+                        TipoFecha::"De fin a fin":
+                            begin
+                                jobTask2."Fecha fin Tarea" := jobTask."Fecha fin Tarea" + jobTask.Retardo + jobSetup."Dias a Sumar";
+                                jobTask2."Fecha fin Tarea" := jobTask.CalculaFestivo(jobTask."Fecha Fin Tarea");
+                                jobTask2."Fecha inicio Tarea" := jobTask."Fecha fin Tarea" - jobTask."Dias Tarea";
+                                jobTask2."Fecha inicio Tarea" := jobTask.CalculaFestivo(jobTask."Fecha inicio Tarea");
+                            end;
+                        TipoFecha::"De inicio a fin":
+                            begin
+                                // jobTask2."Fecha inicio Tarea" := jobTask."Fecha inicio Tarea" + jobTask.Retardo + jobSetup."Dias a Sumar";
+                                // jobTask2."Fecha inicio Tarea" := jobTask.CalculaFestivo(jobTask."Fecha inicio Tarea");
+                                // jobTask2."Fecha fin Tarea" := jobTask."Fecha inicio Tarea" + jobTask."Dias Tarea";
+                                // jobTask2."Fecha fin Tarea" := jobTask.CalculaFestivo(jobTask."Fecha inicio Tarea");
+                                jobTask2."Fecha inicio Tarea" := jobTask."Fecha inicio Tarea" + jobTask.Retardo + jobSetup."Dias a Sumar";
+                                jobTask2."Fecha inicio Tarea" := jobTask.CalculaFestivo(FechaTareInicio);
+                                jobTask2."Fecha fin Tarea" := FechaTareInicio + jobTask."Dias Tarea";
+                                jobTask2."Fecha fin Tarea" := jobTask.CalculaFestivo(FechaTareaFin);
+                            end;
                     end;
-                TipoFecha::"De inicio a inicio":
-                    begin
-                        jobTask2."Fecha inicio Tarea" := jobTask."Fecha inicio Tarea" + jobTask.Retardo + jobSetup."Dias a Sumar";
-                        jobTask2."Fecha inicio Tarea" := jobTask.CalculaFestivo(jobTask."Fecha inicio Tarea");
-                        jobTask2."Fecha fin Tarea" := jobTask."Fecha inicio Tarea" + jobTask."Dias Tarea";
-                        jobTask2."Fecha fin Tarea" := jobTask.CalculaFestivo(jobTask."Fecha fin Tarea");
-                    end;
-                TipoFecha::"De fin a fin":
-                    begin
-                        jobTask2."Fecha fin Tarea" := jobTask."Fecha fin Tarea" + jobTask.Retardo + jobSetup."Dias a Sumar";
-                        jobTask2."Fecha fin Tarea" := jobTask.CalculaFestivo(jobTask."Fecha Fin Tarea");
-                        jobTask2."Fecha inicio Tarea" := jobTask."Fecha fin Tarea" - jobTask."Dias Tarea";
-                        jobTask2."Fecha inicio Tarea" := jobTask.CalculaFestivo(jobTask."Fecha inicio Tarea");
-                    end;
-                TipoFecha::"De inicio a fin":
-                    begin
-                        // jobTask2."Fecha inicio Tarea" := jobTask."Fecha inicio Tarea" + jobTask.Retardo + jobSetup."Dias a Sumar";
-                        // jobTask2."Fecha inicio Tarea" := jobTask.CalculaFestivo(jobTask."Fecha inicio Tarea");
-                        // jobTask2."Fecha fin Tarea" := jobTask."Fecha inicio Tarea" + jobTask."Dias Tarea";
-                        // jobTask2."Fecha fin Tarea" := jobTask.CalculaFestivo(jobTask."Fecha inicio Tarea");
-                        jobTask2."Fecha inicio Tarea" := jobTask."Fecha inicio Tarea" + jobTask.Retardo + jobSetup."Dias a Sumar";
-                        jobTask2."Fecha inicio Tarea" := jobTask.CalculaFestivo(FechaTareInicio);
-                        jobTask2."Fecha fin Tarea" := FechaTareInicio + jobTask."Dias Tarea";
-                        jobTask2."Fecha fin Tarea" := jobTask.CalculaFestivo(FechaTareaFin);
-                    end;
-            end;
-            jobTask2.Modify();
-        end;
+                    jobTask2.Modify();
+                end;
+                */
     end;
 
     procedure GetDatosTarea(var jobNo: Code[20]; var Tarea: Code[20]; var pJobTareas: Record "Job Task")
