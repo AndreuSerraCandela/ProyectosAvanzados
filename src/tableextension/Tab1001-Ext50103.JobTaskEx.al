@@ -135,8 +135,15 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
             begin
                 If ("Fecha inicio Tarea" <> 0D) and (("Fecha fin Tarea" <> 0D) or ("Dias Tarea" <> 0)) then
                     if "Fecha fin Tarea" = 0D then "Fecha fin Tarea" := "Fecha inicio Tarea";
-                if "Fecha inicio Tarea" = 0D then "Fecha inicio Tarea" := "Fecha fin Tarea";
-                "Dias Tarea" := "Fecha fin Tarea" - "Fecha inicio Tarea";
+                if "Fecha inicio Tarea" = 0D then
+                    "Fecha inicio Tarea" := "Fecha fin Tarea";
+
+                IF (REC."Fecha fin Tarea" <> xRec."Fecha fin Tarea") OR
+                   (REC."Fecha inicio Tarea" <> XREC."Fecha inicio Tarea") then begin
+                    "Dias Tarea" := 0;
+                    if rec."Fecha fin Tarea" <> 0D then
+                        rec."Dias Tarea" := "Fecha fin Tarea" - "Fecha inicio Tarea";
+                END;
                 CalculaFechas();
 
             end;
@@ -184,9 +191,22 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
             DataClassification = ToBeClassified;
             trigger OnValidate()
             begin
-                If ("Fecha inicio Tarea" <> 0D) and (("Fecha fin Tarea" <> 0D) or ("Dias Tarea" <> 0)) then
-                    if "Fecha inicio Tarea" = 0D then "Fecha inicio Tarea" := "Fecha fin Tarea";
-                "Fecha fin Tarea" := SumarDias_SinContarFestivos("Fecha inicio Tarea", "Dias Tarea"); // + "Dias Tarea";
+                rec.CalcFields(Dependencia2);
+                // if Rec.Dependencia2 = 0 then begin
+                If (Rec."Fecha inicio Tarea" <> 0D) and ((Rec."Fecha fin Tarea" <> 0D) or (Rec."Dias Tarea" <> 0)) then
+                    if Rec."Fecha inicio Tarea" = 0D then Rec."Fecha inicio Tarea" := Rec."Fecha fin Tarea";
+
+                if (rec."Tipo Dependencia fecha" = rec."Tipo Dependencia fecha"::"De fin a fin") or
+                  (rec."Tipo Dependencia fecha" = "Tipo Dependencia fecha"::"De inicio a fin") then begin
+                    IF Rec."Dias Tarea" <> 0 then
+                        rec."Fecha inicio Tarea" := RestarDias_SinContarFestivos(Rec."Fecha fin Tarea", Rec."Dias Tarea");
+                end else begin
+                    IF Rec."Dias Tarea" <> 0 then
+                        Rec."Fecha fin Tarea" := SumarDias_SinContarFestivos(Rec."Fecha inicio Tarea", Rec."Dias Tarea"); // + "Dias Tarea";
+                                                                                                                          //  end else begin
+                end;
+
+                //   end;
 
                 Modify();
                 CalculaFechas();
@@ -257,42 +277,79 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
     end;
 
 
+
     procedure SumarDias_SinContarFestivos(FechainicioTarea: Date; diasAsumar: integer): date
     var
         Festivo: Record "Base Calendar Change";
         Dia: Integer;
-        DiaA: Integer;
+        DiaAContador: Integer;
     begin
-        DiaA := 0;
+        Clear(DiaAContador);
+        if (diasAsumar = 0) or (diasAsumar = 1) then
+            exit(FechainicioTarea);
+        DiaAContador := 1;
         repeat
-            DiaA := DiaA + 1;
+            DiaAContador := DiaAContador + 1;
             FechainicioTarea := FechainicioTarea + 1;
+            FechainicioTarea := CalculaFestivo(FechainicioTarea);
             Dia := Date2DWY(FechainicioTarea, 1);
             If Dia = 6 then
                 FechainicioTarea := FechainicioTarea + 2;
             if Dia = 7 then
                 FechainicioTarea := FechainicioTarea + 1;
 
-        until DiaA = diasAsumar;
+        until DiaAContador >= diasAsumar;
 
-        /*    
-        Festivo.SetRange(Nonworking, true);
-        // if not Festivo.Find() then exit(FechainicioTarea);
-        Festivo.SetRange("Date", FechainicioTarea);
-        //   Festivo.SetRange(nonworking, true);
-        if Festivo.FindFirst() then
-            repeat
-                DiaA := DiaA + 1;
-                FechainicioTarea := FechainicioTarea + DiaA;
-                if Date2DWY(FechainicioTarea, 1) = 6 then
-                    FechainicioTarea := FechainicioTarea + 2;
-                Festivo.SetRange("Date", FechainicioTarea);
-            //until not Festivo.Find() or ;
-            until DiaA = diasAsumar;
-            */
         exit(FechainicioTarea);
     end;
 
+    procedure RestarDias_SinContarFestivos(FechaTarea: Date; diasAsumar: integer): date
+    var
+        Festivo: Record "Base Calendar Change";
+        Dia: Integer;
+        DiaA: Integer;
+    begin
+        DiaA := 1;
+        repeat
+            DiaA := DiaA + 1;
+            FechaTarea := FechaTarea - 1;
+            FechaTarea := CalculaFestivo_Dis(FechaTarea);
+            Dia := Date2DWY(FechaTarea, 1);
+            If Dia = 6 then
+                FechaTarea := FechaTarea - 2;
+            if Dia = 7 then
+                FechaTarea := FechaTarea - 1;
+
+        until DiaA = diasAsumar;
+
+        exit(FechaTarea);
+    end;
+
+    procedure CalculaFestivo_Dis(FechainicioTarea: Date): date
+    var
+        Festivo: Record "Base Calendar Change";
+        Dia: Integer;
+    begin
+        Dia := Date2DWY(FechainicioTarea, 1);
+        If Dia = 6 then
+            //FechainicioTarea := FechainicioTarea + 2;
+            FechainicioTarea := FechainicioTarea - 1;
+        if Dia = 7 then
+            //FechainicioTarea := FechainicioTarea + 1;
+            FechainicioTarea := FechainicioTarea - 2;
+        Festivo.SetRange(Nonworking, true);
+        if not Festivo.Find() then exit(FechainicioTarea);
+        Festivo.SetRange("Date", FechainicioTarea);
+        Festivo.SetRange(nonworking, true);
+        if Festivo.Find() then
+            repeat
+                FechainicioTarea := FechainicioTarea - 1;
+                if Date2DWY(FechainicioTarea, 1) = 6 then
+                    FechainicioTarea := FechainicioTarea - 1;
+                Festivo.SetRange("Date", FechainicioTarea);
+            until not Festivo.Find();
+        exit(FechainicioTarea);
+    end;
 
 
     procedure RecalcularTarea()

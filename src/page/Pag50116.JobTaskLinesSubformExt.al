@@ -48,6 +48,7 @@ page 50116 "Job Task Lines Subform Ext"
                 field(Dependencia; Rec.Dependencia)
                 {
                     ApplicationArea = all;
+                    Visible = false;
 
                 }
                 field(Dependencia2; Rec.Dependencia2)
@@ -65,6 +66,7 @@ page 50116 "Job Task Lines Subform Ext"
                 field(Retardo; rec.Retardo)
                 {
                     ApplicationArea = all;
+                    Visible = false;
 
                 }
                 field("Status Task"; Rec."Status Task")
