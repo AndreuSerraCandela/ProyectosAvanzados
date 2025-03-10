@@ -48,7 +48,7 @@ page 50116 "Job Task Lines Subform Ext"
                 field(Dependencia; Rec.Dependencia)
                 {
                     ApplicationArea = all;
-                    Visible = false;
+                    Visible = not (Multi);
 
                 }
                 field(Dependencia2; Rec.Dependencia2)
@@ -66,7 +66,7 @@ page 50116 "Job Task Lines Subform Ext"
                 field(Retardo; rec.Retardo)
                 {
                     ApplicationArea = all;
-                    Visible = false;
+                    // Visible = not (Multi);
 
                 }
                 field("Status Task"; Rec."Status Task")
@@ -817,11 +817,11 @@ page 50116 "Job Task Lines Subform Ext"
 
     trigger OnAfterGetRecord()
     begin
-        DescriptionIndent := Rec.Indentation;
-        StyleIsStrong := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo; //Rec."Job Task Type" <> "Job Task Type"::Posting;
-        CodeEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
-        DescriptionEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
-        DescriptionIndent := Rec.Indentation;
+        // DescriptionIndent := Rec.Indentation;
+        // StyleIsStrong := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo; //Rec."Job Task Type" <> "Job Task Type"::Posting;
+        // CodeEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
+        // DescriptionEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
+        // DescriptionIndent := Rec.Indentation;
 
 
 

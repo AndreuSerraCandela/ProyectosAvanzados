@@ -94,14 +94,25 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
                         Case Rec."Tipo Dependencia fecha" of
                             TipoFecha::"De fin a inicio":
                                 begin
-                                    //"Fecha inicio Tarea" := jobTask."Fecha fin Tarea" + Retardo + jobSetup."Dias a Sumar";
                                     "Fecha inicio Tarea" := SumarDias_SinContarFestivos(jobTask."Fecha fin Tarea", Retardo + jobSetup."Dias a Sumar");
-                                    //SumarDias_SinContarFestivos
                                     "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
-
                                     // "Fecha fin Tarea" := "Fecha inicio tarea" + "Dias Tarea";
                                     "Fecha fin Tarea" := SumarDias_SinContarFestivos("Fecha inicio tarea", "Dias Tarea");
                                     "Fecha fin Tarea" := CalculaFestivo("Fecha fin Tarea");
+                                end;
+                            TipoFecha::"De inicio a inicio":
+                                begin
+                                    "Fecha inicio Tarea" := SumarDias_SinContarFestivos(jobTask."Fecha fin Tarea", Retardo + jobSetup."Dias a Sumar");
+                                    "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
+                                    // "Fecha fin Tarea" := "Fecha inicio tarea" + "Dias Tarea";
+                                    "Fecha fin Tarea" := SumarDias_SinContarFestivos("Fecha inicio tarea", "Dias Tarea");
+                                    "Fecha fin Tarea" := CalculaFestivo("Fecha fin Tarea");
+                                end;
+
+                            TipoFecha::" ":
+                                begin
+                                    if rec."Fecha fin Tarea" <> 0D then
+                                        "Fecha fin Tarea" := SumarDias_SinContarFestivos("Fecha inicio tarea", Rec.Retardo);
                                 end;
                         end;
                     end;
@@ -224,6 +235,7 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
         field(50015; Dependencia2; Integer)
         {
             // DataClassification = ToBeClassified;
+            Caption = 'Dependencia', comment = 'ESP="Dependencia"';
             FieldClass = FlowField;
             CalcFormula = count("Dependecias de Tareas" where("Job No." = field("Job No."), "Cód. Tarea" = field("Job Task No.")));
 

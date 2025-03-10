@@ -1954,8 +1954,8 @@
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Dependencia - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 3096838928 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
-          <source>Dependencia2</source>
-          <note from="Developer" annotates="general" priority="2"></note>
+          <source>Dependencia</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Dependencia"</note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Dependencia2 - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 2793488656 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
