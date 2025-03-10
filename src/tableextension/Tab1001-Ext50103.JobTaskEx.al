@@ -179,6 +179,13 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
             // ValuesAllowed = ' ', "Completado";
 
         }
+        field(50015; Dependencia2; Integer)
+        {
+            // DataClassification = ToBeClassified;
+            FieldClass = FlowField;
+            CalcFormula = count("Dependecias de Tareas" where("Cód. Tarea" = field("Job Task No.")));
+
+        }
 
     }
 
@@ -203,7 +210,7 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
     end;
 
 
-    local procedure CalculaFestivo(FechainicioTarea: Date): date
+    procedure CalculaFestivo(FechainicioTarea: Date): date
     var
         Festivo: Record "Base Calendar Change";
         Dia: Integer;

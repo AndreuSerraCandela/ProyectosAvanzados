@@ -50,6 +50,12 @@ page 50116 "Job Task Lines Subform Ext"
                     ApplicationArea = all;
 
                 }
+                field(Dependencia2; Rec.Dependencia2)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Dependencia2 field.', Comment = '%';
+                }
+
                 field("Tipo Dependencia fecha"; rec."Tipo Dependencia fecha")
                 {
                     ApplicationArea = all;
