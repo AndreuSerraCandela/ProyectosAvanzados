@@ -64,6 +64,52 @@ codeunit 50100 "ProcesosProyectos"
             end;
         end;
     end;
+    //report 1094 "Job Transfer to Sales Invoice"
+    [EventSubscriber(ObjectType::Report, Report::"Job Transfer to Sales Invoice", 'OnBeforeSetCustomer', '', false, false)]
+    procedure OnBeforeSetCustomer(JobPlanningLine: Record "Job Planning Line"; var BillToCustomerNo: Code[20]; var SellToCustomerNo: Code[20]; var CurrencyCode: Code[20]; var IsHandled: Boolean)
+    var
+        RJob: Record job;
+    begin
+
+        if RJob.Get(JobPlanningLine."Job No.") then
+            if (RJob."Bill-to Customer No." <> JobPlanningLine."Bill-to Customer No.") and (JobPlanningLine."Bill-to Customer No." <> '') then begin
+                BillToCustomerNo := JobPlanningLine."Bill-to Customer No.";
+                IsHandled := true;
+            end;
+
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Create-Invoice", 'OnBeforeTestSalesHeader', '', false, false)]
+    local procedure OnBeforeTestSalesHeader(var SalesHeader: Record "Sales Header"; Job: Record Job; var IsHandled: Boolean; var JobPlanningLine: Record "Job Planning Line")
+    var
+        JobTask: Record "Job Task";
+        Rcliente: Record Customer;
+    begin
+
+        if (Job."Bill-to Customer No." <> JobPlanningLine."Bill-to Customer No.") and (JobPlanningLine."Bill-to Customer No." <> '') then begin
+            if Rcliente.get(JobPlanningLine."Bill-to Customer No.") then
+                Job.Get(JobPlanningLine."Job No.");
+            if Job."Task Billing Method" = Job."Task Billing Method"::"One customer" then begin
+                SalesHeader.TestField("Bill-to Customer No.", Rcliente."No.");
+                SalesHeader.TestField("Sell-to Customer No.", Rcliente."No.");
+            end else begin
+                JobTask.Get(JobPlanningLine."Job No.", JobPlanningLine."Job Task No.");
+                SalesHeader.TestField("Bill-to Customer No.", JobTask."Bill-to Customer No.");
+                SalesHeader.TestField("Sell-to Customer No.", JobTask."Sell-to Customer No.");
+            end;
+
+            if Job."Currency Code" <> '' then
+                SalesHeader.TestField("Currency Code", Job."Currency Code")
+            else
+                if Job."Task Billing Method" = Job."Task Billing Method"::"One customer" then
+                    SalesHeader.TestField("Currency Code", Job."Invoice Currency Code")
+                else
+                    SalesHeader.TestField("Currency Code", JobTask."Invoice Currency Code");
+
+            IsHandled := true;
+        end;
+    end;
+
     // [EventSubscriber(ObjectType::Codeunit,1012,'OnAfterRunCode','',false,false)]
     // local procedure OnAfterRunCode(var JobJournalLine: Record "Job Journal Line"; var JobLedgEntryNo: Integer; var JobRegister: Record "Job Register"; var NextEntryNo: Integer)
     // var
