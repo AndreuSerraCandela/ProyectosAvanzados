@@ -61,6 +61,10 @@ tableextension 50100 "LineasPlanificacion" extends "Job Planning Line"//1003
         }
         field(50006; "Nº documento Compra"; Code[20])
         { }
+        field(50008; "Cantidad en Oferta Compra"; Decimal)
+        {
+            DecimalPlaces = 0 : 5;
+        }
         field(50010; "Cód Oferta Job"; Code[20])
         {
             DataClassification = ToBeClassified;

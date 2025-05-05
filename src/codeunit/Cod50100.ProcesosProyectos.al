@@ -1,6 +1,8 @@
 /// <summary>
 /// Codeunit ProcesosProyectos (ID 50100).
 /// </summary>
+/// 
+
 codeunit 50100 "ProcesosProyectos"
 {
     Permissions = TableData "G/L Budget Entry" = rimd;
@@ -62,6 +64,52 @@ codeunit 50100 "ProcesosProyectos"
             end;
         end;
     end;
+    //report 1094 "Job Transfer to Sales Invoice"
+    [EventSubscriber(ObjectType::Report, Report::"Job Transfer to Sales Invoice", 'OnBeforeSetCustomer', '', false, false)]
+    procedure OnBeforeSetCustomer(JobPlanningLine: Record "Job Planning Line"; var BillToCustomerNo: Code[20]; var SellToCustomerNo: Code[20]; var CurrencyCode: Code[20]; var IsHandled: Boolean)
+    var
+        RJob: Record job;
+    begin
+
+        if RJob.Get(JobPlanningLine."Job No.") then
+            if (RJob."Bill-to Customer No." <> JobPlanningLine."Bill-to Customer No.") and (JobPlanningLine."Bill-to Customer No." <> '') then begin
+                BillToCustomerNo := JobPlanningLine."Bill-to Customer No.";
+                IsHandled := true;
+            end;
+
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Create-Invoice", 'OnBeforeTestSalesHeader', '', false, false)]
+    local procedure OnBeforeTestSalesHeader(var SalesHeader: Record "Sales Header"; Job: Record Job; var IsHandled: Boolean; var JobPlanningLine: Record "Job Planning Line")
+    var
+        JobTask: Record "Job Task";
+        Rcliente: Record Customer;
+    begin
+
+        if (Job."Bill-to Customer No." <> JobPlanningLine."Bill-to Customer No.") and (JobPlanningLine."Bill-to Customer No." <> '') then begin
+            if Rcliente.get(JobPlanningLine."Bill-to Customer No.") then
+                Job.Get(JobPlanningLine."Job No.");
+            if Job."Task Billing Method" = Job."Task Billing Method"::"One customer" then begin
+                SalesHeader.TestField("Bill-to Customer No.", Rcliente."No.");
+                SalesHeader.TestField("Sell-to Customer No.", Rcliente."No.");
+            end else begin
+                JobTask.Get(JobPlanningLine."Job No.", JobPlanningLine."Job Task No.");
+                SalesHeader.TestField("Bill-to Customer No.", JobTask."Bill-to Customer No.");
+                SalesHeader.TestField("Sell-to Customer No.", JobTask."Sell-to Customer No.");
+            end;
+
+            if Job."Currency Code" <> '' then
+                SalesHeader.TestField("Currency Code", Job."Currency Code")
+            else
+                if Job."Task Billing Method" = Job."Task Billing Method"::"One customer" then
+                    SalesHeader.TestField("Currency Code", Job."Invoice Currency Code")
+                else
+                    SalesHeader.TestField("Currency Code", JobTask."Invoice Currency Code");
+
+            IsHandled := true;
+        end;
+    end;
+
     // [EventSubscriber(ObjectType::Codeunit,1012,'OnAfterRunCode','',false,false)]
     // local procedure OnAfterRunCode(var JobJournalLine: Record "Job Journal Line"; var JobLedgEntryNo: Integer; var JobRegister: Record "Job Register"; var NextEntryNo: Integer)
     // var
@@ -92,6 +140,10 @@ codeunit 50100 "ProcesosProyectos"
         JobPlaningLine: Record "Job Planning Line";
     begin
         If JobPlaningLine.get(PurchLine."Job No.", PurchLine."Job Task No.", PurchLine."Job Planning Line No.") Then begin
+            if PurchLine."Document Type" = PurchLine."Document Type"::Quote then begin
+                JobPlaningLine."Cantidad en Oferta Compra" += PurchLine.Quantity;
+                JobPlaningLine."Nº documento Compra" := PurchLine."Document No.";
+            end;
             if PurchLine."Document Type" = PurchLine."Document Type"::Order then begin
                 JobPlaningLine."Cantidad en Pedido Compra" += PurchLine.Quantity;
                 JobPlaningLine."Nº documento Compra" := PurchLine."Document No.";
@@ -910,6 +962,8 @@ codeunit 50100 "ProcesosProyectos"
             PurchaseLine.Validate("Unit of Measure Code", JobPlanningLine2."Unit of Measure Code");
             //PurchaseLine.Validate(Quantity, Factor * JobPlanningLine."Qty. to Transfer to Invoice");
             case PurchaseHeader2."Document Type" of
+                PurchaseHeader2."Document Type"::Quote:
+                    PurchaseLine.Validate(Quantity, Factor * (JobPlanningLine2.Quantity - JobPlanningLine."Cantidad en Oferta Compra"));
                 PurchaseHeader2."Document Type"::Order:
                     PurchaseLine.Validate(Quantity, Factor * (JobPlanningLine2.Quantity - JobPlanningLine."Cantidad en Pedido Compra"));
                 PurchaseHeader2."Document Type"::Invoice, PurchaseHeader2."Document Type"::"Credit Memo":
@@ -921,9 +975,7 @@ codeunit 50100 "ProcesosProyectos"
                 PurchaseLine.Validate("Bin Code", JobPlanningLine2."Bin Code");
             if JobInvCurrency then begin
                 Currency.Get(PurchaseLine."Currency Code");
-                // PurchaseLine.Validate("Unit Price",
-                //   Round(JobPlanningLine."Unit Price" * PurchaseHeader."Currency Factor",
-                //     Currency."Unit-Amount Rounding Precision"));
+
                 PurchaseLine.Validate("Unit Cost",
                   Round(JobPlanningLine2."Unit Cost" * PurchaseHeader."Currency Factor",
                     Currency."Unit-Amount Rounding Precision"));
@@ -960,7 +1012,8 @@ codeunit 50100 "ProcesosProyectos"
               DimSetIDArr[5],
               PurchaseLine."Shortcut Dimension 1 Code",
               PurchaseLine."Shortcut Dimension 2 Code",
-              SourceCodeSetup.Purchases,
+             // SourceCodeSetup.Purchases,
+             SourceCodeSetup."Primary Key",
               DATABASE::Job);
             //DATABASE::JOB);
             PurchaseLine."Dimension Set ID" :=
@@ -1349,7 +1402,7 @@ codeunit 50100 "ProcesosProyectos"
                     repeat
                         Linea += 1;
                         BudgetEntry."Entry No." := Linea;
-                        
+
                     until BudgetEntry.Insert(true);
             end;
 

@@ -22,6 +22,7 @@ pageextension 50103 "CompanyInfor" extends "Company Information" //1
 
     trigger OnOpenPage()
     var
+
     begin
         Rec.CalcFields("Invoice Legal Text");
         Rec."Invoice Legal Text".CreateInStream(varInStream);

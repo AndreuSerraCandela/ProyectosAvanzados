@@ -48,8 +48,16 @@ page 50116 "Job Task Lines Subform Ext"
                 field(Dependencia; Rec.Dependencia)
                 {
                     ApplicationArea = all;
+                    Visible = not (Multi);
 
                 }
+                field(Dependencia2; Rec.Dependencia2)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Dependencia2 field.', Comment = '%';
+                    Visible = Multi;
+                }
+
                 field("Tipo Dependencia fecha"; rec."Tipo Dependencia fecha")
                 {
                     ApplicationArea = all;
@@ -58,6 +66,7 @@ page 50116 "Job Task Lines Subform Ext"
                 field(Retardo; rec.Retardo)
                 {
                     ApplicationArea = all;
+                    // Visible = not (Multi);
 
                 }
                 field("Status Task"; Rec."Status Task")
@@ -73,6 +82,15 @@ page 50116 "Job Task Lines Subform Ext"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Dias Tarea field.';
+
+                    trigger OnValidate()
+                    begin
+                        if ConfProyecto.ProyectoMultiple() then begin
+                            rec.RecalcularTarea();
+                            CurrPage.Update(true);
+                        end;
+
+                    end;
                 }
                 field("Fecha fin Tarea"; Rec."Fecha fin Tarea")
                 {
@@ -792,14 +810,28 @@ page 50116 "Job Task Lines Subform Ext"
         }
     }
 
+    trigger OnOpenPage()
+    begin
+        Multi := ConfProyecto.ProyectoMultiple();
+    end;
+
     trigger OnAfterGetRecord()
     begin
-        DescriptionIndent := Rec.Indentation;
-        StyleIsStrong := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo; //Rec."Job Task Type" <> "Job Task Type"::Posting;
-        CodeEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
-        DescriptionEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
-        DescriptionIndent := Rec.Indentation;
+        // DescriptionIndent := Rec.Indentation;
+        // StyleIsStrong := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo; //Rec."Job Task Type" <> "Job Task Type"::Posting;
+        // CodeEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
+        // DescriptionEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
+        // DescriptionIndent := Rec.Indentation;
+
+
+
     end;
+
+    // trigger OnModifyRecord(): Boolean
+    // begin
+    //     if rec."Dias Tarea" <> xRec."Dias Tarea" then
+    //         CurrPage.Update();
+    // end;
 
 
     trigger OnNewRecord(BelowxRec: Boolean)
@@ -827,6 +859,10 @@ page 50116 "Job Task Lines Subform Ext"
         DescriptionIndent: Integer;
         Proyecto: Code[20];
         StyleIsStrong: Boolean;
+        ConfProyecto: Record "Jobs Setup";
+        Multi: Boolean;
+
+
 
     procedure cargaProyecto(pProyecto: Code[20])
     begin

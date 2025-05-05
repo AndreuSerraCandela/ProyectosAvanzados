@@ -50,8 +50,20 @@ tableextension 50108 "JobSetup" extends "Jobs Setup" //315
             DataClassification = ToBeClassified;
             Caption = 'Dias a Sumar';
         }
+        field(50109; "Multiples Dependencias"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
 
     }
+
+    //    procedure ProyectoMultiple()
+    procedure ProyectoMultiple(): Boolean
+    begin
+        if rec.Get() then
+            exit(rec."Multiples Dependencias");
+    end;
+
 
     var
         myInt: Integer;

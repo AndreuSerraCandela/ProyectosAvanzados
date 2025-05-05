@@ -18,6 +18,36 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Categorias - Field Description - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 253162126 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dependecias de Tareas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Dependecias de Tareas - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 253162126 - Field 1106824731 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cód Tarea</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Dependecias de Tareas - Field Cód. Tarea - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 253162126 - Field 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Job No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Dependecias de Tareas - Field Job No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 253162126 - Field 3117169600 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Retraso</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Dependecias de Tareas - Field Retraso - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 253162126 - Field 3344887887 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tareas Dependiente</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Dependecias de Tareas - Field Tareas Dependiente - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 253162126 - Field 3412782023 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tipo Dependencia fecha</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Dependecias de Tareas - Field Tipo Dependencia fecha - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3928990288 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Hist. Job Planning Line</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -328,6 +358,36 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Total VAT Amount - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 1418604368 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dependencias de Tareas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Dependencias de Tareas - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1418604368 - Control 1106824731 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the MyField field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Dependencias de Tareas - Control Cód. Tarea - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1418604368 - Control 1908272084 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Job No. field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Dependencias de Tareas - Control Job No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1418604368 - Control 3117169600 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Retraso field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Dependencias de Tareas - Control Retraso - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1418604368 - Control 3344887887 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Tareas Dependiente field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Dependencias de Tareas - Control Tareas Dependiente - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1418604368 - Control 3412782023 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Tipo Dependencia fecha field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Dependencias de Tareas - Control Tipo Dependencia fecha - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="Page 3354071981 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Estimacion</source>
           <note from="Developer" annotates="general" priority="2">ESP="Estimacion"</note>
@@ -457,6 +517,11 @@
           <source>Specifies the value of the Coste Inicial field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Coste Inicial - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3096838928 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Dependencia2 field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Dependencia2 - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3008278152 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies a description of the job task. You can enter anything that is meaningful in describing the task. The description is copied and used in descriptions on the job planning line.</source>
@@ -1683,6 +1748,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Categoría - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Control 936105910 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Specifies the value of the Cantidad en Oferta Compra field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Cantidad en Oferta Compra - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Control 1014071166 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Specifies the value of the Cantidad en Pedido Compra field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Cantidad en Pedido Compra - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 4048657685 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
           <source>Specifies the value of the No. Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1757,6 +1832,11 @@
           <source>Specifies the value of the Asigna la Dimension del Proveedor cuando hacemos un pedido/factura de compra desde la linea de planificacion field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control DimensionJobProveedor - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3078122788 - Control 4117458266 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2556642749">
+          <source>Specifies the value of the Multiples Dependencias field.</source>
+          <note from="Developer" annotates="general" priority="2">%</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control Multiples Dependencias - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 3078122788 - Control 721031380 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2556642749">
           <source>Specifies the value of the Prefijo que se va a utilizar para asignar números de capítulos a los proyectos. field.</source>
@@ -1843,6 +1923,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobSetup - Field DimensionJobProveedor - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 1627283316 - Field 4117458266 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2556642749">
+          <source>Multiples Dependencias</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobSetup - Field Multiples Dependencias - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 1627283316 - Field 186893730 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2556642749">
           <source>No. Serie Ofertas en Proyectos</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1867,6 +1952,11 @@
           <source>Dependencia</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Dependencia - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 3096838928 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Dependencia</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Dependencia"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Dependencia2 - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 2793488656 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>Dias Tarea</source>
@@ -1942,6 +2032,11 @@
           <source>Cantidad en Factura Compra</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Cantidad en Factura Compra - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1862886636 - Field 936105910 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
+          <source>Cantidad en Oferta Compra</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Cantidad en Oferta Compra - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1862886636 - Field 1014071166 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
           <source>Cantidad en Pedido Compra</source>

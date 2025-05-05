@@ -1,16 +1,21 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Microsoft cloud sandbox",
-            "request": "launch",
-            "type": "al",
-            "environmentType": "Sandbox",
-            // "environmentName": "Desarrollo_052124",
-            // "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e", //pargroup
-            //  "tenant": "8d4a17f2-1b25-4d79-8174-3d100994f228",
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Microsoft cloud sandbox",
+      "request": "launch",
+      "type": "al",
+      // "environmentType": "Sandbox",
+      // "environmentName": "CopiaProd241226",
+      // "tenant": "fe659371-d016-40ff-a31c-a52888650f25",
+      // "environmentName": "ZZ_MARZO25PADG",
+      // "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
+      //   "environmentName": "ZZ_ProyectoAvanzados",
+      //  "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e", //pargroup
+      //  "tenant": "8d4a17f2-1b25-4d79-8174-3d100994f228",
 
 
+<<<<<<< HEAD
             // "tenant": "020a7edc-d29a-4bce-b041-34c1fdc5381f",
             // "environmentName": "DesarrolloGantt",
             //"environmentName": "DesarrolloPargroupSanboxDic23",
@@ -19,17 +24,30 @@
             //"environmentName": "PowerBI",
             //"environmentName": "DesarrolloEntiba_280520024",
             // "environmentName": "Desarrollo_Entiba",
+=======
+      // "tenant": "020a7edc-d29a-4bce-b041-34c1fdc5381f",
+      // "environmentName": "DesarrolloGantt",
+      //"environmentName": "DesarrolloPargroupSanboxDic23",
+>>>>>>> 7c9133ddbcbf7b704d1b7c8933f9be1ba3d53c2a
 
-            // "tenant": "cfe8200f-dc0e-4d6a-8164-a55d7626cce2",
-            // "environmentName": "Demos_MayBe",
-            //"tenant": "fe659371-d016-40ff-a31c-a52888650f25",
+      // "tenant": "ad3eed48-97cd-48ba-a291-b5dd63b6c37a", //entiba
+      // "environmentName": "ZZ_MARZO25_ENTIBA",
+
+      //  "environmentName": "PowerBI",
+      //"environmentName": "DesarrolloEntiba_280520024",
+      // "environmentName": "Desarrollo_Entiba",
+
+      // "tenant": "cfe8200f-dc0e-4d6a-8164-a55d7626cce2",
+      // "environmentName": "Demos_MayBe",
+      //"tenant": "fe659371-d016-40ff-a31c-a52888650f25",
 
 
-            // "tenant": "cfe8200f-dc0e-4d6a-8164-a55d7626cce2",
+      // "tenant": "cfe8200f-dc0e-4d6a-8164-a55d7626cce2",
 
-            //ad3eed48-97cd-48ba-a291-b5dd63b6c37a/Desarrollo_Entiba
-            //   "tenant": "cfe8200f-dc0e-4d6a-8164-a55d7626cce2",
+      //ad3eed48-97cd-48ba-a291-b5dd63b6c37a/Desarrollo_Entiba
+      //   "tenant": "cfe8200f-dc0e-4d6a-8164-a55d7626cce2",
 
+<<<<<<< HEAD
             // "environmentName": "Demos_Maybe",
             //     "environmentName": "Demos_Maybe",
               "environmentName": "sandbox24",
@@ -42,4 +60,18 @@
             "schemaUpdateMode": "Synchronize",
         }
     ]
+=======
+      // "environmentName": "Demos_Maybe",
+      //     "environmentName": "Demos_Maybe",
+      //    "environmentName": "sandbox24",
+      // "startupObjectId": 22,
+      // "startupObjectType": "Page",
+      "breakOnError": true,
+      "launchBrowser": true,
+      "enableLongRunningSqlStatements": true,
+      "enableSqlInformationDebugger": true,
+      "schemaUpdateMode": "ForceSync"
+    }
+  ]
+>>>>>>> 7c9133ddbcbf7b704d1b7c8933f9be1ba3d53c2a
 }

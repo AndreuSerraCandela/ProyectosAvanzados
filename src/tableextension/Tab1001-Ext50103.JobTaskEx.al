@@ -52,42 +52,73 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
                 jobSetup: Record "Jobs Setup";
             begin
                 jobSetup.Get();
+                if not jobSetup."Multiples Dependencias" then begin
+                    if jobTask.Get(Rec."Job No.", Rec.Dependencia) then begin
+                        Case Rec."Tipo Dependencia fecha" of
+                            TipoFecha::"De fin a inicio":
+                                begin
+                                    "Fecha inicio Tarea" := jobTask."Fecha fin Tarea" + Retardo + jobSetup."Dias a Sumar";
+                                    //"Fecha inicio Tarea" := SumarDias_SinContarFestivos(jobTask."Fecha fin Tarea", Retardo + jobSetup."Dias a Sumar");
+                                    //SumarDias_SinContarFestivos
+                                    "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
 
-                if jobTask.Get(Rec."Job No.", Rec.Dependencia) then begin
-                    Case Rec."Tipo Dependencia fecha" of
-                        TipoFecha::"De fin a inicio":
-                            begin
-                                "Fecha inicio Tarea" := jobTask."Fecha fin Tarea" + Retardo + jobSetup."Dias a Sumar";
-                                "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
-
-                                "Fecha fin Tarea" := "Fecha inicio tarea" + "Dias Tarea";
-                                "Fecha fin Tarea" := CalculaFestivo("Fecha fin Tarea");
-                            end;
-                        TipoFecha::"De inicio a inicio":
-                            begin
-                                "Fecha inicio Tarea" := jobTask."Fecha inicio Tarea" + Retardo + jobSetup."Dias a Sumar";
-                                "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
-                                "Fecha fin Tarea" := "Fecha inicio Tarea" + "Dias Tarea";
-                                "Fecha fin Tarea" := CalculaFestivo("Fecha fin Tarea");
-                            end;
-                        TipoFecha::"De fin a fin":
-                            begin
-                                "Fecha fin Tarea" := jobTask."Fecha fin Tarea" + Retardo + jobSetup."Dias a Sumar";
-                                "Fecha fin Tarea" := CalculaFestivo("Fecha Fin Tarea");
-                                "Fecha inicio Tarea" := "Fecha fin Tarea" - "Dias Tarea";
-                                "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
-                            end;
-                        TipoFecha::"De inicio a fin":
-                            begin
-                                "Fecha inicio Tarea" := jobTask."Fecha inicio Tarea" + Retardo + jobSetup."Dias a Sumar";
-                                "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
-                                "Fecha fin Tarea" := "Fecha inicio Tarea" + "Dias Tarea";
-                                "Fecha fin Tarea" := CalculaFestivo("Fecha inicio Tarea");
-                            end;
+                                    // "Fecha fin Tarea" := "Fecha inicio tarea" + "Dias Tarea";
+                                    "Fecha fin Tarea" := SumarDias_SinContarFestivos("Fecha inicio tarea", "Dias Tarea");
+                                    "Fecha fin Tarea" := CalculaFestivo("Fecha fin Tarea");
+                                end;
+                            TipoFecha::"De inicio a inicio":
+                                begin
+                                    "Fecha inicio Tarea" := jobTask."Fecha inicio Tarea" + Retardo + jobSetup."Dias a Sumar";
+                                    "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
+                                    "Fecha fin Tarea" := SumarDias_SinContarFestivos("Fecha inicio Tarea", "Dias Tarea");
+                                    "Fecha fin Tarea" := CalculaFestivo("Fecha fin Tarea");
+                                end;
+                            TipoFecha::"De fin a fin":
+                                begin
+                                    "Fecha fin Tarea" := jobTask."Fecha fin Tarea" + Retardo + jobSetup."Dias a Sumar";
+                                    "Fecha fin Tarea" := CalculaFestivo("Fecha Fin Tarea");
+                                    "Fecha inicio Tarea" := "Fecha fin Tarea" - "Dias Tarea";
+                                    "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
+                                end;
+                            TipoFecha::"De inicio a fin":
+                                begin
+                                    "Fecha inicio Tarea" := jobTask."Fecha inicio Tarea" + Retardo + jobSetup."Dias a Sumar";
+                                    "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
+                                    "Fecha fin Tarea" := SumarDias_SinContarFestivos("Fecha inicio Tarea", "Dias Tarea");
+                                    "Fecha fin Tarea" := CalculaFestivo("Fecha inicio Tarea");
+                                end;
+                        end;
                     end;
-                end;
+                end else begin
+                    if jobTask.Get(Rec."Job No.", Rec."Job Task No.") then begin
+                        Case Rec."Tipo Dependencia fecha" of
+                            TipoFecha::"De fin a inicio":
+                                begin
+                                    "Fecha inicio Tarea" := SumarDias_SinContarFestivos(jobTask."Fecha fin Tarea", Retardo + jobSetup."Dias a Sumar");
+                                    "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
+                                    // "Fecha fin Tarea" := "Fecha inicio tarea" + "Dias Tarea";
+                                    "Fecha fin Tarea" := SumarDias_SinContarFestivos("Fecha inicio tarea", "Dias Tarea");
+                                    "Fecha fin Tarea" := CalculaFestivo("Fecha fin Tarea");
+                                end;
+                            TipoFecha::"De inicio a inicio":
+                                begin
+                                    "Fecha inicio Tarea" := SumarDias_SinContarFestivos(jobTask."Fecha fin Tarea", Retardo + jobSetup."Dias a Sumar");
+                                    "Fecha inicio Tarea" := CalculaFestivo("Fecha inicio Tarea");
+                                    // "Fecha fin Tarea" := "Fecha inicio tarea" + "Dias Tarea";
+                                    "Fecha fin Tarea" := SumarDias_SinContarFestivos("Fecha inicio tarea", "Dias Tarea");
+                                    "Fecha fin Tarea" := CalculaFestivo("Fecha fin Tarea");
+                                end;
 
-                //Modify();
+                            TipoFecha::" ":
+                                begin
+                                    if rec."Fecha fin Tarea" <> 0D then
+                                        "Fecha fin Tarea" := SumarDias_SinContarFestivos("Fecha inicio tarea", Rec.Retardo);
+                                end;
+                        end;
+                    end;
+
+                    //Modify();
+                end;
             end;
 
         }
@@ -115,8 +146,15 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
             begin
                 If ("Fecha inicio Tarea" <> 0D) and (("Fecha fin Tarea" <> 0D) or ("Dias Tarea" <> 0)) then
                     if "Fecha fin Tarea" = 0D then "Fecha fin Tarea" := "Fecha inicio Tarea";
-                if "Fecha inicio Tarea" = 0D then "Fecha inicio Tarea" := "Fecha fin Tarea";
-                "Dias Tarea" := "Fecha fin Tarea" - "Fecha inicio Tarea";
+                if "Fecha inicio Tarea" = 0D then
+                    "Fecha inicio Tarea" := "Fecha fin Tarea";
+
+                IF (REC."Fecha fin Tarea" <> xRec."Fecha fin Tarea") OR
+                   (REC."Fecha inicio Tarea" <> XREC."Fecha inicio Tarea") then begin
+                    "Dias Tarea" := 0;
+                    if rec."Fecha fin Tarea" <> 0D then
+                        rec."Dias Tarea" := "Fecha fin Tarea" - "Fecha inicio Tarea";
+                END;
                 CalculaFechas();
 
             end;
@@ -164,12 +202,27 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
             DataClassification = ToBeClassified;
             trigger OnValidate()
             begin
-                If ("Fecha inicio Tarea" <> 0D) and (("Fecha fin Tarea" <> 0D) or ("Dias Tarea" <> 0)) then
-                    if "Fecha inicio Tarea" = 0D then "Fecha inicio Tarea" := "Fecha fin Tarea";
-                "Fecha fin Tarea" := "Fecha inicio Tarea" + "Dias Tarea";
+                rec.CalcFields(Dependencia2);
+                // if Rec.Dependencia2 = 0 then begin
+                If (Rec."Fecha inicio Tarea" <> 0D) and ((Rec."Fecha fin Tarea" <> 0D) or (Rec."Dias Tarea" <> 0)) then
+                    if Rec."Fecha inicio Tarea" = 0D then Rec."Fecha inicio Tarea" := Rec."Fecha fin Tarea";
+
+                if (rec."Tipo Dependencia fecha" = rec."Tipo Dependencia fecha"::"De fin a fin") or
+                  (rec."Tipo Dependencia fecha" = "Tipo Dependencia fecha"::"De inicio a fin") then begin
+                    IF Rec."Dias Tarea" <> 0 then
+                        rec."Fecha inicio Tarea" := RestarDias_SinContarFestivos(Rec."Fecha fin Tarea", Rec."Dias Tarea");
+                end else begin
+                    IF Rec."Dias Tarea" <> 0 then
+                        Rec."Fecha fin Tarea" := SumarDias_SinContarFestivos(Rec."Fecha inicio Tarea", Rec."Dias Tarea"); // + "Dias Tarea";
+                                                                                                                          //  end else begin
+                end;
+
+                //   end;
+
                 Modify();
                 CalculaFechas();
-                ;
+                // if ConfProyecto.ProyectoMultiple() then
+                //     RecalcularTarea();
             end;
         }
         field(50009; "Tipo Partida"; Enum "Tipo Partida")
@@ -177,6 +230,14 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
             DataClassification = ToBeClassified;
             Caption = 'Tipo Partida';
             // ValuesAllowed = ' ', "Completado";
+
+        }
+        field(50015; Dependencia2; Integer)
+        {
+            // DataClassification = ToBeClassified;
+            Caption = 'Dependencia', comment = 'ESP="Dependencia"';
+            FieldClass = FlowField;
+            CalcFormula = count("Dependecias de Tareas" where("Job No." = field("Job No."), "Cód. Tarea" = field("Job Task No.")));
 
         }
 
@@ -203,7 +264,7 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
     end;
 
 
-    local procedure CalculaFestivo(FechainicioTarea: Date): date
+    procedure CalculaFestivo(FechainicioTarea: Date): date
     var
         Festivo: Record "Base Calendar Change";
         Dia: Integer;
@@ -228,5 +289,101 @@ tableextension 50103 "JobTaskEx" extends "Job Task" //1001
     end;
 
 
+
+    procedure SumarDias_SinContarFestivos(FechainicioTarea: Date; diasAsumar: integer): date
+    var
+        Festivo: Record "Base Calendar Change";
+        Dia: Integer;
+        DiaAContador: Integer;
+    begin
+        Clear(DiaAContador);
+        if (diasAsumar = 0) or (diasAsumar = 1) then
+            exit(FechainicioTarea);
+        DiaAContador := 1;
+        repeat
+            DiaAContador := DiaAContador + 1;
+            FechainicioTarea := FechainicioTarea + 1;
+            FechainicioTarea := CalculaFestivo(FechainicioTarea);
+            Dia := Date2DWY(FechainicioTarea, 1);
+            If Dia = 6 then
+                FechainicioTarea := FechainicioTarea + 2;
+            if Dia = 7 then
+                FechainicioTarea := FechainicioTarea + 1;
+
+        until DiaAContador >= diasAsumar;
+
+        exit(FechainicioTarea);
+    end;
+
+    procedure RestarDias_SinContarFestivos(FechaTarea: Date; diasAsumar: integer): date
+    var
+        Festivo: Record "Base Calendar Change";
+        Dia: Integer;
+        DiaA: Integer;
+    begin
+        DiaA := 1;
+        repeat
+            DiaA := DiaA + 1;
+            FechaTarea := FechaTarea - 1;
+            FechaTarea := CalculaFestivo_Dis(FechaTarea);
+            Dia := Date2DWY(FechaTarea, 1);
+            If Dia = 6 then
+                FechaTarea := FechaTarea - 2;
+            if Dia = 7 then
+                FechaTarea := FechaTarea - 1;
+
+        until DiaA = diasAsumar;
+
+        exit(FechaTarea);
+    end;
+
+    procedure CalculaFestivo_Dis(FechainicioTarea: Date): date
+    var
+        Festivo: Record "Base Calendar Change";
+        Dia: Integer;
+    begin
+        Dia := Date2DWY(FechainicioTarea, 1);
+        If Dia = 6 then
+            //FechainicioTarea := FechainicioTarea + 2;
+            FechainicioTarea := FechainicioTarea - 1;
+        if Dia = 7 then
+            //FechainicioTarea := FechainicioTarea + 1;
+            FechainicioTarea := FechainicioTarea - 2;
+        Festivo.SetRange(Nonworking, true);
+        if not Festivo.Find() then exit(FechainicioTarea);
+        Festivo.SetRange("Date", FechainicioTarea);
+        Festivo.SetRange(nonworking, true);
+        if Festivo.Find() then
+            repeat
+                FechainicioTarea := FechainicioTarea - 1;
+                if Date2DWY(FechainicioTarea, 1) = 6 then
+                    FechainicioTarea := FechainicioTarea - 1;
+                Festivo.SetRange("Date", FechainicioTarea);
+            until not Festivo.Find();
+        exit(FechainicioTarea);
+    end;
+
+
+    procedure RecalcularTarea()
+    var
+        Tareas: Record "Job Task";
+        DependenciaTareas: Record "Dependecias de Tareas";
+        TareaAfectada: Code[20];
+    begin
+        Tareas.SetRange("Job No.", Rec."Job No.");
+        Tareas.SetRange("Job Task No.", Rec."Job Task No.");
+        if Tareas.FindFirst() then;
+        DependenciaTareas.SetRange("Job No.", Rec."Job No.");
+        DependenciaTareas.SetRange("Tareas Dependiente", rec."Job Task No.");
+        if DependenciaTareas.FindFirst() then begin
+            TareaAfectada := DependenciaTareas."Cód. Tarea";
+            DependenciaTareas.CalcularFechaTarea(Tareas, TareaAfectada, rec."Job Task No.");
+        end;
+
+    end;
+
+
+    var
+        ConfProyecto: Record "Jobs Setup";
 
 }

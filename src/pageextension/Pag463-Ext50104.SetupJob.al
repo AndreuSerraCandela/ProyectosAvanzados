@@ -43,6 +43,11 @@ pageextension 50104 "SetupJob" extends "Jobs Setup" //463
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Dias a Sumar field.';
             }
+            field("Multiples Dependencias"; Rec."Multiples Dependencias")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Multiples Dependencias field.', Comment = '%';
+            }
 
         }
         addlast(Numbering)
