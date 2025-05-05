@@ -1,1 +1,1 @@
-﻿{"Added":[{"Id":50120,"Kind":16,"Name":"PurchaseOrderSubform","Namespace":""}],"Modified":[],"Removed":[{"Id":50112,"Kind":16,"Name":"PurchaseQuote","Namespace":""}]}
+﻿{"Added":[],"Modified":[{"Id":50103,"Kind":17,"Name":"JobTaskEx","Namespace":""},{"Id":50108,"Kind":17,"Name":"JobSetup","Namespace":""},{"Id":50104,"Kind":16,"Name":"SetupJob","Namespace":""}],"Removed":[]}
