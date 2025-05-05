@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-﻿{"Added":[],"Modified":[{"Id":50103,"Kind":17,"Name":"JobTaskEx","Namespace":""},{"Id":50108,"Kind":17,"Name":"JobSetup","Namespace":""},{"Id":50104,"Kind":16,"Name":"SetupJob","Namespace":""}],"Removed":[]}
-=======
-﻿{"Added":[],"Modified":[{"Id":50103,"Kind":16,"Name":"CompanyInfor","Namespace":""},{"Id":50100,"Kind":11,"Name":"ProcesosProyectos","Namespace":""},{"Id":50119,"Kind":16,"Name":"JobListExt","Namespace":""}],"Removed":[]}
->>>>>>> 7c9133ddbcbf7b704d1b7c8933f9be1ba3d53c2a
+﻿{"Added":[{"Id":50120,"Kind":12,"Name":"Matriz Ventas Proyecto","Namespace":""}],"Modified":[{"Id":50119,"Kind":16,"Name":"JobListExt","Namespace":""}],"Removed":[]}

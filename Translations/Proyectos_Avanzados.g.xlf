@@ -868,6 +868,416 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Job Ledger E&amp;ntries - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 3227545621 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Matriz de Ventas por Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 4105281732 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Proyectos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control GroupName - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 946009950 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el primer periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod1 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 946009950 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 1</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod1 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3009438342 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el décimo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod10 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3009438342 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 10</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod10 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2371741725 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el undécimo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod11 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2371741725 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 11</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod11 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1734045108 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el duodécimo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod12 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1734045108 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 12</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod12 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1096348491 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el decimotercero periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod13 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1096348491 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 13</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod13 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 458651874 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el decimocuarto periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod14 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 458651874 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 14</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod14 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 4115922553 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el decimoquinto periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod15 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 4115922553 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 15</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod15 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3478225936 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el decimosexto periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod16 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3478225936 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 16</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod16 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2840529319 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el decimoséptimo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod17 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2840529319 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 17</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod17 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2202832702 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el decimoctavo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod18 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2202832702 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 18</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod18 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1565136085 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el decimonoveno periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod19 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1565136085 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 19</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod19 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3327887395 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el segundo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod2 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3327887395 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 42752051 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el vigésimo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod20 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 42752051 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 20</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod20 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 680448668 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el vigésimo primer periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod21 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 680448668 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 21</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod21 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1318145285 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el vigésimo segundo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod22 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1318145285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 22</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod22 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1955841902 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el vigésimo tercero periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod23 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1955841902 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 23</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod23 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1786932879 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el vigésimo cuarto periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod24 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1786932879 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 24</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod24 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2424629496 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el vigésimo quinto periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod25 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2424629496 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 25</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod25 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3062326113 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el vigésimo sexto periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod26 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3062326113 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 26</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod26 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3700022730 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el vigésimo séptimo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod27 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3700022730 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 27</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod27 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 849357691 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el vigésimo octavo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod28 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 849357691 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 28</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod28 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1487054308 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el vigésimo noveno periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod29 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1487054308 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 29</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod29 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3965584012 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el tercer periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod3 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3965584012 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 3</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod3 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3545706884 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el trigésimo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod30 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3545706884 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 30</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod30 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2908010267 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el trigésimo primer periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod31 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2908010267 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 31</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod31 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2052494161 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el cuarto periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod4 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2052494161 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 4</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod4 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2690190778 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el quinto periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod5 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2690190778 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 5</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod5 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 777100927 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el sexto periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod6 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 777100927 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 6</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod6 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1414797544 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el séptimo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod7 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1414797544 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 7</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod7 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1114918973 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el octavo periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod8 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1114918973 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 8</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod8 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1752615590 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para el noveno periodo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod9 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1752615590 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Periodo 9</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control ColumnPeriod9 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica la descripción del proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control Description - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 4200184881 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el número del proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 648142515 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el estado detallado del proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control Project Status - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1225278069 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el cliente del proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control Sell-to Customer No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 513339096 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el estado del proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control Status - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 4035776739 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el importe total no facturado para todos los periodos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control TotalPendingAmount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 4035776739 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Total Pendiente</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control TotalPendingAmount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 1211933382 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Opciones de filtrado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control Opciones - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2159682478 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica la fecha de inicio para el análisis</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control FechaInicio - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 2159682478 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha inicio</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control FechaInicio - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3806754417 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el número de periodos a mostrar (máximo 31)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control NumeroPeriodos - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Control 3806754417 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Número de periodos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Control NumeroPeriodos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Action 1088990488 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Abre la ficha del proyecto seleccionado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Action Ficha Proyecto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Action 1088990488 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ficha Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Action Ficha Proyecto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Action 562798140 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exporta los datos de la matriz a Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Action ExportarExcel - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Action 562798140 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exportar a Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Action ExportarExcel - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Action 3132668871 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra las líneas de proyecto pendientes de facturar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Action MostrarDetalle - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3227545621 - Action 3132668871 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Mostrar Detalle</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Action MostrarDetalle - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 4238079284 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Pendiente facturar</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1652,6 +2062,16 @@
           <source>Tareas Estándar</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Change JobTaskLines - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2900412208 - Action 4064243314 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2273701615">
+          <source>Muestra la matriz de ventas por proyecto pendientes de facturación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobListExt - Action Matriz Ventas por Proyecto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2900412208 - Action 4064243314 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2273701615">
+          <source>Matriz Ventas por Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobListExt - Action Matriz Ventas por Proyecto - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2900412208 - Action 3906122219 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2273701615">
           <source>Pendiente de facturar</source>

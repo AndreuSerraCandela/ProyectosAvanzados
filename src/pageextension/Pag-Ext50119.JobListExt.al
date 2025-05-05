@@ -30,11 +30,18 @@ pageextension 50119 JobListExt extends "Job List"
                 end;
             }
 
+            action("Matriz Ventas por Proyecto")
+            {
+                ApplicationArea = Jobs;
+                Caption = 'Matriz Ventas por Proyecto';
+                ToolTip = 'Muestra la matriz de ventas por proyecto pendientes de facturación';
+                Image = Sales;
 
-
-
-
-            // }
+                trigger OnAction()
+                begin
+                    Page.Run(Page::"Matriz Ventas Proyecto");
+                end;
+            }
 
         }
 
@@ -43,6 +50,7 @@ pageextension 50119 JobListExt extends "Job List"
         addlast(Category_Process)
         {
             actionref(Pendiente_facturar_promoted; "Pendiente de facturar") { }
+            actionref(Matriz_Ventas_Proyecto_promoted; "Matriz Ventas por Proyecto") { }
             //actionref(Pendiente_facturar_Mes_actual; "Pendiente facturar Mes actual") { }
             // actionref(Pendiente_facturar_Mes_anterior; "Pendiente facturar Mes anterior") { }
         }
