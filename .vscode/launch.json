@@ -7,6 +7,8 @@
       "request": "launch",
       "type": "al",
       "environmentType": "Sandbox",
+      "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
+      "environmentName": "PARD_UAT_APM",
       "breakOnError": true,
       "launchBrowser": true,
       "enableLongRunningSqlStatements": true,

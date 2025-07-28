@@ -11,7 +11,6 @@ tableextension 50110 "JobMyb" extends Job //167
                 LinePlani: Record "Job Planning Line";
 
             begin
-                // if rec."Cód Oferta Job" <> xRec."Cód Oferta Job" then begin
                 LinePlani.SetFilter(LinePlani."Job No.", rec."No.");
                 LinePlani.SetFilter(LinePlani."Cód Oferta Job", '%1', '');
                 if LinePlani.FindSet() then begin
