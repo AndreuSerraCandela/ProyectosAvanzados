@@ -4,6 +4,7 @@ page 50118 "Pendiente facturar"
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "Job Planning Line";
+    SourceTableView = sorting("Job No.", "Contract Line") where(Status = filter(<> Completed));
 
     layout
     {

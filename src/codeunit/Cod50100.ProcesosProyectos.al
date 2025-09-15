@@ -1221,17 +1221,20 @@ codeunit 50100 "ProcesosProyectos"
     end;
 
     procedure CreateJobLocation(pJob: Record Job)
+    //TODO PDTE DE PROBAR 15/09/25 UPDATE VERSION 26.05
     var
         Location: Record Location;
         FinLocation: Record Location;
         RJob: Record Job;
         JobsSetup: Record "Jobs Setup";
-        NoSeriesMgt: Codeunit NoSeriesManagement;
+        // NoSeriesMgt1: Codeunit NoSeriesManagement;
+        NoSeriesMgt: Codeunit "No. Series";
     begin
         JobsSetup.Get();
         JobsSetup.TestField("No.Serie Almacen de Proyecto");
         if pJob."Cod Almacen de Proyecto" = '' then
-            NoSeriesMgt.InitSeries(JobsSetup."No.Serie Almacen de Proyecto", '', 0D, pjob."Cod Almacen de Proyecto", JobsSetup."No.Serie Almacen de Proyecto");
+            // NoSeriesMgt.InitSeries(JobsSetup."No.Serie Almacen de Proyecto", '', 0D, pjob."Cod Almacen de Proyecto", JobsSetup."No.Serie Almacen de Proyecto");
+            NoSeriesMgt.AreRelated(JobsSetup."No.Serie Almacen de Proyecto", pjob."Cod Almacen de Proyecto");
         pJob.Modify();
 
         FinLocation.SetRange(Code, pJob."Cod Almacen de Proyecto");
