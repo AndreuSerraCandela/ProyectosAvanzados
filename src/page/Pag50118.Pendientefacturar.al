@@ -4,6 +4,7 @@ page 50118 "Pendiente facturar"
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "Job Planning Line";
+    SourceTableView = sorting("Job No.", "Contract Line") where(Status = filter(<> Completed));
 
     layout
     {
@@ -16,13 +17,14 @@ page 50118 "Pendiente facturar"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the number of the related job.';
-                    Visible = false;
+                    Editable = false;
                 }
                 field("Job Task No."; Rec."Job Task No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the number of the related job task.';
                     Visible = JobTaskNoVisible;
+                    Editable = false;
                 }
                 field("Line Type"; Rec."Line Type")
                 {

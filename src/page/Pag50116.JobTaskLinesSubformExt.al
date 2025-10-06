@@ -811,7 +811,9 @@ page 50116 "Job Task Lines Subform Ext"
     }
 
     trigger OnOpenPage()
+
     begin
+        ConfProyecto.get();
         Multi := ConfProyecto.ProyectoMultiple();
     end;
 

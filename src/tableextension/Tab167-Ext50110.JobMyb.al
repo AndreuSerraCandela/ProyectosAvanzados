@@ -11,7 +11,6 @@ tableextension 50110 "JobMyb" extends Job //167
                 LinePlani: Record "Job Planning Line";
 
             begin
-                // if rec."Cód Oferta Job" <> xRec."Cód Oferta Job" then begin
                 LinePlani.SetFilter(LinePlani."Job No.", rec."No.");
                 LinePlani.SetFilter(LinePlani."Cód Oferta Job", '%1', '');
                 if LinePlani.FindSet() then begin
@@ -106,7 +105,8 @@ tableextension 50110 "JobMyb" extends Job //167
     }
     procedure AddOfertaaProyecto()
     var
-        NoSeriesMgt: Codeunit NoSeriesManagement;
+        //NoSeriesMgt: Codeunit NoSeriesManagement;
+        NoSeriesMgt: Codeunit "No. Series";
         SetupJob: Record "Jobs Setup";
     begin
         SetupJob.Get();
@@ -114,7 +114,9 @@ tableextension 50110 "JobMyb" extends Job //167
             SetupJob.TestField("No. serie Ofertas en Proyectos");
             // NoSeriesMgt.TestManual(SetupJob."No. serie Ofertas en Proyectos");
             //    NoSeriesMgt.GetNoSeriesWithCheck(SetupJob."No. serie Ofertas en Proyectos", true, rec."Cód Oferta Job");
-            rec.validate("Cód Oferta Job", NoSeriesMgt.DoGetNextNo(SetupJob."No. serie Ofertas en Proyectos", 0D, true, false));
+            // rec.validate("Cód Oferta Job", NoSeriesMgt.DoGetNextNo(SetupJob."No. serie Ofertas en Proyectos", 0D, true, false));
+            //GetNextNo
+            rec.validate("Cód Oferta Job", NoSeriesMgt.GetNextNo(SetupJob."No. serie Ofertas en Proyectos"));
         end;
     end;
 
