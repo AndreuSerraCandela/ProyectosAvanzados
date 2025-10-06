@@ -93,6 +93,10 @@ tableextension 50100 "LineasPlanificacion" extends "Job Planning Line"//1003
         {
             DataClassification = ToBeClassified;
         }
+        field(90005; "Work Description"; BLOB)
+        {
+            Caption = 'Work Description';
+        }
 
 
     }
@@ -100,4 +104,26 @@ tableextension 50100 "LineasPlanificacion" extends "Job Planning Line"//1003
 
     var
         myInt: Integer;
+        WorkDescription: Text;
+
+    procedure GetWorkDescription(): Text
+    var
+        TempBlob: Codeunit "Temp Blob";
+        TypeHelper: Codeunit "Type Helper";
+        InStream: InStream;
+    begin
+        TempBlob.FromRecord(Rec, FieldNo("Work Description"));
+        TempBlob.CreateInStream(InStream, TEXTENCODING::UTF8);
+        exit(TypeHelper.TryReadAsTextWithSepAndFieldErrMsg(InStream, TypeHelper.LFSeparator(), FieldName("Work Description")));
+    end;
+
+    procedure SetWorkDescription(NewWorkDescription: Text)
+    var
+        OutStream: OutStream;
+    begin
+        Clear("Work Description");
+        "Work Description".CreateOutStream(OutStream, TEXTENCODING::UTF8);
+        OutStream.WriteText(NewWorkDescription);
+        Modify();
+    end;
 }

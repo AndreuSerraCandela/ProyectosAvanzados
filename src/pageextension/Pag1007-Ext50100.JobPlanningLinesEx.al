@@ -13,6 +13,10 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
             {
                 ApplicationArea = All;
             }
+            field("Work Description"; Rec."Work Description")
+            {
+                ApplicationArea = All;
+            }
         }
 
         // Add changes to page layout here
@@ -269,7 +273,11 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
         end else
             Clear(Nombre);
 */
+        WorkDescription := Rec.GetWorkDescription();
     end;
+
+    var
+        WorkDescription: Text;
     /// <summary>
     /// CreatePurcharseInvoice.
     /// </summary>

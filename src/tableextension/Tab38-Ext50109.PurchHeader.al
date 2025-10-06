@@ -47,11 +47,39 @@ tableextension 50109 "PurchHeader" extends "Purchase Header" //38
             end;
 
         }
+        field(90200; "Work Description"; BLOB)
+        {
+            Caption = 'Work Description';
+        }
     }
 
 
     var
         myInt: Integer;
+
+    procedure SetWorkDescription(NewWorkDescription: Text)
+    var
+        OutStream: OutStream;
+    begin
+        Clear("Work Description");
+        "Work Description".CreateOutStream(OutStream, TEXTENCODING::UTF8);
+        OutStream.WriteText(NewWorkDescription);
+        Modify();
+    end;
+
+    /// <summary>
+    /// Retrieves work description from the sales header.
+    /// </summary>
+    /// <returns>Work description.</returns>
+    procedure GetWorkDescription() WorkDescription: Text
+    var
+        TypeHelper: Codeunit "Type Helper";
+        InStream: InStream;
+    begin
+        CalcFields("Work Description");
+        "Work Description".CreateInStream(InStream, TEXTENCODING::UTF8);
+        exit(TypeHelper.TryReadAsTextWithSepAndFieldErrMsg(InStream, TypeHelper.LFSeparator(), FieldName("Work Description")));
+    end;
 
 
 }

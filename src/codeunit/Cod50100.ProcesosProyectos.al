@@ -385,7 +385,7 @@ codeunit 50100 "ProcesosProyectos"
             //CreatePurchaseHeader(Job, PostingDate, JobPlanningLine)
             CreatePurchaseHeaderOrder(Job, PostingDate, JobPlanningLine)
         ELSE
-            TestPurchaseHeader(PurchaseHeader, Job, Prov."No.");
+            TestPurchaseHeader(PurchaseHeader, Job, Prov."No.", JobPlanningLine.GetWorkDescription());
         IF JobPlanningLine.FIND('-') THEN
             REPEAT
                 IF TransferLine(JobPlanningLine) THEN BEGIN
@@ -505,7 +505,7 @@ codeunit 50100 "ProcesosProyectos"
             //CreatePurchaseHeader(Job, PostingDate, JobPlanningLine)
             CreatePurchaseHeaderQuote(Job, PostingDate, JobPlanningLine)
         ELSE
-            TestPurchaseHeader(PurchaseHeader, Job, Prov."No.");
+            TestPurchaseHeader(PurchaseHeader, Job, Prov."No.", JobPlanningLine.GetWorkDescription());
         IF JobPlanningLine.FIND('-') THEN
             REPEAT
                 IF TransferLine(JobPlanningLine) THEN BEGIN
@@ -630,7 +630,7 @@ codeunit 50100 "ProcesosProyectos"
         IF NewInvoice THEN
             CreatePurchaseHeader(Job, PostingDate, JobPlanningLine)
         ELSE
-            TestPurchaseHeader(PurchaseHeader, Job, Prov."No.");
+            TestPurchaseHeader(PurchaseHeader, Job, Prov."No.", JobPlanningLine.GetWorkDescription());
         IF JobPlanningLine.FINDSET THEN
             REPEAT
                 IF TransferLine(JobPlanningLine) THEN BEGIN
@@ -712,11 +712,13 @@ codeunit 50100 "ProcesosProyectos"
     /// <param name="VAR PurchaseHeader">Record "Purchase Header".</param>
     /// <param name="VAR Job">Record Job.</param>
     /// <param name="Proveedor">Code[20].</param>
-    LOCAL procedure TestPurchaseHeader(VAR PurchaseHeader: Record "Purchase Header"; VAR Job: Record Job; Proveedor: Code[20])
+    LOCAL procedure TestPurchaseHeader(VAR PurchaseHeader: Record "Purchase Header"; VAR Job: Record Job; Proveedor: Code[20]; workdescription: text)
     var
         IsHandled: Boolean;
+
     begin
         IsHandled := FALSE;
+        PurchaseHeader.SetWorkDescription(workdescription);
 
         OnBeforeTestPurchaseHeader(PurchaseHeader, Job, IsHandled);
 
@@ -731,6 +733,7 @@ codeunit 50100 "ProcesosProyectos"
             PurchaseHeader.TESTFIELD("Currency Code", Job."Currency Code")
         ELSE
             PurchaseHeader.TESTFIELD("Currency Code", Job."Invoice Currency Code");
+
         OnAfterTestPurchaseHeader(PurchaseHeader, Job);
     end;
 
@@ -808,6 +811,7 @@ codeunit 50100 "ProcesosProyectos"
     var
         PurchaseSetup: Record "Purchases & Payables Setup";
         IsHandled: Boolean;
+        WorkDescription: Text;
     begin
         PurchaseSetup.GET;
         PurchaseHeader.INIT;
@@ -818,6 +822,8 @@ codeunit 50100 "ProcesosProyectos"
         IF PurchaseHeader."Document Type" = PurchaseHeader2."Document Type"::"Return Order" THEN
             PurchaseSetup.TESTFIELD("Return Order Nos.");
         PurchaseHeader."Posting Date" := PostingDate;
+        WorkDescription := JobPlanningLine.GetWorkDescription();
+        PurchaseHeader.SetWorkDescription(WorkDescription);
         OnBeforeInsertPurchaseHeader(PurchaseHeader, Job);
         PurchaseHeader.INSERT(TRUE);
         //**

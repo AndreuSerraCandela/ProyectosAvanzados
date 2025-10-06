@@ -2183,6 +2183,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Purchase Invoice - Control No. Proyecto - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 4048657685 - Control 22244033 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
+          <source>Specifies the value of the Work Description field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Purchase Invoice - Control Work Description - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 3952545662 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 407220332">
           <source>Specifies the value of the No. Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -2193,10 +2198,35 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension PostedSalesInvoiceMyb - Control Cod. Oferta de Proyecto - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 783370822 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2437096118">
+          <source>Specifies the value of the No. Proyecto field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PurchaseInvoice - Control No. Proyecto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 783370822 - Control 22244033 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2437096118">
+          <source>Work Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PurchaseInvoice - Control Work Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 783370822 - Control 512684737 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2437096118">
+          <source>Specifies the products or service being offered</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PurchaseInvoice - Control WorkDescription - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1640572759 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 387971303">
           <source>Specifies the value of the No. Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension PurchaseOrder - Control No. Proyecto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1640572759 - Control 22244033 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 387971303">
+          <source>Work Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PurchaseOrder - Control Work Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1640572759 - Control 512684737 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 387971303">
+          <source>Specifies the products or service being offered</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PurchaseOrder - Control WorkDescription - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 487435905 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3195034673">
           <source>Specifies the value of the No. Proyecto field.</source>
@@ -2513,6 +2543,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field QB - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 1862886636 - Field 22244033 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
+          <source>Work Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Work Description - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 636858393 - Field 1254159580 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3891454143">
           <source>No.Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -2522,6 +2557,11 @@
           <source>No. Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension Purch. Inv. Header - Field No. Proyecto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1592379974 - Field 22244033 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1592379974">
+          <source>Work Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Purch. Inv. Header - Field Work Description - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 3543651433 - Field 1800052274 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1519909599">
           <source>Job Contract Entry No.</source>
@@ -2547,6 +2587,11 @@
           <source>No. Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeader - Field No. Proyecto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4199099589 - Field 22244033 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
+          <source>Work Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeader - Field Work Description - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 3240715643 - Field 2797495759 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1192395785">
           <source>Cod. Oferta de Proyecto</source>

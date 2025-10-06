@@ -10,6 +10,11 @@ pageextension 50111 "Posted Purchase Invoice" extends "Posted Purchase Invoice" 
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the No. Proyecto field.';
             }
+            field("Work Description"; Rec."Work Description")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Work Description field.';
+            }
         }
     }
 
@@ -20,4 +25,13 @@ pageextension 50111 "Posted Purchase Invoice" extends "Posted Purchase Invoice" 
 
     var
         myInt: Integer;
+        WorkDescription: Text;
+
+    trigger OnAfterGetRecord()
+    begin
+        WorkDescription := Rec.GetWorkDescription();
+    end;
+
+
+
 }
