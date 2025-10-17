@@ -2,7 +2,7 @@
 /// <summary>
 /// PageExtension JobPlanningLinesEx (ID 50100) extends Record Job Planning Lines.
 /// </summary>
-pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
+pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
 #pragma warning restore DOC0101
 {
     layout
@@ -13,10 +13,21 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
             {
                 ApplicationArea = All;
             }
-            field("Work Description"; Rec."Work Description")
-            {
-                ApplicationArea = All;
-            }
+
+        }
+        modify(Description)
+        {
+            StyleExpr = DescriptionEmphasize;
+
+            trigger OnAssistEdit()
+            var
+                WordDesription: Page WordDesription;
+            begin
+                WordDesription.SetWorkDescription(Rec.GetWorkDescription);
+                WordDesription.RunModal();
+                Rec.SetWorkDescription(WordDesription.GetWorkDescription());
+
+            end;
         }
 
         // Add changes to page layout here
@@ -273,11 +284,16 @@ pageextension 50100 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
         end else
             Clear(Nombre);
 */
-        WorkDescription := Rec.GetWorkDescription();
+
+        If Rec.GetWorkDescription() <> '' then
+            DescriptionEmphasize := 'StrongAccent'
+        else
+            DescriptionEmphasize := '';
     end;
 
+
     var
-        WorkDescription: Text;
+        DescriptionEmphasize: Text;
     /// <summary>
     /// CreatePurcharseInvoice.
     /// </summary>

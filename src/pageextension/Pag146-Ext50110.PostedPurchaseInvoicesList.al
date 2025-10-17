@@ -1,4 +1,4 @@
-pageextension 50110 "Posted Purchase Invoices List" extends "Posted Purchase Invoices" //146
+pageextension 50310 "Posted Purchase Invoices List" extends "Posted Purchase Invoices" //146
 {
     layout
     {

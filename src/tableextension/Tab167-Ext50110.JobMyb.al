@@ -1,4 +1,4 @@
-tableextension 50110 "JobMyb" extends Job //167
+tableextension 50310 "JobMyb" extends Job //167
 {
     fields
     {

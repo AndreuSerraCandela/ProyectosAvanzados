@@ -1,4 +1,4 @@
-pageextension 50105 "PurchaseOrder" extends "Purchase Order" //50
+pageextension 50305 "PurchaseOrder" extends "Purchase Order" //50
 {
     layout
     {
@@ -75,7 +75,7 @@ pageextension 50105 "PurchaseOrder" extends "Purchase Order" //50
         WorkDescription := Rec.GetWorkDescription();
     end;
 }
-pageextension 50115 "PurchaseInvoice" extends "Purchase Invoice" //52
+pageextension 50315 "PurchaseInvoice" extends "Purchase Invoice" //52
 {
     layout
     {

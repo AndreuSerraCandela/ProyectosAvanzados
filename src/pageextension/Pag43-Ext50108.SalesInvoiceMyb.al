@@ -1,4 +1,4 @@
-pageextension 50108 "SalesInvoiceMyb" extends "Sales Invoice" //43
+pageextension 50308 "SalesInvoiceMyb" extends "Sales Invoice" //43
 {
     layout
     {

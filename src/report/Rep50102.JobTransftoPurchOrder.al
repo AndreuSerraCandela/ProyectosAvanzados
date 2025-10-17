@@ -1,4 +1,4 @@
-report 50102 "Job Transf.to Purch. Order"
+report 50202 "Job Transf.to Purch. Order"
 {
     Caption = 'Job Transfer to Purcharse Order';
     ProcessingOnly = true;

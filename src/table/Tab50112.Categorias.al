@@ -1,5 +1,5 @@
 //Crear tabla de categorías
-table 50112 Categorias
+table 50212 Categorias
 {
     LookupPageId = 50114;
     DrillDownPageId = 50114;

@@ -1,7 +1,7 @@
 /// <summary>
 /// TableExtension LineasPlanificacion (ID 50100) extends Record Job Planning Line//1003.
 /// </summary>
-tableextension 50100 "LineasPlanificacion" extends "Job Planning Line"//1003
+tableextension 50300 "LineasPlanificacion" extends "Job Planning Line"//1003
 {
     fields
     {

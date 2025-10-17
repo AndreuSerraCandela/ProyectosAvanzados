@@ -1,4 +1,4 @@
-pageextension 50109 "PostedSalesInvoiceMyb" extends "Posted Sales Invoice"//132
+pageextension 50309 "PostedSalesInvoiceMyb" extends "Posted Sales Invoice"//132
 {
     layout
     {

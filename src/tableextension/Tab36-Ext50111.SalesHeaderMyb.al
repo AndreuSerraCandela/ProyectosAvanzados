@@ -1,4 +1,4 @@
-tableextension 50111 "SalesHeaderMyb" extends "Sales Header" //36
+tableextension 50311 "SalesHeaderMyb" extends "Sales Header" //36
 {
     fields
     {

@@ -1,4 +1,4 @@
-pageextension 50112 "PurchaseQuote" extends "Purchase Quote" //49
+pageextension 50312 "PurchaseQuote" extends "Purchase Quote" //49
 {
     layout
     {

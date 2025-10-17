@@ -1,4 +1,4 @@
-pageextension 50114 BusgetEntries extends "G/L Budget Entries"
+pageextension 50314 BusgetEntries extends "G/L Budget Entries"
 {
     layout
     {

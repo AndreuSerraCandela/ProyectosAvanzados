@@ -1,4 +1,4 @@
-tableextension 50102 "PurcharseLine_Job" extends "Purchase Line" //39
+tableextension 50302 "PurcharseLine_Job" extends "Purchase Line" //39
 {
     fields
     {
@@ -37,8 +37,34 @@ tableextension 50102 "PurcharseLine_Job" extends "Purchase Line" //39
 */
             end;
         }
+        field(90005; "Work Description"; BLOB)
+        {
+            Caption = 'Work Description';
+        }
     }
+    procedure SetWorkDescription(NewWorkDescription: Text)
+    var
+        OutStream: OutStream;
+    begin
+        Clear("Work Description");
+        "Work Description".CreateOutStream(OutStream, TEXTENCODING::UTF8);
+        OutStream.WriteText(NewWorkDescription);
+        Modify();
+    end;
 
+    /// <summary>
+    /// Retrieves work description from the sales header.
+    /// </summary>
+    /// <returns>Work description.</returns>
+    procedure GetWorkDescription() WorkDescription: Text
+    var
+        TypeHelper: Codeunit "Type Helper";
+        InStream: InStream;
+    begin
+        CalcFields("Work Description");
+        "Work Description".CreateInStream(InStream, TEXTENCODING::UTF8);
+        exit(TypeHelper.TryReadAsTextWithSepAndFieldErrMsg(InStream, TypeHelper.LFSeparator(), FieldName("Work Description")));
+    end;
 
     [InternalEvent(true)]
     local procedure OnBeforeValidateJobContractEntryNo(var xRec: Record "Purchase Line"; var IsHandled: Boolean);

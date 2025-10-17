@@ -1,4 +1,4 @@
-tableextension 50112 "SalesInvoiceHeaderMyB" extends "Sales Invoice Header" //112
+tableextension 50312 "SalesInvoiceHeaderMyB" extends "Sales Invoice Header" //112
 {
     fields
     {

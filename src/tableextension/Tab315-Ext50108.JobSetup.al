@@ -1,23 +1,23 @@
 /// <summary>
-/// TableExtension JobSetup (ID 50108) extends Record Jobs Setup //315.
+/// TableExtension JobSetup (ID 50208) extends Record Jobs Setup //315.
 /// </summary>
-tableextension 50108 "JobSetup" extends "Jobs Setup" //315
+tableextension 50308 "JobSetup" extends "Jobs Setup" //315
 {
     fields
     {
-        field(50100; DimensionJobProveedor; Boolean)
+        field(50200; DimensionJobProveedor; Boolean)
         {
             DataClassification = ToBeClassified;
             //si esta activado el campo para realizar los pedidos/facturas de compra desde proyecto debemos hacer que
             //coja la dimension del proveedor, trae la del cliente porque es una linea de planificacion y tiene la del cliente de proyecto.
             Caption = 'Asigna la Dimension del Proveedor cuando hacemos un pedido/factura de compra desde la linea de planificacion';
         }
-        field(50101; "Cód. Proyecto Obligatorio"; Boolean)
+        field(50201; "Cód. Proyecto Obligatorio"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Cód. Proyecto Obligatorios en Documentos Pedido/Factura';
         }
-        field(50102; "No. serie Ofertas en Proyectos"; Code[10])
+        field(50202; "No. serie Ofertas en Proyectos"; Code[10])
         {
             //DataClassification = ToBeClassified;
             TableRelation = "No. Series";
@@ -25,32 +25,32 @@ tableextension 50108 "JobSetup" extends "Jobs Setup" //315
             //'Especifica el código de la serie numérica que se va a utilizar para asignar números de ofertas a los proyectos.';
             Caption = 'No. Serie Ofertas en Proyectos';
         }
-        field(50103; "No.Serie Almacen de Proyecto"; Code[20])
+        field(50203; "No.Serie Almacen de Proyecto"; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = "No. Series";
             Caption = 'No. Serie Almacen en Pryectos';
         }
-        field(50104; "Digitos Capítulo"; Integer)
+        field(50204; "Digitos Capítulo"; Integer)
         {
 
         }
-        field(50105; "Digitos Subcapítulo"; Integer)
+        field(50205; "Digitos Subcapítulo"; Integer)
         { }
-        field(50106; "Prefijo Capítulo"; Code[10])
+        field(50206; "Prefijo Capítulo"; Code[10])
         { }
-        field(50107; "Dimension Proyecto"; Code[20])
+        field(50207; "Dimension Proyecto"; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = Dimension;
             Caption = 'Dimension Proyecto';
         }
-        field(50108; "Dias a Sumar"; Integer)
+        field(50208; "Dias a Sumar"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Dias a Sumar';
         }
-        field(50109; "Multiples Dependencias"; Boolean)
+        field(50209; "Multiples Dependencias"; Boolean)
         {
             DataClassification = ToBeClassified;
         }

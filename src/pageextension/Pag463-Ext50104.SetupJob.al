@@ -1,7 +1,7 @@
 /// <summary>
 /// PageExtension SetupJob (ID 50104) extends Record Jobs Setup //463.
 /// </summary>
-pageextension 50104 "SetupJob" extends "Jobs Setup" //463
+pageextension 50304 "SetupJob" extends "Jobs Setup" //463
 {
     layout
     {

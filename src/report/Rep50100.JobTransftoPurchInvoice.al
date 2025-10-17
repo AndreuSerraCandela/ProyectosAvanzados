@@ -1,7 +1,7 @@
 /// <summary>
 /// Report Job Transf.to Purch. Invoice (ID 50100).
 /// </summary>
-report 50100 "Job Transf.to Purch. Invoice"
+report 50200 "Job Transf.to Purch. Invoice"
 {
     Caption = 'Job Transfer to Purcharse Invoice';
     ProcessingOnly = true;

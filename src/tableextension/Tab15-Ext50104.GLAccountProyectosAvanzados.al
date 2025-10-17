@@ -1,4 +1,4 @@
-tableextension 50104 GLAccountProyectosAvanzados extends "G/L Account" //15
+tableextension 50304 GLAccountProyectosAvanzados extends "G/L Account" //15
 {
     fields
     {

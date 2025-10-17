@@ -1,4 +1,4 @@
-tableextension 50107 budgetentry extends "G/L Budget Entry"
+tableextension 50307 budgetentry extends "G/L Budget Entry"
 {
     fields
     {

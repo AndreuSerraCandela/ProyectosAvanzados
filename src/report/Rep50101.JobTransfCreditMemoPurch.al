@@ -1,4 +1,4 @@
-report 50101 "Job Transf Credit Memo Purch"
+report 50201 "Job Transf Credit Memo Purch"
 {
     Caption = 'Job Transfer to Credit Memo Purch';
     ProcessingOnly = true;
