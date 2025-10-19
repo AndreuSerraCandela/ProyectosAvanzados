@@ -1,4 +1,4 @@
-tableextension 50113 "Purch. Inv. Header" extends "Purch. Inv. Header" //122
+tableextension 50313 "Purch. Inv. Header" extends "Purch. Inv. Header" //122
 {
     fields
     {

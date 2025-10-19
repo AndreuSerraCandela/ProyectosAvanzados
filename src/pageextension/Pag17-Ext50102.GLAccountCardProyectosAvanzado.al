@@ -1,4 +1,4 @@
-pageextension 50102 GLAccountCardProyectosAvanzado extends "G/L Account Card" //17
+pageextension 50302 GLAccountCardProyectosAvanzado extends "G/L Account Card" //17
 {
     layout
     {

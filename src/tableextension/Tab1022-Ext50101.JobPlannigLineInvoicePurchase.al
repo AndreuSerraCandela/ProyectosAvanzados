@@ -1,4 +1,4 @@
-tableextension 50101 "JobPlannigLineInvoicePurchase" extends "Job Planning Line Invoice"//1022
+tableextension 50301 "JobPlannigLineInvoicePurchase" extends "Job Planning Line Invoice"//1022
 {
     fields
     {

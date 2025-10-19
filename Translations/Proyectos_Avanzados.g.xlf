@@ -3,6 +3,21 @@
   <file datatype="xml" source-language="en-US" target-language="en-US" original="Proyectos_Avanzados">
     <body>
       <group id="body">
+        <trans-unit id="Table 3769117148 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Adjuntos Informe</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Adjuntos Informe - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3769117148 - Field 1772630389 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No. Informe</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Adjuntos Informe - Field No. Informe - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3769117148 - Field 2564078735 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pdf Adjunto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Adjuntos Informe - Field Pdf Adjunto - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3377152574 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Categorias</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -193,6 +208,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Naturaleza Contable - Field Descripcion - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Codeunit 1528286649 - Method 2266206396 - NamedType 953671837" size-unit="char" translate="yes" xml:space="preserve">
+          <source>application/json</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Eventos-proyectos - Method RestApi - NamedType MEDIA_TYPE</note>
+        </trans-unit>
         <trans-unit id="Codeunit 3200460114 - NamedType 2476940767" size-unit="char" translate="yes" xml:space="preserve">
           <source>The lines were successfully transferred to an invoice.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -267,6 +287,71 @@
           <source>Esta tarea tiene dependencias que no estan completadas</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method OnBeforeRunWithCheck_Myb - NamedType Text_001</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Adjuntos Informe</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Control 3985449205 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Indica si el informe tiene un PDF adjunto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Control HasAttachment - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Control 3985449205 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tiene Adjunto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Control HasAttachment - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Control 4273478253 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Muestra el nombre del informe seleccionado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Control InformeName - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Control 4273478253 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nombre del Informe</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Control InformeName - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Control 1772630389 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el número del informe</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Control No. Informe - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Control 2564078735 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el PDF adjunto para este informe</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Control Pdf Adjunto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Action 3553845173 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Elimina el PDF adjunto del informe seleccionado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Action Eliminar PDF - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Action 3553845173 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Eliminar PDF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Action Eliminar PDF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Action 2671663815 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exporta el PDF adjunto del informe seleccionado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Action Exportar PDF - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Action 2671663815 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exportar PDF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Action Exportar PDF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Action 825650544 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importa un archivo PDF para el informe seleccionado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Action ImportarPDF - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3769117148 - Action 825650544 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importar PDF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Action ImportarPDF - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3787461146 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Categorías</source>
@@ -1728,6 +1813,16 @@
           <note from="Developer" annotates="general" priority="2">Generated from the PromotedActionCategories property index 2.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Category_Report - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 3581397397 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>WordDesription</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page WordDesription - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3581397397 - Control 512684737 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Descripción ampliada</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page WordDesription - Control WorkDescription - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Report 2421352948 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Job Transfer to Credit Memo Purch</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -2313,6 +2408,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Invoice Legal Text - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 3460046866 - Field 2162379755 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
+          <source>Url Pdf</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Url Pdf - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 3315447413 - Field 2165121140 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 4274826855">
           <source>Mostrar en lineas de planif.</source>
           <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
@@ -2567,6 +2667,11 @@
           <source>Job Contract Entry No.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurcharseLine_Job - Field Job Contract Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3543651433 - Field 22244033 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1519909599">
+          <source>Work Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurcharseLine_Job - Field Work Description - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 4199099589 - Field 1148871529 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
           <source>Aceptada</source>

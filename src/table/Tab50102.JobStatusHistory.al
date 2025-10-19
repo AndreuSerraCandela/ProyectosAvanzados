@@ -1,4 +1,4 @@
-table 50102 "Job Status History"
+table 50202 "Job Status History"
 {
     DrillDownPageId = 50113;
     LookupPageId = 50113;

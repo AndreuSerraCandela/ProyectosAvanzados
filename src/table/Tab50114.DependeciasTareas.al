@@ -1,4 +1,4 @@
-table 50114 "Dependecias de Tareas"
+table 50214 "Dependecias de Tareas"
 {
     DataClassification = ToBeClassified;
     DrillDownPageId = "Dependencias de Tareas";

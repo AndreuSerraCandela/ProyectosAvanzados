@@ -1,4 +1,4 @@
-pageextension 50106 "PurchaseOrderList" extends "Purchase Order List" //9307
+pageextension 50306 "PurchaseOrderList" extends "Purchase Order List" //9307
 {
     layout
     {

@@ -1,4 +1,4 @@
-codeunit 50101 "Eventos-proyectos"
+codeunit 50302 "Eventos-proyectos"
 {
     trigger OnRun()
     begin
@@ -165,6 +165,184 @@ codeunit 50101 "Eventos-proyectos"
         end;
 
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::ReportManagement, 'OnAfterDocumentReady', '', false, false)]
+    local procedure OnAfterDocumentReady(ObjectId: Integer; ObjectPayload: JsonObject; DocumentStream: InStream; var TargetStream: OutStream; var Success: Boolean)
+    var
+        Result: JsonToken;
+        ResultText: Text;
+        Filters: JsonArray;
+        filtro: JsonObject;
+        filtros: Text;
+        TokenFiltro: JsonToken;
+        Impresora: Text;
+        TempBlob: Codeunit "Temp Blob";
+        DocumentOutStream: OutStream;
+        size: Integer;
+        filename: Text;
+        B64: Codeunit "Base64 Convert";
+        GenLedgerSetup: Record "General Ledger Setup";
+        TM: Record "Tenant Media";
+        File64: Text;
+        Contrato: Text;
+        Proyecto: Text;
+        a: Integer;
+        RT: Codeunit "Reporting Triggers";
+        ObjectType: Option "Report","Page";
+        ReportAction: Option SaveAsPdf,SaveAsWord,SaveAsExcel,Preview,Print,SaveAsHtml;
+        Inf: Record "Company Information";
+        AdjuntosInforme: Record "Adjuntos Informe";
+        Id: Integer;
+    begin
+        //{"filterviews":[{"name":"Sales Invoice Header",
+        //"tableid":112,"view":"VERSION(1) SORTING(Field3) WHERE(Field3=1(IBC24-00070),Field4=1(5228))"},
+        //{"name":"CopyLoop","tableid":2000000026,"view":"VERSION(1) SORTING(Field1) WHERE(Field1=1(1))"},
+        //{"name":"Sales Invoice Line","tableid":113,"view":"VERSION(1) SORTING(Field3,Field4) WHERE(Field4=1(0..44050))"},
+        //{"name":"Sales Shipment Buffer","tableid":2000000026,"view":"VERSION(1) SORTING(Field1) WHERE(Field1=1(1..0))"},
+        //{"name":"Textos","tableid":2000000026,"view":"VERSION(1) SORTING(Field1) WHERE(Field1=1(1..0))"},
+        //{"name":"VATCounter","tableid":2000000026,"view":"VERSION(1) SORTING(Field1) WHERE(Field1=1(1..2))"},
+        //{"name":"VATClauseEntryCounter","tableid":2000000026,"view":"VERSION(1) SORTING(Field1) WHERE(Field1=1(1..2))"}],
+        //"version":1,"objectname":"Factura Venta","objectid":50025,"documenttype":"application/pdf","invokedby":"c25ac6d6-b4e2-4380-9ff5-a18ea44a0bf2"App
+        //,"invokeddatetime":"2023-11-28T10:26:33.252+01:00","companyname":"Malla Publicidad","printername":"Bullzip PDF Printer",
+        //"duplex":false,"color":false,"defaultcopies":1,"papertray":
+        //{"papersourcekind":1,"paperkind":0,"landscape":false,"units":0,"height":0,"width":0},"intent":"Print",
+        //"layoutmodel":"Rdlc","layoutname":"./src/report/layout/SalesInvoice.rdlc","layoutmimetype":"",
+        //"layoutapplicationid":"00000000-0000-0000-0000-000000000000","reportrunid":"c08679d0-a879-4afd-a4ca-b8a63a021f0a"}
+        //recuperar el objectid
+        ObjectPayload.Get('objectid', Result);
+        if not Evaluate(Id, Result.AsValue().AsText()) then
+            exit;
+        AdjuntosInforme.SetRange("No. Informe", Result.AsValue().AsInteger());
+        if AdjuntosInforme.FindFirst() then begin
+            // ObjectPayload.Get('filterviews', Result);
+            // Filters := Result.AsArray();
+            // foreach Tokenfiltro in filters do begin
+            //     If filtros = '' Then begin
+
+            //         filtro := Tokenfiltro.AsObject();
+            //         If filtro.Get('view', Result) then begin
+            //             Result.WriteTo(filtros);
+            //             If Strpos(filtros, 'Field3=') <> 0 Then
+            //                 Contrato := Copystr(Filtros, Strpos(filtros, 'Field3=') + 9, 11);
+            //         end;
+            //     end;
+
+            // end;
+            //If Contrato = '' Then exit;
+            File64 := GuardaPdfAdjunto(AdjuntosInforme)
+        end;
+        If File64 = '' Then exit;
+        filename := B64.ToBase64(DocumentStream);
+        filename := PostDocumentos(filename, File64);
+        B64.fromBase64(filename, TargetStream);
+        Success := true;
+    end;
+
+    procedure PostDocumentos(base1: Text; base2: Text): Text
+    Var
+        Inf: Record "Company Information";
+        RequestType: Option Get,patch,put,post,delete;
+        Parametros: Text;
+        UrlPdf: Text;
+        JsonObj: JsonObject;
+        JsonTexT: Text;
+        ResPuestaJson: JsonObject;
+        PdfToken: JsonToken;
+    begin
+        Inf.Get();
+        if Inf."Url Pdf" <> '' then
+            UrlPdf := Inf."Url Pdf"
+        else
+            UrlPdf := 'https://gateway.malla.es/pdf';
+
+        jsonobj.Add('pdf1', Base1);
+        jsonobj.Add('pdf2', base2);
+        jsonobj.WriteTo(JsonTexT);
+        ResPuestaJson.ReadFrom(RestApi(UrlPdf, RequestType::post, jSonText));
+        //Obtener el valor de la key pdf
+        if ResPuestaJson.Get('pdf', PdfToken) then
+            exit(PdfToken.AsValue().AsText());
+    end;
+
+    /// <summary>
+    /// RestApi.
+    /// </summary>
+    /// <param name="url">Text.</param>
+    /// <param name="RequestType">Option Get,patch,put,post,delete.</param>
+    /// <param name="payload">Text.</param>
+    /// <returns>Return value of type Text.</returns>
+    procedure RestApi(url: Text; RequestType: Option Get,patch,put,post,delete; payload: Text): Text
+    var
+        Ok: Boolean;
+        Respuesta: Text;
+        Client: HttpClient;
+        RequestHeaders: HttpHeaders;
+        RequestContent: HttpContent;
+        ResponseMessage: HttpResponseMessage;
+        RequestMessage: HttpRequestMessage;
+        ResponseText: Text;
+        contentHeaders: HttpHeaders;
+        MEDIA_TYPE: Label 'application/json';
+    begin
+        RequestHeaders := Client.DefaultRequestHeaders();
+        //RequestHeaders.Add('Authorization', CreateBasicAuthHeader(Username, Password));
+
+        case RequestType of
+            RequestType::Get:
+                Client.Get(URL, ResponseMessage);
+            RequestType::patch:
+                begin
+                    RequestContent.WriteFrom(payload);
+
+                    RequestContent.GetHeaders(contentHeaders);
+                    contentHeaders.Clear();
+                    contentHeaders.Add('Content-Type', 'application/json-patch+json');
+
+                    RequestMessage.Content := RequestContent;
+
+                    RequestMessage.SetRequestUri(URL);
+                    RequestMessage.Method := 'PATCH';
+
+                    client.Send(RequestMessage, ResponseMessage);
+                end;
+            RequestType::post:
+                begin
+                    RequestContent.WriteFrom(payload);
+
+                    RequestContent.GetHeaders(contentHeaders);
+                    contentHeaders.Clear();
+                    contentHeaders.Add('Content-Type', 'application/json');
+
+                    Client.Post(URL, RequestContent, ResponseMessage);
+                end;
+            RequestType::delete:
+                Client.Delete(URL, ResponseMessage);
+        end;
+
+        ResponseMessage.Content().ReadAs(ResponseText);
+        exit(ResponseText);
+
+    end;
+
+    local procedure GuardaPdfAdjunto(var AdjuntosInforme: Record "Adjuntos Informe"): Text
+    var
+        varInStream: InStream;
+        varOutStream: OutStream;
+        TempBlob: Codeunit "Temp Blob";
+        FileManagement: Codeunit "File Management";
+        DocumentStream: OutStream;
+        FullFileName: Text;
+        IsHandled: Boolean;
+        Base64: Codeunit "Base64 Convert";
+    begin
+        TempBlob.CreateOutStream(DocumentStream);
+        AdjuntosInforme."Pdf Adjunto".ExportStream(DocumentStream);
+        TempBlob.CreateInStream(varInStream);
+        exit(Base64.ToBase64(varInStream));
+    end;
+
+
+
 
     var
         myInt: Integer;

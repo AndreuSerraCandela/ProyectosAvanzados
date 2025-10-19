@@ -1,4 +1,4 @@
-table 50113 "Naturaleza Contable"
+table 50213 "Naturaleza Contable"
 {
     DataClassification = ToBeClassified;
 

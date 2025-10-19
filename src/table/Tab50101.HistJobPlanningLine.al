@@ -1,4 +1,4 @@
-table 50101 "Hist. Job Planning Line"
+table 50201 "Hist. Job Planning Line"
 {
     DrillDownPageId = 50112;
     LookupPageId = 50112;

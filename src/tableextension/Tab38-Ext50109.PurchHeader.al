@@ -1,7 +1,7 @@
 //namespace Microsoft.Projects.Project.Job;
 
 //namespace Microsoft.Purchases.Document."Purchase Header";
-tableextension 50109 "PurchHeader" extends "Purchase Header" //38
+tableextension 50309 "PurchHeader" extends "Purchase Header" //38
 {
     fields
     {
@@ -15,12 +15,12 @@ tableextension 50109 "PurchHeader" extends "Purchase Header" //38
         {
             DataClassification = ToBeClassified;
         }
-        field(90002; Categorias; Code[20])
+        field(90102; Categorias; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = Categorias;
         }
-        field(90003; Aceptada; Boolean)
+        field(90103; Aceptada; Boolean)
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()

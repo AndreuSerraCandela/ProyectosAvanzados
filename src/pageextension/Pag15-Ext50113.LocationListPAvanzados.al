@@ -1,4 +1,4 @@
-pageextension 50113 LocationListPAvanzados extends "Location List" //15
+pageextension 50313 LocationListPAvanzados extends "Location List" //15
 {
     layout
     {

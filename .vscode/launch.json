@@ -9,14 +9,29 @@
       "environmentType": "Sandbox",
       // "tenant": "fe659371-d016-40ff-a31c-a52888650f25",
       // "environmentName": "UAT_TECH4PLUS",
-      "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
-      "environmentName": "PARD_UAT_APM",
+      //"tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
+      //"environmentName": "PARD_UAT_APM",
+      "tenant": "ccfc82ea-80ca-49b8-9e32-cca1e059073d",
+      "environmentName": "TEST_RADYAL_ADVJOBS_161025",
       "breakOnError": true,
       "launchBrowser": true,
       "enableLongRunningSqlStatements": true,
       "enableSqlInformationDebugger": true,
       "schemaUpdateMode": "Synchronize"
 
-    }
+    },
+    {
+      "name": "Andreu",
+      "request": "launch",
+      "type": "al",
+      "tenant": "2ced0470-8346-4f24-97da-ec029d56d980",
+      "environmentType": "Sandbox",
+      "environmentName": "sandbox",
+      "breakOnError": "All",
+      "launchBrowser": true,
+      "schemaUpdateMode": "Synchronize",
+      "enableLongRunningSqlStatements": true,
+      "enableSqlInformationDebugger": true
+  }
   ]
 }

@@ -3,7 +3,7 @@
 /// </summary>
 /// 
 
-codeunit 50100 "ProcesosProyectos"
+codeunit 50301 "ProcesosProyectos"
 {
     Permissions = TableData "G/L Budget Entry" = rimd;
     trigger OnRun()
@@ -1058,6 +1058,8 @@ codeunit 50100 "ProcesosProyectos"
                     Currency."Amount Rounding Precision"));
             end;
             PurchaseLine.Validate("Job Contract Entry No.", JobPlanningLine2."Job Contract Entry No.");
+            if JobPlanningLine2.GetWorkDescription() <> '' then
+                PurchaseLine.SetWorkDescription(JobPlanningLine2.GetWorkDescription());
             OnBeforeModifyPurchaseLine(PurchaseLine, PurchaseHeader, Job, JobPlanningLine2);
             PurchaseLine.Modify();
             JobPlanningLine2."VAT Unit Price" := PurchaseLine."Unit Cost";
