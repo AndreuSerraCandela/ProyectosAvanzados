@@ -41,6 +41,53 @@ tableextension 50302 "PurcharseLine_Job" extends "Purchase Line" //39
         {
             Caption = 'Work Description';
         }
+        field(50001; "Job Assignment Percentage"; Decimal)
+        {
+            Caption = '% Asignación Proyecto';
+            ToolTip = 'Especifica el porcentaje de la línea que se asignará al proyecto. Si se utiliza porcentaje, el importe debe ser 0.';
+            DecimalPlaces = 2 : 5;
+            MinValue = 0;
+            MaxValue = 100;
+
+            trigger OnValidate()
+            var
+                ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
+            begin
+                if "Job Assignment Percentage" <> 0 then begin
+                    // Si se establece porcentaje, borrar asignaciones por importe para esta línea
+                    ProyectoFacturaCompra.SetRange("Document Type", "Document Type");
+                    ProyectoFacturaCompra.SetRange("Document No.", "Document No.");
+                    ProyectoFacturaCompra.SetRange("Line No.", "Line No.");
+                    ProyectoFacturaCompra.SetFilter("Amount", '<>%1', 0);
+                    if ProyectoFacturaCompra.FindSet() then
+                        ProyectoFacturaCompra.DeleteAll();
+                end;
+            end;
+        }
+        field(50002; "Job Assignment Amount"; Decimal)
+        {
+            Caption = 'Importe Asignación Proyecto';
+            ToolTip = 'Especifica el importe de la línea que se asignará al proyecto. Si se utiliza importe, el porcentaje debe ser 0.';
+            AutoFormatType = 1;
+            AutoFormatExpression = "Currency Code";
+            DecimalPlaces = 2 : 5;
+            MinValue = 0;
+
+            trigger OnValidate()
+            var
+                ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
+            begin
+                if "Job Assignment Amount" <> 0 then begin
+                    // Si se establece importe, borrar asignaciones por porcentaje para esta línea
+                    ProyectoFacturaCompra.SetRange("Document Type", "Document Type");
+                    ProyectoFacturaCompra.SetRange("Document No.", "Document No.");
+                    ProyectoFacturaCompra.SetRange("Line No.", "Line No.");
+                    ProyectoFacturaCompra.SetFilter("Percentage", '<>%1', 0);
+                    if ProyectoFacturaCompra.FindSet() then
+                        ProyectoFacturaCompra.DeleteAll();
+                end;
+            end;
+        }
     }
     procedure SetWorkDescription(NewWorkDescription: Text)
     var

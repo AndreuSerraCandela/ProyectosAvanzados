@@ -12,7 +12,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
             {
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Cód Oferta Job field.';
-                Visible = false;
+                // Visible = false;
             }
             field("Cod Almacen de Proyecto"; Rec."Cod Almacen de Proyecto")
             {
@@ -66,6 +66,15 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                 Enabled = JobTaskLinesEditable2;
             }
 
+        }
+        addafter("Attached Documents List")
+        {
+            part(PagosAsociados; "Pagos Asociados Factbox")
+            {
+                ApplicationArea = Jobs;
+                Caption = 'Pagos Asociados';
+                SubPageLink = "Job No." = field("No.");
+            }
         }
     }
 
@@ -253,6 +262,33 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                     CodProyecto.CrearPresupuesto(Rec);
                 end;
             }
+            action("Importar desde Excel")
+            {
+                ApplicationArea = All;
+                Caption = 'Importar Tareas desde Excel';
+                ToolTip = 'Importa tareas de proyecto desde un archivo Excel';
+                Image = ImportExcel;
+
+                trigger OnAction()
+                begin
+                    ImportarLineasDesdeExcel();
+                end;
+            }
+            action("Pagos Vinculados")
+            {
+                ApplicationArea = All;
+                Caption = 'Pagos Vinculados al Proyecto';
+                ToolTip = 'Muestra el estado de los pagos de documentos de compra vinculados a este proyecto';
+                Image = Payment;
+
+                trigger OnAction()
+                var
+                    PagosProyecto: Page "Pagos Proyecto";
+                begin
+                    PagosProyecto.SetJobFilter(Rec."No.");
+                    PagosProyecto.RunModal();
+                end;
+            }
 
         }
 
@@ -272,6 +308,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                 actionref(crearalmacen_ref; "Crear Almacen de Proyecto") { }
                 actionref(VerEstimaciones; "Ver Estimaciones") { }
                 actionref(CrearNuevaEstimacion; "Calcular nueva estimación") { }
+                actionref(ImportarDesdeExcel; "Importar desde Excel") { }
             }
 
         }
@@ -477,7 +514,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
     begin
         JobTaskLinesEditable2 := Rec.CalcJobTaskLinesEditable();
         CurrPage.JobTaskLines2.Page.cargaProyecto(Rec."No.");
-
+        CurrPage.PagosAsociados.Page.SetJobFilter(Rec."No.");
     end;
 
     trigger OnOpenPage()
@@ -490,4 +527,122 @@ pageextension 50307 "JobCard" extends "Job Card" //88
         TareasEstandard: Boolean;
         myInt: Integer;
         JobTaskLinesEditable2: Boolean;
+
+    local procedure ImportarLineasDesdeExcel()
+    var
+        TempExcelBuffer: Record "Excel Buffer" temporary;
+        JobTask: Record "Job Task";
+        InStream: InStream;
+        FileName: Text;
+        RowNo: Integer;
+        //TaskNo: Integer;
+        CodigoLinea: Text[20];
+        Descripcion: Text[100];
+        NoCuenta: Code[20];
+        EsSumatorio: Boolean;
+        ImportedTasks: Integer;
+        ParentTaskNo: Code[20];
+        SheetName: Text;
+        DimMgt: Codeunit DimensionManagement;
+        JobTaskDim: Record "Job Task Dimension";
+        DefaultDim: Record "Default Dimension";
+    begin
+        // Verificar que el proyecto esté abierto
+        if Rec.Status <> Rec.Status::Open then begin
+            Message('El proyecto debe estar en estado Abierto para importar tareas.');
+            exit;
+        end;
+
+        // Solicitar archivo Excel
+
+        // Limpiar buffer temporal
+        TempExcelBuffer.DeleteAll();
+
+        // Cargar datos del Excel
+        if UploadIntoStream('Seleccionar archivo Excel', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos los archivos (*.*)|*.*', FileName, InStream) then begin
+            SheetName := TempExcelBuffer.SelectSheetsNameStream(InStream);
+            TempExcelBuffer.OpenBookStream(InStream, SheetName);
+            TempExcelBuffer.ReadSheet();
+        end else
+            exit;
+        JobTaskDim.SetRange("Job No.", Rec."No.");
+        JobTaskDim.DeleteAll();
+        commit();
+        ImportedTasks := 0;
+        //TaskNo := 10000; // Iniciar numeración de tareas
+        ParentTaskNo := ''; // Para agrupar sumatorios
+
+        // Procesar cada fila del Excel
+        if TempExcelBuffer.FindSet() then
+            repeat
+                RowNo := TempExcelBuffer."Row No.";
+
+                // Saltar fila de encabezados (asumiendo que está en la fila 1)
+                if RowNo = 1 then begin
+                    // Saltar esta fila y continuar con la siguiente
+                end else begin
+                    // Leer datos de las columnas A, B, C
+                    CodigoLinea := '';
+                    Descripcion := '';
+                    NoCuenta := '';
+                    EsSumatorio := false;
+
+                    // Buscar datos de esta fila
+                    TempExcelBuffer.SetRange("Row No.", RowNo);
+                    if TempExcelBuffer.FindSet() then
+                        repeat
+                            case TempExcelBuffer."Column No." of
+                                1: // Columna A - Código de línea
+                                    begin
+                                        CodigoLinea := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(JobTask."Job Task No."));
+                                        // Detectar si es sumatorio por formato (negrita)
+                                        EsSumatorio := TempExcelBuffer.Bold;
+                                    end;
+                                2: // Columna B - Descripción
+                                    Descripcion := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Descripcion));
+                                3:
+                                    Begin// Columna C - Número de cuenta
+                                        NoCuenta := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NoCuenta));
+                                        if NoCuenta = '' Then EsSumatorio := true;
+                                    end;
+                            end;
+                        until TempExcelBuffer.Next() = 0;
+
+                    // Crear tarea de proyecto si hay datos válidos
+                    if (CodigoLinea <> '') and (Descripcion <> '') then begin
+                        if not JobTask.Get(Rec."No.", CodigoLinea) then begin
+                            JobTask.Init();
+                            JobTask."Job No." := Rec."No.";
+                            JobTask."Job Task No." := CodigoLinea;
+
+                            // Si es sumatorio, crear como tarea padre
+                            if EsSumatorio then begin
+                                JobTask.Description := Descripcion;
+                                JobTask."Job Task Type" := JobTask."Job Task Type"::Heading;
+                                JobTask."WIP-Total" := JobTask."WIP-Total"::Total;
+                                ParentTaskNo := JobTask."Job Task No.";
+                                JobTask.Totaling := CodigoLinea + '.00' + '..' + CodigoLinea + '.99';
+                            end else begin
+                                JobTask.Description := Descripcion;
+                                JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
+                                JobTask."WIP-Total" := JobTask."WIP-Total"::" ";
+                                JobTask."Tipo Partida" := JobTask."Tipo Partida"::Subcapítulo;
+                            end;
+
+                            If JobTask.Insert(true) then;
+                            //TaskNo += 10000;
+                            ImportedTasks += 1;
+                        end;
+                    end;
+
+                    // Restaurar filtro para siguiente iteración
+                    TempExcelBuffer.SetRange("Row No.");
+                end;
+            until TempExcelBuffer.Next() = 0;
+
+        Message('Se importaron %1 tareas correctamente.', ImportedTasks);
+
+        // Actualizar la página de tareas
+        CurrPage.JobTaskLines2.Page.Update(false);
+    end;
 }

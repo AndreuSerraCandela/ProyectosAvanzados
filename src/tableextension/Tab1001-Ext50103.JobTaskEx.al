@@ -240,6 +240,13 @@ tableextension 50303 "JobTaskEx" extends "Job Task" //1001
             CalcFormula = count("Dependecias de Tareas" where("Job No." = field("Job No."), "Cód. Tarea" = field("Job Task No.")));
 
         }
+        field(50016; "IMprte Pagado"; Decimal)
+        {
+            Caption = 'Importe Pagado';
+
+        }
+        field(50017; Pendiente; Boolean)
+        { }
 
     }
 

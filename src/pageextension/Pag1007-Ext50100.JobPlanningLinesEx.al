@@ -100,6 +100,7 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 Visible = false;
             }
 
+
         }
     }
 

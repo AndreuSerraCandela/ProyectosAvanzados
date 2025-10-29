@@ -97,6 +97,13 @@ tableextension 50300 "LineasPlanificacion" extends "Job Planning Line"//1003
         {
             Caption = 'Work Description';
         }
+        field(50016; "Importe Pagado"; Decimal)
+        {
+            Caption = 'Importe Pagado';
+
+        }
+        field(50017; Pendiente; Boolean)
+        { }
 
 
     }

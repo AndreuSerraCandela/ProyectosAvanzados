@@ -7,17 +7,18 @@
       "request": "launch",
       "type": "al",
       "environmentType": "Sandbox",
+      
       // "tenant": "fe659371-d016-40ff-a31c-a52888650f25",
       // "environmentName": "UAT_TECH4PLUS",
       //"tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
       //"environmentName": "PARD_UAT_APM",
-      "tenant": "ccfc82ea-80ca-49b8-9e32-cca1e059073d",
-      "environmentName": "TEST_RADYAL_ADVJOBS_161025",
+      "tenant": "a18adf9d-3e6c-4d92-9ddb-b6ae98304ef7",
+      "environmentName": "UAT_DEVELOP_AF_151025",
       "breakOnError": true,
       "launchBrowser": true,
       "enableLongRunningSqlStatements": true,
       "enableSqlInformationDebugger": true,
-      "schemaUpdateMode": "Synchronize"
+      "schemaUpdateMode": "ForceSync"
 
     },
     {
