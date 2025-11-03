@@ -64,6 +64,7 @@ tableextension 50309 "PurchHeader" extends "Purchase Header" //38
         Clear("Work Description");
         "Work Description".CreateOutStream(OutStream, TEXTENCODING::UTF8);
         OutStream.WriteText(NewWorkDescription);
+        If Rec."No." = '' Then Exit;
         Modify();
     end;
 
