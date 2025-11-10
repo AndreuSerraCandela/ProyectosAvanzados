@@ -822,8 +822,8 @@ codeunit 50301 "ProcesosProyectos"
         IF PurchaseHeader."Document Type" = PurchaseHeader2."Document Type"::"Return Order" THEN
             PurchaseSetup.TESTFIELD("Return Order Nos.");
         PurchaseHeader."Posting Date" := PostingDate;
-        WorkDescription := JobPlanningLine.GetWorkDescription();
-        PurchaseHeader.SetWorkDescription(WorkDescription);
+        //WorkDescription := JobPlanningLine.GetWorkDescription();
+        //PurchaseHeader.SetWorkDescription(WorkDescription);
         OnBeforeInsertPurchaseHeader(PurchaseHeader, Job);
         PurchaseHeader.INSERT(TRUE);
         //**
@@ -960,6 +960,7 @@ codeunit 50301 "ProcesosProyectos"
         PurchaseLine.Validate("Gen. Prod. Posting Group", JobPlanningLine2."Gen. Prod. Posting Group");
         PurchaseLine.Validate("Location Code", JobPlanningLine2."Location Code");
         // PurchaseLine.Validate("Work Type Code", JobPlanningLine."Work Type Code");
+
         PurchaseLine.Validate("Variant Code", JobPlanningLine2."Variant Code");
         GlSetup.Get();
         if Factor = 0 then Factor := 1;
@@ -1033,6 +1034,7 @@ codeunit 50301 "ProcesosProyectos"
         //NoLinea := GetNextLineNo(PurchaseLine);
         // PurchaseLine."Line No." := NoLinea;
         OnBeforeInsertPurchaseLine(PurchaseLine, PurchaseHeader, Job, JobPlanningLine2);
+
         PurchaseLine.Insert(true);
         JobPlanningLine.Modify();
 
@@ -1073,6 +1075,10 @@ codeunit 50301 "ProcesosProyectos"
         if TransferExtendedText.SalesCheckIfAnyExtText(PurchaseLine, false) then
             TransferExtendedText.InsertSalesExtText(PurchaseLine);
 */
+        if JobPlanningLine.GetWorkDescription() <> '' then begin
+            PurchaseLine.SetWorkDescription(JobPlanningLine2.GetWorkDescription());
+            //PurchaseLine.Modify();
+        end;
         OnAfterCreatePurchaseLine(PurchaseLine, PurchaseHeader, Job, JobPlanningLine2);
 
 

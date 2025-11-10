@@ -147,20 +147,20 @@ codeunit 50102 "Gestión Pagos Proyecto"
     end;
 
     // Procedimiento para crear asignación manual desde línea de compra
-    procedure CreateProjectAssignment(PurchaseLine: Record "Purchase Line"; JobNo: Code[20]; JobTaskNo: Code[20]; JobPlanningLineNo: Integer; Percentage: Decimal; Amount: Decimal)
+    procedure CreateProjectAssignment(PurchaseLine: Record "Purch. Inv. Line"; JobNo: Code[20]; JobTaskNo: Code[20]; JobPlanningLineNo: Integer; Percentage: Decimal; Amount: Decimal)
     var
         ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
-        PurchaseHeader: Record "Purchase Header";
+        PurchaseHeader: Record "Purch. Inv. Header";
         VendorNo: Code[20];
     begin
         if JobNo = '' then
             exit;
 
-        if PurchaseHeader.Get(PurchaseLine."Document Type", PurchaseLine."Document No.") then
+        if PurchaseHeader.Get(PurchaseLine."Document No.") then
             VendorNo := PurchaseHeader."Buy-from Vendor No.";
 
         ProyectoFacturaCompra.Init();
-        ProyectoFacturaCompra."Document Type" := PurchaseLine."Document Type";
+        ProyectoFacturaCompra."Document Type" := ProyectoFacturaCompra."Document Type"::Invoice;
         ProyectoFacturaCompra."Document No." := PurchaseLine."Document No.";
         ProyectoFacturaCompra."Line No." := PurchaseLine."Line No.";
         ProyectoFacturaCompra."Job No." := JobNo;
@@ -176,5 +176,23 @@ codeunit 50102 "Gestión Pagos Proyecto"
             Error('Debe especificar un porcentaje o un importe.');
 
         if ProyectoFacturaCompra.Insert() then;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", 'OnPostDtldVendLedgEntriesOnBeforeUpdateTotalAmounts', '', false, false)]
+    local procedure OnPostDtldVendLedgEntriesOnBeforeUpdateTotalAmounts(var GenJnlLine: Record "Gen. Journal Line"; DtldVendLedgEntry: Record "Detailed Vendor Ledg. Entry"; var IsHandled: Boolean; var DetailedCVLedgEntryBuffer: Record "Detailed CV Ledg. Entry Buffer")
+    var
+        VendLedgEntry: Record "Vendor Ledger Entry";
+        VendLedgEntryNo: Integer;
+        PurchaseLine: Record "Purch. Inv. Line";
+    begin
+        VendLedgEntryNo := DtldVendLedgEntry."Vendor Ledger Entry No.";
+        if VendLedgEntry.Get(VendLedgEntryNo) then begin
+            PurchaseLine.SetRange("Document No.", VendLedgEntry."Document No.");
+            if PurchaseLine.FindFirst() then
+                repeat
+                    CreateProjectAssignment(PurchaseLine, PurchaseLine."Job No.", PurchaseLine."Job Task No.", PurchaseLine."Job Planning Line No.", 100, PurchaseLine."Amount");
+                until PurchaseLine.Next() = 0;
+        end;
+
     end;
 }
