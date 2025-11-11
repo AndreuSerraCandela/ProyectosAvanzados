@@ -238,6 +238,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Proyecto Movimiento Pago - Field Document Type - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3856100107 - Field 883711285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Entry No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Proyecto Movimiento Pago - Field Entry No. - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3856100107 - Field 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Nº Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -867,6 +872,16 @@
           <source>&amp;Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action &amp;Job - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3853247520 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Actualizar el árbol de tareas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Actualizar Arbol - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Action 3853247520 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Actualizar Arbol</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Actualizar Arbol - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3008278152 - Action 100870816 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Indentar+</source>

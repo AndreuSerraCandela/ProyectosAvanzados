@@ -114,11 +114,16 @@ table 50117 "Proyecto Movimiento Pago"
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(14; "Entry No."; Integer)
+        {
+            TableRelation = "Vendor Ledger Entry"."Entry No.";
+            ValidateTableRelation = false;
+        }
     }
 
     keys
     {
-        key(Key1; "Document Type", "Document No.", "Line No.", "Job No.", "Job Planning Line No.")
+        key(Key1; "Document Type", "Document No.", "Line No.", "Job No.", "Job Planning Line No.", "Entry No.")
         {
             Clustered = true;
         }
@@ -261,6 +266,7 @@ table 50117 "Proyecto Movimiento Pago"
         VendorLedgerEntry.SetRange("Document Type", VendorLedgerEntry."Document Type"::Invoice);
         VendorLedgerEntry.SetRange("Document No.", "Posted Document No.");
         VendorLedgerEntry.SetRange("Vendor No.", "Vendor No.");
+        VendorLedgerEntry.SetRange("Entry No.", "Entry No.");
 
         if not VendorLedgerEntry.FindFirst() then begin
             Clear("Amount Paid");
