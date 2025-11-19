@@ -248,6 +248,18 @@ page 50116 "Job Task Lines Subform Ext"
                     ToolTip = 'Specifies the estimate at completion (EAC) total price for a job task line. If the Apply Usage Link check box on the job is selected, then the EAC (Total Price) field is calculated as follows: Usage (Total Price) + Remaining (Total Price).';
                     Visible = false;
                 }
+                field("Amount Paid"; CalculaImportePagado())
+                {
+                    ApplicationArea = All;
+                    Caption = 'Importe Pagado';
+                    ToolTip = 'Especifica el importe pagado para esta tarea.';
+                }
+                field("Amount Pending"; CalculaImportePendiente())
+                {
+                    ApplicationArea = All;
+                    Caption = 'Importe Pendiente';
+                    ToolTip = 'Especifica el importe pendiente de pago para esta tarea.';
+                }
                 field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
                 {
                     ApplicationArea = Dimensions;
@@ -868,6 +880,45 @@ page 50116 "Job Task Lines Subform Ext"
         PurchLine.CalcSums("Outstanding Amount");
         If PurchLine.FindFirst() then exit(PurchLine."Outstanding Amount");
 
+
+    end;
+
+    local procedure CalculaImportePendiente(): Decimal
+    var
+        JobTask: Record "Job Task";
+        ImportePagado: Decimal;
+        ImporteCoste: Decimal;
+    begin
+        If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
+            exit(Rec."Tota Cost" - Rec."Amount Paid")
+        else begin
+            JobTask.SetRange("Job No.", Rec."Job No.");
+            JobTask.SetFilter("Job Task No.", Rec.Totaling);
+            If JobTask.FindSet() then
+                repeat
+                    ImportePagado += JobTask."Amount Paid";
+                    ImporteCoste += JobTask."Tota Cost";
+                until JobTask.Next() = 0;
+            exit(ImporteCoste - ImportePagado);
+        end;
+    end;
+
+    local procedure CalculaImportePagado(): Decimal
+    var
+        JobTask: Record "Job Task";
+        ImportePendiente: Decimal;
+    begin
+        If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
+            exit(Rec."Amount Paid")
+        else begin
+            JobTask.SetRange("Job No.", Rec."Job No.");
+            JobTask.SetFilter("Job Task No.", Rec.Totaling);
+            If JobTask.FindSet() then
+                repeat
+                    ImportePendiente += JobTask."Amount Paid";
+                until JobTask.Next() = 0;
+            exit(ImportePendiente);
+        end;
 
     end;
 

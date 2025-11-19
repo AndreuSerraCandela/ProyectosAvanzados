@@ -162,6 +162,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         VendorNo: Code[20];
         Importe: Decimal;
         JobPlaningLine: Record "Job Planning Line";
+        AmoindPaid: Decimal;
     begin
         if JobNo = '' then
             exit;
@@ -208,10 +209,34 @@ codeunit 50102 "Gestión Pagos Proyecto"
             repeat
                 Importe += ProyectoFacturaCompraOld."Amount Paid";
             Until ProyectoFacturaCompraOld.Next() = 0;
-        ProyectoFacturaCompra."Amount Paid" += Importe;
+        AmoindPaid += Importe;
         If JobPlaningLine.Get(JobNo, JobTaskNo, JobPlanningLineNo) Then
-            ProyectoFacturaCompra."Amount Pending" := JobPlaningLine."total Cost" - ProyectoFacturaCompra."Amount Paid";
+            ProyectoFacturaCompra."Amount Pending" := JobPlaningLine."total Cost" - AmoindPaid;
         ProyectoFacturaCompra.Insert;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", 'OnPostEmployeeOnAfterPostDtldEmplLedgEntries', '', false, false)]
+    local procedure OnPostEmployeeOnAfterPostDtldEmplLedgEntries(GenJournalLine: Record "Gen. Journal Line"; var EmployeeLedgerEntry: Record "Employee Ledger Entry"; var DtldLedgEntryInserted: Boolean)
+    var
+        EmplEntry: Record "Employee Ledger Entry";
+        JobPlanningLine: Record "Job Planning Line";
+        Employee: Record Employee;
+    begin
+        EmpLEntry.SetRange("Document No.", GenJournalLine."Applies-to Doc. No.");
+        if EmplEntry.FindFirst() then
+            repeat
+                if Employee.Get(EmplEntry."Employee No.") then
+                    repeat
+                        JobPlanningLine.SetRange("No.", Employee."Resource No.");
+                        JobPlanningLine.SetRange(Type, JobPlanningLine.Type::Resource);
+                        JobPlanningLine.SetRange("Document Date", CalcDate('<CM+1D-1m>', EmplEntry."Posting Date"), CalcDate('<CM>', EmplEntry."Posting Date"));
+
+                        if JobPlanningLine.Get(Employee."Job No.", Employee."Job Task No.", Employee."Job Planning Line No.") then
+                            CreateProjectAssignment(JobPlanningLine, JobPlanningLine."Job No.", JobPlanningLine."Job Task No.", JobPlanningLine."Job Planning Line No.", 0, JobPlanningLine."Amount", JobPlanningLine."Entry No.");
+                    until JobPlanningLine.Next() = 0;
+
+            until GLEntry.Next() = 0;
+
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", 'OnPostDtldVendLedgEntriesOnBeforeUpdateTotalAmounts', '', false, false)]

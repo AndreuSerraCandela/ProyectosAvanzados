@@ -243,10 +243,27 @@ tableextension 50303 "JobTaskEx" extends "Job Task" //1001
         field(50016; "IMprte Pagado"; Decimal)
         {
             Caption = 'Importe Pagado';
+            ObsoleteState = Removed;
 
         }
         field(50017; Pendiente; Boolean)
         { }
+        field(50018; "Amount Paid"; Decimal)
+        {
+            Caption = 'Importe Pagado';
+            FieldClass = FlowField;
+            CalcFormula = sum("Proyecto Movimiento Pago"."Amount Paid" where("Job Task No." = field("Job Task No."), "Job No." = field("Job No.")));
+            Editable = false;
+            DecimalPlaces = 2 : 2;
+        }
+        field(50019; "Tota Cost"; Decimal)
+        {
+            Caption = 'Total Cost';
+            FieldClass = FlowField;
+            CalcFormula = sum("Job Planning Line"."Total Cost (LCY)" where("Job No." = field("Job No."), "Job Task No." = field("Job Task No.")));
+            Editable = false;
+            DecimalPlaces = 2 : 2;
+        }
 
     }
 
