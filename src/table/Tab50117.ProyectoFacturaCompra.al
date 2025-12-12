@@ -2,6 +2,8 @@ table 50117 "Proyecto Movimiento Pago"
 {
     Caption = 'Proyecto Movimiento Pago';
     DataClassification = ToBeClassified;
+    DrillDownPageId = "Pagos Proyecto";
+    LookupPageId = "Pagos Proyecto";
 
     fields
     {
@@ -15,7 +17,7 @@ table 50117 "Proyecto Movimiento Pago"
             Caption = 'Nº Documento';
             DataClassification = ToBeClassified;
             // Si es Documento Blanco a G/L Entry, si es Pago a Vendor Entry
-            TableRelation = if ("Document Type" = const(" ")) "Gen. Journal Line"."Document No." else
+            TableRelation = if ("Document Type" = const(" ")) "G/L Entry"."Document No." else
             "Vendor Ledger Entry"."Document No.";
 
         }
@@ -114,12 +116,19 @@ table 50117 "Proyecto Movimiento Pago"
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(14; "Entry No."; Integer)
+        {
+            TableRelation = if ("Document Type" = const(" ")) "G/L Entry"."Entry No." else
+            "Vendor Ledger Entry"."Entry No.";
+            ValidateTableRelation = false;
+        }
     }
 
     keys
     {
-        key(Key1; "Document Type", "Document No.", "Line No.", "Job No.", "Job Planning Line No.")
+        key(Key1; "Document Type", "Document No.", "Line No.", "Job No.", "Job Planning Line No.", "Entry No.")
         {
+            SumIndexFields = "Amount Paid", "Amount Pending";
             Clustered = true;
         }
         key(Key2; "Job No.", "Job Planning Line No.", "Document No.", "Line No.")
@@ -261,6 +270,7 @@ table 50117 "Proyecto Movimiento Pago"
         VendorLedgerEntry.SetRange("Document Type", VendorLedgerEntry."Document Type"::Invoice);
         VendorLedgerEntry.SetRange("Document No.", "Posted Document No.");
         VendorLedgerEntry.SetRange("Vendor No.", "Vendor No.");
+        VendorLedgerEntry.SetRange("Entry No.", "Entry No.");
 
         if not VendorLedgerEntry.FindFirst() then begin
             Clear("Amount Paid");

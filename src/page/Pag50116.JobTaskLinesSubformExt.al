@@ -248,6 +248,18 @@ page 50116 "Job Task Lines Subform Ext"
                     ToolTip = 'Specifies the estimate at completion (EAC) total price for a job task line. If the Apply Usage Link check box on the job is selected, then the EAC (Total Price) field is calculated as follows: Usage (Total Price) + Remaining (Total Price).';
                     Visible = false;
                 }
+                field("Amount Paid"; CalculaImportePagado())
+                {
+                    ApplicationArea = All;
+                    Caption = 'Importe Pagado';
+                    ToolTip = 'Especifica el importe pagado para esta tarea.';
+                }
+                field("Amount Pending"; CalculaImportePendiente())
+                {
+                    ApplicationArea = All;
+                    Caption = 'Importe Pendiente';
+                    ToolTip = 'Especifica el importe pendiente de pago para esta tarea.';
+                }
                 field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
                 {
                     ApplicationArea = Dimensions;
@@ -364,8 +376,8 @@ page 50116 "Job Task Lines Subform Ext"
                                 JobTask.VALIDATE("Job No.", NewOriginCode);
                                 JobTask.VALIDATE("Job Task No.", NewCode);
                                 JobTask.VALIDATE(Description, TPP001);
-                                JobTask.VALIDATE("Tipo Partida", JobTaskSub."Tipo Partida"::Capítulo);
-                                JobTask."Job Task Type" := JobTaskSub."Job Task Type"::Total;
+                                JobTask.VALIDATE("Tipo Partida", JobTaskSub."Tipo Partida"::"Capítulo");
+                                JobTask."Job Task Type" := JobTaskSub."Job Task Type"::"Total";
                                 JobTask.VALIDATE(Totaling, NewCode + '..' + PADSTR(NewCode, 20 - (STRLEN(NewCode) + 2), '9'));
                                 JobTask.INSERT;
                                 CurrPage.UPDATE;
@@ -523,6 +535,22 @@ page 50116 "Job Task Lines Subform Ext"
                             Rec.MODIFY;
                             CurrPage.UPDATE
                         END;
+                    }
+                    action("Actualizar Arbol")
+                    {
+                        Image = Trace;
+                        Caption = 'Actualizar Arbol';
+                        ApplicationArea = All;
+                        Promoted = true;
+                        PromotedIsBig = true;
+                        PromotedOnly = true;
+                        PromotedCategory = Process;
+                        ToolTip = 'Actualizar el árbol de tareas';
+
+                        trigger OnAction()
+                        begin
+                            ActualizarArbolTareas();
+                        end;
                     }
 
 
@@ -820,10 +848,10 @@ page 50116 "Job Task Lines Subform Ext"
     trigger OnAfterGetRecord()
     begin
         // DescriptionIndent := Rec.Indentation;
-        // StyleIsStrong := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo; //Rec."Job Task Type" <> "Job Task Type"::Posting;
-        // CodeEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
-        // DescriptionEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
-        // DescriptionIndent := Rec.Indentation;
+        StyleIsStrong := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo; //Rec."Job Task Type" <> "Job Task Type"::Posting;
+        CodeEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
+        DescriptionEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
+        DescriptionIndent := Rec.Indentation;
 
 
 
@@ -855,6 +883,45 @@ page 50116 "Job Task Lines Subform Ext"
 
     end;
 
+    local procedure CalculaImportePendiente(): Decimal
+    var
+        JobTask: Record "Job Task";
+        ImportePagado: Decimal;
+        ImporteCoste: Decimal;
+    begin
+        If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
+            exit(Rec."Tota Cost" - Rec."Amount Paid")
+        else begin
+            JobTask.SetRange("Job No.", Rec."Job No.");
+            JobTask.SetFilter("Job Task No.", Rec.Totaling);
+            If JobTask.FindSet() then
+                repeat
+                    ImportePagado += JobTask."Amount Paid";
+                    ImporteCoste += JobTask."Tota Cost";
+                until JobTask.Next() = 0;
+            exit(ImporteCoste - ImportePagado);
+        end;
+    end;
+
+    local procedure CalculaImportePagado(): Decimal
+    var
+        JobTask: Record "Job Task";
+        ImportePendiente: Decimal;
+    begin
+        If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
+            exit(Rec."Amount Paid")
+        else begin
+            JobTask.SetRange("Job No.", Rec."Job No.");
+            JobTask.SetFilter("Job Task No.", Rec.Totaling);
+            If JobTask.FindSet() then
+                repeat
+                    ImportePendiente += JobTask."Amount Paid";
+                until JobTask.Next() = 0;
+            exit(ImportePendiente);
+        end;
+
+    end;
+
     var
         CodeEmphasize: Boolean;
         DescriptionEmphasize: Boolean;
@@ -869,6 +936,81 @@ page 50116 "Job Task Lines Subform Ext"
     procedure cargaProyecto(pProyecto: Code[20])
     begin
         Proyecto := pProyecto;
+    end;
+
+    internal procedure ActualizarArbolTareas()
+    var
+        JobTask: Record "Job Task";
+        JobTaskChild: Record "Job Task";
+        JobSetup: Record "Jobs Setup";
+        JobNo: Code[20];
+        LongitudPrefijo: Integer;
+        LongitudCapitulo: Integer;
+        LongitudTarea: Integer;
+        EsCapitulo: Boolean;
+        TieneHijas: Boolean;
+    begin
+        // Obtener configuración
+        JobSetup.Get();
+
+        // Determinar el Job No. a procesar
+        if Rec."Job No." <> '' then
+            JobNo := Rec."Job No."
+        else
+            if Proyecto <> '' then
+                JobNo := Proyecto
+            else
+                Error('No se ha seleccionado un proyecto');
+
+        // Calcular la longitud esperada de un capítulo
+        JobSetup.TestField("Digitos Capítulo");
+        LongitudPrefijo := StrLen(JobSetup."Prefijo Capítulo");
+        LongitudCapitulo := LongitudPrefijo + 1 + JobSetup."Digitos Capítulo"; // Prefijo + '.' + dígitos
+
+        // Recorrer todas las tareas del proyecto ordenadas por número
+        JobTask.Reset();
+        JobTask.SetRange("Job No.", JobNo);
+        if JobTask.FindSet() then
+            repeat
+                LongitudTarea := StrLen(JobTask."Job Task No.");
+
+                // Determinar si es capítulo: la longitud debe coincidir con la longitud esperada de capítulo
+                EsCapitulo := (LongitudTarea = LongitudCapitulo) and
+                              (CopyStr(JobTask."Job Task No.", 1, LongitudPrefijo) = JobSetup."Prefijo Capítulo");
+
+                // Establecer Tipo Partida
+                if EsCapitulo then
+                    JobTask."Tipo Partida" := JobTask."Tipo Partida"::"Capítulo"
+                else
+                    JobTask."Tipo Partida" := JobTask."Tipo Partida"::"Subcapítulo";
+
+                // Verificar si tiene tareas hijas (tareas que empiezan con el número de esta tarea seguido de un punto o carácter)
+                TieneHijas := false;
+                JobTaskChild.Reset();
+                JobTaskChild.SetRange("Job No.", JobNo);
+                // Buscar tareas que empiecen con el número de esta tarea pero que sean diferentes (hijas)
+                JobTaskChild.SetFilter("Job Task No.", JobTask."Job Task No." + '?*');
+                if JobTaskChild.FindFirst() then
+                    TieneHijas := true;
+
+                // Establecer Job Task Type y Totaling
+                if TieneHijas then begin
+                    JobTask."Job Task Type" := JobTask."Job Task Type"::Total;
+                    // Totaling = número de tarea '..' número de tarea '9999999'
+                    // Formato similar al código existente: "1.01..1.019999999"
+                    JobTask.Validate(Totaling, JobTask."Job Task No." + '..' + PadStr(JobTask."Job Task No.", 20 - (StrLen(JobTask."Job Task No.") + 2), '9'));
+                end else begin
+                    JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
+                    JobTask.Totaling := '';
+                end;
+
+                // Establecer indentación = strlen del número de tarea
+                JobTask.Indentation := StrLen(JobTask."Job Task No.");
+
+                JobTask.Modify();
+            until JobTask.Next() = 0;
+
+        CurrPage.Update(false);
     end;
 
     [IntegrationEvent(true, false)]

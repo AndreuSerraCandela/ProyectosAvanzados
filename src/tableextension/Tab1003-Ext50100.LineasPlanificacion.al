@@ -97,14 +97,30 @@ tableextension 50300 "LineasPlanificacion" extends "Job Planning Line"//1003
         {
             Caption = 'Work Description';
         }
-        field(50016; "Importe Pagado"; Decimal)
-        {
-            Caption = 'Importe Pagado';
+        // field(50016; "Importe Pagado"; Decimal)
+        // {
+        //     Caption = 'Importe Pagado';
+        //     ObsoleteState = Removed;
+        //     ObsoleteReason = 'Se ha reemplazado por el campo "Amount Paid"';
 
-        }
+        // }
         field(50017; Pendiente; Boolean)
         { }
-
+        field(50018; "Amount Paid"; Decimal)
+        {
+            Caption = 'Importe Pagado.';
+            FieldClass = FlowField;
+            CalcFormula = sum("Proyecto Movimiento Pago"."Amount Paid" where("Job Planning Line No." = field("Line No."), "Job Task No." = field("Job Task No."), "Job No." = field("Job No.")));
+            Editable = false;
+            DecimalPlaces = 2 : 2;
+        }
+        field(50019; "Employee Entry No."; Integer)
+        {
+            Caption = 'Nº Movimiento Empleado';
+            DataClassification = ToBeClassified;
+            TableRelation = "Employee Ledger Entry"."Entry No.";
+            Editable = false;
+        }
 
     }
 

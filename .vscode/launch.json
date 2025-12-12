@@ -3,7 +3,7 @@
   "configurations": [
 
     {
-      "name": "Microsoft cloud sandbox",
+      "name": "A Films",
       "request": "launch",
       "type": "al",
       "environmentType": "Sandbox",

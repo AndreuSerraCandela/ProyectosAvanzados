@@ -99,6 +99,18 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 ApplicationArea = All;
                 Visible = false;
             }
+            field("Amount Paid"; Rec."Amount Paid")
+            {
+                ApplicationArea = All;
+                Caption = 'Importe Pagado';
+                ToolTip = 'Especifica el importe total pagado para esta línea de planificación del proyecto.';
+            }
+            field("Amount Pending"; Rec."Total Cost" - Rec."Amount Paid")
+            {
+                ApplicationArea = All;
+                Caption = 'Importe Pendiente';
+                ToolTip = 'Especifica el importe pendiente de pago para esta línea de planificación del proyecto.';
+            }
 
 
         }
