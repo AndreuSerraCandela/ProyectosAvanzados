@@ -215,6 +215,123 @@ codeunit 50102 "Gestión Pagos Proyecto"
         ProyectoFacturaCompra.Insert;
     end;
 
+    /// <summary>
+    /// Genera movimientos de empleado para líneas de planificación de proyecto relacionadas con el recurso del empleado
+    /// </summary>
+    procedure GenerateEmployeeEntriesForJobPlanningLines(EmployeeLedgerEntry: Record "Employee Ledger Entry")
+    var
+        Employee: Record Employee;
+        JobPlanningLine: Record "Job Planning Line";
+    begin
+        if not Employee.Get(EmployeeLedgerEntry."Employee No.") then
+            exit;
+
+        if Employee."Resource No." = '' then
+            exit;
+
+        // Buscar líneas de planificación de tipo Resource relacionadas con el recurso del empleado
+        // que sean de tipo Billable o Both Budget and Billable y que no tengan Employee Entry No. asignado
+        JobPlanningLine.SetRange("No.", Employee."Resource No.");
+        JobPlanningLine.SetRange(Type, JobPlanningLine.Type::Resource);
+        JobPlanningLine.SetFilter("Line Type", '%1|%2', JobPlanningLine."Line Type"::Billable, JobPlanningLine."Line Type"::"Both Budget and Billable");
+        JobPlanningLine.SetRange("Employee Entry No.", 0);
+        JobPlanningLine.SetRange("Usage Link", true);
+
+        if JobPlanningLine.FindSet() then
+            repeat
+                // Crear movimiento de empleado para esta línea de planificación
+                CreateEmployeeEntryFromJobPlanningLine(JobPlanningLine, EmployeeLedgerEntry);
+            until JobPlanningLine.Next() = 0;
+    end;
+
+    /// <summary>
+    /// Crea un movimiento de empleado desde una línea de planificación y un registro en ProyectoFacturaCompra
+    /// </summary>
+    local procedure CreateEmployeeEntryFromJobPlanningLine(JobPlanningLine: Record "Job Planning Line"; SourceEmployeeLedgerEntry: Record "Employee Ledger Entry")
+    var
+        NewEmployeeLedgerEntry: Record "Employee Ledger Entry";
+    begin
+        // Verificar que no exista ya un movimiento para esta línea
+        if JobPlanningLine."Employee Entry No." <> 0 then
+            exit;
+
+        // Crear nuevo movimiento de empleado basado en el movimiento fuente
+        NewEmployeeLedgerEntry.Init();
+        NewEmployeeLedgerEntry."Employee No." := SourceEmployeeLedgerEntry."Employee No.";
+        NewEmployeeLedgerEntry."Posting Date" := SourceEmployeeLedgerEntry."Posting Date";
+        NewEmployeeLedgerEntry."Document Type" := SourceEmployeeLedgerEntry."Document Type";
+        NewEmployeeLedgerEntry."Document No." := SourceEmployeeLedgerEntry."Document No.";
+        NewEmployeeLedgerEntry."Currency Code" := SourceEmployeeLedgerEntry."Currency Code";
+        NewEmployeeLedgerEntry.Amount := JobPlanningLine."Total Cost (LCY)";
+        NewEmployeeLedgerEntry."Remaining Amount" := NewEmployeeLedgerEntry.Amount;
+        NewEmployeeLedgerEntry."Original Amount" := NewEmployeeLedgerEntry.Amount;
+        NewEmployeeLedgerEntry."Job No." := JobPlanningLine."Job No.";
+        NewEmployeeLedgerEntry."Job Task No." := JobPlanningLine."Job Task No.";
+        NewEmployeeLedgerEntry."Job Planning Line No." := JobPlanningLine."Line No.";
+        NewEmployeeLedgerEntry.Insert(true);
+
+        // Actualizar la línea de planificación con el número de movimiento de empleado
+        JobPlanningLine."Employee Entry No." := NewEmployeeLedgerEntry."Entry No.";
+        JobPlanningLine.Modify();
+
+        // Crear registro en ProyectoFacturaCompra para esta línea
+        CreateProyectoFacturaCompraFromEmployeeEntry(NewEmployeeLedgerEntry, JobPlanningLine);
+    end;
+
+    /// <summary>
+    /// Crea un registro en ProyectoFacturaCompra desde un movimiento de empleado
+    /// </summary>
+    local procedure CreateProyectoFacturaCompraFromEmployeeEntry(EmployeeLedgerEntry: Record "Employee Ledger Entry"; JobPlanningLine: Record "Job Planning Line")
+    var
+        ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
+    begin
+        // Verificar que no exista ya un registro para esta combinación
+        ProyectoFacturaCompra.SetRange("Document Type", ProyectoFacturaCompra."Document Type"::" ");
+        ProyectoFacturaCompra.SetRange("Document No.", EmployeeLedgerEntry."Document No.");
+        ProyectoFacturaCompra.SetRange("Line No.", 0);
+        ProyectoFacturaCompra.SetRange("Job No.", JobPlanningLine."Job No.");
+        ProyectoFacturaCompra.SetRange("Job Task No.", JobPlanningLine."Job Task No.");
+        ProyectoFacturaCompra.SetRange("Job Planning Line No.", JobPlanningLine."Line No.");
+        ProyectoFacturaCompra.SetRange("Entry No.", EmployeeLedgerEntry."Entry No.");
+
+        if ProyectoFacturaCompra.FindFirst() then
+            exit;
+
+        // Crear nuevo registro
+        ProyectoFacturaCompra.Init();
+        ProyectoFacturaCompra."Document Type" := ProyectoFacturaCompra."Document Type"::" ";
+        ProyectoFacturaCompra."Document No." := EmployeeLedgerEntry."Document No.";
+        ProyectoFacturaCompra."Line No." := 0;
+        ProyectoFacturaCompra."Job No." := JobPlanningLine."Job No.";
+        ProyectoFacturaCompra."Job Task No." := JobPlanningLine."Job Task No.";
+        ProyectoFacturaCompra."Job Planning Line No." := JobPlanningLine."Line No.";
+        ProyectoFacturaCompra."Entry No." := EmployeeLedgerEntry."Entry No.";
+        ProyectoFacturaCompra."Amount" := JobPlanningLine."Total Cost (LCY)";
+        ProyectoFacturaCompra."Amount Paid" := 0;
+        ProyectoFacturaCompra."Amount Pending" := ProyectoFacturaCompra."Amount";
+        ProyectoFacturaCompra.Insert(true);
+    end;
+
+    /// <summary>
+    /// Procesa un movimiento de empleado que está relacionado con un proyecto
+    /// </summary>
+    local procedure ProcessEmployeeEntryForProject(EmployeeLedgerEntry: Record "Employee Ledger Entry")
+    var
+        JobPlanningLine: Record "Job Planning Line";
+    begin
+        if not JobPlanningLine.Get(EmployeeLedgerEntry."Job No.", EmployeeLedgerEntry."Job Task No.", EmployeeLedgerEntry."Job Planning Line No.") then
+            exit;
+
+        // Actualizar la línea de planificación con el número de movimiento de empleado si no está asignado
+        if JobPlanningLine."Employee Entry No." = 0 then begin
+            JobPlanningLine."Employee Entry No." := EmployeeLedgerEntry."Entry No.";
+            JobPlanningLine.Modify();
+        end;
+
+        // Crear o actualizar registro en ProyectoFacturaCompra
+        CreateProyectoFacturaCompraFromEmployeeEntry(EmployeeLedgerEntry, JobPlanningLine);
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", 'OnPostEmployeeOnAfterPostDtldEmplLedgEntries', '', false, false)]
     local procedure OnPostEmployeeOnAfterPostDtldEmplLedgEntries(GenJournalLine: Record "Gen. Journal Line"; var EmployeeLedgerEntry: Record "Employee Ledger Entry"; var DtldLedgEntryInserted: Boolean)
     var
@@ -231,11 +348,11 @@ codeunit 50102 "Gestión Pagos Proyecto"
                         JobPlanningLine.SetRange(Type, JobPlanningLine.Type::Resource);
                         JobPlanningLine.SetRange("Document Date", CalcDate('<CM+1D-1m>', EmplEntry."Posting Date"), CalcDate('<CM>', EmplEntry."Posting Date"));
 
-                        if JobPlanningLine.Get(Employee."Job No.", Employee."Job Task No.", Employee."Job Planning Line No.") then
-                            CreateProjectAssignment(JobPlanningLine, JobPlanningLine."Job No.", JobPlanningLine."Job Task No.", JobPlanningLine."Job Planning Line No.", 0, JobPlanningLine."Amount", JobPlanningLine."Entry No.");
+                    // if JobPlanningLine.Get(EmplEntry."Job No.", EmplEntry."Job Task No.", EmplEntry."Job Planning Line No.") then
+                    //     CreateProjectAssignment(JobPlanningLine, JobPlanningLine."Job No.", JobPlanningLine."Job Task No.", JobPlanningLine."Job Planning Line No.", 0, JobPlanningLine."Amount", JobPlanningLine."Entry No.");
                     until JobPlanningLine.Next() = 0;
 
-            until GLEntry.Next() = 0;
+            until EmplEntry.Next() = 0;
 
     end;
 

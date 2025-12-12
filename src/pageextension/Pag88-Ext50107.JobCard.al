@@ -535,10 +535,16 @@ pageextension 50307 "JobCard" extends "Job Card" //88
         InStream: InStream;
         FileName: Text;
         RowNo: Integer;
-        //TaskNo: Integer;
         CodigoLinea: Text[20];
         Descripcion: Text[100];
+        Tipo: Text[20];
         NoCuenta: Code[20];
+        DescripcionCuenta: Text[100];
+        LargoCodigo: Integer;
+        Cantidad: Decimal;
+        Cost: Decimal;
+        Venta: Decimal;
+        TipoLinea: Text[20];
         EsSumatorio: Boolean;
         ImportedTasks: Integer;
         ParentTaskNo: Code[20];
@@ -546,14 +552,18 @@ pageextension 50307 "JobCard" extends "Job Card" //88
         DimMgt: Codeunit DimensionManagement;
         JobTaskDim: Record "Job Task Dimension";
         DefaultDim: Record "Default Dimension";
+        JobTaskPlanningLine: Record "Job Planning Line";
+        JobLedgerEntry: Record "Job Ledger Entry";
+        GLAccount: Record "G/L Account";
+        Item: Record Item;
+        Resource: Record Resource;
+        LineNo: Integer;
     begin
         // Verificar que el proyecto esté abierto
         if Rec.Status <> Rec.Status::Open then begin
             Message('El proyecto debe estar en estado Abierto para importar tareas.');
             exit;
         end;
-
-        // Solicitar archivo Excel
 
         // Limpiar buffer temporal
         TempExcelBuffer.DeleteAll();
@@ -569,7 +579,6 @@ pageextension 50307 "JobCard" extends "Job Card" //88
         JobTaskDim.DeleteAll();
         commit();
         ImportedTasks := 0;
-        //TaskNo := 10000; // Iniciar numeración de tareas
         ParentTaskNo := ''; // Para agrupar sumatorios
 
         // Procesar cada fila del Excel
@@ -581,10 +590,17 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                 if RowNo = 1 then begin
                     // Saltar esta fila y continuar con la siguiente
                 end else begin
-                    // Leer datos de las columnas A, B, C
+                    // Inicializar variables
                     CodigoLinea := '';
                     Descripcion := '';
+                    Tipo := '';
                     NoCuenta := '';
+                    DescripcionCuenta := '';
+                    LargoCodigo := 0;
+                    Cantidad := 0;
+                    Cost := 0;
+                    Venta := 0;
+                    TipoLinea := '';
                     EsSumatorio := false;
 
                     // Buscar datos de esta fila
@@ -600,13 +616,38 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                     end;
                                 2: // Columna B - Descripción
                                     Descripcion := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Descripcion));
-                                3:
-                                    Begin// Columna C - Número de cuenta
-                                        NoCuenta := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NoCuenta));
-                                        if NoCuenta = '' Then EsSumatorio := true;
+                                3: // Columna C - Tipo (cuenta, producto, recurso)
+                                    Tipo := CopyStr(UpperCase(TempExcelBuffer."Cell Value as Text"), 1, 20);
+                                4: // Columna D - Número de cuenta/producto/recurso
+                                    NoCuenta := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NoCuenta));
+                                5: // Columna E - Descripción cuenta contable
+                                    DescripcionCuenta := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(DescripcionCuenta));
+                                6: // Columna F - Largo del código
+                                    begin
+                                        If Not Evaluate(LargoCodigo, TempExcelBuffer."Cell Value as Text") then LargoCodigo := 0;
                                     end;
+                                7: // Columna G - Cantidad
+                                    If Not Evaluate(Cantidad, TempExcelBuffer."Cell Value as Text") then
+                                        Cantidad := 0;
+                                8: // Columna H - Importe Coste
+                                    If Not Evaluate(Cost, TempExcelBuffer."Cell Value as Text") then
+                                        Cost := 0;
+                                9: // Columna I - Importe Venta
+                                    If Not Evaluate(Venta, TempExcelBuffer."Cell Value as Text") then
+                                        Venta := 0;
+                                10: // Columna J - Tipo línea (Planificacion, Uso, Ambos)
+                                    TipoLinea := CopyStr(UpperCase(TempExcelBuffer."Cell Value as Text"), 1, 20);
                             end;
                         until TempExcelBuffer.Next() = 0;
+
+                    // Determinar si es sumatorio basándose en el largo del código (Columna F)
+                    // Si el largo del código es menor o igual al especificado en la columna F, es sumatorio
+                    if (LargoCodigo > 0) and (StrLen(CodigoLinea) <= LargoCodigo) then
+                        EsSumatorio := true;
+
+                    // Si no hay cuenta y no es sumatorio, marcar como sumatorio
+                    if (NoCuenta = '') and not EsSumatorio then
+                        EsSumatorio := true;
 
                     // Crear tarea de proyecto si hay datos válidos
                     if (CodigoLinea <> '') and (Descripcion <> '') then begin
@@ -629,9 +670,149 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                 JobTask."Tipo Partida" := JobTask."Tipo Partida"::Subcapítulo;
                             end;
 
-                            If JobTask.Insert(true) then;
-                            //TaskNo += 10000;
-                            ImportedTasks += 1;
+                            If JobTask.Insert(true) then begin
+                                ImportedTasks += 1;
+
+                                // Si no es sumatorio, crear cuenta/producto/recurso si no existe
+                                if not EsSumatorio and (NoCuenta <> '') then begin
+                                    case UpperCase(Tipo) of
+                                        'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
+                                            begin
+                                                if not GLAccount.Get(NoCuenta) then begin
+                                                    GLAccount.Init();
+                                                    GLAccount."No." := NoCuenta;
+                                                    GLAccount.Name := CopyStr(DescripcionCuenta, 1, MaxStrLen(GLAccount.Name));
+                                                    if DescripcionCuenta = '' then
+                                                        GLAccount.Name := Descripcion;
+                                                    GLAccount."Account Type" := GLAccount."Account Type"::Posting;
+                                                    GLAccount."Direct Posting" := true;
+                                                    GLAccount.Insert(true);
+                                                end;
+                                            end;
+                                        'PRODUCTO', 'ITEM':
+                                            begin
+                                                if not Item.Get(NoCuenta) then begin
+                                                    Item.Init();
+                                                    Item."No." := NoCuenta;
+                                                    Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
+                                                    Item.Type := Item.Type::Inventory;
+                                                    Item.Insert(true);
+                                                end;
+                                            end;
+                                        'RECURSO', 'RESOURCE':
+                                            begin
+                                                if not Resource.Get(NoCuenta) then begin
+                                                    Resource.Init();
+                                                    Resource."No." := NoCuenta;
+                                                    Resource.Name := CopyStr(Descripcion, 1, MaxStrLen(Resource.Name));
+                                                    Resource.Type := Resource.Type::Person;
+                                                    Resource.Insert(true);
+                                                end;
+                                            end;
+                                    end;
+
+                                    // Determinar el tipo de Job Planning Line según el Tipo
+                                    LineNo := 10000;
+                                    if (TipoLinea = 'PLANIFICACION') or (TipoLinea = 'AMBOS') then begin
+                                        // Crear Job Planning Line
+                                        JobTaskPlanningLine.Init();
+                                        JobTaskPlanningLine."Job No." := Rec."No.";
+                                        JobTaskPlanningLine."Job Task No." := JobTask."Job Task No.";
+                                        JobTaskPlanningLine."Line No." := LineNo;
+
+                                        // Determinar Line Type según TipoLinea
+                                        if TipoLinea = 'PLANIFICACION' then
+                                            JobTaskPlanningLine."Line Type" := JobTaskPlanningLine."Line Type"::Budget
+                                        else if TipoLinea = 'AMBOS' then
+                                            JobTaskPlanningLine."Line Type" := JobTaskPlanningLine."Line Type"::"Both Budget and Billable";
+
+                                        // Determinar Type según el Tipo (columna C)
+                                        case UpperCase(Tipo) of
+                                            'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
+                                                begin
+                                                    JobTaskPlanningLine."Type" := JobTaskPlanningLine."Type"::"G/L Account";
+                                                    JobTaskPlanningLine."No." := NoCuenta;
+                                                end;
+                                            'PRODUCTO', 'ITEM':
+                                                begin
+                                                    JobTaskPlanningLine."Type" := JobTaskPlanningLine."Type"::Item;
+                                                    JobTaskPlanningLine."No." := NoCuenta;
+                                                end;
+                                            'RECURSO', 'RESOURCE':
+                                                begin
+                                                    JobTaskPlanningLine."Type" := JobTaskPlanningLine."Type"::Resource;
+                                                    JobTaskPlanningLine."No." := NoCuenta;
+                                                end;
+                                        end;
+
+                                        JobTaskPlanningLine.Description := Descripcion;
+                                        if Cantidad <> 0 then
+                                            JobTaskPlanningLine.Quantity := Cantidad
+                                        else
+                                            JobTaskPlanningLine.Quantity := 1;
+
+                                        if Cost <> 0 then begin
+                                            JobTaskPlanningLine."Unit Cost (LCY)" := Cost / JobTaskPlanningLine.Quantity;
+                                            JobTaskPlanningLine."Total Cost (LCY)" := Cost;
+                                        end;
+
+                                        if Venta <> 0 then begin
+                                            JobTaskPlanningLine."Unit Price (LCY)" := Venta / JobTaskPlanningLine.Quantity;
+                                            JobTaskPlanningLine."Total Price (LCY)" := Venta;
+                                        end;
+
+                                        JobTaskPlanningLine."Usage Link" := true;
+                                        JobTaskPlanningLine.INSERT;
+                                        LineNo += 10000;
+                                    end;
+
+                                    // Crear Job Ledger Entry si es Uso o Ambos
+                                    if (TipoLinea = 'USO') or (TipoLinea = 'AMBOS') then begin
+                                        JobLedgerEntry.Init();
+                                        JobLedgerEntry."Job No." := Rec."No.";
+                                        JobLedgerEntry."Job Task No." := JobTask."Job Task No.";
+                                        JobLedgerEntry."Posting Date" := Today;
+                                        JobLedgerEntry."Document No." := CopyStr(Rec."No.", 1, MaxStrLen(JobLedgerEntry."Document No."));
+
+                                        // Determinar Type según el Tipo (columna C)
+                                        case UpperCase(Tipo) of
+                                            'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
+                                                begin
+                                                    JobLedgerEntry.Type := JobLedgerEntry.Type::"G/L Account";
+                                                    JobLedgerEntry."No." := NoCuenta;
+                                                end;
+                                            'PRODUCTO', 'ITEM':
+                                                begin
+                                                    JobLedgerEntry.Type := JobLedgerEntry.Type::Item;
+                                                    JobLedgerEntry."No." := NoCuenta;
+                                                end;
+                                            'RECURSO', 'RESOURCE':
+                                                begin
+                                                    JobLedgerEntry.Type := JobLedgerEntry.Type::Resource;
+                                                    JobLedgerEntry."No." := NoCuenta;
+                                                end;
+                                        end;
+
+                                        JobLedgerEntry.Description := Descripcion;
+                                        if Cantidad <> 0 then
+                                            JobLedgerEntry.Quantity := Cantidad
+                                        else
+                                            JobLedgerEntry.Quantity := 1;
+
+                                        if Cost <> 0 then begin
+                                            JobLedgerEntry."Unit Cost" := Cost / JobLedgerEntry.Quantity;
+                                            JobLedgerEntry."Total Cost" := Cost;
+                                        end;
+
+                                        if Venta <> 0 then begin
+                                            JobLedgerEntry."Unit Price" := Venta / JobLedgerEntry.Quantity;
+                                            JobLedgerEntry."Total Price" := Venta;
+                                        end;
+
+                                        JobLedgerEntry.INSERT(true);
+                                    end;
+                                end;
+                            end;
                         end;
                     end;
 

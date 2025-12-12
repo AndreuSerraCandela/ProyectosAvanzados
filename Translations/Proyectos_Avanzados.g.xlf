@@ -2373,6 +2373,36 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension BusgetEntries - Control Job No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3873351432 - Control 1908272084 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
+          <source>Especifica el número del proyecto asociado a esta entrada del mayor de empleados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Control Job No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3873351432 - Control 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
+          <source>Nº Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Control Job No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3873351432 - Control 4214889165 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
+          <source>Especifica el número de la línea de planificación del proyecto asociada a esta entrada del mayor de empleados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Control Job Planning Line No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3873351432 - Control 4214889165 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
+          <source>Nº Línea Planificación Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Control Job Planning Line No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3873351432 - Control 561421623 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
+          <source>Especifica el número de la tarea del proyecto asociada a esta entrada del mayor de empleados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Control Job Task No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3873351432 - Control 561421623 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
+          <source>Nº Tarea Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Control Job Task No. - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 3134381272 - Control 2165121140 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4219821699">
           <source>Specifies the value of the Mostrar en lineas de planif. field.</source>
           <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
@@ -2803,6 +2833,21 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Url Pdf - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 3197594902 - Field 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1874461389">
+          <source>Nº Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EmployeeLedgerEntryExt - Field Job No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3197594902 - Field 4214889165 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1874461389">
+          <source>Nº Línea Planificación Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EmployeeLedgerEntryExt - Field Job Planning Line No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3197594902 - Field 561421623 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1874461389">
+          <source>Nº Tarea Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EmployeeLedgerEntryExt - Field Job Task No. - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 3315447413 - Field 2165121140 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 4274826855">
           <source>Mostrar en lineas de planif.</source>
           <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
@@ -2974,7 +3019,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field WIP % - Method OnValidate - NamedType MensajeLbl</note>
         </trans-unit>
         <trans-unit id="TableExtension 1862886636 - Field 1330443460 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
-          <source>Importe Pagado</source>
+          <source>Importe Pagado.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Amount Paid - Property Caption</note>
         </trans-unit>
@@ -3017,6 +3062,11 @@
           <source>Cód Oferta Job</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Cód Oferta Job - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1862886636 - Field 3977046019 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
+          <source>Nº Movimiento Empleado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Employee Entry No. - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1862886636 - Field 1503256470 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
           <source>Generar compras</source>
