@@ -270,8 +270,13 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                 Image = ImportExcel;
 
                 trigger OnAction()
+                var
+                    CodProyecto: Codeunit ProcesosProyectos;
                 begin
                     ImportarLineasDesdeExcel();
+                    Commit();
+                    CodProyecto.ActualizarArbolTareas(Rec."No.");
+                    CurrPage.Update(false);
                 end;
             }
             action("Pagos Vinculados")
@@ -557,8 +562,14 @@ pageextension 50307 "JobCard" extends "Job Card" //88
         GLAccount: Record "G/L Account";
         Item: Record Item;
         Resource: Record Resource;
+        ItemTempl: Record "Item Templ.";
+        ItemTemplMgt: Codeunit "Item Templ. Mgt.";
         LineNo: Integer;
+        CodProyecto: Codeunit ProcesosProyectos;
+        JobsSetup: Record "Jobs Setup";
+        GenProdPostingGroup: Record "Gen. Product Posting Group";
     begin
+        JobsSetup.Get();
         // Verificar que el proyecto esté abierto
         if Rec.Status <> Rec.Status::Open then begin
             Message('El proyecto debe estar en estado Abierto para importar tareas.');
@@ -695,8 +706,26 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                                     Item.Init();
                                                     Item."No." := NoCuenta;
                                                     Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
-                                                    Item.Type := Item.Type::Inventory;
-                                                    Item.Insert(true);
+
+                                                    // Si el Item Template está configurado, usarlo
+                                                    if (JobsSetup."Item Template" <> '') and ItemTempl.Get(JobsSetup."Item Template") then begin
+                                                        // Usar el template para crear el Item
+                                                        ItemTemplMgt.InsertItemFromTemplate(Item);
+                                                        If Item.Get(NoCuenta) then begin
+                                                            //Grear Grupo registro prodducto por producto
+                                                            Item."Gen. Prod. Posting Group" := Item."No.";
+                                                            If Not GeNProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
+                                                                GenProdPostingGroup.Init();
+                                                                GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
+                                                                GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
+                                                                GenProdPostingGroup.Insert(true);
+                                                            end;
+                                                            Item.Modify(true);
+                                                        end;
+                                                    end else begin
+                                                        // Si no hay template configurado, Error
+                                                        Error('No hay template configurado para crear el Producto %1', NoCuenta);
+                                                    end;
                                                 end;
                                             end;
                                         'RECURSO', 'RESOURCE':
@@ -768,48 +797,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
 
                                     // Crear Job Ledger Entry si es Uso o Ambos
                                     if (TipoLinea = 'USO') or (TipoLinea = 'AMBOS') then begin
-                                        JobLedgerEntry.Init();
-                                        JobLedgerEntry."Job No." := Rec."No.";
-                                        JobLedgerEntry."Job Task No." := JobTask."Job Task No.";
-                                        JobLedgerEntry."Posting Date" := Today;
-                                        JobLedgerEntry."Document No." := CopyStr(Rec."No.", 1, MaxStrLen(JobLedgerEntry."Document No."));
-
-                                        // Determinar Type según el Tipo (columna C)
-                                        case UpperCase(Tipo) of
-                                            'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
-                                                begin
-                                                    JobLedgerEntry.Type := JobLedgerEntry.Type::"G/L Account";
-                                                    JobLedgerEntry."No." := NoCuenta;
-                                                end;
-                                            'PRODUCTO', 'ITEM':
-                                                begin
-                                                    JobLedgerEntry.Type := JobLedgerEntry.Type::Item;
-                                                    JobLedgerEntry."No." := NoCuenta;
-                                                end;
-                                            'RECURSO', 'RESOURCE':
-                                                begin
-                                                    JobLedgerEntry.Type := JobLedgerEntry.Type::Resource;
-                                                    JobLedgerEntry."No." := NoCuenta;
-                                                end;
-                                        end;
-
-                                        JobLedgerEntry.Description := Descripcion;
-                                        if Cantidad <> 0 then
-                                            JobLedgerEntry.Quantity := Cantidad
-                                        else
-                                            JobLedgerEntry.Quantity := 1;
-
-                                        if Cost <> 0 then begin
-                                            JobLedgerEntry."Unit Cost" := Cost / JobLedgerEntry.Quantity;
-                                            JobLedgerEntry."Total Cost" := Cost;
-                                        end;
-
-                                        if Venta <> 0 then begin
-                                            JobLedgerEntry."Unit Price" := Venta / JobLedgerEntry.Quantity;
-                                            JobLedgerEntry."Total Price" := Venta;
-                                        end;
-
-                                        JobLedgerEntry.INSERT(true);
+                                        CodProyecto.CreaLineaUso(Rec."No.", JobTask."Job Task No.", Tipo, NoCuenta, Descripcion, Cantidad, Cost, Venta);
                                     end;
                                 end;
                             end;

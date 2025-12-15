@@ -48,6 +48,12 @@ pageextension 50304 "SetupJob" extends "Jobs Setup" //463
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Multiples Dependencias field.', Comment = '%';
             }
+            //ItemTemplate
+            field("Item Template"; Rec."Item Template")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Item Template field.';
+            }
 
         }
         addlast(Numbering)

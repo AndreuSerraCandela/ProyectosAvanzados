@@ -5,7 +5,7 @@
 
 codeunit 50301 "ProcesosProyectos"
 {
-    Permissions = TableData "G/L Budget Entry" = rimd;
+    Permissions = TableData "G/L Budget Entry" = rimd, TableData "Job Ledger Entry" = rimd;
     trigger OnRun()
     begin
     end;
@@ -1427,6 +1427,54 @@ codeunit 50301 "ProcesosProyectos"
         Message('Se ha generado el presupuesto para este proyecto');
     end;
 
+    internal procedure CreaLineaUso(JobNo: Code[20]; JobTaskNo: Code[20]; Tipo: Text; NoCuenta: Code[20]; Descripcion: Text; Cantidad: Decimal; Cost: Decimal; Venta: Decimal)
+    var
+        JobLedgerEntry: Record "Job Ledger Entry";
+    begin
+        JobLedgerEntry.Init();
+        JobLedgerEntry."Job No." := JobNo;
+        JobLedgerEntry."Job Task No." := JobTaskNo;
+        JobLedgerEntry."Posting Date" := Today;
+        JobLedgerEntry."Document No." := CopyStr(JobNo, 1, MaxStrLen(JobLedgerEntry."Document No."));
+
+        // Determinar Type según el Tipo (columna C)
+        case UpperCase(Tipo) of
+            'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
+                begin
+                    JobLedgerEntry.Type := JobLedgerEntry.Type::"G/L Account";
+                    JobLedgerEntry."No." := NoCuenta;
+                end;
+            'PRODUCTO', 'ITEM':
+                begin
+                    JobLedgerEntry.Type := JobLedgerEntry.Type::Item;
+                    JobLedgerEntry."No." := NoCuenta;
+                end;
+            'RECURSO', 'RESOURCE':
+                begin
+                    JobLedgerEntry.Type := JobLedgerEntry.Type::Resource;
+                    JobLedgerEntry."No." := NoCuenta;
+                end;
+        end;
+
+        JobLedgerEntry.Description := Descripcion;
+        if Cantidad <> 0 then
+            JobLedgerEntry.Quantity := Cantidad
+        else
+            JobLedgerEntry.Quantity := 1;
+
+        if Cost <> 0 then begin
+            JobLedgerEntry."Unit Cost" := Cost / JobLedgerEntry.Quantity;
+            JobLedgerEntry."Total Cost" := Cost;
+        end;
+
+        if Venta <> 0 then begin
+            JobLedgerEntry."Unit Price" := Venta / JobLedgerEntry.Quantity;
+            JobLedgerEntry."Total Price" := Venta;
+        end;
+
+        JobLedgerEntry.INSERT(true);
+    end;
+
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::DimensionManagement, 'OnBeforeCreateDimSetFromJobTaskDim', '', false, false)]
 
@@ -1459,6 +1507,75 @@ codeunit 50301 "ProcesosProyectos"
             //end;
             IsHandled := JobSetup.DimensionJobProveedor;
         end;
+
+
+    end;
+
+    procedure ActualizarArbolTareas(JobNo: Code[20])
+    var
+        JobTask: Record "Job Task";
+        JobTaskChild: Record "Job Task";
+        JobSetup: Record "Jobs Setup";
+        LongitudPrefijo: Integer;
+        LongitudCapitulo: Integer;
+        LongitudTarea: Integer;
+        EsCapitulo: Boolean;
+        TieneHijas: Boolean;
+    begin
+        // Obtener configuración
+        JobSetup.Get();
+
+        // Determinar el Job No. a procesar
+
+
+        // Calcular la longitud esperada de un capítulo
+        JobSetup.TestField("Digitos Capítulo");
+        LongitudPrefijo := StrLen(JobSetup."Prefijo Capítulo");
+        LongitudCapitulo := LongitudPrefijo + 1 + JobSetup."Digitos Capítulo"; // Prefijo + '.' + dígitos
+
+        // Recorrer todas las tareas del proyecto ordenadas por número
+        JobTask.Reset();
+        JobTask.SetRange("Job No.", JobNo);
+        if JobTask.FindSet() then
+            repeat
+                LongitudTarea := StrLen(JobTask."Job Task No.");
+
+                // Determinar si es capítulo: la longitud debe coincidir con la longitud esperada de capítulo
+                EsCapitulo := ((LongitudTarea = LongitudCapitulo) and
+                              (CopyStr(JobTask."Job Task No.", 1, LongitudPrefijo) = JobSetup."Prefijo Capítulo"))
+                              Or (JobTask."Tipo Partida" = JobTask."Tipo Partida"::Capítulo);
+
+                // Establecer Tipo Partida
+                if EsCapitulo then
+                    JobTask."Tipo Partida" := JobTask."Tipo Partida"::"Capítulo"
+                else
+                    JobTask."Tipo Partida" := JobTask."Tipo Partida"::"Subcapítulo";
+
+                // Verificar si tiene tareas hijas (tareas que empiezan con el número de esta tarea seguido de un punto o carácter)
+                TieneHijas := false;
+                JobTaskChild.Reset();
+                JobTaskChild.SetRange("Job No.", JobNo);
+                // Buscar tareas que empiecen con el número de esta tarea pero que sean diferentes (hijas)
+                JobTaskChild.SetFilter("Job Task No.", JobTask."Job Task No." + '?*');
+                if JobTaskChild.FindFirst() then
+                    TieneHijas := true;
+
+                // Establecer Job Task Type y Totaling
+                if TieneHijas then begin
+                    JobTask."Job Task Type" := JobTask."Job Task Type"::Total;
+                    // Totaling = número de tarea '..' número de tarea '9999999'
+                    // Formato similar al código existente: "1.01..1.019999999"
+                    JobTask.Validate(Totaling, JobTask."Job Task No." + '..' + PadStr(JobTask."Job Task No.", 20 - (StrLen(JobTask."Job Task No.") + 2), '9'));
+                end else begin
+                    JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
+                    JobTask.Totaling := '';
+                end;
+
+                // Establecer indentación = strlen del número de tarea
+                JobTask.Indentation := StrLen(JobTask."Job Task No.");
+
+                JobTask.Modify();
+            until JobTask.Next() = 0;
 
 
     end;

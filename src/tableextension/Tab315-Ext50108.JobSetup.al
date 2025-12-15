@@ -54,6 +54,12 @@ tableextension 50308 "JobSetup" extends "Jobs Setup" //315
         {
             DataClassification = ToBeClassified;
         }
+        field(50210; "Item Template"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Item Template';
+            TableRelation = "Item Templ.";
+        }
 
     }
 
