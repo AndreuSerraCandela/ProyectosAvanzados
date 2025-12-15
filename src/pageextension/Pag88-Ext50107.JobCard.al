@@ -642,8 +642,8 @@ pageextension 50307 "JobCard" extends "Job Card" //88
 
                     // Determinar si es sumatorio basándose en el largo del código (Columna F)
                     // Si el largo del código es menor o igual al especificado en la columna F, es sumatorio
-                    if (LargoCodigo > 0) and (StrLen(CodigoLinea) <= LargoCodigo) then
-                        EsSumatorio := true;
+                    //if (LargoCodigo > 0) and (StrLen(CodigoLinea) <= LargoCodigo) then
+                    EsSumatorio := false;
 
                     // Si no hay cuenta y no es sumatorio, marcar como sumatorio
                     if (NoCuenta = '') and not EsSumatorio then
