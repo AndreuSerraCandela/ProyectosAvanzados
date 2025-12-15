@@ -33,6 +33,19 @@
       "schemaUpdateMode": "Synchronize",
       "enableLongRunningSqlStatements": true,
       "enableSqlInformationDebugger": true
-  }
+  },
+  {
+    "name": "PardGroup",
+    "request": "launch",
+    "type": "al",
+    "tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
+    "environmentType": "Sandbox",
+    "environmentName": "PARD_UAT_APM",
+    "breakOnError": "All",
+    "launchBrowser": true,
+    "schemaUpdateMode": "Synchronize",
+    "enableLongRunningSqlStatements": true,
+    "enableSqlInformationDebugger": true
+}
   ]
 }

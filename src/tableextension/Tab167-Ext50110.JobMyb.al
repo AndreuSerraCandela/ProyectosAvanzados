@@ -111,13 +111,14 @@ tableextension 50310 "JobMyb" extends Job //167
     begin
         SetupJob.Get();
         if rec."Cód Oferta Job" = '' then begin
+
             SetupJob.TestField("No. serie Ofertas en Proyectos");
             // NoSeriesMgt.TestManual(SetupJob."No. serie Ofertas en Proyectos");
             //    NoSeriesMgt.GetNoSeriesWithCheck(SetupJob."No. serie Ofertas en Proyectos", true, rec."Cód Oferta Job");
             // rec.validate("Cód Oferta Job", NoSeriesMgt.DoGetNextNo(SetupJob."No. serie Ofertas en Proyectos", 0D, true, false));
             //GetNextNo
             rec.validate("Cód Oferta Job", NoSeriesMgt.GetNextNo(SetupJob."No. serie Ofertas en Proyectos"));
-            Rec.Modify();
+            rec.Modify();
         end;
     end;
 
