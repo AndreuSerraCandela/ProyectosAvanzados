@@ -1715,6 +1715,7 @@ codeunit 50301 "ProcesosProyectos"
         NetoFactura: Decimal;
         IGICOIVA: Decimal;
         ImporteIGICOIVA: Decimal;
+        Budget: Decimal;
         IRPF: Decimal;
         BrutoFactura: Decimal;
         FechaVTO: Date;
@@ -1741,6 +1742,9 @@ codeunit 50301 "ProcesosProyectos"
         Ishandled: Boolean;
         ImportedEntriesPagado: Decimal;
         ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
+        Descripcion2: Text[50];
+        esProveedor: Boolean;
+        esEmpleado: Boolean;
     begin
         if not Job.Get(JobNo) then
             Error('El proyecto %1 no existe.', JobNo);
@@ -1780,11 +1784,14 @@ codeunit 50301 "ProcesosProyectos"
                     NetoFactura := 0;
                     IGICOIVA := 0;
                     ImporteIGICOIVA := 0;
+                    esProveedor := false;
+                    esEmpleado := false;
                     IRPF := 0;
                     BrutoFactura := 0;
                     FechaVTO := 0D;
                     Estado := '';
                     FechaPago := 0D;
+                    Budget := 0;
                     Tipo := '';
                     NoCuenta := '';
                     Fic := '';
@@ -1820,37 +1827,42 @@ codeunit 50301 "ProcesosProyectos"
                                     CIFProveedor := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(CIFProveedor));
                                 12: // Columna L - PROVEEDOR / EMPLEADO
                                     ProveedorEmpleado := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(ProveedorEmpleado));
-                                14: // Columna N - NETO FACTURA
+                                13: // Columna M - Descripcion2
+                                    Descripcion2 := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Descripcion2));
+                                14: // Columna N - Presupuesto
+                                    if not Evaluate(Budget, TempExcelBuffer."Cell Value as Text") then
+                                        Budget := 0;
+                                15: // Columna O - NETO FACTURA
                                     if not Evaluate(NetoFactura, TempExcelBuffer."Cell Value as Text") then
                                         NetoFactura := 0;
-                                15: // Columna O - IGIC O IVA
+                                16: // Columna P - IGIC O IVA
                                     if not Evaluate(IGICOIVA, TempExcelBuffer."Cell Value as Text") then
                                         IGICOIVA := 0;
-                                16: // Columna P - IMPORTE IGIC O IVA
+                                17: // Columna Q - IMPORTE IGIC O IVA
                                     if not Evaluate(ImporteIGICOIVA, TempExcelBuffer."Cell Value as Text") then
                                         ImporteIGICOIVA := 0;
-                                17: // Columna Q - IRPF
+                                18: // Columna R - IRPF
                                     if not Evaluate(IRPF, TempExcelBuffer."Cell Value as Text") then
                                         IRPF := 0;
-                                18: // Columna R - BRUTO FACTURA
+                                19: // Columna S - BRUTO FACTURA
                                     if not Evaluate(BrutoFactura, TempExcelBuffer."Cell Value as Text") then
                                         BrutoFactura := 0;
-                                19: // Columna S - FECHA VTO
+                                20: // Columna T - FECHA VTO
                                     begin
                                         if TempExcelBuffer."Cell Value as Text" <> '' then
                                             if not Evaluate(FechaVTO, TempExcelBuffer."Cell Value as Text") then
                                                 FechaVTO := 0D;
                                     end;
-                                20: // Columna T - ESTADO
+                                21: // Columna U - ESTADO
                                     Estado := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Estado));
-                                21:// COLUMNA U - PAGADO
+                                22:// COLUMNA V - PAGADO
                                     begin
                                         if TempExcelBuffer."Cell Value as Text" <> '' then
                                             if not Evaluate(ImportedEntriesPagado, TempExcelBuffer."Cell Value as Text") then
                                                 ImportedEntriesPagado := 0;
 
                                     end;
-                                23: // Columna W - FECHA DE PAGO
+                                24: // Columna X - FECHA DE PAGO
                                     begin
                                         if TempExcelBuffer."Cell Value as Text" <> '' then
                                             if not Evaluate(FechaPago, TempExcelBuffer."Cell Value as Text") then
@@ -1882,6 +1894,7 @@ codeunit 50301 "ProcesosProyectos"
                             Vendor.SetRange("VAT Registration No.", CIFProveedor);
                             if Vendor.FindFirst() then begin
                                 // Si es proveedor, usar la cuenta contable del proveedor
+                                esProveedor := true;
                                 Tipo := 'PRODUCTO';
                             end else Begin
                                 Employee.SetRange(Name, ProveedorEmpleado);
@@ -1891,6 +1904,7 @@ codeunit 50301 "ProcesosProyectos"
                                         if Resource.Get(Employee."Resource No.") then begin
                                             //NoCuenta := Resource."No.";
                                             //Tipo := 'RECURSO';
+                                            esEmpleado := true;
                                         end;
                                     end;
                                 end;
@@ -1986,8 +2000,12 @@ codeunit 50301 "ProcesosProyectos"
                                 JobPlanningLine.Description := Descripcion;
                                 JobPlanningLine.Quantity := 1;
                                 if BrutoFactura <> 0 then begin
-                                    JobPlanningLine."Unit Cost (LCY)" := BrutoFactura;
-                                    JobPlanningLine."Total Cost (LCY)" := BrutoFactura;
+                                    //   JobPlanningLine."Unit Cost (LCY)" := BrutoFactura;
+                                    //   JobPlanningLine."Total Cost (LCY)" := BrutoFactura;
+                                end;
+                                if Budget <> 0 then begin
+                                    JobPlanningLine."Total Cost (LCY)" := Budget;
+                                    JobPlanningLine."Unit Cost (LCY)" := Budget;
                                 end;
                                 JobPlanningLine."Usage Link" := true;
                                 repeat
@@ -1998,6 +2016,7 @@ codeunit 50301 "ProcesosProyectos"
                             end;
                             if ImportedEntriesPagado <> 0 then begin
                                 ProyectoMovimientoPago.SetRange("Job No.", JobNo);
+                                ProyectoMovimientoPago.SetRange("Document No.", CopyStr(NumeroFactura, 1, MaxStrLen(ProyectoMovimientoPago."Document No.")));
                                 ProyectoMovimientoPago.SetRange("Job Task No.", JobTaskNo);
                                 ProyectoMovimientoPago.SetRange("Job Planning Line No.", JobPlanningLine."Line No.");
                                 if ProyectoMovimientoPago.FindLast() then
@@ -2005,11 +2024,21 @@ codeunit 50301 "ProcesosProyectos"
                                 else
                                     LineNo := 10000;
                                 ProyectoMovimientoPago.Init();
+                                if esProveedor then
+                                    ProyectoMovimientoPago."Document Type" := ProyectoMovimientoPago."Document Type"::Invoice
+                                else
+                                    ProyectoMovimientoPago."Document Type" := ProyectoMovimientoPago."Document Type"::" ";
+                                if esProveedor then
+                                    ProyectoMovimientoPago."Vendor No." := Vendor."No."
+                                else
+                                    ProyectoMovimientoPago."Vendor No." := Employee."No.";
                                 ProyectoMovimientoPago."Document Type" := ProyectoMovimientoPago."Document Type"::" ";
-                                ProyectoMovimientoPago."Document No." := CopyStr(JobNo, 1, MaxStrLen(ProyectoMovimientoPago."Document No."));
+                                ProyectoMovimientoPago."Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(ProyectoMovimientoPago."Document No."));
                                 ProyectoMovimientoPago."Line No." := 0;
+                                if LineNo = 10000 Then ProyectoMovimientoPago.Validate(Amount, BrutoFactura);
                                 ProyectoMovimientoPago."Job No." := JobNo;
                                 ProyectoMovimientoPago."Job Task No." := JobTaskNo;
+                                ProyectoMovimientoPago.Validate("Amount Paid", ImportedEntriesPagado);
                                 ProyectoMovimientoPago."Job Planning Line No." := JobPlanningLine."Line No.";
                                 repeat
                                     ProyectoMovimientoPago."Line No." := LineNo;

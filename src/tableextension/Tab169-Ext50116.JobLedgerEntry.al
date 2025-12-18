@@ -14,7 +14,7 @@ tableextension 50322 "JobLedgerEntryExt" extends "Job Ledger Entry" //169
         {
             Caption = 'Importe Pagado';
             FieldClass = FlowField;
-            CalcFormula = sum("Proyecto Movimiento Pago"."Amount Paid" where("Job Task No." = field("Job Task No."), "Job No." = field("Job No.")));
+            CalcFormula = sum("Proyecto Movimiento Pago"."Amount Paid" where("Document No." = field("Document No."), "Job Task No." = field("Job Task No."), "Job No." = field("Job No.")));
             Editable = false;
             DecimalPlaces = 2 : 2;
         }
