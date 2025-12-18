@@ -2423,6 +2423,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Importar desde Excel - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Action 4034383764 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Importa movimientos de proyecto (Job Ledger Entries) desde un archivo Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Importar Movimientos desde Excel - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Action 4034383764 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Importar Movimientos desde Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Importar Movimientos desde Excel - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 2427575060 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Muestra el estado de los pagos de documentos de compra vinculados a este proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -2557,6 +2567,166 @@
           <source>Tareas Estándar</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Change JobTaskLines - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 1330443460 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el importe total pagado para esta entrada del mayor de proyectos.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Amount Paid - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 1330443460 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Importe Pagado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Amount Paid - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 4169368700 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el código presupuestario asociado a esta entrada.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Budget Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 4169368700 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Código Presupuestario</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Budget Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 3977046019 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el número del movimiento de empleado asociado a esta entrada del mayor de proyectos.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Employee Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 3977046019 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Nº Movimiento Empleado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Employee Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 2950845476 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el estado de esta entrada.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Estado - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 2950845476 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Estado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Estado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 1482889612 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica la fecha de pago de esta entrada.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Fecha Pago - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 1482889612 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Fecha Pago</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Fecha Pago - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 3341333936 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica la fecha de vencimiento de esta entrada.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Fecha VTO - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 3341333936 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Fecha VTO</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Fecha VTO - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 698455820 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el importe bruto de la factura.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Bruto Factura - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 698455820 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Bruto Factura</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Bruto Factura - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 3630568484 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica contra quién se facturó esta entrada.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Facturado Contra - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 3630568484 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Facturado Contra</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Facturado Contra - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 2217611624 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el código FIC asociado a esta entrada.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control FIC - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 2217611624 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>FIC</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control FIC - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 3688618999 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el porcentaje de IGIC o IVA.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control IGIC O IVA - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 3688618999 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>IGIC O IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control IGIC O IVA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 2312124255 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el importe de IGIC o IVA.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Importe IGIC O IVA - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 2312124255 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Importe IGIC O IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Importe IGIC O IVA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 2361878631 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el importe de IRPF.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control IRPF - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 2361878631 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>IRPF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 1625125562 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el importe neto de la factura.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Neto Factura - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 1625125562 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Neto Factura</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Neto Factura - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 2548181681 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el nombre del proveedor o empleado asociado a esta entrada.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control NombreProveedor o Empleado - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 2548181681 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Nombre Proveedor o Empleado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control NombreProveedor o Empleado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 1654878624 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica si esta entrada está pendiente.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Pendiente - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 1654878624 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Pendiente</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control Pendiente - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 137716724 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Especifica el registro presupuestario asociado a esta entrada.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control RegistroPresupuestario - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Control 137716724 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Registro Presupuestario</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Control RegistroPresupuestario - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2900412208 - Action 4064243314 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2273701615">
           <source>Muestra la matriz de ventas por proyecto pendientes de facturación</source>
@@ -2798,6 +2968,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control DimensionJobProveedor - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3078122788 - Control 2775122287 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2556642749">
+          <source>Specifies the value of the Item Template field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control Item Template - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 3078122788 - Control 4117458266 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2556642749">
           <source>Specifies the value of the Multiples Dependencias field.</source>
           <note from="Developer" annotates="general" priority="2">%</note>
@@ -2853,6 +3028,86 @@
           <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension GLAccountProyectosAvanzados - Field Mostrar en lineas de planif. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 1330443460 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Importe Pagado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Amount Paid - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 698455820 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Bruto Factura</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Bruto Factura - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 4169368700 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Código Presupuestario</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Budget Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 3977046019 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Nº Movimiento Empleado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Employee Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 2950845476 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Estado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Estado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 3630568484 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Facturado Contra</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Facturado Contra - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 1482889612 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Fecha Pago</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Fecha Pago - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 3341333936 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Fecha VTO</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Fecha VTO - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 2217611624 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>FIC</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field FIC - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 3688618999 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>IGIC O IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field IGIC O IVA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 2312124255 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Importe IGIC O IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Importe IGIC O IVA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 2361878631 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>IRPF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 1625125562 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Neto Factura</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Neto Factura - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 2548181681 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Nombre Proveedor o Empleado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field NombreProveedor o Empleado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 1654878624 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Pendiente</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Pendiente - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 137716724 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Registro Presupuestario</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field RegistroPresupuestario - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2512212003 - Field 4228486331 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2818324089">
           <source>Cod.Almacen Proyecto almacen</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -2907,6 +3162,11 @@
           <source>Asigna la Dimension del Proveedor cuando hacemos un pedido/factura de compra desde la linea de planificacion</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobSetup - Field DimensionJobProveedor - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1627283316 - Field 2775122287 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2556642749">
+          <source>Item Template</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobSetup - Field Item Template - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1627283316 - Field 4117458266 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2556642749">
           <source>Multiples Dependencias</source>

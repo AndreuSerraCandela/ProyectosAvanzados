@@ -1695,4 +1695,403 @@ codeunit 50301 "ProcesosProyectos"
     begin
 
     end;
+
+    procedure ImportarJobLedgerEntriesDesdeExcel(JobNo: Code[20])
+    var
+        TempExcelBuffer: Record "Excel Buffer" temporary;
+        JobTask: Record "Job Task";
+        JobLedgerEntry: Record "Job Ledger Entry";
+        JobPlanningLine: Record "Job Planning Line";
+        InStream: InStream;
+        FileName: Text;
+        RowNo: Integer;
+        JobTaskNo: Code[20];
+        BudgetCode: Code[100];
+        Fic: Text[100];
+        Descripcion: Text[100];
+        FechaFactura: Date;
+        NumeroFactura: Code[50];
+        ProveedorEmpleado: Text[100];
+        NetoFactura: Decimal;
+        IGICOIVA: Decimal;
+        ImporteIGICOIVA: Decimal;
+        IRPF: Decimal;
+        BrutoFactura: Decimal;
+        FechaVTO: Date;
+        Estado: Text[100];
+        FechaPago: Date;
+        ImportedEntries: Integer;
+        SheetName: Text;
+        Job: Record Job;
+        LineNo: Integer;
+        GLAccount: Record "G/L Account";
+        Vendor: Record Vendor;
+        Employee: Record Employee;
+        Resource: Record Resource;
+        Tipo: Text[20];
+        NoCuenta: Code[20];
+        RegistroPresupuestario: Text[100];
+        FacturadoContra: Text[100];
+        CIFProveedor: Text[30];
+        Item: Record Item;
+        JobsSetup: Record "Jobs Setup";
+        ItemTempl: Record "Item Templ.";
+        ItemTemplMgt: Codeunit "Item Templ. Mgt.";
+        GenProdPostingGroup: Record "Gen. Product Posting Group";
+        Ishandled: Boolean;
+        ImportedEntriesPagado: Decimal;
+        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
+    begin
+        if not Job.Get(JobNo) then
+            Error('El proyecto %1 no existe.', JobNo);
+
+        if Job.Status <> Job.Status::Open then
+            Error('El proyecto debe estar en estado Abierto para importar movimientos.');
+
+        // Limpiar buffer temporal
+        TempExcelBuffer.DeleteAll();
+
+        // Cargar datos del Excel
+        if UploadIntoStream('Seleccionar archivo Excel', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos los archivos (*.*)|*.*', FileName, InStream) then begin
+            SheetName := TempExcelBuffer.SelectSheetsNameStream(InStream);
+            TempExcelBuffer.OpenBookStream(InStream, SheetName);
+            TempExcelBuffer.ReadSheet();
+        end else
+            exit;
+
+        ImportedEntries := 0;
+
+        // Procesar cada fila del Excel
+        if TempExcelBuffer.FindSet() then
+            repeat
+                RowNo := TempExcelBuffer."Row No.";
+
+                // Saltar fila de encabezados (asumiendo que está en la fila 1)
+                if RowNo = 1 then begin
+                    // Saltar esta fila y continuar con la siguiente
+                end else begin
+                    // Inicializar variables
+                    JobTaskNo := '';
+                    BudgetCode := '';
+                    Descripcion := '';
+                    FechaFactura := 0D;
+                    NumeroFactura := '';
+                    ProveedorEmpleado := '';
+                    NetoFactura := 0;
+                    IGICOIVA := 0;
+                    ImporteIGICOIVA := 0;
+                    IRPF := 0;
+                    BrutoFactura := 0;
+                    FechaVTO := 0D;
+                    Estado := '';
+                    FechaPago := 0D;
+                    Tipo := '';
+                    NoCuenta := '';
+                    Fic := '';
+                    RegistroPresupuestario := '';
+                    FacturadoContra := '';
+                    CIFProveedor := '';
+                    // Buscar datos de esta fila
+                    TempExcelBuffer.SetRange("Row No.", RowNo);
+                    if TempExcelBuffer.FindSet() then
+                        repeat
+                            case TempExcelBuffer."Column No." of
+                                1: // Columna A - CÓDIGO PRESUPUESTARIOBUSINESS CENTRAL (Job Task No.)
+                                    JobTaskNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(JobTask."Job Task No."));
+                                2: // Columna B - FIC
+                                    FIC := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Fic));
+                                3: // Columna C - Registro Presupuestario
+                                    RegistroPresupuestario := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(RegistroPresupuestario));
+                                4: // Columna D - CÓDIGO PRESUPUESTARIO
+                                    BudgetCode := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(BudgetCode));
+                                5: // Columna E - DESCRIPCIÓN
+                                    Descripcion := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Descripcion));
+                                6: //Columna GFacturadoContra
+                                    FacturadoContra := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(FacturadoContra));
+                                9: // Columna I - FECHA FRA (Fecha Factura)
+                                    begin
+                                        if TempExcelBuffer."Cell Value as Text" <> '' then
+                                            if not Evaluate(FechaFactura, TempExcelBuffer."Cell Value as Text") then
+                                                FechaFactura := 0D;
+                                    end;
+                                10: // Columna J - NÚMERO DE FACTURA
+                                    NumeroFactura := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NumeroFactura));
+                                11: // Columna K - CIF PRoveedor
+                                    CIFProveedor := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(CIFProveedor));
+                                12: // Columna L - PROVEEDOR / EMPLEADO
+                                    ProveedorEmpleado := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(ProveedorEmpleado));
+                                14: // Columna N - NETO FACTURA
+                                    if not Evaluate(NetoFactura, TempExcelBuffer."Cell Value as Text") then
+                                        NetoFactura := 0;
+                                15: // Columna O - IGIC O IVA
+                                    if not Evaluate(IGICOIVA, TempExcelBuffer."Cell Value as Text") then
+                                        IGICOIVA := 0;
+                                16: // Columna P - IMPORTE IGIC O IVA
+                                    if not Evaluate(ImporteIGICOIVA, TempExcelBuffer."Cell Value as Text") then
+                                        ImporteIGICOIVA := 0;
+                                17: // Columna Q - IRPF
+                                    if not Evaluate(IRPF, TempExcelBuffer."Cell Value as Text") then
+                                        IRPF := 0;
+                                18: // Columna R - BRUTO FACTURA
+                                    if not Evaluate(BrutoFactura, TempExcelBuffer."Cell Value as Text") then
+                                        BrutoFactura := 0;
+                                19: // Columna S - FECHA VTO
+                                    begin
+                                        if TempExcelBuffer."Cell Value as Text" <> '' then
+                                            if not Evaluate(FechaVTO, TempExcelBuffer."Cell Value as Text") then
+                                                FechaVTO := 0D;
+                                    end;
+                                20: // Columna T - ESTADO
+                                    Estado := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Estado));
+                                21:// COLUMNA U - PAGADO
+                                    begin
+                                        if TempExcelBuffer."Cell Value as Text" <> '' then
+                                            if not Evaluate(ImportedEntriesPagado, TempExcelBuffer."Cell Value as Text") then
+                                                ImportedEntriesPagado := 0;
+
+                                    end;
+                                23: // Columna W - FECHA DE PAGO
+                                    begin
+                                        if TempExcelBuffer."Cell Value as Text" <> '' then
+                                            if not Evaluate(FechaPago, TempExcelBuffer."Cell Value as Text") then
+                                                FechaPago := 0D;
+                                    end;
+                            end;
+                        until TempExcelBuffer.Next() = 0;
+
+                    // Si hay Job Task No., crear o verificar Job Task
+                    if (JobTaskNo <> '') and (Descripcion <> '') then begin
+                        if not JobTask.Get(JobNo, JobTaskNo) then begin
+                            // Crear Job Task si no existe
+                            JobTask.Init();
+                            JobTask."Job No." := JobNo;
+                            JobTask."Job Task No." := JobTaskNo;
+                            JobTask.Description := Descripcion;
+                            JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
+                            JobTask."WIP-Total" := JobTask."WIP-Total"::" ";
+                            JobTask.Insert(true);
+                        end;
+
+                        // Determinar el tipo y número de cuenta basándose en el proveedor/empleado o descripción
+                        // Por defecto, usar G/L Account si no se puede determinar
+                        Tipo := 'PRODUCTO';
+                        NoCuenta := JobTaskNo;
+
+                        // Intentar encontrar el proveedor o empleado
+                        if (ProveedorEmpleado <> '') or (CIFProveedor <> '') then begin
+                            Vendor.SetRange("VAT Registration No.", CIFProveedor);
+                            if Vendor.FindFirst() then begin
+                                // Si es proveedor, usar la cuenta contable del proveedor
+                                Tipo := 'PRODUCTO';
+                            end else Begin
+                                Employee.SetRange(Name, ProveedorEmpleado);
+                                if Employee.FindFirst() then begin
+                                    // Si es empleado, usar el recurso asociado
+                                    if Employee."Resource No." <> '' then begin
+                                        if Resource.Get(Employee."Resource No.") then begin
+                                            //NoCuenta := Resource."No.";
+                                            //Tipo := 'RECURSO';
+                                        end;
+                                    end;
+                                end;
+                            end;
+                        end;
+
+                        // Si no se encontró cuenta, usar Budget Code como cuenta contable
+                        if NoCuenta = '' then begin
+                            if Tipo = 'CUENTA' then begin
+                                NoCuenta := CopyStr(BudgetCode, 1, MaxStrLen(NoCuenta));
+                                // Verificar si es una cuenta contable válida
+                                if not GLAccount.Get(NoCuenta) then begin
+                                    // Crear cuenta contable si no existe
+                                    GLAccount.Init();
+                                    GLAccount."No." := NoCuenta;
+                                    GLAccount.Name := CopyStr(Descripcion, 1, MaxStrLen(GLAccount.Name));
+                                    GLAccount."Account Type" := GLAccount."Account Type"::Posting;
+                                    GLAccount."Direct Posting" := true;
+                                    GLAccount.Insert(true);
+                                end;
+                                Tipo := 'CUENTA';
+                            end;
+                        end;
+
+                        // Solo crear Job Planning Line y Job Ledger Entry si hay una cuenta válida
+                        if NoCuenta <> '' then begin
+                            // Crear Job Planning Line si no existe para esta combinación
+                            LineNo := 10000;
+                            JobPlanningLine.Reset();
+                            JobPlanningLine.SetRange("Job No.", JobNo);
+
+                            if Not JobPlanningLine.FindLast() then
+                                LineNo := JobPlanningLine."Line No." + 10000;
+
+                            // Buscar si ya existe una línea de planificación para esta combinación
+                            JobPlanningLine.SetRange("Job No.", JobNo);
+                            JobPlanningLine.SetRange("Job Task No.", JobTaskNo);
+                            JobPlanningLine.SetRange("No.", NoCuenta);
+                            if not JobPlanningLine.FindFirst() then begin
+                                // Crear nueva Job Planning Line
+                                JobPlanningLine.Init();
+                                JobPlanningLine."Job No." := JobNo;
+                                JobPlanningLine."Job Task No." := JobTaskNo;
+                                JobPlanningLine."Line No." := LineNo;
+
+                                // Determinar Type según el Tipo
+                                case UpperCase(Tipo) of
+                                    'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
+                                        begin
+                                            JobPlanningLine."Type" := JobPlanningLine."Type"::"G/L Account";
+                                            JobPlanningLine."No." := NoCuenta;
+                                        end;
+                                    'PRODUCTO', 'ITEM':
+                                        begin
+                                            JobPlanningLine."Type" := JobPlanningLine."Type"::Item;
+                                            JobPlanningLine."No." := NoCuenta;
+
+                                            if not Item.Get(NoCuenta) then begin
+                                                Item.Init();
+                                                Item."No." := NoCuenta;
+                                                Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
+                                                JobsSetup.Get();
+                                                ItemTempl.Get(JobsSetup."Item Template");
+                                                // Si el Item Template está configurado, usarlo
+                                                if (JobsSetup."Item Template" <> '') and ItemTempl.Get(JobsSetup."Item Template") then begin
+                                                    // Usar el template para crear el Item
+                                                    ItemTemplMgt.CreateItemFromTemplate(Item, Ishandled, JobsSetup."Item Template");
+                                                    If Item.Get(NoCuenta) then begin
+                                                        //Grear Grupo registro prodducto por producto
+                                                        Item."Gen. Prod. Posting Group" := Item."No.";
+                                                        If Not GenProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
+                                                            GenProdPostingGroup.Init();
+                                                            GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
+                                                            GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
+                                                            GenProdPostingGroup.Insert(true);
+                                                        end;
+                                                        Item.Modify(true);
+                                                    end;
+                                                end else begin
+                                                    // Si no hay template configurado, Error
+                                                    Error('No hay template configurado para crear el Producto %1', NoCuenta);
+                                                end;
+
+                                            end;
+                                        end;
+                                    'RECURSO', 'RESOURCE':
+                                        begin
+                                            JobPlanningLine."Type" := JobPlanningLine."Type"::Resource;
+                                            JobPlanningLine."No." := NoCuenta;
+                                        end;
+                                end;
+
+                                JobPlanningLine.Description := Descripcion;
+                                JobPlanningLine.Quantity := 1;
+                                if BrutoFactura <> 0 then begin
+                                    JobPlanningLine."Unit Cost (LCY)" := BrutoFactura;
+                                    JobPlanningLine."Total Cost (LCY)" := BrutoFactura;
+                                end;
+                                JobPlanningLine."Usage Link" := true;
+                                repeat
+                                    JobPlanningLine."Line No." := LineNo;
+                                    LineNo += 10000;
+                                until JobPlanningLine.Insert(true);
+
+                            end;
+                            if ImportedEntriesPagado <> 0 then begin
+                                ProyectoMovimientoPago.SetRange("Job No.", JobNo);
+                                ProyectoMovimientoPago.SetRange("Job Task No.", JobTaskNo);
+                                ProyectoMovimientoPago.SetRange("Job Planning Line No.", JobPlanningLine."Line No.");
+                                if ProyectoMovimientoPago.FindLast() then
+                                    LineNo := ProyectoMovimientoPago."Line No." + 10000
+                                else
+                                    LineNo := 10000;
+                                ProyectoMovimientoPago.Init();
+                                ProyectoMovimientoPago."Document Type" := ProyectoMovimientoPago."Document Type"::" ";
+                                ProyectoMovimientoPago."Document No." := CopyStr(JobNo, 1, MaxStrLen(ProyectoMovimientoPago."Document No."));
+                                ProyectoMovimientoPago."Line No." := 0;
+                                ProyectoMovimientoPago."Job No." := JobNo;
+                                ProyectoMovimientoPago."Job Task No." := JobTaskNo;
+                                ProyectoMovimientoPago."Job Planning Line No." := JobPlanningLine."Line No.";
+                                repeat
+                                    ProyectoMovimientoPago."Line No." := LineNo;
+                                    LineNo += 10000;
+                                until ProyectoMovimientoPago.Insert();
+                            end;
+
+                            // Verificar si ya existe un Job Ledger Entry con los mismos datos para evitar duplicados
+                            JobLedgerEntry.Reset();
+                            if JobLedgerEntry.FindLast() then
+                                LineNo := JobLedgerEntry."Entry No." + 1
+                            else
+                                LineNo := 1;
+                            JobLedgerEntry.Init();
+                            JobLedgerEntry."Entry No." := LineNo;
+                            JobLedgerEntry."Job No." := JobNo;
+                            JobLedgerEntry."Job Task No." := JobTaskNo;
+                            //JobLedgerEntry."Job Planning Line No." := JobPlanningLine."Line No.";
+                            JobLedgerEntry."Posting Date" := Today;
+                            if FechaFactura <> 0D then
+                                JobLedgerEntry."Posting Date" := FechaFactura;
+
+                            // Determinar Type según el Tipo
+                            case UpperCase(Tipo) of
+                                'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
+                                    begin
+                                        JobLedgerEntry."Type" := JobLedgerEntry."Type"::"G/L Account";
+                                        JobLedgerEntry."No." := NoCuenta;
+                                    end;
+                                'PRODUCTO', 'ITEM':
+                                    begin
+                                        JobLedgerEntry."Type" := JobLedgerEntry."Type"::Item;
+                                        JobLedgerEntry."No." := NoCuenta;
+                                    end;
+                                'RECURSO', 'RESOURCE':
+                                    begin
+                                        JobLedgerEntry."Type" := JobLedgerEntry."Type"::Resource;
+                                        JobLedgerEntry."No." := NoCuenta;
+                                    end;
+                            end;
+
+                            JobLedgerEntry.Description := Descripcion;
+                            JobLedgerEntry.Quantity := 1;
+                            if BrutoFactura <> 0 then begin
+                                JobLedgerEntry."Unit Cost" := BrutoFactura;
+                                JobLedgerEntry."Total Cost" := BrutoFactura;
+                            end;
+
+                            // Campos personalizados
+                            JobLedgerEntry."Budget Code" := BudgetCode;
+                            JobLedgerEntry."Neto Factura" := NetoFactura;
+                            JobLedgerEntry."IGIC O IVA" := IGICOIVA;
+                            JobLedgerEntry."Importe IGIC O IVA" := ImporteIGICOIVA;
+                            JobLedgerEntry."IRPF" := IRPF;
+                            JobLedgerEntry."Bruto Factura" := BrutoFactura;
+                            JobLedgerEntry."Fecha VTO" := FechaVTO;
+                            JobLedgerEntry."Estado" := Estado;
+
+                            if NumeroFactura <> '' then begin
+                                JobLedgerEntry."Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(JobLedgerEntry."Document No."));
+                                JobLedgerEntry."External Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(JobLedgerEntry."External Document No."));
+                            end;
+
+                            JobLedgerEntry."Fecha Pago" := FechaPago;
+                            JobLedgerEntry."NombreProveedor o Empleado" := ProveedorEmpleado;
+                            JobLedgerEntry."Facturado Contra" := FacturadoContra;
+                            JobLedgerEntry."FIC" := FIC;
+                            JobLedgerEntry."RegistroPresupuestario" := RegistroPresupuestario;
+                            repeat
+                                JobLedgerEntry."Entry No." := LineNo;
+                                LineNo += 1;
+                            until JobLedgerEntry.Insert();
+                            ImportedEntries += 1;
+
+                        end; // Cerrar if NoCuenta <> ''
+                    end; // Cerrar if (JobTaskNo <> '') and (Descripcion <> '')
+
+                    // Restaurar filtro para siguiente iteración
+                    TempExcelBuffer.SetRange("Row No.");
+                end;
+            until TempExcelBuffer.Next() = 0;
+
+        Message('Se importaron %1 movimientos correctamente.', ImportedEntries);
+    end;
 }

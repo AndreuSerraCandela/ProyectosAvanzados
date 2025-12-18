@@ -279,6 +279,22 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                     CurrPage.Update(false);
                 end;
             }
+            action("Importar Movimientos desde Excel")
+            {
+                ApplicationArea = All;
+                Caption = 'Importar Movimientos desde Excel';
+                ToolTip = 'Importa movimientos de proyecto (Job Ledger Entries) desde un archivo Excel';
+                Image = ImportExcel;
+
+                trigger OnAction()
+                var
+                    CodProyecto: Codeunit ProcesosProyectos;
+                begin
+                    CodProyecto.ImportarJobLedgerEntriesDesdeExcel(Rec."No.");
+                    Commit();
+                    CurrPage.Update(false);
+                end;
+            }
             action("Pagos Vinculados")
             {
                 ApplicationArea = All;
@@ -314,6 +330,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                 actionref(VerEstimaciones; "Ver Estimaciones") { }
                 actionref(CrearNuevaEstimacion; "Calcular nueva estimación") { }
                 actionref(ImportarDesdeExcel; "Importar desde Excel") { }
+                actionref(ImportarMovimientosDesdeExcel; "Importar Movimientos desde Excel") { }
             }
 
         }
