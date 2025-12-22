@@ -1813,7 +1813,7 @@ codeunit 50301 "ProcesosProyectos"
                                     BudgetCode := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(BudgetCode));
                                 5: // Columna E - DESCRIPCIÓN
                                     Descripcion := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Descripcion));
-                                6: //Columna GFacturadoContra
+                                7: //Columna G - FacturadoContra
                                     FacturadoContra := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(FacturadoContra));
                                 9: // Columna I - FECHA FRA (Fecha Factura)
                                     begin
@@ -2000,8 +2000,9 @@ codeunit 50301 "ProcesosProyectos"
                                 JobPlanningLine.Description := Descripcion;
                                 JobPlanningLine.Quantity := 1;
                                 if BrutoFactura <> 0 then begin
-                                    //   JobPlanningLine."Unit Cost (LCY)" := BrutoFactura;
-                                    //   JobPlanningLine."Total Cost (LCY)" := BrutoFactura;
+                                    // JobPlanningLine."Unit Cost (LCY)" := BrutoFactura; // DFS DESCOMENTÉ POR LO DE LOS TOTALES
+                                    // JobPlanningLine."Total Cost (LCY)" := BrutoFactura; // DFS DESCOMENTÉ POR LO DE LOS TOTALES
+
                                 end;
                                 if Budget <> 0 then begin
                                     JobPlanningLine."Total Cost (LCY)" := Budget;
@@ -2083,8 +2084,11 @@ codeunit 50301 "ProcesosProyectos"
                             JobLedgerEntry.Description := Descripcion;
                             JobLedgerEntry.Quantity := 1;
                             if BrutoFactura <> 0 then begin
-                                JobLedgerEntry."Unit Cost" := BrutoFactura;
-                                JobLedgerEntry."Total Cost" := BrutoFactura;
+                                //   JobLedgerEntry."Unit Cost" := BrutoFactura;   DFS
+                                JobLedgerEntry."Unit Cost (LCY)" := BrutoFactura;   //DFS    
+
+                                // JobLedgerEntry."Total Cost" := BrutoFactura;  //DFS
+                                JobLedgerEntry."Total Cost (LCY)" := BrutoFactura;
                             end;
 
                             // Campos personalizados
