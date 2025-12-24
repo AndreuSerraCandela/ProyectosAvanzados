@@ -5,6 +5,25 @@ codeunit 50302 "Eventos-proyectos"
 
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Batch", OnBeforeUpdateAndDeleteLines, '', false, false)]
+    local procedure OnBeforeUpdateAndDeleteLines(var GenJournalLine: Record "Gen. Journal Line"; CommitIsSuppressed: Boolean; var IsHandled: Boolean)
+    var
+        ProcesosProyectos: Codeunit "ProcesosProyectos";
+        GLEntry: Record "G/L Entry";
+        DocNo: Code[20];
+        Fecha: Date;
+        DocNoAnterior: Code[20];
+        FechaAnterior: Date;
+    begin
+        If GenJournalLine.FindFirst() then
+            if GenJournalLine."Source Code" = 'NOMINAS' then begin
+                DocNo := GenJournalLine."Document No.";
+                Fecha := GenJournalLine."Posting Date";
+                ProcesosProyectos.CrearMovimientosEmpleadosDesdeDiario(DocNo, Fecha);
+            end;
+
+    end;
+
     [EventSubscriber(ObjectType::Table, Database::"Job", 'OnAfterInsertEvent', '', false, false)]
     local procedure OnAfterInsertEvent(var Rec: Record Job)
     var

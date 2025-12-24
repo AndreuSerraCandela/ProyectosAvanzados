@@ -901,15 +901,17 @@ page 50116 "Job Task Lines Subform Ext"
         ImportePagado: Decimal;
         ImporteCoste: Decimal;
     begin
+        Rec.CalcFields("Amount Paid", "Usage (Total Cost)");
         If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
-            exit(Rec."Tota Cost" - Rec."Amount Paid")
+            exit(Rec."Usage (Total Cost)" - Rec."Amount Paid")
         else begin
             JobTask.SetRange("Job No.", Rec."Job No.");
             JobTask.SetFilter("Job Task No.", Rec.Totaling);
             If JobTask.FindSet() then
                 repeat
+                    JobTask.CalcFields("Amount Paid", "Usage (Total Cost)");
                     ImportePagado += JobTask."Amount Paid";
-                    ImporteCoste += JobTask."Tota Cost";
+                    ImporteCoste += JobTask."Usage (Total Cost)";
                 until JobTask.Next() = 0;
             exit(ImporteCoste - ImportePagado);
         end;
@@ -918,8 +920,10 @@ page 50116 "Job Task Lines Subform Ext"
     local procedure CalculaImportePagado(): Decimal
     var
         JobTask: Record "Job Task";
-        ImportePendiente: Decimal;
+        ImportePagado: Decimal;
+        ImporteCoste: Decimal;
     begin
+        Rec.CalcFields("Amount Paid", "Usage (Total Cost)");
         If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
             exit(Rec."Amount Paid")
         else begin
@@ -927,9 +931,11 @@ page 50116 "Job Task Lines Subform Ext"
             JobTask.SetFilter("Job Task No.", Rec.Totaling);
             If JobTask.FindSet() then
                 repeat
-                    ImportePendiente += JobTask."Amount Paid";
+                    JobTask.CalcFields("Amount Paid", "Usage (Total Cost)");
+                    ImportePagado += JobTask."Amount Paid";
+                    ImporteCoste += JobTask."Usage (Total Cost)";
                 until JobTask.Next() = 0;
-            exit(ImportePendiente);
+            exit(ImportePagado - ImporteCoste);
         end;
 
     end;
