@@ -1935,6 +1935,15 @@ codeunit 50301 "ProcesosProyectos"
                             LineNo := 10000;
                             JobPlanningLine.Reset();
                             JobPlanningLine.SetRange("Job No.", JobNo);
+                            if JobTask.Get(JobNo, JobTaskNo) Then begin
+                                if JobTask."Job Task Type" <> JobTask."Job Task Type"::Posting then begin
+                                    JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
+                                    JobTask.Modify(false);
+                                end;
+
+                            end else begin
+
+                            end;
 
                             if Not JobPlanningLine.FindLast() then
                                 LineNo := JobPlanningLine."Line No." + 10000;
