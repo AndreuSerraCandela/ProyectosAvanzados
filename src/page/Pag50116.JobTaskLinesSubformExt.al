@@ -253,12 +253,35 @@ page 50116 "Job Task Lines Subform Ext"
                     ApplicationArea = All;
                     Caption = 'Importe Pagado';
                     ToolTip = 'Especifica el importe pagado para esta tarea.';
+                    trigger OnDrillDown()
+                    var
+                        JobEntries: Record "Job Ledger Entry";
+                    begin
+                        JobEntries.SetRange("Job No.", Rec."Job No.");
+                        If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
+                            JobEntries.SetFilter("Job Task No.", Rec."Job Task No.")
+                        else
+                            JobEntries.SetFilter("Job Task No.", Rec.Totaling);
+
+                        Page.RunModal(0, JobEntries);
+                    end;
                 }
                 field("Amount Pending"; CalculaImportePendiente())
                 {
                     ApplicationArea = All;
                     Caption = 'Importe Pendiente';
                     ToolTip = 'Especifica el importe pendiente de pago para esta tarea.';
+                    trigger OnDrillDown()
+                    var
+                        JobEntries: Record "Job Ledger Entry";
+                    begin
+                        JobEntries.SetRange("Job No.", Rec."Job No.");
+                        If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
+                            JobEntries.SetFilter("Job Task No.", Rec."Job Task No.")
+                        else
+                            JobEntries.SetFilter("Job Task No.", Rec.Totaling);
+                        Page.RunModal(0, JobEntries);
+                    end;
                 }
                 field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
                 {
@@ -900,7 +923,10 @@ page 50116 "Job Task Lines Subform Ext"
         JobTask: Record "Job Task";
         ImportePagado: Decimal;
         ImporteCoste: Decimal;
+        Pagos: Record "Proyecto Movimiento Pago";
+        Coste: Record "Job Ledger Entry";
     begin
+        Rec.CalcFields("Tota Cost", "Amount Paid");
         If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
             exit(Rec."Tota Cost" - Rec."Amount Paid")
         else begin
@@ -908,8 +934,19 @@ page 50116 "Job Task Lines Subform Ext"
             JobTask.SetFilter("Job Task No.", Rec.Totaling);
             If JobTask.FindSet() then
                 repeat
-                    ImportePagado += JobTask."Amount Paid";
-                    ImporteCoste += JobTask."Tota Cost";
+                    Coste.SetRange("Job No.", JobTask."Job No.");
+                    Coste.SetRange("Job Task No.", JobTask."Job Task No.");
+                    if Coste.FindFirst() then
+                        repeat
+                            ImporteCoste += Coste."Total Cost (LCY)";
+                        until Coste.Next() = 0;
+                    Pagos.SetRange("Job No.", JobTask."Job No.");
+                    Pagos.SetFilter("Job Task No.", JobTask."Job Task No.");
+                    If Pagos.FindSet() then
+                        repeat
+                            ImportePagado += Pagos."Amount Paid";
+
+                        until Pagos.Next() = 0;
                 until JobTask.Next() = 0;
             exit(ImporteCoste - ImportePagado);
         end;
@@ -918,16 +955,26 @@ page 50116 "Job Task Lines Subform Ext"
     local procedure CalculaImportePagado(): Decimal
     var
         JobTask: Record "Job Task";
+        Pagos: Record "Proyecto Movimiento Pago";
         ImportePendiente: Decimal;
     begin
+        Rec.CalcFields("Amount Paid");
         If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
             exit(Rec."Amount Paid")
         else begin
             JobTask.SetRange("Job No.", Rec."Job No.");
             JobTask.SetFilter("Job Task No.", Rec.Totaling);
+
             If JobTask.FindSet() then
                 repeat
-                    ImportePendiente += JobTask."Amount Paid";
+                    Pagos.SetRange("Job No.", JobTask."Job No.");
+                    Pagos.SetFilter("Job Task No.", JobTask."Job Task No.");
+                    If Pagos.FindSet() then
+                        repeat
+                            ImportePendiente += Pagos."Amount Paid";
+                        until Pagos.Next() = 0;
+
+
                 until JobTask.Next() = 0;
             exit(ImportePendiente);
         end;
