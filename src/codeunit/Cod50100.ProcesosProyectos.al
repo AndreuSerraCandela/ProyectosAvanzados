@@ -2016,6 +2016,10 @@ codeunit 50301 "ProcesosProyectos"
                                 if Budget <> 0 then begin
                                     JobPlanningLine."Total Cost (LCY)" := Budget;
                                     JobPlanningLine."Unit Cost (LCY)" := Budget;
+                                    JobPlanningLine."Total Cost" := Budget;
+                                    JobPlanningLine."Unit Cost" := Budget;
+                                    JobPlanningLine."Schedule Line" := true;
+
                                 end;
                                 JobPlanningLine."Usage Link" := true;
                                 repeat
