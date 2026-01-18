@@ -585,7 +585,14 @@ pageextension 50307 "JobCard" extends "Job Card" //88
         CodProyecto: Codeunit ProcesosProyectos;
         JobsSetup: Record "Jobs Setup";
         GenProdPostingGroup: Record "Gen. Product Posting Group";
+        rInf: Record "Company Information";
+        CtaCta: Text[30];
+        GenNegPostingGrup: Record "Gen. Business Posting Group";
+        GenPostingSetup: Record "General Posting Setup";
     begin
+        rInf.Get();
+        rInf.TestField("Cta Contable Estructura");
+
         JobsSetup.Get();
         // Verificar que el proyecto esté abierto
         if Rec.Status <> Rec.Status::Open then begin
@@ -631,6 +638,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                     TipoLinea := '';
                     EsSumatorio := false;
 
+
                     // Buscar datos de esta fila
                     TempExcelBuffer.SetRange("Row No.", RowNo);
                     if TempExcelBuffer.FindSet() then
@@ -666,6 +674,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                 10: // Columna J - Tipo línea (Planificacion, Uso, Ambos)
                                     TipoLinea := CopyStr(UpperCase(TempExcelBuffer."Cell Value as Text"), 1, 20);
                             end;
+                            if TempExcelBuffer.xlColID = rInf."Cta Contable Estructura" Then CtaCta := TempExcelBuffer."Cell Value as Text";
                         until TempExcelBuffer.Next() = 0;
 
                     // Determinar si es sumatorio basándose en el largo del código (Columna F)
@@ -736,6 +745,14 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                                                 GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
                                                                 GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
                                                                 GenProdPostingGroup.Insert(true);
+                                                                If GenNegPostingGrup.FindFirst Then
+                                                                    repeat
+                                                                        GenPostingSetup.Init;
+                                                                        GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
+                                                                        GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
+                                                                        GenPostingSetup."Purch. Account" := CtaCta;
+                                                                        GenPostingSetup.Insert();
+                                                                    until GenNegPostingGrup.next = 0;
                                                             end;
                                                             Item.Modify(true);
                                                         end;

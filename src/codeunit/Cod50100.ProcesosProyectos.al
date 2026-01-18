@@ -1745,7 +1745,13 @@ codeunit 50301 "ProcesosProyectos"
         Descripcion2: Text[50];
         esProveedor: Boolean;
         esEmpleado: Boolean;
+        rInf: Record "Company Information";
+        CtaCble: Text[30];
+        GenNegPostingGrup: Record "Gen. Business Posting Group";
+        GenPostingSetup: Record "General Posting Setup";
     begin
+        rInf.Get();
+        rInf.TestField("Cta Contable Mov");
         if not Job.Get(JobNo) then
             Error('El proyecto %1 no existe.', JobNo);
 
@@ -1869,6 +1875,7 @@ codeunit 50301 "ProcesosProyectos"
                                                 FechaPago := 0D;
                                     end;
                             end;
+                            if TempExcelBuffer.xlColID = rInf."Cta Contable Mov" Then CtaCble := TempExcelBuffer."Cell Value as Text";
                         until TempExcelBuffer.Next() = 0;
 
                     // Si hay Job Task No., crear o verificar Job Task
@@ -1989,6 +1996,14 @@ codeunit 50301 "ProcesosProyectos"
                                                             GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
                                                             GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
                                                             GenProdPostingGroup.Insert(true);
+                                                            If GenNegPostingGrup.FindFirst Then
+                                                                repeat
+                                                                    GenPostingSetup.Init;
+                                                                    GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
+                                                                    GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
+                                                                    GenPostingSetup."Purch. Account" := CtaCble;
+                                                                    GenPostingSetup.Insert();
+                                                                until GenNegPostingGrup.next = 0;
                                                         end;
                                                         Item.Modify(true);
                                                     end;

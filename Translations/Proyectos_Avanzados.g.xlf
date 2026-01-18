@@ -2998,6 +2998,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension budgetentry - Field Job No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 3460046866 - Field 2878150594 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
+          <source>Letra Columna Cta. Cble. Estr</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Cta Contable Estructura - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3460046866 - Field 792347442 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
+          <source>Letra Columna Cta. Cble. Mov</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Cta Contable Mov - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 3460046866 - Field 3982937649 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
           <source>Invoice Legal Text</source>
           <note from="Developer" annotates="general" priority="2"></note>

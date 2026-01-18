@@ -41,6 +41,16 @@ tableextension 50305 "CompanyInf" extends "Company Information" //79
             DataClassification = ToBeClassified;
             Caption = 'Pdf Adjunto';
         }
+        field(50004; "Cta Contable Estructura"; Text[2])
+        {
+            Caption = 'Letra Columna Cta. Cble. Estr';
+
+        }
+        field(50005; "Cta Contable Mov"; Text[2])
+        {
+            Caption = 'Letra Columna Cta. Cble. Mov';
+
+        }
     }
 
     var
