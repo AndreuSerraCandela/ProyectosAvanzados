@@ -1875,6 +1875,7 @@ codeunit 50301 "ProcesosProyectos"
                                                 FechaPago := 0D;
                                     end;
                             end;
+                            If TempExcelBuffer.xlColID = '' Then TempExcelBuffer.Validate("Column No.");
                             if TempExcelBuffer.xlColID = rInf."Cta Contable Mov" Then CtaCble := TempExcelBuffer."Cell Value as Text";
                         until TempExcelBuffer.Next() = 0;
 
@@ -1991,20 +1992,7 @@ codeunit 50301 "ProcesosProyectos"
                                                     If Item.Get(NoCuenta) then begin
                                                         //Grear Grupo registro prodducto por producto
                                                         Item."Gen. Prod. Posting Group" := Item."No.";
-                                                        If Not GenProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
-                                                            GenProdPostingGroup.Init();
-                                                            GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
-                                                            GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
-                                                            GenProdPostingGroup.Insert(true);
-                                                            If GenNegPostingGrup.FindFirst Then
-                                                                repeat
-                                                                    GenPostingSetup.Init;
-                                                                    GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
-                                                                    GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
-                                                                    GenPostingSetup."Purch. Account" := CtaCble;
-                                                                    GenPostingSetup.Insert();
-                                                                until GenNegPostingGrup.next = 0;
-                                                        end;
+
                                                         Item.Modify(true);
                                                     end;
                                                 end else begin
@@ -2013,6 +2001,25 @@ codeunit 50301 "ProcesosProyectos"
                                                 end;
 
                                             end;
+                                            If Not GenProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
+                                                GenProdPostingGroup.Init();
+                                                GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
+                                                GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
+                                                GenProdPostingGroup.Insert(true);
+                                            end;
+                                            If GenNegPostingGrup.FindFirst Then
+                                                repeat
+                                                    if Not GenPostingSetup.Get(GenNegPostingGrup.Code, GenProdPostingGroup.Code) Then begin
+                                                        GenPostingSetup.Init;
+                                                        GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
+                                                        GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
+
+                                                        GenPostingSetup.Insert();
+                                                    end;
+                                                    GenPostingSetup."Purch. Account" := CtaCble;
+                                                    GenPostingSetup.Modify();
+                                                until GenNegPostingGrup.next = 0;
+
                                         end;
                                     'RECURSO', 'RESOURCE':
                                         begin
