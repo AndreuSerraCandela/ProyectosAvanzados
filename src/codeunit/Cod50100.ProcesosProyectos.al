@@ -1749,6 +1749,8 @@ codeunit 50301 "ProcesosProyectos"
         CtaCble: Text[30];
         GenNegPostingGrup: Record "Gen. Business Posting Group";
         GenPostingSetup: Record "General Posting Setup";
+        ClasificacionGasto: Text[100];
+        Categorias: Record Categorias;
     begin
         rInf.Get();
         rInf.TestField("Cta Contable Mov");
@@ -1804,6 +1806,7 @@ codeunit 50301 "ProcesosProyectos"
                     RegistroPresupuestario := '';
                     FacturadoContra := '';
                     CIFProveedor := '';
+                    ClasificacionGasto := '';
                     // Buscar datos de esta fila
                     TempExcelBuffer.SetRange("Row No.", RowNo);
                     if TempExcelBuffer.FindSet() then
@@ -1819,6 +1822,8 @@ codeunit 50301 "ProcesosProyectos"
                                     BudgetCode := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(BudgetCode));
                                 5: // Columna E - DESCRIPCIÓN
                                     Descripcion := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Descripcion));
+                                6: // Columna F - Clasificación Gasto
+                                    ClasificacionGasto := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(ClasificacionGasto));
                                 7: //Columna G - FacturadoContra
                                     FacturadoContra := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(FacturadoContra));
                                 9: // Columna I - FECHA FRA (Fecha Factura)
@@ -1966,7 +1971,14 @@ codeunit 50301 "ProcesosProyectos"
                                 JobPlanningLine."Job No." := JobNo;
                                 JobPlanningLine."Job Task No." := JobTaskNo;
                                 JobPlanningLine."Line No." := LineNo;
-
+                                JobPlanningLine."Facturado Contra" := FacturadoContra;
+                                JobPlanningLine.Categorias := ClasificacionGasto;
+                                If Not Categorias.Get(ClasificacionGasto) then begin
+                                    Categorias.Init();
+                                    Categorias.Code := ClasificacionGasto;
+                                    Categorias.Description := ClasificacionGasto;
+                                    Categorias.Insert();
+                                end;
                                 // Determinar Type según el Tipo
                                 case UpperCase(Tipo) of
                                     'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
