@@ -260,7 +260,8 @@ tableextension 50303 "JobTaskEx" extends "Job Task" //1001
         {
             Caption = 'Total Cost';
             FieldClass = FlowField;
-            CalcFormula = sum("Job Ledger Entry"."Total Cost (LCY)" where("Job No." = field("Job No."), "Job Task No." = field("Job Task No.")));
+            CalcFormula = sum("Job Ledger Entry"."Total Cost (LCY)" where("Job No." = field("Job No."), "Job Task No." = field("Job Task No."),
+                                                                            "Job Task No." = field(filter(Totaling))));
             Editable = false;
             DecimalPlaces = 2 : 2;
         }
