@@ -1565,7 +1565,7 @@ codeunit 50301 "ProcesosProyectos"
                     JobTask."Job Task Type" := JobTask."Job Task Type"::Total;
                     // Totaling = número de tarea '..' número de tarea '9999999'
                     // Formato similar al código existente: "1.01..1.019999999"
-                    JobTask.Validate(Totaling, JobTask."Job Task No." + '..' + JobTask."Job Task No." +'Z');
+                    JobTask.Validate(Totaling, JobTask."Job Task No." + '..' + JobTask."Job Task No." + 'Z');
                 end else begin
                     JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
                     JobTask.Totaling := '';
@@ -1766,6 +1766,7 @@ codeunit 50301 "ProcesosProyectos"
         TempExcelBuffer.DeleteAll();
         JobPlanningLine.SetRange("Job No.", JobNo);
         JobPlanningLine.Deleteall;
+        Commit();
 
         // Cargar datos del Excel
         if UploadIntoStream('Seleccionar archivo Excel', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos los archivos (*.*)|*.*', FileName, InStream) then begin

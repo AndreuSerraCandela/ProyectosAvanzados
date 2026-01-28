@@ -292,6 +292,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                 begin
                     CodProyecto.ImportarJobLedgerEntriesDesdeExcel(Rec."No.");
                     Commit();
+                    CodProyecto.ActualizarArbolTareas(Rec."No.");
                     CurrPage.Update(false);
                 end;
             }
