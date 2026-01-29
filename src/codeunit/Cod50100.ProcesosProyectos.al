@@ -1812,6 +1812,7 @@ codeunit 50301 "ProcesosProyectos"
                     FacturadoContra := '';
                     CIFProveedor := '';
                     ClasificacionGasto := '';
+                    ImportedEntriesPagado := 0;
                     // Buscar datos de esta fila
                     TempExcelBuffer.SetRange("Row No.", RowNo);
                     if TempExcelBuffer.FindSet() then
