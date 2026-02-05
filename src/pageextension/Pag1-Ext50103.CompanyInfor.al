@@ -29,6 +29,16 @@ pageextension 50303 "CompanyInfor" extends "Company Information" //1
                     Page.RunModal(Page::"Adjuntos Informe");
                 end;
             }
+            field("Cta Contable Estructura"; Rec."Cta Contable Estructura")
+            {
+                ApplicationArea = all;
+            }
+            field("Cta Contable Movs."; Rec."Cta Contable Mov")
+            {
+                ApplicationArea = all;
+            }
+
+
         }
     }
     actions

@@ -1566,7 +1566,7 @@ codeunit 50301 "ProcesosProyectos"
                     JobTask."Job Task Type" := JobTask."Job Task Type"::Total;
                     // Totaling = número de tarea '..' número de tarea '9999999'
                     // Formato similar al código existente: "1.01..1.019999999"
-                    JobTask.Validate(Totaling, JobTask."Job Task No." + '..' + PadStr(JobTask."Job Task No.", 20 - (StrLen(JobTask."Job Task No.") + 2), '9'));
+                    JobTask.Validate(Totaling, JobTask."Job Task No." + '..' + JobTask."Job Task No." + 'Z');
                 end else begin
                     JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
                     JobTask.Totaling := '';
@@ -1746,7 +1746,17 @@ codeunit 50301 "ProcesosProyectos"
         Descripcion2: Text[50];
         esProveedor: Boolean;
         esEmpleado: Boolean;
+        rInf: Record "Company Information";
+        CtaCble: Text[30];
+        GenNegPostingGrup: Record "Gen. Business Posting Group";
+        GenPostingSetup: Record "General Posting Setup";
+        ClasificacionGasto: Text[100];
+        Categorias: Record Categorias;
+        IcParter: Record "Ic Partner";
+        Customer: Record Customer;
     begin
+        rInf.Get();
+        rInf.TestField("Cta Contable Mov");
         if not Job.Get(JobNo) then
             Error('El proyecto %1 no existe.', JobNo);
 
@@ -1755,6 +1765,9 @@ codeunit 50301 "ProcesosProyectos"
 
         // Limpiar buffer temporal
         TempExcelBuffer.DeleteAll();
+        JobPlanningLine.SetRange("Job No.", JobNo);
+        JobPlanningLine.Deleteall;
+        Commit();
 
         // Cargar datos del Excel
         if UploadIntoStream('Seleccionar archivo Excel', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos los archivos (*.*)|*.*', FileName, InStream) then begin
@@ -1799,6 +1812,8 @@ codeunit 50301 "ProcesosProyectos"
                     RegistroPresupuestario := '';
                     FacturadoContra := '';
                     CIFProveedor := '';
+                    ClasificacionGasto := '';
+                    ImportedEntriesPagado := 0;
                     // Buscar datos de esta fila
                     TempExcelBuffer.SetRange("Row No.", RowNo);
                     if TempExcelBuffer.FindSet() then
@@ -1814,6 +1829,8 @@ codeunit 50301 "ProcesosProyectos"
                                     BudgetCode := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(BudgetCode));
                                 5: // Columna E - DESCRIPCIÓN
                                     Descripcion := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Descripcion));
+                                6: // Columna F - Clasificación Gasto
+                                    ClasificacionGasto := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(ClasificacionGasto));
                                 7: //Columna G - FacturadoContra
                                     FacturadoContra := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(FacturadoContra));
                                 9: // Columna I - FECHA FRA (Fecha Factura)
@@ -1870,8 +1887,13 @@ codeunit 50301 "ProcesosProyectos"
                                                 FechaPago := 0D;
                                     end;
                             end;
+                            If TempExcelBuffer.xlColID = '' Then TempExcelBuffer.Validate("Column No.");
+                            if TempExcelBuffer.xlColID = rInf."Cta Contable Mov" Then CtaCble := TempExcelBuffer."Cell Value as Text";
                         until TempExcelBuffer.Next() = 0;
-
+                    If FacturadoContra <> '' Then begin
+                        IcParter.SetRange("Inbox Details", FacturadoContra);
+                        if Not IcParter.FindFirst() then Error('No existe el socio %1', FacturadoContra);
+                    end;
                     // Si hay Job Task No., crear o verificar Job Task
                     if (JobTaskNo <> '') and (Descripcion <> '') then begin
                         if not JobTask.Get(JobNo, JobTaskNo) then begin
@@ -1894,8 +1916,12 @@ codeunit 50301 "ProcesosProyectos"
                         NoCuenta := JobTaskNo;
 
                         // Intentar encontrar el proveedor o empleado
+                        Vendor.Reset();
                         if (ProveedorEmpleado <> '') or (CIFProveedor <> '') then begin
-                            Vendor.SetRange("VAT Registration No.", CIFProveedor);
+                            If Not Vendor.Get(ProveedorEmpleado) then
+                                Vendor.SetRange("VAT Registration No.", CIFProveedor)
+                            else
+                                Vendor.SetRange("No.", ProveedorEmpleado);
                             if Vendor.FindFirst() then begin
                                 // Si es proveedor, usar la cuenta contable del proveedor
                                 esProveedor := true;
@@ -1939,75 +1965,100 @@ codeunit 50301 "ProcesosProyectos"
                             LineNo := 10000;
                             JobPlanningLine.Reset();
                             JobPlanningLine.SetRange("Job No.", JobNo);
+                            if JobTask.Get(JobNo, JobTaskNo) Then begin
+                                if JobTask."Job Task Type" <> JobTask."Job Task Type"::Posting then begin
+                                    JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
+                                    JobTask.Modify(false);
+                                end;
+
+                            end else begin
+
+                            end;
 
                             if Not JobPlanningLine.FindLast() then
                                 LineNo := JobPlanningLine."Line No." + 10000;
 
                             // Buscar si ya existe una línea de planificación para esta combinación
-                            JobPlanningLine.SetRange("Job No.", JobNo);
-                            JobPlanningLine.SetRange("Job Task No.", JobTaskNo);
-                            JobPlanningLine.SetRange("No.", NoCuenta);
-                            if not JobPlanningLine.FindFirst() then begin
-                                // Crear nueva Job Planning Line
-                                JobPlanningLine.Init();
-                                JobPlanningLine."Job No." := JobNo;
-                                JobPlanningLine."Job Task No." := JobTaskNo;
-                                JobPlanningLine."Line No." := LineNo;
-
-                                // Determinar Type según el Tipo
-                                case UpperCase(Tipo) of
-                                    'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
-                                        begin
-                                            JobPlanningLine."Type" := JobPlanningLine."Type"::"G/L Account";
-                                            JobPlanningLine."No." := NoCuenta;
-                                        end;
-                                    'PRODUCTO', 'ITEM':
-                                        begin
-                                            JobPlanningLine."Type" := JobPlanningLine."Type"::Item;
-                                            JobPlanningLine."No." := NoCuenta;
-
-                                            if not Item.Get(NoCuenta) then begin
-                                                Item.Init();
-                                                Item."No." := NoCuenta;
-                                                Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
-                                                JobsSetup.Get();
-                                                ItemTempl.Get(JobsSetup."Item Template");
-                                                // Si el Item Template está configurado, usarlo
-                                                if (JobsSetup."Item Template" <> '') and ItemTempl.Get(JobsSetup."Item Template") then begin
-                                                    // Usar el template para crear el Item
-                                                    ItemTemplMgt.CreateItemFromTemplate(Item, Ishandled, JobsSetup."Item Template");
-                                                    If Item.Get(NoCuenta) then begin
-                                                        //Grear Grupo registro prodducto por producto
-                                                        Item."Gen. Prod. Posting Group" := Item."No.";
-                                                        If Not GenProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
-                                                            GenProdPostingGroup.Init();
-                                                            GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
-                                                            GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
-                                                            GenProdPostingGroup.Insert(true);
-                                                        end;
-                                                        Item.Modify(true);
-                                                    end;
-                                                end else begin
-                                                    // Si no hay template configurado, Error
-                                                    Error('No hay template configurado para crear el Producto %1', NoCuenta);
-                                                end;
-
-                                            end;
-                                        end;
-                                    'RECURSO', 'RESOURCE':
-                                        begin
-                                            JobPlanningLine."Type" := JobPlanningLine."Type"::Resource;
-                                            JobPlanningLine."No." := NoCuenta;
-                                        end;
-                                end;
-
-                                JobPlanningLine.Description := Descripcion;
-                                JobPlanningLine.Quantity := 1;
-                                repeat
-                                    JobPlanningLine."Line No." := LineNo;
-                                    LineNo += 10000;
-                                until JobPlanningLine.Insert(true);
+                            // JobPlanningLine.SetRange("Job No.", JobNo);
+                            // JobPlanningLine.SetRange("Job Task No.", JobTaskNo);
+                            // JobPlanningLine.SetRange("No.", NoCuenta);
+                            //if not JobPlanningLine.FindFirst() then begin
+                            // Crear nueva Job Planning Line
+                            JobPlanningLine.Init();
+                            JobPlanningLine."Job No." := JobNo;
+                            JobPlanningLine."Job Task No." := JobTaskNo;
+                            JobPlanningLine."Line No." := LineNo;
+                            JobPlanningLine."Facturado Contra" := FacturadoContra;
+                            JobPlanningLine.Categorias := ClasificacionGasto;
+                            If Not Categorias.Get(ClasificacionGasto) then begin
+                                Categorias.Init();
+                                Categorias.Code := ClasificacionGasto;
+                                Categorias.Description := ClasificacionGasto;
+                                Categorias.Insert();
                             end;
+                            // Determinar Type según el Tipo
+                            case UpperCase(Tipo) of
+                                'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
+                                    begin
+                                        JobPlanningLine."Type" := JobPlanningLine."Type"::"G/L Account";
+                                        JobPlanningLine."No." := NoCuenta;
+                                    end;
+                                'PRODUCTO', 'ITEM':
+                                    begin
+                                        JobPlanningLine."Type" := JobPlanningLine."Type"::Item;
+                                        JobPlanningLine."No." := NoCuenta;
+
+                                        if not Item.Get(NoCuenta) then begin
+                                            Item.Init();
+                                            Item."No." := NoCuenta;
+                                            Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
+                                            JobsSetup.Get();
+                                            ItemTempl.Get(JobsSetup."Item Template");
+                                            // Si el Item Template está configurado, usarlo
+                                            if (JobsSetup."Item Template" <> '') and ItemTempl.Get(JobsSetup."Item Template") then begin
+                                                // Usar el template para crear el Item
+                                                ItemTemplMgt.CreateItemFromTemplate(Item, Ishandled, JobsSetup."Item Template");
+                                                If Item.Get(NoCuenta) then begin
+                                                    //Grear Grupo registro prodducto por producto
+                                                    Item."Gen. Prod. Posting Group" := Item."No.";
+
+                                                    Item.Modify(true);
+                                                end;
+                                            end else begin
+                                                // Si no hay template configurado, Error
+                                                Error('No hay template configurado para crear el Producto %1', NoCuenta);
+                                            end;
+
+                                        end;
+                                        If Not GenProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
+                                            GenProdPostingGroup.Init();
+                                            GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
+                                            GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
+                                            GenProdPostingGroup.Insert(true);
+                                        end;
+                                        If GenNegPostingGrup.FindFirst Then
+                                            repeat
+                                                if Not GenPostingSetup.Get(GenNegPostingGrup.Code, GenProdPostingGroup.Code) Then begin
+                                                    GenPostingSetup.Init;
+                                                    GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
+                                                    GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
+
+                                                    GenPostingSetup.Insert();
+                                                end;
+                                                GenPostingSetup."Purch. Account" := CtaCble;
+                                                GenPostingSetup.Modify();
+                                            until GenNegPostingGrup.next = 0;
+
+                                    end;
+                                'RECURSO', 'RESOURCE':
+                                    begin
+                                        JobPlanningLine."Type" := JobPlanningLine."Type"::Resource;
+                                        JobPlanningLine."No." := NoCuenta;
+                                    end;
+                            end;
+
+                            JobPlanningLine.Description := Descripcion;
+                            JobPlanningLine.Quantity := 1;
                             if BrutoFactura <> 0 then begin
                                 // JobPlanningLine."Unit Cost (LCY)" := BrutoFactura; // DFS DESCOMENTÉ POR LO DE LOS TOTALES
                                 // JobPlanningLine."Total Cost (LCY)" := BrutoFactura; // DFS DESCOMENTÉ POR LO DE LOS TOTALES
@@ -2018,13 +2069,25 @@ codeunit 50301 "ProcesosProyectos"
                                 JobPlanningLine."Unit Cost (LCY)" := Budget;
                                 JobPlanningLine."Total Cost" := Budget;
                                 JobPlanningLine."Unit Cost" := Budget;
+                                JobPlanningLine."Schedule Line" := true;
+
+                            end;
+                            If FacturadoContra <> '' Then begin
+                                IcParter.SetRange("Inbox Details", FacturadoContra);
+                                if Not IcParter.FindFirst() then Error('No existe el socio %1', FacturadoContra);
+                                IcParter.TestField("Customer No.");
+                                JobPlanningLine."Bill-to Customer No." := IcParter."Customer No.";
+                            end;
+                            if esProveedor then begin
+                                JobPlanningLine.Validate("Cod_Proveedor", Vendor."No.");
                             end;
                             JobPlanningLine."Usage Link" := true;
-                            JobPlanningLine."Schedule Line" := true;
-                            JobPlanningLine.Modify();
+                            repeat
+                                JobPlanningLine."Line No." := LineNo;
+                                LineNo += 10000;
+                            until JobPlanningLine.Insert(true);
 
-
-
+                            //end;
                             if ImportedEntriesPagado <> 0 then begin
                                 ProyectoMovimientoPago.SetRange("Job No.", JobNo);
                                 ProyectoMovimientoPago.SetRange("Document No.", CopyStr(NumeroFactura, 1, MaxStrLen(ProyectoMovimientoPago."Document No.")));

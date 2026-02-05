@@ -2583,6 +2583,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Document No. - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 4238079284 - Control 3630568484 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the contra account for the job planning line.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Control Facturado Contra - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="Page 4238079284 - Control 633819257 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the vendor's or customer's trade type to link transactions made for this business partner with the appropriate general ledger account according to the general posting setup.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3828,6 +3833,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension budgetentry - Field Job No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 3460046866 - Field 2878150594 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
+          <source>Letra Columna Cta. Cble. Estr</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Cta Contable Estructura - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3460046866 - Field 792347442 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
+          <source>Letra Columna Cta. Cble. Mov</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Cta Contable Mov - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 3460046866 - Field 3982937649 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
           <source>Invoice Legal Text</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3872,6 +3887,11 @@
           <source>Código Presupuestario</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Budget Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 2326564452 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Clasificación Gasto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Clasificación Gasto - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2487241009 - Field 3977046019 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
           <source>Nº Movimiento Empleado</source>
@@ -4157,6 +4177,11 @@
           <source>Nº Movimiento Empleado</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Employee Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1862886636 - Field 3630568484 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
+          <source>Facturado Contra</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Facturado Contra - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1862886636 - Field 1503256470 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
           <source>Generar compras</source>

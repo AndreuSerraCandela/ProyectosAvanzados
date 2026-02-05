@@ -110,5 +110,11 @@ tableextension 50322 "JobLedgerEntryExt" extends "Job Ledger Entry" //169
             Caption = 'Fecha Pago';
             DataClassification = ToBeClassified;
         }
+        //Clasificación Gasto
+        field(50033; "Clasificación Gasto"; Text[100])
+        {
+            Caption = 'Clasificación Gasto';
+            DataClassification = ToBeClassified;
+        }
     }
 }

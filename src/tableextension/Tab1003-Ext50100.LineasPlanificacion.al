@@ -73,6 +73,12 @@ tableextension 50300 "LineasPlanificacion" extends "Job Planning Line"//1003
         {
             DataClassification = ToBeClassified;
         }
+        //FacturadoContra
+        field(50029; "Facturado Contra"; Text[100])
+        {
+            Caption = 'Facturado Contra';
+            DataClassification = ToBeClassified;
+        }
         field(90001; "Bill-to Customer No."; Code[20])
         {
             Caption = 'Cliente Facturación';

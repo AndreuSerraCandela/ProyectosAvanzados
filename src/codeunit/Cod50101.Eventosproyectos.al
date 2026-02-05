@@ -185,6 +185,45 @@ codeunit 50302 "Eventos-proyectos"
 
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Create-Invoice", 'OnAfterCreateSalesLine', '', false, false)]
+    local procedure OnAfterCreateSalesLine(var SalesLine: Record "Sales Line"; SalesHeader: Record "Sales Header"; Job: Record Job; var JobPlanningLine: Record "Job Planning Line")
+    var
+        SalesHeaderOtraEmpresa: Record "Sales Header";
+        SalesLineOtraEmpresa: Record "Sales Line";
+        CompanyName: Text[100];
+        LineNo: Integer;
+    begin
+        // Si la línea de proyecto tiene rellenado el campo "Facturado Contra", cambiar las líneas de empresa
+        if JobPlanningLine."Facturado Contra" <> '' then begin
+            CompanyName := JobPlanningLine."Facturado Contra";
+
+            // Cambiar a la empresa especificada
+            SalesHeaderOtraEmpresa.ChangeCompany(CompanyName);
+            SalesLineOtraEmpresa.ChangeCompany(CompanyName);
+
+            // Verificar si existe la cabecera de factura en la empresa seleccionada
+            SalesHeaderOtraEmpresa.SetRange("Document Type", SalesHeader."Document Type");
+            SalesHeaderOtraEmpresa.SetRange("No.", SalesHeader."No.");
+
+            if not SalesHeaderOtraEmpresa.FindFirst() then begin
+                // Si no existe, crear la cabecera de factura en la empresa seleccionada
+                //en lugar de pasar todos los campos, podemos igualar las variables de la cabecera de factura
+                SalesHeaderOtraEmpresa := SalesHeader;
+                SalesHeaderOtraEmpresa.Insert();
+            end;
+
+            // Cambiar las líneas de venta a la empresa seleccionada
+            SalesLineOtraEmpresa.SetRange("Document Type", SalesLine."Document Type");
+            SalesLineOtraEmpresa.SetRange("Document No.", SalesLine."Document No.");
+            if not SalesLineOtraEmpresa.FindFirst() then LineNo := SalesLineOtraEmpresa."Line No." + 10000;
+            SalesLineOtraEmpresa := SalesLine;
+            SalesLineOtraEmpresa."Line No." := LineNo;
+            SalesLineOtraEmpresa.Insert();
+            SalesLine.Delete();
+
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::ReportManagement, 'OnAfterDocumentReady', '', false, false)]
     local procedure OnAfterDocumentReady(ObjectId: Integer; ObjectPayload: JsonObject; DocumentStream: InStream; var TargetStream: OutStream; var Success: Boolean)
     var

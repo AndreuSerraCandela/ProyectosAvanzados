@@ -42,6 +42,16 @@ page 50118 "Pendiente facturar"
                         UsageLinkOnAfterValidate();
                     end;
                 }
+                field("Facturado Contra"; Rec."Facturado Contra")
+                {
+                    ApplicationArea = Jobs;
+                    ToolTip = 'Specifies the contra account for the job planning line.';
+                }
+                field("Categorias"; Rec.Categorias)
+                {
+                    ApplicationArea = Jobs;
+                }
+
                 field("Planning Date"; Rec."Planning Date")
                 {
                     ApplicationArea = Jobs;
