@@ -907,12 +907,16 @@ page 50116 "Job Task Lines Subform Ext"
         else begin
             JobTask.SetRange("Job No.", Rec."Job No.");
             JobTask.SetFilter("Job Task No.", Rec.Totaling);
-            If JobTask.FindSet() then
+            JobTask.SetRange("Job Task Type", Rec."Job Task Type"::Posting);
+
+            If JobTask.FindSet() then begin
+
                 repeat
                     JobTask.CalcFields("Amount Paid", "Usage (Total Cost)");
                     ImportePagado += JobTask."Amount Paid";
                     ImporteCoste += JobTask."Usage (Total Cost)";
                 until JobTask.Next() = 0;
+            end;
             exit(ImporteCoste - ImportePagado);
         end;
     end;
@@ -929,13 +933,16 @@ page 50116 "Job Task Lines Subform Ext"
         else begin
             JobTask.SetRange("Job No.", Rec."Job No.");
             JobTask.SetFilter("Job Task No.", Rec.Totaling);
-            If JobTask.FindSet() then
+            JobTask.SetRange("Job Task Type", Rec."Job Task Type"::Posting);
+            If JobTask.FindSet() then begin
+
                 repeat
-                    JobTask.CalcFields("Amount Paid", "Usage (Total Cost)");
+                    JobTask.CalcFields("Amount Paid");
                     ImportePagado += JobTask."Amount Paid";
-                    ImporteCoste += JobTask."Usage (Total Cost)";
+
                 until JobTask.Next() = 0;
-            exit(ImportePagado - ImporteCoste);
+                exit(ImportePagado);
+            end;
         end;
 
     end;
