@@ -2011,7 +2011,7 @@ codeunit 50301 "ProcesosProyectos"
                                         if not Item.Get(NoCuenta) then begin
                                             Item.Init();
                                             Item."No." := NoCuenta;
-                                            Item."Gen. Prod. Posting Group" := BudgetCode; //Item."No.";
+                                            // Item."Gen. Prod. Posting Group" := BudgetCode; //Item."No.";
                                             Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
                                             JobsSetup.Get();
                                             ItemTempl.Get(JobsSetup."Item Template");
@@ -2031,24 +2031,24 @@ codeunit 50301 "ProcesosProyectos"
                                             end;
 
                                         end;
-                                        If Not GenProdPostingGroup.Get(BudgetCode) Then begin//Item."Gen. Prod. Posting Group") then begin
-                                            GenProdPostingGroup.Init();
-                                            GenProdPostingGroup."Code" := BudgetCode; //Item."Gen. Prod. Posting Group";
-                                            GenProdPostingGroup.Description := Descripcion; // Item."Gen. Prod. Posting Group";
-                                            GenProdPostingGroup.Insert(true);
-                                        end;
-                                        If GenNegPostingGrup.FindFirst Then
-                                            repeat
-                                                if Not GenPostingSetup.Get(GenNegPostingGrup.Code, GenProdPostingGroup.Code) Then begin
-                                                    GenPostingSetup.Init;
-                                                    GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
-                                                    GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
+                                        // If Not GenProdPostingGroup.Get(BudgetCode) Then begin//Item."Gen. Prod. Posting Group") then begin
+                                        //     GenProdPostingGroup.Init();
+                                        //     GenProdPostingGroup."Code" := BudgetCode; //Item."Gen. Prod. Posting Group";
+                                        //     GenProdPostingGroup.Description := Descripcion; // Item."Gen. Prod. Posting Group";
+                                        //     GenProdPostingGroup.Insert(true);
+                                        // end;
+                                        // If GenNegPostingGrup.FindFirst Then
+                                        //     repeat
+                                        //         if Not GenPostingSetup.Get(GenNegPostingGrup.Code, GenProdPostingGroup.Code) Then begin
+                                        //             GenPostingSetup.Init;
+                                        //             GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
+                                        //             GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
 
-                                                    GenPostingSetup.Insert();
-                                                end;
-                                                GenPostingSetup."Purch. Account" := CtaCble;
-                                                GenPostingSetup.Modify();
-                                            until GenNegPostingGrup.next = 0;
+                                        //             GenPostingSetup.Insert();
+                                        //         end;
+                                        //         GenPostingSetup."Purch. Account" := CtaCble;
+                                        //         GenPostingSetup.Modify();
+                                        //     until GenNegPostingGrup.next = 0;
 
                                     end;
                                 'RECURSO', 'RESOURCE':

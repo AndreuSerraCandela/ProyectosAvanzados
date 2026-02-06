@@ -619,7 +619,6 @@ pageextension 50307 "JobCard" extends "Job Card" //88
         JobsSetup: Record "Jobs Setup";
         GenProdPostingGroup: Record "Gen. Product Posting Group";
         rInf: Record "Company Information";
-        CtaCta: Text[30];
         GenNegPostingGrup: Record "Gen. Business Posting Group";
         GenPostingSetup: Record "General Posting Setup";
         GrupoProducto: Text;
@@ -708,7 +707,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                 10: // Columna J - Tipo línea (Planificacion, Uso, Ambos)
                                     TipoLinea := CopyStr(UpperCase(TempExcelBuffer."Cell Value as Text"), 1, 20);
                             end;
-                            if TempExcelBuffer.xlColID = rInf."Cta Contable Estructura" Then CtaCta := TempExcelBuffer."Cell Value as Text";
+                        // if TempExcelBuffer.xlColID = rInf."Cta Contable Estructura" Then CtaCta := TempExcelBuffer."Cell Value as Text";
                         until TempExcelBuffer.Next() = 0;
 
                     // Determinar si es sumatorio basándose en el largo del código (Columna F)
@@ -762,16 +761,17 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                             end;
                                         'PRODUCTO', 'ITEM':
                                             begin
-                                                if not Item.Get(NoCuenta) then begin
+                                                if not Item.Get(CodigoLinea) then begin
                                                     Item.Init();
-                                                    Item."No." := NoCuenta;
+                                                    Item."No." := CodigoLinea;
                                                     Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
 
                                                     // Si el Item Template está configurado, usarlo
                                                     if (JobsSetup."Item Template" <> '') and ItemTempl.Get(JobsSetup."Item Template") then begin
                                                         // Usar el template para crear el Item
                                                         ItemTemplMgt.InsertItemFromTemplate(Item);
-                                                        If Item.Get(NoCuenta) then begin
+                                                        If Item.Get(CodigoLinea) then begin
+                                                            Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
                                                             //Grear Grupo registro prodducto por producto
                                                             Item."Gen. Prod. Posting Group" := GrupoProducto;
                                                             If Not GeNProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
@@ -784,7 +784,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                                                         GenPostingSetup.Init;
                                                                         GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
                                                                         GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
-                                                                        GenPostingSetup."Purch. Account" := CtaCta;
+                                                                        GenPostingSetup."Purch. Account" := NoCuenta;
                                                                         GenPostingSetup.Insert();
                                                                     until GenNegPostingGrup.next = 0;
                                                             end;
@@ -794,7 +794,26 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                                         // Si no hay template configurado, Error
                                                         Error('No hay template configurado para crear el Producto %1', NoCuenta);
                                                     end;
+                                                end else begin
+                                                    Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
+                                                    Item."Gen. Prod. Posting Group" := GrupoProducto;
+                                                    If Not GeNProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
+                                                        GenProdPostingGroup.Init();
+                                                        GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
+                                                        GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
+                                                        GenProdPostingGroup.Insert(true);
+                                                        If GenNegPostingGrup.FindFirst Then
+                                                            repeat
+                                                                GenPostingSetup.Init;
+                                                                GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
+                                                                GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
+                                                                GenPostingSetup."Purch. Account" := NoCuenta;
+                                                                GenPostingSetup.Insert();
+                                                            until GenNegPostingGrup.next = 0;
+                                                    end;
+                                                    Item.Modify(true);
                                                 end;
+
                                             end;
                                         'RECURSO', 'RESOURCE':
                                             begin
