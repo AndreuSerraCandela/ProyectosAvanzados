@@ -5,7 +5,8 @@
 
 codeunit 50301 "ProcesosProyectos"
 {
-    Permissions = TableData "G/L Budget Entry" = rimd, TableData "Job Ledger Entry" = rimd;
+    Permissions = TableData "G/L Budget Entry" = rimd, TableData "Job Ledger Entry" = rimd,
+    Tabledata "Employee Ledger Entry" = rimd;
     trigger OnRun()
     begin
     end;
@@ -1904,6 +1905,9 @@ codeunit 50301 "ProcesosProyectos"
                             JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
                             JobTask."WIP-Total" := JobTask."WIP-Total"::" ";
                             JobTask.Insert(true);
+                        end else begin
+                            JobTask."Job Task Type" := JobTask."Job Task Type"::Posting;
+                            JobTask.Modify(false);
                         end;
 
                         // Determinar el tipo y número de cuenta basándose en el proveedor/empleado o descripción
@@ -2158,6 +2162,8 @@ codeunit 50301 "ProcesosProyectos"
 
                                 // JobLedgerEntry."Total Cost" := BrutoFactura;  //DFS
                                 JobLedgerEntry."Total Cost (LCY)" := BrutoFactura;
+                                JobLedgerEntry."Total Cost" := BrutoFactura;
+                                JobLedgerEntry."Unit Cost" := BrutoFactura;
                             end;
 
                             // Campos personalizados
@@ -2195,5 +2201,1695 @@ codeunit 50301 "ProcesosProyectos"
             until TempExcelBuffer.Next() = 0;
 
         Message('Se importaron %1 movimientos correctamente.', ImportedEntries);
+    end;
+
+    /// <summary>
+    /// Contabiliza nóminas directamente desde Excel sin pasar por la tabla de nóminas
+    /// </summary>
+    procedure ContabilizarNominasDesdeExcel(nImp: Code[20]; rFec: Date)
+    var
+        GenJnlLine: Record "Gen. Journal Line";
+        NoSeriesMgt: Codeunit "No. Series";
+        rBco: Record "Bank Account";
+        AcountInfo: Text[250];
+        AccNo: Integer;
+        TotSum: Integer;
+        Ventana: Dialog;
+        LINEA: Integer;
+        Employee: Record Employee;
+        rOr: Record "Source Code";
+        GlSetup: Record "General Ledger Setup";
+        Doc: Code[20];
+        ExcelBuff: Record "Excel Buffer" temporary;
+        Filename: Text[250];
+        Instream: InStream;
+        Hoja: Text[50];
+        NameValue: Record "Name/Value Buffer" temporary;
+        Ok: Boolean;
+        EmpresaNombre: Text[30];
+        i: Integer;
+        Total: Integer;
+        CodigoEmpleado: Text[100];
+        Devengado: Decimal;
+        SSObrero: Decimal;
+        IRPF: Decimal;
+        SSEmpresa: Decimal;
+        EnfermedadAccidente: Decimal;
+        Bonificacion: Decimal;
+        BonificacionFundae: Decimal;
+        Anticipos: Decimal;
+        Embargos: Decimal;
+        DtoEspecie: Decimal;
+        Dieta: Decimal;
+        Kms: Decimal;
+        Banco: Decimal;
+        PPEx: Decimal;
+        MejoraV: Decimal;
+        Comida: Decimal;
+        Dietas: Decimal;
+        PPVaca: Decimal;
+        PLFlex: Decimal;
+        Indemni: Decimal;
+        AntDiet: Decimal;
+        Nose: Variant;
+        As: Text;
+        Importe: Decimal;
+        rDep: Record "Company Information";
+        NoSeries: Record "No. Series";
+        NoSeriesLine: Record "No. Series Line";
+        CIFEmpresaActual: Text[20];
+        DepartamentoHoja: Code[20];
+        FilaEncabezados: Integer;
+        ColDevengado: Integer;
+        ColSSObrero: Integer;
+        ColIRPF: Integer;
+        ColSSEmpresa: Integer;
+        ColCosteEmpresa: Integer;
+        ColEnfermedadAccidente: Integer;
+        ColBonificacion: Integer;
+        ColBonificacionFundae: Integer;
+        ColBanco: Integer;
+        ColKms: Integer;
+        ColDieta: Integer;
+        ColPPEx: Integer;
+        ColMejoraV: Integer;
+        ColComida: Integer;
+        ColDietas: Integer;
+        ColPPVaca: Integer;
+        ColPLFlex: Integer;
+        ColIndemni: Integer;
+        ColAntDiet: Integer;
+        j: Integer;
+        ContadorNominas: Integer;
+        TotalHojas: Integer;
+        HojasProcesadas: Integer;
+        ContadorNominasHoja: Integer;
+        UltimoEmpleado: Code[20];
+        FilaVacia: Integer;
+    begin
+        GlSetup.Get;
+
+        // Subir archivo Excel
+        UploadIntoStream('Elija el fichero Excel de nóminas', '\\documentos\prueba.xlsx', 'Documentos excel (*.xlsx)|*.xlsx', Filename, Instream);
+        if Filename = '' then
+            Error('No se seleccionó ningún archivo');
+
+        // Obtener empresa actual
+        EmpresaNombre := CompanyName;
+
+        // Obtener CIF de la empresa actual
+        rDep.Get();
+        CIFEmpresaActual := rDep."VAT Registration No.";
+        if CIFEmpresaActual = '' then
+            Error('La empresa actual no tiene CIF configurado. Configure el CIF en Información de Empresa.');
+
+        // Obtener lista de hojas
+        ExcelBuff.GetSheetsNameListFromStream(Instream, NameValue);
+
+        // Procesar todas las hojas automáticamente
+        if not NameValue.FindSet() then
+            Error('No se encontraron hojas en el archivo Excel.');
+
+        // Configurar diario (una sola vez para todas las hojas)
+        NoSeries.SetRange(Code, 'NOMINAS');
+        if not NoSeries.FindFirst() then
+            Error('No existe la serie de documentos "NOMINAS"');
+
+        GenJnlLine.SetRange("Journal Template Name", 'GENERAL');
+        GenJnlLine.SetRange("Journal Batch Name", 'NOMINAS');
+        if GenJnlLine.FindLast() then
+            LINEA := GenJnlLine."Line No." + 10000
+        else
+            LINEA := 10000;
+
+        if not rOr.Get('NOMINAS') then begin
+            rOr.Code := 'NOMINAS';
+            rOr.Description := 'Nóminas';
+            rOr.Insert();
+        end;
+
+        // Contador total de nóminas procesadas
+        ContadorNominas := 0;
+        TotalHojas := 0;
+        HojasProcesadas := 0;
+
+        // Contar total de hojas para el progreso
+        NameValue.Reset();
+        if NameValue.FindSet() then
+            repeat
+                TotalHojas += 1;
+            until NameValue.Next() = 0;
+
+        // Procesar cada hoja
+        NameValue.Reset();
+        if NameValue.FindSet() then
+            repeat
+                Hoja := NameValue.Value;
+                if Hoja <> '' then begin
+                    HojasProcesadas += 1;
+
+                    // Abrir hoja Excel
+                    ExcelBuff.OpenBookStream(Instream, Hoja);
+                    ExcelBuff.ReadSheet;
+
+                    // Leer CIF de la empresa desde la fila 4, columna A y validar que coincida con la empresa actual
+                    if ExcelBuff.Get(4, 1) then begin
+                        As := ExcelBuff."Cell Value as Text";
+                        // El CIF está en las últimas posiciones de la columna A
+                        // Validar que el CIF del Excel coincida con el CIF de la empresa actual
+                        if (CIFEmpresaActual <> '') and (StrPos(As, CIFEmpresaActual) > 0) then begin
+                            // Leer departamento de la fila 2, columna D
+                            // Formato: "NIVEL 4           03         DIRECTIVO"
+                            // El departamento es la última palabra
+                            DepartamentoHoja := '';
+                            if ExcelBuff.Get(2, 4) then begin
+                                As := ExcelBuff."Cell Value as Text";
+                                // Extraer la última palabra (el departamento)
+                                DepartamentoHoja := ExtraerUltimaPalabra(As);
+                                if DepartamentoHoja <> '' then begin
+                                    // Crear departamento si no existe
+                                    CrearDepartamentoSiNoExiste(DepartamentoHoja);
+
+                                    // Buscar fila de encabezados para identificar las columnas
+                                    // Los encabezados están en la fila 8 (antes de los datos que empiezan en fila 9)
+                                    FilaEncabezados := 8;
+                                    ColDevengado := 0;
+                                    ColSSObrero := 0;
+                                    ColIRPF := 0;
+                                    ColSSEmpresa := 0;
+                                    ColCosteEmpresa := 0;
+                                    ColEnfermedadAccidente := 0;
+                                    ColBonificacion := 0;
+                                    ColBonificacionFundae := 0;
+                                    ColBanco := 0;
+                                    ColKms := 0;
+                                    ColDieta := 0;
+                                    ColPPEx := 0;
+                                    ColMejoraV := 0;
+                                    ColComida := 0;
+                                    ColDietas := 0;
+                                    ColPPVaca := 0;
+                                    ColPLFlex := 0;
+                                    ColIndemni := 0;
+                                    ColAntDiet := 0;
+
+                                    // Buscar encabezados en la fila 8
+                                    for j := 1 to 30 do begin
+                                        if ExcelBuff.Get(FilaEncabezados, j) then begin
+                                            As := UpperCase(ExcelBuff."Cell Value as Text");
+                                            // Eliminar espacios y paréntesis para normalizar
+                                            As := DelChr(As, '=', ' ');
+                                            As := DelChr(As, '=', '(');
+                                            As := DelChr(As, '=', ')');
+
+                                            if StrPos(As, 'TOT.BRUTO') > 0 then
+                                                ColDevengado := j
+                                            else if (StrPos(As, 'SSTRAB') > 0) or (StrPos(As, 'SS.TRAB') > 0) or (StrPos(As, 'SEGURIDADSOCIALTRAB') > 0) then
+                                                ColSSObrero := j
+                                            else if (StrPos(As, 'IRPF') > 0) and (StrPos(As, 'TRI') > 0) then
+                                                ColIRPF := j
+                                            else if (StrPos(As, 'SSEMPRESA') > 0) or (StrPos(As, 'SS.EMPRESA') > 0) then
+                                                ColSSEmpresa := j
+                                            else if (StrPos(As, 'COSTEEMP') > 0) then
+                                                ColCosteEmpresa := j
+                                            else if (StrPos(As, 'ENFERMEDAD') > 0) or (StrPos(As, 'ACCIDENTE') > 0) or (StrPos(As, 'BASEACC') > 0) then
+                                                ColEnfermedadAccidente := j
+                                            else if (StrPos(As, 'BONIFIC') > 0) or (StrPos(As, 'BONIF') > 0) then
+                                                ColBonificacion := j
+                                            else if (StrPos(As, 'FUNDAE') > 0) then
+                                                ColBonificacionFundae := j
+                                            else if (StrPos(As, 'BANCO') > 0) or (StrPos(As, 'TOTAL.LIQ') > 0) or (StrPos(As, 'TOTALLIQ') > 0) then
+                                                ColBanco := j
+                                            else if (StrPos(As, 'KMS') > 0) or (StrPos(As, 'KM') > 0) then
+                                                ColKms := j
+                                            else if (StrPos(As, 'DIETA') > 0) and (StrPos(As, 'DIETAS') = 0) then
+                                                ColDieta := j
+                                            // Buscar nuevas columnas con códigos numéricos
+                                            // Buscar por código numérico o por texto, más flexible
+                                            else if (StrPos(As, '0030') > 0) or (StrPos(As, 'PPEX') > 0) or (StrPos(As, 'P.P.EX') > 0) or (StrPos(As, 'P.PEX') > 0) then
+                                                if ColPPEx = 0 then
+                                                    ColPPEx := j
+                                                else if (StrPos(As, '0038') > 0) or (StrPos(As, 'MEJORA') > 0) then
+                                                    if ColMejoraV = 0 then
+                                                        ColMejoraV := j
+                                                    else if (StrPos(As, '0140') > 0) or (StrPos(As, 'COMIDA') > 0) then
+                                                        if ColComida = 0 then
+                                                            ColComida := j
+                                                        else if (StrPos(As, '0209') > 0) or (StrPos(As, 'DIETAS') > 0) then
+                                                            // Solo si no es la columna Dieta (singular)
+                                                            if (ColDietas = 0) and (ColDieta <> j) then
+                                                                ColDietas := j
+                                                            else if (StrPos(As, '0211') > 0) or (StrPos(As, 'PPVACA') > 0) or (StrPos(As, 'P.PVACA') > 0) or (StrPos(As, 'PVACA') > 0) then
+                                                                if ColPPVaca = 0 then
+                                                                    ColPPVaca := j
+                                                                else if (StrPos(As, '0321') > 0) or (StrPos(As, 'PLFLEX') > 0) or (StrPos(As, 'PL.FLEX') > 0) then
+                                                                    if ColPLFlex = 0 then
+                                                                        ColPLFlex := j
+                                                                    else if (StrPos(As, '0599') > 0) or (StrPos(As, 'INDEMNI') > 0) then
+                                                                        if ColIndemni = 0 then
+                                                                            ColIndemni := j
+                                                                        else if (StrPos(As, '0795') > 0) or (StrPos(As, 'ANT.DIET') > 0) or (StrPos(As, 'ANTDIET') > 0) then
+                                                                            if ColAntDiet = 0 then ColAntDiet := j;
+                                        end;
+                                    end;
+
+                                    // Si no se encontraron columnas, intentar buscar en otras filas
+                                    if (ColDevengado = 0) and (ColSSObrero = 0) and (ColIRPF = 0) then begin
+                                        // Intentar buscar en la fila 7 o 9
+                                        for FilaEncabezados := 7 to 9 do begin
+                                            for j := 1 to 30 do begin
+                                                if ExcelBuff.Get(FilaEncabezados, j) then begin
+                                                    As := UpperCase(ExcelBuff."Cell Value as Text");
+                                                    As := DelChr(As, '=', ' ');
+                                                    if StrPos(As, 'TOT.BRUTO') > 0 then
+                                                        ColDevengado := j
+                                                    else if (StrPos(As, 'SSTRAB') > 0) or (StrPos(As, 'SS.TRAB') > 0) then
+                                                        ColSSObrero := j
+                                                    else if (StrPos(As, 'IRPF') > 0) and (StrPos(As, 'TRI') > 0) then
+                                                        ColIRPF := j
+                                                    else if (StrPos(As, 'SSEMPRESA') > 0) then
+                                                        ColSSEmpresa := j
+                                                    else if (StrPos(As, 'COSTEEMP') > 0) then
+                                                        ColCosteEmpresa := j;
+                                                end;
+                                            end;
+                                            if ColDevengado > 0 then
+                                                break;
+                                        end;
+                                    end;
+
+                                    // Procesar filas del Excel
+                                    AcountInfo := 'Procesando hoja #1#### de #2####: #3####################\Progreso: @4@@@@@@@@@@@@@@@@';
+                                    if HojasProcesadas = 1 then
+                                        Ventana.Open(AcountInfo);
+                                    Ventana.Update(1, HojasProcesadas);
+                                    Ventana.Update(2, TotalHojas);
+                                    Ventana.Update(3, Hoja);
+                                    i := 9; // Las nóminas empiezan en la fila 9
+                                    Total := 1000; // Ajustar según necesidad
+                                    ContadorNominasHoja := 0;
+                                    UltimoEmpleado := '';
+                                    FilaVacia := 0; // Contador de filas vacías consecutivas
+
+                                    while (i <= Total) do begin
+                                        Ventana.Update(4, Round(i * 100 / Total, 1));
+
+                                        // Leer código de empleado de la columna B (columna 2)
+                                        if ExcelBuff.Get(i, 2) then begin
+                                            FilaVacia := 0; // Resetear contador si hay datos
+                                            CodigoEmpleado := ExcelBuff."Cell Value as Text";
+                                            // Limpiar espacios y validar que sea un código válido
+                                            CodigoEmpleado := DelChr(CodigoEmpleado, '=', ' ');
+                                            // Si el código está vacío, intentar leer de la columna A
+                                            if CodigoEmpleado = '' then begin
+                                                if ExcelBuff.Get(i, 1) then begin
+                                                    CodigoEmpleado := ExcelBuff."Cell Value as Text";
+                                                    CodigoEmpleado := DelChr(CodigoEmpleado, '=', ' ');
+                                                end;
+                                            end;
+
+                                            // Validar que sea un código válido (no vacío, no "Sección", y que tenga al menos un carácter)
+                                            if (CodigoEmpleado <> '') and (CopyStr(UpperCase(CodigoEmpleado), 1, 7) <> 'SECCIÓN') and (StrLen(CodigoEmpleado) > 0) then begin
+                                                // Guardar el último empleado procesado para anticipos/embargos
+                                                UltimoEmpleado := CodigoEmpleado;
+                                                // Buscar o crear empleado (en la empresa actual)
+                                                if not Employee.Get(CodigoEmpleado) then begin
+                                                    // Crear empleado si no existe
+                                                    CrearEmpleadoSiNoExiste(Employee, CodigoEmpleado, EmpresaNombre, ExcelBuff, i);
+                                                end;
+
+                                                if Employee.Get(CodigoEmpleado) then begin
+                                                    // Leer valores del Excel usando las columnas identificadas
+                                                    Devengado := 0;
+                                                    SSObrero := 0;
+                                                    IRPF := 0;
+                                                    SSEmpresa := 0;
+                                                    EnfermedadAccidente := 0;
+                                                    Bonificacion := 0;
+                                                    BonificacionFundae := 0;
+                                                    Anticipos := 0;
+                                                    Embargos := 0;
+                                                    DtoEspecie := 0;
+                                                    Dieta := 0;
+                                                    Kms := 0;
+                                                    Banco := 0;
+                                                    PPEx := 0;
+                                                    MejoraV := 0;
+                                                    Comida := 0;
+                                                    Dietas := 0;
+                                                    PPVaca := 0;
+                                                    PLFlex := 0;
+                                                    Indemni := 0;
+
+                                                    // Leer Devengado (TOT. BRUTO)
+                                                    if ColDevengado > 0 then begin
+                                                        if ExcelBuff.Get(i, ColDevengado) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(Devengado, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer S.S Obrero (SS TRAB)
+                                                    if ColSSObrero > 0 then begin
+                                                        if ExcelBuff.Get(i, ColSSObrero) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(SSObrero, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer IRPF (0999-TRI.IRPF)
+                                                    if ColIRPF > 0 then begin
+                                                        if ExcelBuff.Get(i, ColIRPF) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(IRPF, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer SS empresa de la columna U (21) específicamente
+                                                    // La SS empresa está en la columna U, no confundir con COSTE EMP
+                                                    if ExcelBuff.Get(i, 21) then begin
+                                                        As := ExcelBuff."Cell Value as Text";
+                                                        As := DelChr(As, '=', ' ');
+                                                        if As <> '' then
+                                                            if Evaluate(SSEmpresa, As) then;
+                                                    end;
+
+                                                    // Si no se encontró en columna U, intentar con la columna detectada
+                                                    if (SSEmpresa = 0) and (ColSSEmpresa > 0) and (ColSSEmpresa <> 21) then begin
+                                                        if ExcelBuff.Get(i, ColSSEmpresa) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            As := DelChr(As, '=', ' ');
+                                                            if As <> '' then
+                                                                if Evaluate(SSEmpresa, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer Enfermedad Accidente (BASE ACC)
+                                                    if ColEnfermedadAccidente > 0 then begin
+                                                        if ExcelBuff.Get(i, ColEnfermedadAccidente) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(EnfermedadAccidente, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer Bonificación
+                                                    if ColBonificacion > 0 then begin
+                                                        if ExcelBuff.Get(i, ColBonificacion) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(Bonificacion, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer Bonificación Fundae
+                                                    if ColBonificacionFundae > 0 then begin
+                                                        if ExcelBuff.Get(i, ColBonificacionFundae) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(BonificacionFundae, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer Banco (TOTAL.LIQ. - líquido a percibir)
+                                                    if ColBanco > 0 then begin
+                                                        if ExcelBuff.Get(i, ColBanco) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(Banco, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer Kms
+                                                    if ColKms > 0 then begin
+                                                        if ExcelBuff.Get(i, ColKms) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(Kms, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer Dieta
+                                                    if ColDieta > 0 then begin
+                                                        if ExcelBuff.Get(i, ColDieta) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(Dieta, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer P.P.Ex (0030)
+                                                    if ColPPEx > 0 then begin
+                                                        if ExcelBuff.Get(i, ColPPEx) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(PPEx, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer MEJORA V (0038)
+                                                    if ColMejoraV > 0 then begin
+                                                        if ExcelBuff.Get(i, ColMejoraV) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(MejoraV, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer COMIDA (0140)
+                                                    if ColComida > 0 then begin
+                                                        if ExcelBuff.Get(i, ColComida) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(Comida, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer DIETAS (0209)
+                                                    if ColDietas > 0 then begin
+                                                        if ExcelBuff.Get(i, ColDietas) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(Dietas, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer P.P Vaca (0211)
+                                                    if ColPPVaca > 0 then begin
+                                                        if ExcelBuff.Get(i, ColPPVaca) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(PPVaca, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer PL. FLEX (0321)
+                                                    if ColPLFlex > 0 then begin
+                                                        if ExcelBuff.Get(i, ColPLFlex) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(PLFlex, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer Indemni. (0599)
+                                                    if ColIndemni > 0 then begin
+                                                        if ExcelBuff.Get(i, ColIndemni) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(Indemni, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Leer Ant.diet (0795-Ant.diet)
+                                                    if ColAntDiet > 0 then begin
+                                                        if ExcelBuff.Get(i, ColAntDiet) then begin
+                                                            As := ExcelBuff."Cell Value as Text";
+                                                            if As <> '' then
+                                                                if Evaluate(AntDiet, As) then;
+                                                        end;
+                                                    end;
+
+                                                    // Guardar siempre que haya un empleado válido
+                                                    // Generar número de documento si no existe
+                                                    if Doc = '' then begin
+                                                        if NoSeries.Code <> '' then begin
+                                                            Clear(NoSeriesMgt);
+                                                            Doc := NoSeriesMgt.GetNextNo(NoSeries.Code, rFec, false);
+                                                        end else
+                                                            Doc := Format(rFec, 0, '<Year4><Month,2><Day,2>');
+                                                    end;
+
+                                                    // Guardar en tabla de nóminas detalle
+                                                    GuardarNominaDetalle(
+                                                        Employee, rFec, DepartamentoHoja,
+                                                        Devengado, SSObrero, IRPF, SSEmpresa, EnfermedadAccidente,
+                                                        Bonificacion, BonificacionFundae, Anticipos, Embargos,
+                                                        DtoEspecie, Dieta, Kms, Banco,
+                                                        PPEx, MejoraV, Comida, Dietas, PPVaca, PLFlex, Indemni, AntDiet);
+                                                    ContadorNominas += 1;
+                                                end;
+                                            end else begin
+                                                // Buscar anticipos, embargos, etc. en la columna B
+                                                if ExcelBuff.Get(i, 2) then begin
+                                                    As := ExcelBuff."Cell Value as Text";
+                                                    if As <> '' then begin
+                                                        As := UpperCase(As);
+                                                        case CopyStr(As, 1, 7) of
+                                                            'ANTICIP', 'ANTICIPO':
+                                                                begin
+                                                                    if ExcelBuff.Get(i, 7) then begin
+                                                                        As := ExcelBuff."Cell Value as Text";
+                                                                        if As <> '' then
+                                                                            if Evaluate(Importe, As) then begin
+                                                                                // Buscar el último empleado procesado para añadir el anticipo
+                                                                                // Esto requeriría mantener una referencia al último empleado
+                                                                            end;
+                                                                    end;
+                                                                end;
+                                                            'EMBARGO':
+                                                                begin
+                                                                    if ExcelBuff.Get(i, 7) then begin
+                                                                        As := ExcelBuff."Cell Value as Text";
+                                                                        if As <> '' then
+                                                                            if Evaluate(Importe, As) then begin
+                                                                                // Similar al anticipo
+                                                                            end;
+                                                                    end;
+                                                                end;
+                                                            'DTO ESP', 'DESC ESP':
+                                                                begin
+                                                                    if ExcelBuff.Get(i, 7) then begin
+                                                                        As := ExcelBuff."Cell Value as Text";
+                                                                        if As <> '' then
+                                                                            if Evaluate(Importe, As) then begin
+                                                                                // Similar al anticipo
+                                                                            end;
+                                                                    end;
+                                                                end;
+                                                        end;
+                                                    end;
+                                                end;
+                                            end;
+                                        end else begin
+                                            // Si no hay datos en la columna B, incrementar contador de filas vacías
+                                            FilaVacia += 1;
+                                            // Si hay 5 filas vacías consecutivas, asumir que terminó el archivo
+                                            if FilaVacia >= 5 then
+                                                break;
+                                        end;
+                                        i += 1;
+                                    end;
+
+                                    // Cerrar la hoja actual
+                                    ExcelBuff.CloseBook();
+
+                                    // Actualizar progreso
+                                    Ventana.Update(4, 100);
+
+                                    // Forzar actualización de cabecera después de procesar la hoja
+                                    // para asegurar que todos los totales estén correctos
+                                    ActualizarCabecerasDepartamento(DepartamentoHoja, rFec);
+                                end;
+                            end;
+                        end;
+                    end;
+                end;
+            until NameValue.Next() = 0;
+
+        Ventana.Close();
+
+        // Mostrar mensaje con información
+        Message('Nóminas importadas correctamente.\Hojas procesadas: %1 de %2\Fecha: %3\Nóminas procesadas: %4\Puede revisarlas y contabilizarlas desde la página de Nóminas.', HojasProcesadas, TotalHojas, rFec, ContadorNominas);
+    end;
+
+    /// <summary>
+    /// Crea un empleado si no existe, usando información del Excel si está disponible
+    /// </summary>
+    local procedure CrearEmpleadoSiNoExiste(var
+                                                Employee: Record Employee;
+                                                CodigoEmpleado: Code[20];
+                                                EmpresaNombre: Text[30];
+
+var
+ExcelBuff: Record "Excel Buffer" temporary;
+Fila: Integer)
+    var
+        NombreEmpleado: Text[100];
+        CIFEmpleado: Text[20];
+    begin
+        // Cambiar a la empresa correcta
+        Employee.ChangeCompany(EmpresaNombre);
+
+        // Verificar que no exista (por si acaso)
+        if Employee.Get(CodigoEmpleado) then
+            exit;
+
+        // Intentar leer nombre del empleado de la columna C (3) si está disponible
+        if ExcelBuff.Get(Fila, 3) then
+            NombreEmpleado := CopyStr(ExcelBuff."Cell Value as Text", 1, MaxStrLen(Employee."First Name"));
+
+        // Intentar leer CIF del empleado de la columna A (1) si está disponible
+        // Nota: La tabla Employee no tiene campo VAT Registration No. estándar
+        // Se puede usar el campo "Social Security No." si está disponible
+        if ExcelBuff.Get(Fila, 1) then
+            CIFEmpleado := CopyStr(ExcelBuff."Cell Value as Text", 1, 20);
+
+        // Crear nuevo empleado
+        Employee.Init();
+        Employee."No." := CodigoEmpleado;
+
+        // Asignar nombre si está disponible
+        if NombreEmpleado <> '' then begin
+            Employee."First Name" := NombreEmpleado;
+            Employee."Last Name" := '';
+        end else begin
+            // Si no hay nombre, usar el código como nombre
+            Employee."First Name" := CodigoEmpleado;
+        end;
+
+        // Fecha de alta (usar fecha actual)
+        Employee."Employment Date" := Today;
+
+        // Insertar el empleado
+        if Employee.Insert(true) then
+            Commit();
+    end;
+
+    /// <summary>
+    /// Guarda una nómina en la tabla de detalle
+    /// </summary>
+    local procedure GuardarNominaDetalle(
+        Employee: Record Employee;
+        Fecha: Date;
+        Departamento: Code[20];
+        Devengado: Decimal;
+        SSObrero: Decimal;
+        IRPF: Decimal;
+        SSEmpresa: Decimal;
+        EnfermedadAccidente: Decimal;
+        Bonificacion: Decimal;
+        BonificacionFundae: Decimal;
+        Anticipos: Decimal;
+        Embargos: Decimal;
+        DtoEspecie: Decimal;
+        Dieta: Decimal;
+        Kms: Decimal;
+        Banco: Decimal;
+        PPEx: Decimal;
+        MejoraV: Decimal;
+        Comida: Decimal;
+        Dietas: Decimal;
+        PPVaca: Decimal;
+        PLFlex: Decimal;
+        Indemni: Decimal;
+        AntDiet: Decimal)
+    var
+        rNomDet: Record "Nominas Detalle";
+    begin
+        // El departamento viene del Excel (hoja)
+
+        // Cambiar a la empresa correcta
+
+        // Buscar si ya existe el registro
+        rNomDet.SetRange(Fecha, Fecha);
+        rNomDet.SetRange(Empleado, Employee."No.");
+        rNomDet.SetRange(Departamento, Departamento);
+
+        if rNomDet.FindFirst() then begin
+            // Actualizar registro existente
+            rNomDet.Devengado := Devengado;
+            rNomDet."S.S Obrero" := SSObrero;
+            rNomDet.IRPF := IRPF;
+            rNomDet."SS empresa" := SSEmpresa;
+            rNomDet."Enfermedad Accidente" := EnfermedadAccidente;
+            rNomDet."Bonificación" := Bonificacion;
+            rNomDet."Bonificación Fundae" := BonificacionFundae;
+            rNomDet.Anticipos := Anticipos;
+            rNomDet.Embargos := Embargos;
+            rNomDet."Dto. Especie" := DtoEspecie;
+            rNomDet.Dieta := Dieta;
+            rNomDet.Kms := Kms;
+            rNomDet.Banco := Banco;
+            rNomDet."P.P.Ex" := PPEx;
+            rNomDet."MEJORA V" := MejoraV;
+            rNomDet.COMIDA := Comida;
+            rNomDet.DIETAS := Dietas;
+            rNomDet."P.P Vaca" := PPVaca;
+            rNomDet."PL. FLEX" := PLFlex;
+            rNomDet.Indemni := Indemni;
+            rNomDet.Personal := Devengado - SSObrero - IRPF - Anticipos - Embargos;
+            rNomDet.Modify();
+        end else begin
+            // Crear nuevo registro
+            rNomDet.Init();
+            rNomDet.Fecha := Fecha;
+            rNomDet.Empleado := Employee."No.";
+            rNomDet.Departamento := Departamento;
+            rNomDet.Devengado := Devengado;
+            rNomDet."S.S Obrero" := SSObrero;
+            rNomDet.IRPF := IRPF;
+            rNomDet."SS empresa" := SSEmpresa;
+            rNomDet."Enfermedad Accidente" := EnfermedadAccidente;
+            rNomDet."Bonificación" := Bonificacion;
+            rNomDet."Bonificación Fundae" := BonificacionFundae;
+            rNomDet.Anticipos := Anticipos;
+            rNomDet.Embargos := Embargos;
+            rNomDet."Dto. Especie" := DtoEspecie;
+            rNomDet.Dieta := Dieta;
+            rNomDet.Kms := Kms;
+            rNomDet.Banco := Banco; // Banco es el líquido a percibir (TOTAL.LIQ del Excel)
+            rNomDet."P.P.Ex" := PPEx;
+            rNomDet."MEJORA V" := MejoraV;
+            rNomDet.COMIDA := Comida;
+            rNomDet.DIETAS := Dietas;
+            rNomDet."P.P Vaca" := PPVaca;
+            rNomDet."PL. FLEX" := PLFlex;
+            rNomDet.Indemni := Indemni;
+            rNomDet."Ant.diet" := AntDiet;
+            // Calcular campos calculados usando Validate para que se ejecuten los triggers
+            rNomDet.Validate(Devengado);
+            rNomDet.Validate("S.S Obrero");
+            rNomDet.Validate(IRPF);
+            rNomDet.Validate("SS empresa");
+            rNomDet.Validate("Enfermedad Accidente");
+            rNomDet.Validate("Bonificación");
+            rNomDet.Validate("Bonificación Fundae");
+            rNomDet.Validate(Kms);
+            rNomDet.Validate(Dieta);
+            rNomDet.Validate("Dto. Especie");
+            rNomDet.Validate(Anticipos);
+            rNomDet.Validate(Embargos);
+            rNomDet.Validate(Banco);
+            rNomDet.Insert(true);
+        end;
+    end;
+
+    /// <summary>
+    /// Crea las líneas de diario para una nómina
+    /// </summary>
+    procedure CrearLineasDiarioNominas(
+        var GenJnlLine: Record "Gen. Journal Line";
+        Employee: Record Employee;
+        EmpresaNombre: Text[30];
+        Fecha: Date;
+        DocNo: Code[20];
+        var LINEA: Integer;
+        rOr: Record "Source Code";
+        Devengado: Decimal;
+        SSObrero: Decimal;
+        IRPF: Decimal;
+        SSEmpresa: Decimal;
+        EnfermedadAccidente: Decimal;
+        Bonificacion: Decimal;
+        BonificacionFundae: Decimal;
+        Anticipos: Decimal;
+        Embargos: Decimal;
+        DtoEspecie: Decimal;
+        Dieta: Decimal;
+        Kms: Decimal;
+        Banco: Decimal;
+        Personal: Decimal;
+        AntDiet: Decimal)
+    var
+        Cuenta: Code[20];
+    begin
+        // Devengado
+        if Devengado - Kms - DtoEspecie - Dieta <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Source Code" := rOr.Code;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Devengado');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code");
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Debit Amount", Devengado - Kms - DtoEspecie - Dieta);
+            GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."));
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // Kms
+        if Kms <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Kms');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code");
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Debit Amount", Kms);
+            GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."));
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // Especie Debe
+        if DtoEspecie <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Especie Debe');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code");
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Debit Amount", DtoEspecie);
+            GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."));
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // Especie Haber
+        if DtoEspecie <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Especie Haber');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code");
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Credit Amount", DtoEspecie);
+            GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."));
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // Dietas
+        if Dieta <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Dieta');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code");
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Debit Amount", Dieta);
+            GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."));
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // Anticipos
+        if Anticipos <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            GenJnlLine."Account No." := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Anticipos');
+            GenJnlLine.Validate("Account No.");
+            GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code");
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Credit Amount", Anticipos);
+            GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."));
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // Embargos
+        if Embargos <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            GenJnlLine."Account No." := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Embargos');
+            GenJnlLine.Validate("Account No.");
+            GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code");
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Credit Amount", Embargos);
+            GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."));
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // Bonificación
+        if Bonificacion <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Source Code" := rOr.Code;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Bonificación');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code");
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Credit Amount", Bonificacion);
+            GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."));
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // Bonificación Fundae
+        if BonificacionFundae <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Source Code" := rOr.Code;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Bonificación Fundae');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code");
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Credit Amount", BonificacionFundae);
+            GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."));
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // SS Empresa
+        if SSEmpresa <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Source Code" := rOr.Code;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'SS Empresa');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code");
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Debit Amount", SSEmpresa);
+            GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."));
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // Enfermedad Accidente
+        if EnfermedadAccidente <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Enfermedad Accidente');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code")
+            else
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", '');
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Credit Amount", EnfermedadAccidente);
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."))
+            else
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", '');
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+
+            // Enfermedad Accidente 2 (Debe)
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Enfermedad Accidente 2');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code")
+            else
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", '');
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Debit Amount", EnfermedadAccidente);
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."))
+            else
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", '');
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // 476 Organismos SS Acreedores (SS Obrero + SS Empresa)
+        // Según PGC, la cuenta 476 debe incluir tanto SS Obrero como SS Empresa
+        if (SSObrero <> 0) or (SSEmpresa <> 0) then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Source Code" := rOr.Code;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'S.S Obrero'); // 476
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code")
+            else
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", '');
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            // La cuenta 476 debe incluir SS Obrero + SS Empresa
+            GenJnlLine.Validate("Credit Amount", SSObrero + SSEmpresa);
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."))
+            else
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", '');
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // IRPF
+        if IRPF <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Source Code" := rOr.Code;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'IRPF');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code")
+            else
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", '');
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Credit Amount", IRPF);
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."))
+            else
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", '');
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // 465 Remuneraciones pendientes de pago (Personal - líquido a percibir)
+        // Según PGC, el Personal (Devengado - SS Obrero - IRPF - Anticipos - Embargos) debe ir a cuenta 465
+        if Personal <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Source Code" := rOr.Code;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            // Usar cuenta 465 (Personal/Cobro Nómina)
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Personal');
+            if Cuenta = '' then
+                Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Cobro Nómina');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code")
+            else
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", '');
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Credit Amount", Personal);
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."))
+            else
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", '');
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+
+        // Ant.diet (0795-Ant.diet)
+        if AntDiet <> 0 then begin
+            GenJnlLine.Init;
+            GenJnlLine."Journal Template Name" := 'GENERAL';
+            GenJnlLine."Journal Batch Name" := 'NOMINAS';
+            GenJnlLine."Line No." := LINEA;
+            GenJnlLine."Posting Date" := Fecha;
+            GenJnlLine."Document No." := DocNo;
+            GenJnlLine."Source Code" := rOr.Code;
+            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine.Validate("Account Type");
+            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Ant.diet');
+            GenJnlLine."Account No." := Cuenta;
+            GenJnlLine.Validate("Account No.");
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", Employee."Global Dimension 1 Code")
+            else
+                GenJnlLine.Validate("Shortcut Dimension 1 Code", '');
+            GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+            GenJnlLine.Validate("Credit Amount", AntDiet);
+            if CopyStr(Cuenta, 1, 1) in ['6', '7'] then
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", GetProgramaNominas(Employee."No."))
+            else
+                GenJnlLine.Validate("Shortcut Dimension 2 Code", '');
+            GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
+            GenJnlLine."Gen. Bus. Posting Group" := '';
+            GenJnlLine."Gen. Prod. Posting Group" := '';
+            GenJnlLine."VAT Bus. Posting Group" := '';
+            GenJnlLine."VAT Prod. Posting Group" := '';
+            GenJnlLine.Insert;
+            LINEA := LINEA + 10000;
+        end;
+    end;
+
+    /// <summary>
+    /// Crea movimientos de empleado cuando se registra el diario de nóminas
+    /// Se ejecuta mediante EventSubscriber cuando se registra el diario
+    /// </summary>
+    procedure CrearMovimientosEmpleadosDesdeDiario(DocNo: Code[20]; Fecha: Date)
+    var
+        EmplLedgEntry: Record "Employee Ledger Entry";
+        Employee: Record Employee;
+        rNomDet: Record "Nominas Detalle";
+        rNom: Record "Cabecera Nominas";
+        NetoAPagar: Decimal;
+    begin
+        // Buscar en nóminas detalle por fecha y documento
+        rNom.SetRange(Fecha, Fecha);
+        rNom.SetRange("Nº Documento", DocNo);
+        if rNom.FindFirst() then begin
+            rNomDet.SetRange(Fecha, Fecha);
+            rNomDet.SetRange(Departamento, rNom.Departamento);
+        end else
+            error('No se encontró la nómina para el documento %1 y fecha %2', DocNo, Fecha);
+        // Buscar por el documento guardado en la cabecera de nóminas
+        // Como no tenemos el documento en detalle, buscamos todas las nóminas de esa fecha
+        // y verificamos que no se haya creado ya el movimiento
+
+        if rNomDet.FindSet() then
+            repeat
+                if Employee.Get(rNomDet.Empleado) then begin
+                    // Verificar si ya existe el movimiento para evitar duplicados
+                    EmplLedgEntry.Reset();
+                    EmplLedgEntry.SetRange("Employee No.", Employee."No.");
+                    EmplLedgEntry.SetRange("Document No.", DocNo);
+                    EmplLedgEntry.SetRange("Posting Date", Fecha);
+
+                    if not EmplLedgEntry.FindFirst() then begin
+                        // Usar Banco que es el líquido a percibir (neto a pagar)
+                        NetoAPagar := rNomDet.Personal;
+
+                        // Solo crear movimiento si hay importe a pagar
+                        if NetoAPagar <> 0 then begin
+                            // Obtener el siguiente número de entrada
+                            EmplLedgEntry.Reset();
+                            EmplLedgEntry.SetCurrentKey("Entry No.");
+                            if EmplLedgEntry.FindLast() then
+                                EmplLedgEntry."Entry No." := EmplLedgEntry."Entry No." + 1
+                            else
+                                EmplLedgEntry."Entry No." := 1;
+
+                            // Inicializar el nuevo registro
+                            EmplLedgEntry.Init();
+                            EmplLedgEntry."Employee No." := Employee."No.";
+                            EmplLedgEntry."Posting Date" := Fecha;
+                            EmplLedgEntry."Document Type" := EmplLedgEntry."Document Type"::Payment;
+                            EmplLedgEntry."Document No." := DocNo;
+                            EmplLedgEntry.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
+                            EmplLedgEntry."Currency Code" := '';
+                            EmplLedgEntry.Amount := NetoAPagar;
+                            EmplLedgEntry."Remaining Amount" := NetoAPagar;
+                            EmplLedgEntry."Original Amount" := NetoAPagar;
+                            EmplLedgEntry."Global Dimension 1 Code" := Employee."Global Dimension 1 Code";
+                            EmplLedgEntry."Global Dimension 2 Code" := GetProgramaNominas(Employee."No.");
+                            EmplLedgEntry.Insert(true);
+                        end;
+                    end;
+                end;
+            until rNomDet.Next() = 0;
+    end;
+
+    /// <summary>
+    /// Obtiene el nombre del mes en español
+    /// </summary>
+    local procedure ObtenerMesEspanol(Fecha: Date): Text[20]
+    var
+        Mes: Integer;
+    begin
+        Mes := Date2DMY(Fecha, 2);
+        case Mes of
+            1:
+                exit('enero');
+            2:
+                exit('febrero');
+            3:
+                exit('marzo');
+            4:
+                exit('abril');
+            5:
+                exit('mayo');
+            6:
+                exit('junio');
+            7:
+                exit('julio');
+            8:
+                exit('agosto');
+            9:
+                exit('septiembre');
+            10:
+                exit('octubre');
+            11:
+                exit('noviembre');
+            12:
+                exit('diciembre');
+        end;
+    end;
+
+    /// <summary>
+    /// Obtiene la cuenta contable de un concepto de nómina
+    /// Accede directamente a la tabla "Nominas Configuración" (50215) usando la empresa seleccionada
+    /// </summary>
+    local procedure GetCuentaConceptoNominas(Empresa: Code[41]; Empleado: Code[20]; Concepto: Text): Code[20]
+    var
+        rConf: Record "Nominas Configuración";
+        Cuenta: Code[20];
+    begin
+        Cuenta := '';
+
+        // Intentar obtener configuración específica del empleado
+        if rConf.Get(Empleado) then begin
+            case Concepto of
+                'Devengado':
+                    Cuenta := rConf.Devengado;
+                'IRPF':
+                    Cuenta := rConf.IRPF;
+                'S.S Obrero':
+                    Cuenta := rConf."S.S Obrero";
+                'SS Empresa':
+                    Cuenta := rConf."SS empresa";
+                'SS Empresa 2':
+                    Cuenta := rConf."SS empresa 2";
+                'Enfermedad Accidente':
+                    Cuenta := rConf."Enfermedad Accidente";
+                'Enfermedad Accidente 2':
+                    Cuenta := rConf."Enfermedad Accidente 2";
+                'Bonificación':
+                    Cuenta := rConf.Bonificación;
+                'Bonificación Fundae':
+                    Cuenta := rConf."Bonificación Fundae";
+                'Kms':
+                    Cuenta := rConf.Kms;
+                'Dieta':
+                    Cuenta := rConf.Dieta;
+                'Especie Debe':
+                    Cuenta := rConf."Especie Debe";
+                'Especie Haber':
+                    Cuenta := rConf."Especie Haber";
+                'Anticipos':
+                    Cuenta := rConf.Anticipos;
+                'Embargos':
+                    Cuenta := rConf.Embargos;
+                'Banco':
+                    Cuenta := rConf.Banco;
+                'Personal':
+                    Cuenta := rConf.Personal;
+                'Cobro Nómina':
+                    Cuenta := rConf."Cobro Nómina";
+                'Ant.diet':
+                    Cuenta := rConf."Ant.diet";
+            end;
+            if Cuenta <> '' then
+                exit(Cuenta);
+        end;
+
+        // Si no hay configuración específica del empleado, buscar configuración general (empleado vacío)
+        if rConf.Get('') then begin
+            case Concepto of
+                'Devengado':
+                    Cuenta := rConf.Devengado;
+                'IRPF':
+                    Cuenta := rConf.IRPF;
+                'S.S Obrero':
+                    Cuenta := rConf."S.S Obrero";
+                'SS Empresa':
+                    Cuenta := rConf."SS empresa";
+                'SS Empresa 2':
+                    Cuenta := rConf."SS empresa 2";
+                'Enfermedad Accidente':
+                    Cuenta := rConf."Enfermedad Accidente";
+                'Enfermedad Accidente 2':
+                    Cuenta := rConf."Enfermedad Accidente 2";
+                'Bonificación':
+                    Cuenta := rConf.Bonificación;
+                'Bonificación Fundae':
+                    Cuenta := rConf."Bonificación Fundae";
+                'Kms':
+                    Cuenta := rConf.Kms;
+                'Dieta':
+                    Cuenta := rConf.Dieta;
+                'Especie Debe':
+                    Cuenta := rConf."Especie Debe";
+                'Especie Haber':
+                    Cuenta := rConf."Especie Haber";
+                'Anticipos':
+                    Cuenta := rConf.Anticipos;
+                'Embargos':
+                    Cuenta := rConf.Embargos;
+                'Banco':
+                    Cuenta := rConf.Banco;
+                'Personal':
+                    Cuenta := rConf.Personal;
+                'Cobro Nómina':
+                    Cuenta := rConf."Cobro Nómina";
+                'Ant.diet':
+                    Cuenta := rConf."Ant.diet";
+            end;
+            if Cuenta <> '' then
+                exit(Cuenta);
+        end;
+
+        // Si no hay configuración por empresa, buscar configuración general (empresa y empleado vacíos)
+        rConf.ChangeCompany('');
+        if rConf.Get('', '') then begin
+            case Concepto of
+                'Devengado':
+                    Cuenta := rConf.Devengado;
+                'IRPF':
+                    Cuenta := rConf.IRPF;
+                'S.S Obrero':
+                    Cuenta := rConf."S.S Obrero";
+                'SS Empresa':
+                    Cuenta := rConf."SS empresa";
+                'SS Empresa 2':
+                    Cuenta := rConf."SS empresa 2";
+                'Enfermedad Accidente':
+                    Cuenta := rConf."Enfermedad Accidente";
+                'Enfermedad Accidente 2':
+                    Cuenta := rConf."Enfermedad Accidente 2";
+                'Bonificación':
+                    Cuenta := rConf.Bonificación;
+                'Bonificación Fundae':
+                    Cuenta := rConf."Bonificación Fundae";
+                'Kms':
+                    Cuenta := rConf.Kms;
+                'Dieta':
+                    Cuenta := rConf.Dieta;
+                'Especie Debe':
+                    Cuenta := rConf."Especie Debe";
+                'Especie Haber':
+                    Cuenta := rConf."Especie Haber";
+                'Anticipos':
+                    Cuenta := rConf.Anticipos;
+                'Embargos':
+                    Cuenta := rConf.Embargos;
+                'Banco':
+                    Cuenta := rConf.Banco;
+            end;
+        end;
+
+        exit(Cuenta);
+    end;
+
+    /// <summary>
+    /// Obtiene el programa de un empleado
+    /// </summary>
+    local procedure GetProgramaNominas(Empleado: Code[20]): Code[20]
+    var
+        Employee: Record Employee;
+        rConf: Record "Nominas Configuración";
+    begin
+        if Employee.Get(Empleado) then
+            exit(Employee."Global Dimension 2 Code");
+
+        // Si el empleado no tiene programa, intentar obtenerlo de la configuración
+        // Intentar obtener configuración específica del empleado
+        if rConf.Get(Empleado) then
+            exit(rConf.Programa);
+
+        // Buscar configuración general (empleado vacío)
+        if rConf.Get('') then
+            exit(rConf.Programa);
+
+        // Si hay programa por defecto, usarlo
+        if rConf."Programa por defecto" <> '' then
+            exit(rConf."Programa por defecto");
+
+        exit('');
+    end;
+
+    /// <summary>
+    /// Extrae el nombre del departamento después del número
+    /// Formato esperado: "NIVEL 4           07         EL MAL HIJO"
+    /// Devuelve: "EL MAL HIJO"
+    /// </summary>
+    local procedure ExtraerUltimaPalabra(Texto: Text): Code[20]
+    var
+        i: Integer;
+        j: Integer;
+        EncontradoNumero: Boolean;
+        PosNumero: Integer;
+        Resultado: Text;
+        Caracter: Text;
+    begin
+        if Texto = '' then
+            exit('');
+
+        // Buscar el último número en el texto (el código del departamento, ej: "07")
+        EncontradoNumero := false;
+        PosNumero := 0;
+
+        for i := StrLen(Texto) downto 1 do begin
+            Caracter := CopyStr(Texto, i, 1);
+            if (Caracter >= '0') and (Caracter <= '9') then begin
+                if not EncontradoNumero then begin
+                    PosNumero := i;
+                    EncontradoNumero := true;
+                end;
+            end else begin
+                if EncontradoNumero then begin
+                    // Hemos encontrado el final del número, extraer todo lo que viene después
+                    Resultado := CopyStr(Texto, i + 1);
+                    // Eliminar espacios al inicio y al final
+                    Resultado := DelChr(Resultado, '<', ' ');
+                    Resultado := DelChr(Resultado, '>', ' ');
+                    // Si hay múltiples espacios, reemplazarlos por uno solo
+                    while StrPos(Resultado, '  ') > 0 do
+                        Resultado := DelStr(Resultado, StrPos(Resultado, '  '), 1);
+                    exit(CopyStr(Resultado, 1, MaxStrLen(Resultado)));
+                end;
+            end;
+        end;
+
+        // Si encontramos un número pero no hay texto después, buscar desde el número hacia adelante
+        if EncontradoNumero and (PosNumero > 0) then begin
+            // Buscar el final del número (puede tener 1 o 2 dígitos)
+            j := PosNumero;
+            while (j <= StrLen(Texto)) and (CopyStr(Texto, j, 1) >= '0') and (CopyStr(Texto, j, 1) <= '9') do
+                j += 1;
+
+            // Extraer todo después del número
+            Resultado := CopyStr(Texto, j);
+            Resultado := DelChr(Resultado, '<', ' ');
+            Resultado := DelChr(Resultado, '>', ' ');
+            while StrPos(Resultado, '  ') > 0 do
+                Resultado := DelStr(Resultado, StrPos(Resultado, '  '), 1);
+            exit(CopyStr(Resultado, 1, MaxStrLen(Resultado)));
+        end;
+
+        // Si no se encuentra número, devolver la última palabra como fallback
+        Resultado := DelChr(Texto, '>', ' ');
+        for i := StrLen(Resultado) downto 1 do begin
+            if CopyStr(Resultado, i, 1) = ' ' then begin
+                Resultado := CopyStr(Resultado, i + 1);
+                exit(CopyStr(Resultado, 1, MaxStrLen(Resultado)));
+            end;
+        end;
+
+        exit(CopyStr(Resultado, 1, MaxStrLen(Resultado)));
+    end;
+
+    /// <summary>
+    /// Actualiza las cabeceras de nóminas para un departamento y fecha específicos
+    /// </summary>
+    local procedure ActualizarCabecerasDepartamento(Departamento: Code[20]; Fecha: Date)
+    var
+        rNomDet: Record "Nominas Detalle";
+        NominaCab: Record "Cabecera Nominas";
+    begin
+        // Recalcular totales desde el detalle para asegurar que todos los registros se incluyan
+        rNomDet.SetRange(Fecha, Fecha);
+        rNomDet.SetRange(Departamento, Departamento);
+
+        if not NominaCab.Get(Fecha, Departamento) then
+            exit;
+
+        NominaCab.Devengado := 0;
+        NominaCab."S.S Obrero" := 0;
+        NominaCab.IRPF := 0;
+        NominaCab."SS empresa" := 0;
+        NominaCab."Enfermedad Accidente" := 0;
+        NominaCab.Banco := 0;
+        NominaCab.Personal := 0;
+        NominaCab."Bonificación" := 0;
+        NominaCab."Bonificación Fundae" := 0;
+        NominaCab.Kms := 0;
+        NominaCab."Dto. Especie" := 0;
+        NominaCab.Dieta := 0;
+        NominaCab.Anticipos := 0;
+        NominaCab.Embargos := 0;
+
+        // Procesar todos los registros
+        if rNomDet.Find('-') then begin
+            repeat
+                NominaCab.Devengado += rNomDet.Devengado;
+                NominaCab."S.S Obrero" += rNomDet."S.S Obrero";
+                NominaCab.IRPF += rNomDet.IRPF;
+                NominaCab."SS empresa" += rNomDet."SS empresa";
+                NominaCab."Enfermedad Accidente" += rNomDet."Enfermedad Accidente";
+                NominaCab.Banco += rNomDet.Banco;
+                NominaCab.Personal += rNomDet.Personal;
+                NominaCab."Bonificación" += rNomDet."Bonificación";
+                NominaCab."Bonificación Fundae" += rNomDet."Bonificación Fundae";
+                NominaCab.Kms += rNomDet.Kms;
+                NominaCab."Dto. Especie" += rNomDet."Dto. Especie";
+                NominaCab.Dieta += rNomDet.Dieta;
+                NominaCab.Anticipos += rNomDet.Anticipos;
+                NominaCab.Embargos += rNomDet.Embargos;
+            until rNomDet.Next() = 0;
+        end;
+
+        NominaCab.Personal := NominaCab.Devengado - NominaCab."S.S Obrero" - NominaCab.IRPF - NominaCab.Anticipos - NominaCab.Embargos;
+        NominaCab.Modify(true);
+        Commit();
+    end;
+
+    /// <summary>
+    /// Crea un departamento (Dimension Value) si no existe
+    /// </summary>
+    local procedure CrearDepartamentoSiNoExiste(Departamento: Code[20])
+    var
+        DimValue: Record "Dimension Value";
+        GLSetup: Record "General Ledger Setup";
+        DimCode: Code[20];
+    begin
+        if Departamento = '' then
+            exit;
+
+        // Obtener código de dimensión global 1
+        GLSetup.Get();
+        DimCode := GLSetup."Global Dimension 1 Code";
+        if DimCode = '' then
+            Error('No está configurada la Dimensión Global 1. Configurela en Configuración Contabilidad.');
+
+        // Verificar si ya existe
+        if DimValue.Get(DimCode, Departamento) then
+            exit;
+
+        // Crear nuevo departamento
+        DimValue.Init();
+        DimValue."Dimension Code" := DimCode;
+        DimValue.Code := Departamento;
+        DimValue.Name := Departamento;
+        DimValue."Dimension Value Type" := DimValue."Dimension Value Type"::Standard;
+        DimValue.Blocked := false;
+        DimValue.Insert(true);
     end;
 }

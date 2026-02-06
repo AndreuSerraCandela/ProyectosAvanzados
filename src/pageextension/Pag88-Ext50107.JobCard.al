@@ -289,11 +289,43 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                 trigger OnAction()
                 var
                     CodProyecto: Codeunit ProcesosProyectos;
+                    JobPlanningLine: Record "Job Planning Line";
                 begin
                     CodProyecto.ImportarJobLedgerEntriesDesdeExcel(Rec."No.");
                     Commit();
                     CodProyecto.ActualizarArbolTareas(Rec."No.");
                     CurrPage.Update(false);
+                    JobPlanningLine.SetRange("Job No.", Rec."No.");
+                    if JobPlanningLine.FindSet() then
+                        repeat
+                            If (JobPlanningLine."Unit Cost (LCY)" <> 0) and (JobPlanningLine."Total Cost (LCY)" = 0) then begin
+                                JobPlanningLine."Unit Cost" := JobPlanningLine."Unit Cost (LCY)";
+                                JobPlanningLine."Total Cost (LCY)" := JobPlanningLine."Unit Cost (LCY)" * JobPlanningLine.Quantity;
+                                JobPlanningLine."Total Cost" := JobPlanningLine."Total Cost (LCY)";
+                                JobPlanningLine.Modify();
+                            end;
+                        until JobPlanningLine.Next() = 0;
+                end;
+            }
+            action("Actualizar Total Cost")
+            {
+                ApplicationArea = All;
+                Caption = 'Actualizar Total Cost';
+                Image = Calculate;
+                trigger OnAction()
+                var
+                    JobPlanningLine: Record "Job Planning Line";
+                begin
+                    JobPlanningLine.SetRange("Job No.", Rec."No.");
+                    if JobPlanningLine.FindSet() then
+                        repeat
+                            If (JobPlanningLine."Unit Cost (LCY)" <> 0) and (JobPlanningLine."Total Cost (LCY)" = 0) then begin
+                                JobPlanningLine."Unit Cost" := JobPlanningLine."Unit Cost (LCY)";
+                                JobPlanningLine."Total Cost (LCY)" := JobPlanningLine."Unit Cost (LCY)" * JobPlanningLine.Quantity;
+                                JobPlanningLine."Total Cost" := JobPlanningLine."Total Cost (LCY)";
+                                JobPlanningLine.Modify();
+                            end;
+                        until JobPlanningLine.Next() = 0;
                 end;
             }
             action("Pagos Vinculados")

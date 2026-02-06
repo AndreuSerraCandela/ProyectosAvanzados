@@ -933,11 +933,14 @@ page 50116 "Job Task Lines Subform Ext"
     begin
         Rec.CalcFields("Tota Cost", "Amount Paid");
         If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
-            exit(Rec."Tota Cost" - Rec."Amount Paid")
+            exit(Rec."Usage (Total Cost)" - Rec."Amount Paid")
         else begin
             JobTask.SetRange("Job No.", Rec."Job No.");
             JobTask.SetFilter("Job Task No.", Rec.Totaling);
-            If JobTask.FindSet() then
+            JobTask.SetRange("Job Task Type", Rec."Job Task Type"::Posting);
+
+            If JobTask.FindSet() then begin
+
                 repeat
                     Coste.SetRange("Job No.", JobTask."Job No.");
                     Coste.SetRange("Job Task No.", JobTask."Job Task No.");
@@ -953,6 +956,7 @@ page 50116 "Job Task Lines Subform Ext"
 
                         until Pagos.Next() = 0;
                 until JobTask.Next() = 0;
+            end;
             exit(ImporteCoste - ImportePagado);
         end;
     end;
@@ -981,8 +985,9 @@ page 50116 "Job Task Lines Subform Ext"
 
 
                 until JobTask.Next() = 0;
-            exit(ImportePendiente);
+            exit(ImportePagado);
         end;
+    end;
 
     end;
 

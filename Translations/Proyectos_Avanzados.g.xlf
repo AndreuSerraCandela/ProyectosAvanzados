@@ -18,6 +18,156 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Adjuntos Informe - Field Pdf Adjunto - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3188928427 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cabecera Nominas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 3782970832 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Anticipos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Anticipos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 283549971 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Banco</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Banco - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2968187644 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bonificación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Bonificación - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 521116407 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bonificación Fundae</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Bonificación Fundae - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 590037999 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>COMIDA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field COMIDA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2416504483 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Contabilizado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Contabilizado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 3801212730 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Coste</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Coste - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 323353982 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Departamento</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Departamento - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2817095259 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Devengado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Devengado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 1214341023 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dieta</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Dieta - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 3549639338 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>DIETAS</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field DIETAS - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 1711143003 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Diferencia</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Difª - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 3176012351 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dto. Especie</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Dto. Especie - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2299222998 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Embargos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Embargos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 311272263 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enfermedad Accidente</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Enfermedad Accidente - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 1991915875 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Fecha - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2849278376 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Indemni.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Indemni - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2361878631 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IRPF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2343472183 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Kms</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Kms - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2982069092 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>MEJORA V</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field MEJORA V - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 1630011464 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº Documento</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Nº Documento - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2747525037 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>P.P Vaca</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field P.P Vaca - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 3599391511 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>P.P.Ex</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field P.P.Ex - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2758253868 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Personal</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field Personal - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2501863183 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>PL. FLEX</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field PL. FLEX - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 2228552027 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>S.S Obrero</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field S.S Obrero - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 1602337943 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SS empresa</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field SS empresa - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 657295790 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SS total</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field SS total - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3188928427 - Field 1234637298 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>TC1</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Cabecera Nominas - Field TC1 - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3377152574 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Categorias</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -207,6 +357,396 @@
           <source>Descripcion</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Naturaleza Contable - Field Descripcion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nominas Configuración</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 39582071 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Alquileres</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Alquileres - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 604539987 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ant.diet</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Ant.diet - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3782970832 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Anticipos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Anticipos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 283549971 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Banco</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Banco - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2968187644 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bonificación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Bonificación - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 521116407 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bonificación Fundae</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Bonificación Fundae - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2014570223 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cobro Nómina</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Cobro Nómina - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3801212730 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Coste</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Coste - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3858584002 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ctrp Nominas extra</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Ctrp Nominas extra - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3231212501 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cuota Sindical</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Cuota Sindical - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 323353982 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Departamento</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Departamento - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1907281349 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Departamento TMP</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Departamento TMP - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2817095259 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Devengado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Devengado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1214341023 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dieta</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Dieta - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3326601200 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Diferencia</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Diferencia - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 762937221 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el número de dígitos de subcuenta que se añadirán a las cuentas base. Ejemplo: si son 7 dígitos, la cuenta 640 se convertirá en 6400001</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Dígitos Subcuenta - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 762937221 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dígitos Subcuenta por Defecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Dígitos Subcuenta - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2299222998 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Embargos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Embargos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 311272263 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enfermedad Accidente</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Enfermedad Accidente - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2556149801 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enfermedad Accidente 2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Enfermedad Accidente 2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 147735078 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especie Debe</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Especie Debe - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3529854852 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especie Haber</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Especie Haber - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 4152084924 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>F. Vacaciones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field F. Vacaciones - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1290916262 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>F. Vacaciones2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field F. Vacaciones2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1303377601 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 1 Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Global Dimension 1 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1337243520 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 2 Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Global Dimension 2 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2308462143 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 3 Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Global Dimension 3 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1098789766 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 4 Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Global Dimension 4 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3684128069 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Global Dimension 5 Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Global Dimension 5 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2361878631 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IRPF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2343472183 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Kms</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Kms - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3871863565 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nominas extra</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Nominas extra - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1003085754 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>P. Vacaciones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field P. Vacaciones - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3479566640 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>P. Vacaciones2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field P. Vacaciones2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1694230580 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Pago Nominas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Pago Nominas - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2758253868 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Personal</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Personal - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1884077111 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Programa</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Programa - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2877488942 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Programa por defecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Programa por defecto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2691449890 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Recurso Facturación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Recurso Facturación - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 2228552027 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>S.S Obrero</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field S.S Obrero - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1602337943 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SS empresa</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field SS empresa - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1614598489 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SS empresa 2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field SS empresa 2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 657295790 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SS total</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field SS total - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1234637298 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>TC1</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field TC1 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3514686166 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Empleado (blanco=todos)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Texto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nominas Detalle</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 604539987 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ant.diet</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Ant.diet - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 3782970832 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Anticipos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Anticipos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 283549971 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Banco</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Banco - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2968187644 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bonificación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Bonificación - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 521116407 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bonificación Fundae</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Bonificación Fundae - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 590037999 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>COMIDA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field COMIDA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 3801212730 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Coste</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Coste - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 323353982 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Departamento</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Departamento - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2817095259 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Devengado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Devengado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 1214341023 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dieta</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Dieta - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 3549639338 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>DIETAS</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field DIETAS - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 1711143003 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Diferencia</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Difª - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 3176012351 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dto. Especie</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Dto. Especie - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2299222998 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Embargos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Embargos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2169576197 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Empleado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Empleado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 311272263 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enfermedad Accidente</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Enfermedad Accidente - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 1991915875 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Fecha - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2849278376 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Indemni.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Indemni - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2361878631 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IRPF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2343472183 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Kms</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Kms - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2982069092 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>MEJORA V</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field MEJORA V - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 1042636322 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Número</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Numero - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2747525037 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>P.P Vaca</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field P.P Vaca - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 3599391511 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>P.P.Ex</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field P.P.Ex - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2758253868 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Personal</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Personal - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2501863183 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>PL. FLEX</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field PL. FLEX - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2228552027 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>S.S Obrero</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field S.S Obrero - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 1602337943 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SS empresa</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field SS empresa - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 657295790 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SS total</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field SS total - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 1234637298 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>TC1</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field TC1 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 1105294485 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Texto Dep</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Texto Dep - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 3856100107 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Proyecto Movimiento Pago</source>
@@ -517,6 +1057,206 @@
           <source>Total VAT</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Comparativo Ofertas - Control Total VAT Amount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Configuración Nominas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2396126743 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Clave</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Clave - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 762937221 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el número de dígitos de subcuenta que se añadirán a las cuentas base. Ejemplo: si son 7 dígitos, la cuenta 640 se convertirá en 6400001</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Dígitos Subcuenta - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 762937221 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dígitos Subcuenta por Defecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Dígitos Subcuenta - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2169576197 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el código del empleado. Dejar en blanco para aplicar a todos los empleados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Empleado - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2169576197 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Empleado (blanco=todos)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Empleado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 4254972781 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cobro</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Cobro - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 283549971 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Banco</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Banco - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2014570223 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cobro Nómina</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Cobro Nómina - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 3326703147 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Facturación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Facturación - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2691449890 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Recurso Facturación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Recurso Facturación - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control General - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 325359780 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Debe</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control DebeGeneral - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 3280333178 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Descuento Especie Debe</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Descuento Especie Debe - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2817095259 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Devengado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Devengado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 1214341023 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dieta</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Dieta - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2343472183 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Kms</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Kms - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 3412368054 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Haber</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control HaberGeneral - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 3782970832 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Anticipos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Anticipos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 754611400 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Descuento Especie Haber</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Descuento Especie Haber - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2299222998 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Embargos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Embargos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2361878631 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IRPF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2758253868 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Personal</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Personal - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2228552027 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>S.S Obrero</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control S.S Obrero - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 4280832806 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Programa</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control ProgramaGroup - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 323353982 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Departamento</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Departamento - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2877488942 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Programa por defecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Programa por defecto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 201803393 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Programa</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control ProgramaField - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 3940340495 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Seguridad Social</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Seguridad Social - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2819605642 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Debe</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control DebeSS - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 1602337943 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SS empresa</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control SS empresa - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 1067795400 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Haber</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control HaberSS - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 2968187644 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bonificación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Bonificación - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 521116407 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bonificación Fundae</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Bonificación Fundae - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 311272263 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enfermedad Accidente</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Enfermedad Accidente - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 1614598489 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SS empresa 2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control SS empresa 2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Action 2250476030 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Abre la lista de configuraciones de nóminas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Action Lista Configuraciones - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Action 2250476030 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Lista Configuraciones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Action Lista Configuraciones - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Action 711911077 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Rellena automáticamente las cuentas con los valores habituales del plan contable español para nóminas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Action Rellenar Cuentas por Defecto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Action 711911077 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Rellenar Cuentas por Defecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Action Rellenar Cuentas por Defecto - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1418604368 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Dependencias de Tareas</source>
@@ -1058,6 +1798,51 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Job Ledger E&amp;ntries - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 2886409203 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Lista Configuración Nominas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Lista Configuración Nominas - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2886409203 - Control 3514686166 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Empleado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Lista Configuración Nominas - Control Texto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2886409203 - Action 2945520854 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Crea una nueva configuración de nóminas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Lista Configuración Nominas - Action Nueva Configuración - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2886409203 - Action 2945520854 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nueva Configuración</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Lista Configuración Nominas - Action Nueva Configuración - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1731715574 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Lista Nominas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Lista Nominas - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1731715574 - Action 3779634586 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Abre la configuración de cuentas de nóminas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Lista Nominas - Action Configurar - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1731715574 - Action 3779634586 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Configurar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Lista Nominas - Action Configurar - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1731715574 - Action 2498313514 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importa las nóminas desde un archivo Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Lista Nominas - Action Importar - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1731715574 - Action 2498313514 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importar desde Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Lista Nominas - Action Importar - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3227545621 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Matriz de Ventas por Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1467,6 +2252,41 @@
           <source>Mostrar Detalle</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Matriz Ventas Proyecto - Action MostrarDetalle - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3154606627 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nominas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nominas - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3154606627 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nominas - Control General - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3154606627 - Control 897556144 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Totales</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nominas - Control Totales - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3154606627 - Action 3779634586 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Abre la configuración de cuentas de nóminas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nominas - Action Configurar - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3154606627 - Action 3779634586 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Configurar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nominas - Action Configurar - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3154606627 - Action 3817966508 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Contabiliza las nóminas creando las líneas de diario y movimientos de empleado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nominas - Action Contabilizar - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3154606627 - Action 3817966508 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Contabilizar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Nominas - Action Contabilizar - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1214637907 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Pagos Asociados</source>
@@ -2163,6 +2983,11 @@
           <note from="Developer" annotates="general" priority="2">Generated from the PromotedActionCategories property index 2.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Pendiente facturar - Action Category_Report - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 4170705766 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Subform Nominas Detalle</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3581397397 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>WordDesription</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -2412,6 +3237,11 @@
           <source>Specifies the value of the Mostrar en lineas de planif. field.</source>
           <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension GLAccountCardProyectosAvanzado - Control Mostrar en lineas de planif. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1863770389 - Action 279625425 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
+          <source>Actualizar Total Cost</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Action Actualizar Total Cost - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 2512388394 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Crear Presupuesto</source>
