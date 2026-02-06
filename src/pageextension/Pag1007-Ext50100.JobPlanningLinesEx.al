@@ -111,6 +111,12 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 Caption = 'Importe Pendiente';
                 ToolTip = 'Especifica el importe pendiente de pago para esta línea de planificación del proyecto.';
             }
+            field("Importe Comprometido"; Rec."Importe Comprometido")
+            {
+                ApplicationArea = All;
+                Caption = 'Importe Comprometido';
+                ToolTip = 'Especifica el importe comprometido para esta línea de planificación del proyecto.';
+            }
 
 
         }

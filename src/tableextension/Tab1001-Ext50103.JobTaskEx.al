@@ -252,7 +252,10 @@ tableextension 50303 "JobTaskEx" extends "Job Task" //1001
         {
             Caption = 'Importe Pagado';
             FieldClass = FlowField;
-            CalcFormula = sum("Proyecto Movimiento Pago"."Amount Paid" where("Job Task No." = field("Job Task No."), "Job No." = field("Job No.")));
+            //CalcFormula = sum("Proyecto Movimiento Pago"."Amount Paid" where("Job Task No." = field("Job Task No."), "Job No." = field("Job No.")));
+            CalcFormula = sum("Proyecto Movimiento Pago"."Amount Paid" where("Job No." = field("Job No."),
+                                                                                      "Job Task No." = field("Job Task No."),
+                                                                                      "Job Task No." = field(filter(Totaling))));
             Editable = false;
             DecimalPlaces = 2 : 2;
         }
@@ -262,6 +265,15 @@ tableextension 50303 "JobTaskEx" extends "Job Task" //1001
             FieldClass = FlowField;
             CalcFormula = sum("Job Ledger Entry"."Total Cost (LCY)" where("Job No." = field("Job No."), "Job Task No." = field("Job Task No."),
                                                                             "Job Task No." = field(filter(Totaling))));
+            Editable = false;
+            DecimalPlaces = 2 : 2;
+        }
+        field(50020; "Importe Comprometido"; Decimal)
+        {
+            Caption = 'Importe Comprometido';
+            FieldClass = FlowField;
+            CalcFormula = sum("Purchase Line"."Outstanding Amount" where("Job No." = field("Job No."), "Job Task No." = field("Job Task No."),
+            "Job Task No." = field(filter(Totaling))));
             Editable = false;
             DecimalPlaces = 2 : 2;
         }

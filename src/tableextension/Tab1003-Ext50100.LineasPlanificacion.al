@@ -127,6 +127,15 @@ tableextension 50300 "LineasPlanificacion" extends "Job Planning Line"//1003
             TableRelation = "Employee Ledger Entry"."Entry No.";
             Editable = false;
         }
+        //Importe Comprometido (Importe Pnediente pedidos de compra
+        field(50020; "Importe Comprometido"; Decimal)
+        {
+            Caption = 'Importe Comprometido';
+            DecimalPlaces = 2 : 2;
+            FieldClass = FlowField;
+            CalcFormula = sum("Purchase Line"."Outstanding Amount" where("Job No." = field("Job No."), "Job Task No." = field("Job Task No."), "Job Planning Line No." = field("Line No.")));
+            Editable = false;
+        }
 
     }
 

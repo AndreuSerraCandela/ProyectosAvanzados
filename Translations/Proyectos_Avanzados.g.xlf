@@ -758,6 +758,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Global Dimension 2 Code - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 1502472374 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the WIP Amount field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Importe Comprometido - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="Page 3008278152 - Control 1908272084 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the number of the related job.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -782,11 +787,6 @@
           <source>Specifies the sum of outstanding orders, in local currency, for this job task. The value of the Outstanding Amount (LCY) field is used for entries in the Purchase Line table of document type Order to calculate and update the contents of this field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Outstanding Orders - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 3008278152 - Control 3456178121 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the value of the WIP Amount field.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Pedidos Pendientes - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3008278152 - Control 1558886936 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the remaining total cost (LCY) as the sum of costs from job planning lines associated with the job task. The calculation occurs when you have specified that there is a usage link between the job ledger and the job planning lines.</source>
@@ -2868,6 +2868,16 @@
           <note from="Developer" annotates="general" priority="2">%</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Cantidad en Pedido Compra - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Control 1502472374 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Especifica el importe comprometido para esta línea de planificación del proyecto.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Importe Comprometido - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Control 1502472374 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Importe Comprometido</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Importe Comprometido - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 4048657685 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
           <source>Specifies the value of the No. Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3248,6 +3258,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Fecha inicio Tarea - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 1502472374 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Importe Comprometido</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Importe Comprometido - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 1654878624 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>Pendiente</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3357,6 +3372,11 @@
           <source>Generar compras</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Generar Compra - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1862886636 - Field 1502472374 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
+          <source>Importe Comprometido</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Importe Comprometido - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1862886636 - Field 3612896113 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
           <source>Importe Inicial Coste</source>

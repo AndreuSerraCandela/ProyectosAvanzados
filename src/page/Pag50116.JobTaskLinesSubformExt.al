@@ -114,7 +114,7 @@ page 50116 "Job Task Lines Subform Ext"
                     ToolTip = 'Specifies the value of the Coste Inicial field.';
                     Editable = false;
                 }
-                field("Pedidos Pendientes"; PedidosPendientes())
+                field("Importe Comprometido"; Rec."Importe Comprometido")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the WIP Amount field.';
@@ -124,7 +124,11 @@ page 50116 "Job Task Lines Subform Ext"
                     begin
                         PurchLine.SetRange("Document Type", PurchLine."Document Type"::Order);
                         PurchLine.SetRange("Job No.", Rec."Job No.");
-                        PurchLine.SetRange("Job Task No.", Rec."Job Task No.");
+                        if Rec.Totaling <> '' then
+                            PurchLine.SetFilter("Job Task No.", Rec.Totaling)
+                        else
+                            PurchLine.SetRange("Job Task No.", Rec."Job Task No.");
+
                         PurchLine.SetFilter("Outstanding Amount", '<>%1', 0);
                         Page.RunModal(0, PurchLine);
                     end;
@@ -248,7 +252,7 @@ page 50116 "Job Task Lines Subform Ext"
                     ToolTip = 'Specifies the estimate at completion (EAC) total price for a job task line. If the Apply Usage Link check box on the job is selected, then the EAC (Total Price) field is calculated as follows: Usage (Total Price) + Remaining (Total Price).';
                     Visible = false;
                 }
-                field("Amount Paid"; CalculaImportePagado())
+                field("Amount Paid"; Rec."Amount Paid")// CalculaImportePagado())
                 {
                     ApplicationArea = All;
                     Caption = 'Importe Pagado';
@@ -266,7 +270,7 @@ page 50116 "Job Task Lines Subform Ext"
                         Page.RunModal(0, JobEntries);
                     end;
                 }
-                field("Amount Pending"; CalculaImportePendiente())
+                field("Amount Pending"; Rec."Tota Cost" - Rec."Amount Paid")// CalculaImportePendiente())
                 {
                     ApplicationArea = All;
                     Caption = 'Importe Pendiente';
@@ -283,6 +287,7 @@ page 50116 "Job Task Lines Subform Ext"
                         Page.RunModal(0, JobEntries);
                     end;
                 }
+
                 field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
                 {
                     ApplicationArea = Dimensions;

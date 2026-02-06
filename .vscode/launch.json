@@ -13,7 +13,7 @@
       //"tenant": "2c9046bd-c626-47d2-a0ac-8c0f04ef874e",
       //"environmentName": "PARD_UAT_APM",
       "tenant": "a18adf9d-3e6c-4d92-9ddb-b6ae98304ef7",
-      "environmentName": "UAT_AF_050126",
+      "environmentName": "UAT_AF_290126",
       "breakOnError": true,
       "launchBrowser": true,
       "enableLongRunningSqlStatements": true,
