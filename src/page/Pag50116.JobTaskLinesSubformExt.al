@@ -985,11 +985,11 @@ page 50116 "Job Task Lines Subform Ext"
 
 
                 until JobTask.Next() = 0;
-            exit(ImportePagado);
+            exit(ImportePendiente);
         end;
     end;
 
-    end;
+
 
     var
         CodeEmphasize: Boolean;

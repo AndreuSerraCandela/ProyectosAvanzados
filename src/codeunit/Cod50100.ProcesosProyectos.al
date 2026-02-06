@@ -2011,6 +2011,7 @@ codeunit 50301 "ProcesosProyectos"
                                         if not Item.Get(NoCuenta) then begin
                                             Item.Init();
                                             Item."No." := NoCuenta;
+                                            Item."Gen. Prod. Posting Group" := BudgetCode; //Item."No.";
                                             Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
                                             JobsSetup.Get();
                                             ItemTempl.Get(JobsSetup."Item Template");
@@ -2018,22 +2019,22 @@ codeunit 50301 "ProcesosProyectos"
                                             if (JobsSetup."Item Template" <> '') and ItemTempl.Get(JobsSetup."Item Template") then begin
                                                 // Usar el template para crear el Item
                                                 ItemTemplMgt.CreateItemFromTemplate(Item, Ishandled, JobsSetup."Item Template");
-                                                If Item.Get(NoCuenta) then begin
-                                                    //Grear Grupo registro prodducto por producto
-                                                    Item."Gen. Prod. Posting Group" := Item."No.";
+                                                // If Item.Get(NoCuenta) then begin
+                                                //     //Grear Grupo registro prodducto por producto
 
-                                                    Item.Modify(true);
-                                                end;
+
+                                                //     Item.Modify(true);
+                                                // end;
                                             end else begin
                                                 // Si no hay template configurado, Error
                                                 Error('No hay template configurado para crear el Producto %1', NoCuenta);
                                             end;
 
                                         end;
-                                        If Not GenProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
+                                        If Not GenProdPostingGroup.Get(BudgetCode) Then begin//Item."Gen. Prod. Posting Group") then begin
                                             GenProdPostingGroup.Init();
-                                            GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
-                                            GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
+                                            GenProdPostingGroup."Code" := BudgetCode; //Item."Gen. Prod. Posting Group";
+                                            GenProdPostingGroup.Description := Descripcion; // Item."Gen. Prod. Posting Group";
                                             GenProdPostingGroup.Insert(true);
                                         end;
                                         If GenNegPostingGrup.FindFirst Then

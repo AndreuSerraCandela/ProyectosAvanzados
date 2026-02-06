@@ -622,6 +622,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
         CtaCta: Text[30];
         GenNegPostingGrup: Record "Gen. Business Posting Group";
         GenPostingSetup: Record "General Posting Setup";
+        GrupoProducto: Text;
     begin
         rInf.Get();
         rInf.TestField("Cta Contable Estructura");
@@ -663,7 +664,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                     Descripcion := '';
                     Tipo := '';
                     NoCuenta := '';
-                    DescripcionCuenta := '';
+                    GrupoProducto := '';
                     LargoCodigo := 0;
                     Cantidad := 0;
                     Cost := 0;
@@ -690,7 +691,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                 4: // Columna D - Número de cuenta/producto/recurso
                                     NoCuenta := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NoCuenta));
                                 5: // Columna E - Descripción cuenta contable
-                                    DescripcionCuenta := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(DescripcionCuenta));
+                                    GrupoProducto := TempExcelBuffer."Cell Value as Text";
                                 6: // Columna F - Largo del código
                                     begin
                                         If Not Evaluate(LargoCodigo, TempExcelBuffer."Cell Value as Text") then LargoCodigo := 0;
@@ -751,7 +752,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                                 if not GLAccount.Get(NoCuenta) then begin
                                                     GLAccount.Init();
                                                     GLAccount."No." := NoCuenta;
-                                                    GLAccount.Name := CopyStr(DescripcionCuenta, 1, MaxStrLen(GLAccount.Name));
+                                                    GLAccount.Name := CopyStr(GrupoProducto, 1, MaxStrLen(GLAccount.Name));
                                                     if DescripcionCuenta = '' then
                                                         GLAccount.Name := Descripcion;
                                                     GLAccount."Account Type" := GLAccount."Account Type"::Posting;
@@ -772,7 +773,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                                         ItemTemplMgt.InsertItemFromTemplate(Item);
                                                         If Item.Get(NoCuenta) then begin
                                                             //Grear Grupo registro prodducto por producto
-                                                            Item."Gen. Prod. Posting Group" := Item."No.";
+                                                            Item."Gen. Prod. Posting Group" := GrupoProducto;
                                                             If Not GeNProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
                                                                 GenProdPostingGroup.Init();
                                                                 GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
