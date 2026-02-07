@@ -920,6 +920,9 @@ codeunit 50301 "ProcesosProyectos"
         DimSetIDArr: array[10] of Integer;
         NoLinea: Integer;
         GlSetup: Record "General Ledger Setup";
+        Item: Record Item;
+        Resource: Record Resource;
+        GLAccount: Record "G/L Account";
     begin
 
         OnBeforeCreatePurchaseLine(JobPlanningLine, PurchaseHeader, PurchaseHeader2, JobInvCurrency);
@@ -959,6 +962,30 @@ codeunit 50301 "ProcesosProyectos"
 
         PurchaseLine.Validate("No.", JobPlanningLine2."No.");
         PurchaseLine.Validate("Gen. Prod. Posting Group", JobPlanningLine2."Gen. Prod. Posting Group");
+        If PurchaseLine."VAT Prod. Posting Group" <> '' Then
+            PurchaseLine.Validate("VAT Prod. Posting Group")
+        else begin
+            Case PurchaseLine.Type of
+                PurchaseLine.Type::Item:
+                    Begin
+                        Item.Get(PurchaseLine."No.");
+                        Item.TestField("VAT Prod. Posting Group");
+                        PurchaseLine.Validate("VAT Prod. Posting Group", Item."VAT Prod. Posting Group");
+                    End;
+                PurchaseLine.Type::Resource:
+                    begin
+                        Resource.Get(PurchaseLine."No.");
+                        Resource.TestField("VAT Prod. Posting Group");
+                        PurchaseLine.Validate("VAT Prod. Posting Group", Resource."VAT Prod. Posting Group");
+                    End;
+                PurchaseLine.Type::"G/L Account":
+                    begin
+                        GLAccount.Get(PurchaseLine."No.");
+                        GLAccount.TestField("VAT Prod. Posting Group");
+                        PurchaseLine.Validate("VAT Prod. Posting Group", GLAccount."VAT Prod. Posting Group");
+                    End;
+            end;
+        end;
         PurchaseLine.Validate("Location Code", JobPlanningLine2."Location Code");
         // PurchaseLine.Validate("Work Type Code", JobPlanningLine."Work Type Code");
 
