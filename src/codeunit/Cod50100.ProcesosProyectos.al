@@ -961,7 +961,8 @@ codeunit 50301 "ProcesosProyectos"
             PurchaseLine.Validate(Type, PurchaseLine.Type::Resource);
 
         PurchaseLine.Validate("No.", JobPlanningLine2."No.");
-        PurchaseLine.Validate("Gen. Prod. Posting Group", JobPlanningLine2."Gen. Prod. Posting Group");
+        If JobPlanningLine2."Gen. Prod. Posting Group" <> '' Then
+            PurchaseLine.Validate("Gen. Prod. Posting Group", JobPlanningLine2."Gen. Prod. Posting Group");
         If PurchaseLine."VAT Prod. Posting Group" <> '' Then
             PurchaseLine.Validate("VAT Prod. Posting Group")
         else begin
@@ -1062,6 +1063,28 @@ codeunit 50301 "ProcesosProyectos"
         //NoLinea := GetNextLineNo(PurchaseLine);
         // PurchaseLine."Line No." := NoLinea;
         OnBeforeInsertPurchaseLine(PurchaseLine, PurchaseHeader, Job, JobPlanningLine2);
+        If PurchaseLine."Gen. Prod. Posting Group" = '' Then begin
+            Case PurchaseLine.Type of
+                PurchaseLine.Type::Item:
+                    Begin
+                        Item.Get(PurchaseLine."No.");
+                        Item.TestField("Gen. Prod. Posting Group");
+                        PurchaseLine."Gen. Prod. Posting Group" := Item."Gen. Prod. Posting Group";
+                    End;
+                PurchaseLine.Type::Resource:
+                    begin
+                        Resource.Get(PurchaseLine."No.");
+                        Resource.TestField("Gen. Prod. Posting Group");
+                        PurchaseLine."Gen. Prod. Posting Group" := Resource."Gen. Prod. Posting Group";
+                    End;
+                PurchaseLine.Type::"G/L Account":
+                    begin
+                        GLAccount.Get(PurchaseLine."No.");
+                        GLAccount.TestField("Gen. Prod. Posting Group");
+                        PurchaseLine."Gen. Prod. Posting Group" := GLAccount."Gen. Prod. Posting Group";
+                    End;
+            end;
+        end;
 
         PurchaseLine.Insert(true);
         JobPlanningLine.Modify();

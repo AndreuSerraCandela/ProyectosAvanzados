@@ -968,6 +968,46 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Adjuntos Informe - Action ImportarPDF - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 51256956 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Borrar Grupos Reg. Producto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Borrar Grupos Reg. Producto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 51256956 - NamedType 1235873716" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Borrar %1 grupo(s) de registro de producto y sus configuraciones en Config. contabilidad general?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Borrar Grupos Reg. Producto - NamedType ConfirmarBorradoQst</note>
+        </trans-unit>
+        <trans-unit id="Page 51256956 - NamedType 3564265473" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No hay ningún registro seleccionado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Borrar Grupos Reg. Producto - NamedType NoSeleccionMsg</note>
+        </trans-unit>
+        <trans-unit id="Page 51256956 - NamedType 899152655" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Se han borrado %1 registro(s) y sus configuraciones.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Borrar Grupos Reg. Producto - NamedType RegistrosBorradosMsg</note>
+        </trans-unit>
+        <trans-unit id="Page 51256956 - Control 3004954119 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Código del grupo de registro de producto.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Borrar Grupos Reg. Producto - Control Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 51256956 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Descripción del grupo.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Borrar Grupos Reg. Producto - Control Description - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 51256956 - Action 177578700 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Borra todos los grupos seleccionados y sus configuraciones en Config. contabilidad general.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Borrar Grupos Reg. Producto - Action Borrar seleccionados y configuraciones - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 51256956 - Action 177578700 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Borrar seleccionados y configuraciones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Borrar Grupos Reg. Producto - Action Borrar seleccionados y configuraciones - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3787461146 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Categorías</source>
           <note from="Developer" annotates="general" priority="2"></note>
