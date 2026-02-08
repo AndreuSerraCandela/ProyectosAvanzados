@@ -1,0 +1,18 @@
+BORRAR GRUPOS DE REGISTRO DE PRODUCTO (Gen. Product Posting Group)
+====================================================================
+
+REQUISITO PREVIO
+- En Información de la empresa debe estar marcado el campo "Permitir borrar grupos".
+  Si no lo está, el botón no se mostrará en la lista.
+
+PASOS PARA BORRAR
+1. Ir a la página "Grupos de registro de producto" (Gen. Product Posting Groups).
+2. Seleccionar las filas que se quieran borrar (checkbox a la izquierda).
+3. Pulsar la acción "Borrar seleccionados y configuraciones".
+4. Confirmar en el mensaje indicando cuántos grupos se van a borrar.
+
+Qué se borra
+- Los grupos de registro de producto seleccionados.
+- Todas sus configuraciones en "Config. contabilidad general" (General Posting Setup).
+
+Nota: Si un grupo está en uso (productos, recursos, cuentas, etc.), el sistema no permitirá borrarlo y mostrará un error.

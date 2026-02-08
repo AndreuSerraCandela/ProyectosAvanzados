@@ -51,6 +51,11 @@ tableextension 50305 "CompanyInf" extends "Company Information" //79
             Caption = 'Letra Columna Cta. Cble. Mov';
 
         }
+        field(50006; "Permitir borrar grupos"; Boolean)
+        {
+            Caption = 'Permitir borrar grupos';
+            ToolTip = 'Si está activo, se muestra la acción para borrar grupos de registro de producto seleccionados y sus configuraciones en la página Gen. Product Posting Groups.';
+        }
     }
 
     var

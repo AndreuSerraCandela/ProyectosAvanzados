@@ -3203,6 +3203,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension BusgetEntries - Control Job No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 4275744093 - Control 2928774794 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3469146285">
+          <source>Si está activo, se muestra la acción para borrar grupos de registro de producto seleccionados en la página Gen. Product Posting Groups.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension CompanyInfor - Control Permitir borrar grupos - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 3873351432 - Control 1908272084 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
           <source>Especifica el número del proyecto asociado a esta entrada del mayor de empleados.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3232,6 +3237,31 @@
           <source>Nº Tarea Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Control Job Task No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2714918652 - NamedType 1235873716" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 2714918652">
+          <source>¿Borrar %1 grupo(s) de registro de producto y sus configuraciones en Config. contabilidad general?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Gen Prod Posting Groups PA - NamedType ConfirmarBorradoQst</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2714918652 - NamedType 3564265473" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 2714918652">
+          <source>No hay ningún registro seleccionado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Gen Prod Posting Groups PA - NamedType NoSeleccionMsg</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2714918652 - NamedType 899152655" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 2714918652">
+          <source>Se han borrado %1 registro(s) y sus configuraciones.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Gen Prod Posting Groups PA - NamedType RegistrosBorradosMsg</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2714918652 - Action 177578700 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 675304631">
+          <source>Borra todos los grupos de registro de producto seleccionados y sus configuraciones en Config. contabilidad general.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Gen Prod Posting Groups PA - Action Borrar seleccionados y configuraciones - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2714918652 - Action 177578700 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 675304631">
+          <source>Borrar seleccionados y configuraciones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Gen Prod Posting Groups PA - Action Borrar seleccionados y configuraciones - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 3134381272 - Control 2165121140 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4219821699">
           <source>Specifies the value of the Mostrar en lineas de planif. field.</source>
@@ -3857,6 +3887,16 @@
           <source>Invoice Legal Text</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Invoice Legal Text - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3460046866 - Field 2928774794 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
+          <source>Si está activo, se muestra la acción para borrar grupos de registro de producto seleccionados y sus configuraciones en la página Gen. Product Posting Groups.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Permitir borrar grupos - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3460046866 - Field 2928774794 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
+          <source>Permitir borrar grupos</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Permitir borrar grupos - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 3460046866 - Field 2162379755 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
           <source>Url Pdf</source>

@@ -37,8 +37,11 @@ pageextension 50303 "CompanyInfor" extends "Company Information" //1
             {
                 ApplicationArea = all;
             }
-
-
+            field("Permitir borrar grupos"; Rec."Permitir borrar grupos")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Si está activo, se muestra la acción para borrar grupos de registro de producto seleccionados en la página Gen. Product Posting Groups.';
+            }
         }
     }
     actions

@@ -402,6 +402,36 @@ codeunit 50302 "Eventos-proyectos"
 
 
 
+    /// <summary>
+    /// Borra los registros de Gen. Product Posting Group pasados (p. ej. con SetSelectionFilter)
+    /// y sus configuraciones en General Posting Setup.
+    /// </summary>
+    procedure DeleteSelectedGenProdPostingGroupsWithSetup(var GenProdPostingGroup: Record "Gen. Product Posting Group"): Integer
+    var
+        GenPostingSetup: Record "General Posting Setup";
+        GenProdPostingGroupToDelete: Record "Gen. Product Posting Group";
+        CodesToDelete: List of [Code[20]];
+        CodeValue: Code[20];
+        Count: Integer;
+    begin
+        if not GenProdPostingGroup.FindSet() then
+            exit(0);
+        repeat
+            CodesToDelete.Add(GenProdPostingGroup.Code);
+        until GenProdPostingGroup.Next() = 0;
+
+        Count := 0;
+        foreach CodeValue in CodesToDelete do begin
+            if GenProdPostingGroupToDelete.Get(CodeValue) then begin
+                GenPostingSetup.SetRange("Gen. Prod. Posting Group", CodeValue);
+                GenPostingSetup.DeleteAll(true);
+                GenProdPostingGroupToDelete.Delete(true);
+                Count += 1;
+            end;
+        end;
+        exit(Count);
+    end;
+
     var
         myInt: Integer;
 }
