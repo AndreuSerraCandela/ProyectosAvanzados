@@ -1070,6 +1070,7 @@ codeunit 50301 "ProcesosProyectos"
                         Item.Get(PurchaseLine."No.");
                         Item.TestField("Gen. Prod. Posting Group");
                         PurchaseLine."Gen. Prod. Posting Group" := Item."Gen. Prod. Posting Group";
+
                     End;
                 PurchaseLine.Type::Resource:
                     begin
@@ -1083,6 +1084,25 @@ codeunit 50301 "ProcesosProyectos"
                         GLAccount.TestField("Gen. Prod. Posting Group");
                         PurchaseLine."Gen. Prod. Posting Group" := GLAccount."Gen. Prod. Posting Group";
                     End;
+            end;
+        end;
+        //unit of measure code
+        If PurchaseLine."Unit of Measure Code" = '' Then begin
+            Case PurchaseLine.Type of
+                PurchaseLine.Type::Item:
+                    Begin
+                        Item.Get(PurchaseLine."No.");
+                        Item.TestField("Purch. Unit of Measure");
+                        PurchaseLine."Unit of Measure Code" := Item."Purch. Unit of Measure";
+
+                    End;
+                PurchaseLine.Type::Resource:
+                    begin
+                        Resource.Get(PurchaseLine."No.");
+                        Resource.TestField("Base Unit of Measure");
+                        PurchaseLine."Unit of Measure Code" := Resource."Base Unit of Measure";
+                    End;
+
             end;
         end;
 
