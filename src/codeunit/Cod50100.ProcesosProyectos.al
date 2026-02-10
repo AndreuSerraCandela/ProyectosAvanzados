@@ -923,6 +923,7 @@ codeunit 50301 "ProcesosProyectos"
         Item: Record Item;
         Resource: Record Resource;
         GLAccount: Record "G/L Account";
+        DimSetID: Integer;
     begin
 
         OnBeforeCreatePurchaseLine(JobPlanningLine, PurchaseHeader, PurchaseHeader2, JobInvCurrency);
@@ -1033,29 +1034,15 @@ codeunit 50301 "ProcesosProyectos"
         PurchaseLine."Job No." := JobPlanningLine2."Job No.";
         PurchaseLine."Job Task No." := JobPlanningLine2."Job Task No.";
         PurchaseLine."Job Planning Line No." := JobPlanningLine2."Line No.";
+        
         if PurchaseLine."Job Task No." <> '' then begin
             SourceCodeSetup.Get();
-            DimSetIDArr[1] := PurchaseLine."Dimension Set ID";
-            DimSetIDArr[2] :=
-              DimMgt.CreateDimSetFromJobTaskDim(
-                PurchaseLine."Job No.", PurchaseLine."Job Task No.", PurchaseLine."Shortcut Dimension 1 Code", PurchaseLine."Shortcut Dimension 2 Code");
-            DimSetIDArr[3] := GetLedgEntryDimSetID(JobPlanningLine2);
-            DimSetIDArr[4] := GetJobLedgEntryDimSetID(JobPlanningLine2);
-
-            DimMgt.CreateDimForPurchLineWithHigherPriorities(
-              PurchaseLine,
-              0,
-              DimSetIDArr[5],
-              PurchaseLine."Shortcut Dimension 1 Code",
-              PurchaseLine."Shortcut Dimension 2 Code",
-             // SourceCodeSetup.Purchases,
-             SourceCodeSetup."Primary Key",
-              DATABASE::Job);
-            //DATABASE::JOB);
-            PurchaseLine."Dimension Set ID" :=
-              DimMgt.GetCombinedDimensionSetID(
-                DimSetIDArr, PurchaseLine."Shortcut Dimension 1 Code", PurchaseLine."Shortcut Dimension 2 Code");
-
+            //Traspasar Dimensiones JobPlanningLine
+            DimSetID := GetJobLedgEntryDimSetID(JobPlanningLine);
+            if DimSetID = 0 then
+                DimSetID := GetDimSetIDFromJobTaskDimension(PurchaseLine."Job No.", PurchaseLine."Job Task No.");
+            if DimSetID <> 0 then
+                PurchaseLine.Validate("Dimension Set ID", DimSetID);
         end;
         PurchaseLine.Description := JobPlanningLine2.Description;
         PurchaseLine."Description 2" := JobPlanningLine2."Description 2";
@@ -1212,6 +1199,7 @@ codeunit 50301 "ProcesosProyectos"
     local procedure GetJobLedgEntryDimSetID(JobPlanningLine: Record "Job Planning Line"): Integer
     var
         JobLedgerEntry: Record "Job Ledger Entry";
+        JobTask: Record "Job Task";
     begin
         if JobPlanningLine."Job Ledger Entry No." = 0 then
             exit(0);
@@ -1220,6 +1208,28 @@ codeunit 50301 "ProcesosProyectos"
             exit(JobLedgerEntry."Dimension Set ID");
 
         exit(0);
+    end;
+
+    local procedure GetDimSetIDFromJobTaskDimension(JobNo: Code[20]; JobTaskNo: Code[20]): Integer
+    var
+        JobTaskDimension: Record "Job Task Dimension";
+        DimValue: Record "Dimension Value";
+        TempDimSetEntry: Record "Dimension Set Entry" temporary;
+        DimMgt: Codeunit DimensionManagement;
+    begin
+        JobTaskDimension.SetRange("Job No.", JobNo);
+        JobTaskDimension.SetRange("Job Task No.", JobTaskNo);
+        if not JobTaskDimension.FindSet() then
+            exit(0);
+        repeat
+            if DimValue.Get(JobTaskDimension."Dimension Code", JobTaskDimension."Dimension Value Code") then begin
+                TempDimSetEntry."Dimension Code" := JobTaskDimension."Dimension Code";
+                TempDimSetEntry."Dimension Value Code" := JobTaskDimension."Dimension Value Code";
+                TempDimSetEntry."Dimension Value ID" := DimValue."Dimension Value ID";
+                TempDimSetEntry.Insert(true);
+            end;
+        until JobTaskDimension.Next() = 0;
+        exit(DimMgt.GetDimensionSetID(TempDimSetEntry));
     end;
 
     local procedure GetLedgEntryDimSetID(JobPlanningLine: Record "Job Planning Line"): Integer
