@@ -83,6 +83,7 @@ tableextension 50310 "JobMyb" extends Job //167
                 if rec."Versión Base" > Ver then Rec."Versión Base" := Ver;
                 JobTask.SetRange("Job No.", rec."No.");
                 JobTask.ModifyAll("Versión Base", rec."Versión Base");
+                JobTask.ModifyAll("Versión Final", Ver);
             end;
         }
         field(50103; "Cod Almacen de Proyecto"; code[10])

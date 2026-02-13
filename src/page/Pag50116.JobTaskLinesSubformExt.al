@@ -114,6 +114,12 @@ page 50116 "Job Task Lines Subform Ext"
                     ToolTip = 'Specifies the value of the Coste Inicial field.';
                     Editable = false;
                 }
+                field("Coste Forecast"; Rec."Coste Forecast")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Coste Forecast field.';
+                    Editable = false;
+                }
                 field("Importe Comprometido"; Rec."Importe Comprometido")
                 {
                     ApplicationArea = All;

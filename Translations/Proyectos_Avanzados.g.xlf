@@ -823,6 +823,571 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Proyecto Movimiento Pago - Field Vendor No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - NamedType 1160039728" size-unit="char" translate="yes" xml:space="preserve">
+          <source>VENTAS</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - NamedType Text90000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - NamedType 522343111" size-unit="char" translate="yes" xml:space="preserve">
+          <source>COMPRAS</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - NamedType Text90001</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 1160039728" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Confirma que desea anular el asiento ?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 522343111" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Generar un nuevo asiento?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90001</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 2435432962" size-unit="char" translate="yes" xml:space="preserve">
+          <source>La fecha de contabilización está fuera del rango de fechas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90002</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 1797736345" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular un asiento anterior a un cierre</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90003</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 3710826196" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Compresión de datos previa \</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90004</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 3073129579" size-unit="char" translate="yes" xml:space="preserve">
+          <source>efectuada para esa fecha.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90005</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 691252134" size-unit="char" translate="yes" xml:space="preserve">
+          <source>GENERAL</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90006</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 53555517" size-unit="char" translate="yes" xml:space="preserve">
+          <source>ANULACION</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90007</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 353434088" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Anulaciones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90008</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 4010704767" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacionado con un mov. IVA\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90009</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 1972840543" size-unit="char" translate="yes" xml:space="preserve">
+          <source>que se encuentra cerrado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90010</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 2610537160" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacionado con un documento\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90011</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 3248233777" size-unit="char" translate="yes" xml:space="preserve">
+          <source>que está incluido en una remesa.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90012</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 3885930394" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacionado con un mov. Cliente\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90013</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 228659715" size-unit="char" translate="yes" xml:space="preserve">
+          <source>que ya está liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90014</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 866356332" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacionado con un mov. Proveedor\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90015</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 1504052949" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacionado con un mov. IVA.\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90016</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 2141749566" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No puede generarse el nuevo asiento.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90017</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 2779446183" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacinado con un mov. Banco\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90018</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 3417142800" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacinado con un mov. Cheque\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90019</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 644559538" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacinado con un documento\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90020</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 6862921" size-unit="char" translate="yes" xml:space="preserve">
+          <source>que se encuentra está liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90021</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 3664133600" size-unit="char" translate="yes" xml:space="preserve">
+          <source>que se encuentra remesado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90022</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 3026436983" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este asiento no se puede anular porque todas sus líneas estan marcadas como "Asiento Automático".</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text90023</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 500275536 - NamedType 3960103487" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No puede anular el asiento, ya que el número de asiento no coincide en el mov %1</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnulaAsiento - NamedType Text10001</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 1160039728" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Confirma que desea anular la abono ?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 522343111" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Generar nuevo abono?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90001</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 2435432962" size-unit="char" translate="yes" xml:space="preserve">
+          <source>La fecha de contabilización está fuera del rango de fechas.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90002</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 1797736345" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono con efectos liquidados o pagos.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90003</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 3710826196" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono con documentos en remesa.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90004</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 3073129579" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono con documentos registrados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90005</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 691252134" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono con documentos cerrados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90006</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 53555517" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono con IVA liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90007</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 353434088" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono anterior a un cierre.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90008</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 4010704767" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Compresión de datos previa efectuada para esa fecha.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90009</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 1972840543" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Necesita definir una serie de anulación de ventas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text90010</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 240277270 - NamedType 652464844" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Esta abono ha sido ajustada y no se puede anular.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoCompra - NamedType Text50000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 1160039728" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Confirma que desea anular la abono ?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 522343111" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Generar nuevo abono?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90001</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 2435432962" size-unit="char" translate="yes" xml:space="preserve">
+          <source>La fecha de contabilización está fuera del rango de fechas.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90002</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 1797736345" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono con efectos liquidados o pagos.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90003</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 3710826196" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono con documentos en remesa.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90004</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 3073129579" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono con documentos registrados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90005</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 691252134" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono con documentos cerrados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90006</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 53555517" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono con IVA liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90007</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 353434088" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una abono anterior a un cierre.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90008</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 4010704767" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Compresión de datos previa efectuada para esa fecha.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90009</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 1972840543" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Necesita definir una serie de anulación de ventas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text90010</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 2138847948 - NamedType 652464844" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Esta abono ha sido ajustada y no se puede anular.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularAbonoVenta - NamedType Text50000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 1160039728" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Confirma que desea anular la factura ?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 522343111" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Generar nueva factura?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90001</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 2435432962" size-unit="char" translate="yes" xml:space="preserve">
+          <source>La fecha de contabilización está fuera del rango de fechas.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90002</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 1797736345" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con efectos liquidados o pagos.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90003</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 3710826196" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con documentos en remesa.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90004</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 3073129579" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con documentos registrados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90005</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 691252134" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con documentos cerrados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90006</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 53555517" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con IVA liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90007</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 353434088" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura anterior a un cierre.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90008</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 2610537160" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con activos.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90011</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 4010704767" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Compresión de datos previa efectuada para esa fecha.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90009</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 1972840543" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Necesita definir una serie de anulación de ventas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text90010</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 1342656347 - NamedType 652464844" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Esta factura ha sido ajustada y no se puede anular.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaCompra - NamedType Text50000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 1160039728" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Confirma que desea anular la factura ?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 522343111" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Generar nueva factura?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90001</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 2557649389" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Quiere conservar el número?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90025</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 1919952772" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Usar fecha envio?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90026</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 2435432962" size-unit="char" translate="yes" xml:space="preserve">
+          <source>La fecha de contabilización está fuera del rango de fechas.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90002</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 1797736345" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con efectos liquidados o pagos.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90003</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 3710826196" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con documentos en remesa.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90004</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 3073129579" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con documentos registrados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90005</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 691252134" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con documentos cerrados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90006</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 53555517" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con IVA liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90007</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 353434088" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura anterior a un cierre.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90008</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 4010704767" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Compresión de datos previa efectuada para esa fecha.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90009</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 1972840543" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Necesita definir una serie de anulación de ventas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text90010</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 3977650813 - NamedType 652464844" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Esta factura ha sido ajustada y no se puede anular.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVenta - NamedType Text50000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 4060205320 - NamedType 2435432962" size-unit="char" translate="yes" xml:space="preserve">
+          <source>La fecha de contabilización está fuera del rango de fechas.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVentaGrupo - NamedType Text90002</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 4060205320 - NamedType 1797736345" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con efectos liquidados o pagos.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVentaGrupo - NamedType Text90003</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 4060205320 - NamedType 3710826196" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con documentos en remesa.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVentaGrupo - NamedType Text90004</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 4060205320 - NamedType 3073129579" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con documentos registrados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVentaGrupo - NamedType Text90005</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 4060205320 - NamedType 691252134" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con documentos cerrados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVentaGrupo - NamedType Text90006</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 4060205320 - NamedType 53555517" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura con IVA liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVentaGrupo - NamedType Text90007</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 4060205320 - NamedType 353434088" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular una factura anterior a un cierre.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVentaGrupo - NamedType Text90008</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 4060205320 - NamedType 4010704767" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Compresión de datos previa efectuada para esa fecha.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVentaGrupo - NamedType Text90009</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 4060205320 - NamedType 1972840543" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Necesita definir una serie de anulación de ventas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVentaGrupo - NamedType Text90010</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 4060205320 - NamedType 652464844" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Esta factura ha sido ajustada y no se puede anular.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method AnularFacturaVentaGrupo - NamedType Text50000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 1160039728" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Confirma que desea anular el asiento ?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 522343111" size-unit="char" translate="yes" xml:space="preserve">
+          <source>¿Generar un nuevo asiento?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90001</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 2435432962" size-unit="char" translate="yes" xml:space="preserve">
+          <source>La fecha de contabilización está fuera del rango de fechas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90002</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 1797736345" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No se puede anular un asiento anterior a un cierre</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90003</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 3710826196" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Compresión de datos previa \</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90004</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 3073129579" size-unit="char" translate="yes" xml:space="preserve">
+          <source>efectuada para esa fecha.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90005</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 691252134" size-unit="char" translate="yes" xml:space="preserve">
+          <source>GENERAL</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90006</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 53555517" size-unit="char" translate="yes" xml:space="preserve">
+          <source>ANULACION</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90007</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 353434088" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Anulaciones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90008</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 4010704767" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacionado con un mov. IVA\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90009</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 1972840543" size-unit="char" translate="yes" xml:space="preserve">
+          <source>que se encuentra cerrado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90010</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 2610537160" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacionado con un documento\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90011</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 3248233777" size-unit="char" translate="yes" xml:space="preserve">
+          <source>que está incluido en una remesa.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90012</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 3885930394" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacionado con un mov. Cliente\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90013</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 228659715" size-unit="char" translate="yes" xml:space="preserve">
+          <source>que ya está liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90014</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 866356332" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacionado con un mov. Proveedor\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90015</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 1504052949" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacionado con un mov. IVA.\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90016</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 2141749566" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No puede generarse el nuevo asiento.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90017</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 2779446183" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacinado con un mov. Banco\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90018</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 3417142800" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacinado con un mov. Cheque\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90019</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 644559538" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este movimiento está relacinado con un documento\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90020</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 6862921" size-unit="char" translate="yes" xml:space="preserve">
+          <source>que se encuentra está liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90021</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 3664133600" size-unit="char" translate="yes" xml:space="preserve">
+          <source>que se encuentra remesado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90022</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 3026436983" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Este asiento no se puede anular porque todas sus líneas estan marcadas como "Asiento Automático".</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text90023</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3054710344 - Method 270919880 - NamedType 3960103487" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No puede anular el asiento, ya que el número de asiento no coincide en el mov %1</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Cancel Entries - Method CrearLinDiario - NamedType Text10001</note>
+        </trans-unit>
         <trans-unit id="Codeunit 1528286649 - Method 2266206396 - NamedType 953671837" size-unit="char" translate="yes" xml:space="preserve">
           <source>application/json</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1472,6 +2037,11 @@
           <source>Specifies, in the local currency, the total billable price for the job task during the time period in the Planning Date Filter field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Contract (Total Price) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 1736630463 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Coste Forecast field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Coste Forecast - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3008278152 - Control 3677023465 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the value of the Coste Inicial field.</source>
@@ -3308,6 +3878,151 @@
           <note from="Developer" annotates="general" priority="2">ESP="Mostrar en lineas de planificacion"</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension GLAccountCardProyectosAvanzado - Control Mostrar en lineas de planif. - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - NamedType 2476940767" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Cliente,Proveedor</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - NamedType Text000</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 3507815391 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1887905131">
+          <source>Anular</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1887905131">
+          <source>Anular Asiento</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 1160039728" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>¿Confirma que desea anular el asiento ?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90000</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 522343111" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>¿Generar un nuevo asiento?</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90001</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 2435432962" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>La fecha de contabilización está fuera del rango de fechas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90002</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 1797736345" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>No se puede anular un asiento anterior a un cierre</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90003</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 3710826196" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Compresión de datos previa \</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90004</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 3073129579" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>efectuada para esa fecha.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90005</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 691252134" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>GENERAL</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90006</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 53555517" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>ANULACION</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90007</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 353434088" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Anulaciones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90008</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 4010704767" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Este movimiento está relacionado con un mov. IVA\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90009</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 1972840543" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>que se encuentra cerrado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90010</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 2610537160" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Este movimiento está relacionado con un documento\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90011</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 3248233777" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>que está incluido en una remesa.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90012</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 3885930394" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Este movimiento está relacionado con un mov. Cliente\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90013</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 228659715" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>que ya está liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90014</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 866356332" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Este movimiento está relacionado con un mov. Proveedor\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90015</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 1504052949" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Este movimiento está relacionado con un mov. IVA.\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90016</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 2141749566" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>No puede generarse el nuevo asiento.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90017</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 2779446183" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Este movimiento está relacinado con un mov. Banco\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90018</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 3417142800" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Este movimiento está relacinado con un mov. Cheque\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90019</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 644559538" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Este movimiento está relacinado con un documento\</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90020</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 6862921" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>que se encuentra está liquidado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90021</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 3664133600" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>que se encuentra remesado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90022</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 3026436983" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>Este asiento no se puede anular porque todas sus líneas estan marcadas como "Asiento Automático".</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text90023</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 4266814226 - Method 1377591017 - NamedType 3960103487" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 1898518212">
+          <source>No puede anular el asiento, ya que el número de asiento no coincide en el mov %1</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Anular Asiento - Method OnAction - NamedType Text10001</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1898518212 - Action 872919274 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1887905131">
+          <source>Desmarcar Automático</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Desmarcar Automático - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 279625425 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Actualizar Total Cost</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4133,6 +4848,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Amount Paid - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 1736630463 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Coste Forecast</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Coste Forecast - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 3677023465 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>Coste Inicial</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4212,6 +4932,11 @@
           <source>Versión Base</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Versión Base - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 1498526366 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Versión Final</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Versión Final - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 352425749 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>WIP %</source>
