@@ -43,6 +43,7 @@ codeunit 50301 "ProcesosProyectos"
         Text010: Label 'The currency dates on all planning lines will be updated based on the invoice posting date because there is a difference in currency exchange rates. Recalculations will be based on the Exch. Calculation setup for the Cost and Price values for the job. Do you want to continue?';
         Text011: Label 'The currency exchange rate on all planning lines will be updated based on the exchange rate on the sales invoice. Do you want to continue?';
         Text012: Label 'The %1 %2 does not exist anymore. A printed copy of the document was created before the document was deleted.', Comment = 'The Sales Invoice Header 103001 does not exist in the system anymore. A printed copy of the document was created before deletion.';
+        ErrVatPostingSetup: Label 'Fila %1: No se encontró configuración de IVA para el grupo de producto %2 con un %3 de IVA.';
         Prov: Record Vendor;
 
     //OnCreateSalesInvoiceOnBeforeRunReport
@@ -1034,7 +1035,7 @@ codeunit 50301 "ProcesosProyectos"
         PurchaseLine."Job No." := JobPlanningLine2."Job No.";
         PurchaseLine."Job Task No." := JobPlanningLine2."Job Task No.";
         PurchaseLine."Job Planning Line No." := JobPlanningLine2."Line No.";
-        
+
         if PurchaseLine."Job Task No." <> '' then begin
             SourceCodeSetup.Get();
             //Traspasar Dimensiones JobPlanningLine
@@ -3972,5 +3973,176 @@ Fila: Integer)
         DimValue."Dimension Value Type" := DimValue."Dimension Value Type"::Standard;
         DimValue.Blocked := false;
         DimValue.Insert(true);
+    end;
+
+    /// <summary>
+    /// Importa facturas de venta desde Excel.
+    /// Columnas: A=Fecha, B=Importe, C=% IVA, D=Importe IVA, E=Total, F=CIF cliente, G=Nombre, H=Texto registro, I=Cuenta contable, J=Nº factura, K=Proyecto.
+    /// </summary>
+    procedure ImportarFacturasDesdeExcel()
+    var
+        TempExcelBuffer: Record "Excel Buffer" temporary;
+        SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
+        Customer: Record Customer;
+        GLAccount: Record "G/L Account";
+        Job: Record Job;
+        SalesSetup: Record "Sales & Receivables Setup";
+        InStream: InStream;
+        FileName: Text;
+        SheetName: Text;
+        RowNo: Integer;
+        Fecha: Date;
+        Importe: Decimal;
+        PctIVA: Decimal;
+        ImporteIVA: Decimal;
+        Total: Decimal;
+        CIFCliente: Text[30];
+        NombreCliente: Text[100];
+        TextoRegistro: Text[100];
+        CuentaContable: Code[20];
+        NumeroFactura: Text[50];
+        ProyectoNo: Code[20];
+        LineNo: Integer;
+        Importadas: Integer;
+        ErrMsg: Label 'Fila %1: No se encontró cliente con CIF %2.';
+        ErrCuenta: Label 'Fila %1: La cuenta contable %2 no existe.';
+        ErrProyecto: Label 'Fila %1: El proyecto %2 no existe.';
+        VatPostingSetup: Record "VAT Posting Setup";
+    begin
+        TempExcelBuffer.DeleteAll();
+        if not UploadIntoStream('Seleccionar archivo Excel de facturas', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos (*.*)|*.*', FileName, InStream) then
+            exit;
+
+        SheetName := TempExcelBuffer.SelectSheetsNameStream(InStream);
+        TempExcelBuffer.OpenBookStream(InStream, SheetName);
+        TempExcelBuffer.ReadSheet();
+
+        Importadas := 0;
+        if not TempExcelBuffer.FindSet() then
+            exit;
+
+        repeat
+            RowNo := TempExcelBuffer."Row No.";
+            if RowNo > 1 then begin
+                Fecha := 0D;
+                Importe := 0;
+                PctIVA := 0;
+                ImporteIVA := 0;
+                Total := 0;
+                CIFCliente := '';
+                NombreCliente := '';
+                TextoRegistro := '';
+                CuentaContable := '';
+                NumeroFactura := '';
+                ProyectoNo := '';
+
+                TempExcelBuffer.SetRange("Row No.", RowNo);
+                if TempExcelBuffer.FindSet() then
+                    repeat
+                        case TempExcelBuffer."Column No." of
+                            1: // A - Fecha
+                                if TempExcelBuffer."Cell Value as Text" <> '' then
+                                    if not Evaluate(Fecha, TempExcelBuffer."Cell Value as Text") then
+                                        Fecha := 0D;
+                            2: // B - Importe
+                                if not Evaluate(Importe, TempExcelBuffer."Cell Value as Text") then
+                                    Importe := 0;
+                            3: // C - % IVA
+                                if not Evaluate(PctIVA, TempExcelBuffer."Cell Value as Text") then
+                                    PctIVA := 0;
+                            4: // D - Importe IVA
+                                if not Evaluate(ImporteIVA, TempExcelBuffer."Cell Value as Text") then
+                                    ImporteIVA := 0;
+                            5: // E - Total
+                                if not Evaluate(Total, TempExcelBuffer."Cell Value as Text") then
+                                    Total := 0;
+                            6: // F - CIF cliente
+                                CIFCliente := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Customer."VAT Registration No."));
+                            7: // G - Nombre
+                                NombreCliente := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NombreCliente));
+                            8: // H - Texto registro
+                                TextoRegistro := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(TextoRegistro));
+                            9: // I - Cuenta contable
+                                CuentaContable := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(CuentaContable));
+                            10: // J - Nº factura (No. / Posting No. -> External Document No.)
+                                NumeroFactura := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NumeroFactura));
+                            11: // K - Proyecto
+                                ProyectoNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(ProyectoNo));
+                        end;
+                    until TempExcelBuffer.Next() = 0;
+                TempExcelBuffer.SetRange("Row No.");
+
+                if (CIFCliente <> '') and (CuentaContable <> '') then begin
+                    Customer.Reset();
+                    Customer.SetRange("VAT Registration No.", CIFCliente);
+                    if not Customer.FindFirst() then begin
+                        Error(ErrMsg, RowNo, CIFCliente);
+                        exit;
+                    end;
+                    if not GLAccount.Get(CuentaContable) then begin
+                        Error(ErrCuenta, RowNo, CuentaContable);
+                        exit;
+                    end;
+                    if ProyectoNo <> '' then begin
+                        if not Job.Get(ProyectoNo) then begin
+                            Error(ErrProyecto, RowNo, ProyectoNo);
+                            exit;
+                        end;
+                    end;
+
+                    // Buscar o crear cabecera: mismo cliente + mismo External Document No. + mismo proyecto
+                    SalesHeader.Reset();
+                    SalesHeader.SetRange("Document Type", SalesHeader."Document Type"::Invoice);
+                    SalesHeader.SetRange("Sell-to Customer No.", Customer."No.");
+                    SalesHeader.SetRange("External Document No.", NumeroFactura);
+                    SalesHeader.SetRange("No.Proyecto", ProyectoNo);
+                    if not SalesHeader.FindFirst() then begin
+                        SalesHeader.Init();
+                        SalesHeader."Document Type" := SalesHeader."Document Type"::Invoice;
+                        SalesHeader.Insert(true);
+                        SalesHeader.Validate("Sell-to Customer No.", Customer."No.");
+                        SalesHeader.Validate("Posting Date", Fecha);
+                        SalesHeader."External Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(SalesHeader."External Document No."));
+                        SalesHeader."No.Proyecto" := ProyectoNo;
+                        SalesHeader.Modify(true);
+                    end;
+
+                    // Obtener siguiente número de línea
+                    SalesLine.Reset();
+                    SalesLine.SetRange("Document Type", SalesHeader."Document Type");
+                    SalesLine.SetRange("Document No.", SalesHeader."No.");
+                    if SalesLine.FindLast() then
+                        LineNo := SalesLine."Line No." + 10000
+                    else
+                        LineNo := 10000;
+
+                    SalesLine.Init();
+                    SalesLine."Document Type" := SalesHeader."Document Type";
+                    SalesLine."Document No." := SalesHeader."No.";
+                    SalesLine."Line No." := LineNo;
+                    SalesLine.Validate(Type, SalesLine.Type::"G/L Account");
+                    SalesLine.Validate("No.", CuentaContable);
+                    SalesLine.Description := TextoRegistro;
+                    SalesLine.Validate(Quantity, 1);
+                    SalesLine.Validate("Unit Price", Importe);
+                    // deberia buscar un grupo registro iva producto que en la configurtacion con el grupo viva negocio del cliente , tenga un PCTIV
+                    VatPostingSetup.Reset();
+                    VatPostingSetup.SetRange("VAT Bus. Posting Group", Customer."VAT Bus. Posting Group");
+                    VatPostingSetup.SetRange("VAT %", PctIVA);
+                    if not VatPostingSetup.FindFirst() then begin
+                        Error(ErrVatPostingSetup, RowNo, Customer."Gen. Bus. Posting Group", PctIVA);
+                        exit;
+                    end;
+                    SalesLine.Validate("VAT Prod. Posting Group", VatPostingSetup."VAT Prod. Posting Group");
+                    SalesLine."Job No." := ProyectoNo;
+                    SalesLine.Insert(true);
+                    Importadas += 1;
+                end; // CIFCliente <> ''
+            end; // RowNo > 1
+
+        until TempExcelBuffer.Next() = 0;
+
+        Message('Se importaron %1 línea(s) de factura correctamente.', Importadas);
     end;
 }
