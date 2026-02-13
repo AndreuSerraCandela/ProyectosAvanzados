@@ -1393,6 +1393,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit Eventos-proyectos - Method RestApi - NamedType MEDIA_TYPE</note>
         </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - NamedType 933192987" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: No se encontró configuración de IVA para el grupo de producto %2 con un %3 de IVA.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType ErrVatPostingSetup</note>
+        </trans-unit>
         <trans-unit id="Codeunit 3200460114 - NamedType 2476940767" size-unit="char" translate="yes" xml:space="preserve">
           <source>The lines were successfully transferred to an invoice.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1462,6 +1467,21 @@
           <source>The %1 %2 does not exist anymore. A printed copy of the document was created before the document was deleted.</source>
           <note from="Developer" annotates="general" priority="2">The Sales Invoice Header 103001 does not exist in the system anymore. A printed copy of the document was created before deletion.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text012</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 3059483201 - NamedType 1854085928" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: No se encontró cliente con CIF %2.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasDesdeExcel - NamedType ErrMsg</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 3059483201 - NamedType 218205607" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: La cuenta contable %2 no existe.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasDesdeExcel - NamedType ErrCuenta</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 3059483201 - NamedType 3895902192" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: El proyecto %2 no existe.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasDesdeExcel - NamedType ErrProyecto</note>
         </trans-unit>
         <trans-unit id="Codeunit 3200460114 - Method 2983573584 - NamedType 3994261301" size-unit="char" translate="yes" xml:space="preserve">
           <source>Esta tarea tiene dependencias que no estan completadas</source>
@@ -4563,6 +4583,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension PurchaseQuote - Control No. Proyecto - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 4028130726 - Action 3616922295 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 561208485">
+          <source>Importa facturas desde un archivo Excel. Columnas: A=Fecha, B=Importe, C=% IVA, D=Importe IVA, E=Total, F=CIF cliente, G=Nombre, H=Texto registro, I=Cuenta contable, J=Nº factura, K=Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Sales Invoice List Carga Excel - Action CargarFacturasDesdeExcel - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 4028130726 - Action 3616922295 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 561208485">
+          <source>Cargar facturas desde Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Sales Invoice List Carga Excel - Action CargarFacturasDesdeExcel - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1819768841 - Control 2797495759 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4034894651">
           <source>Specifies the value of the Cod. Oferta de Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4622,6 +4652,16 @@
           <source>Specifies the value of the No. Serie Almacen en Pryectos field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control No.Serie Almacen de Proyecto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2362642556 - Control 3598112252 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4055858012">
+          <source>Indica si el proveedor es inversor.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Vendor Card Inversor - Control Inversor - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3880025898 - Control 3598112252 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4194195770">
+          <source>Indica si el proveedor es inversor.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Vendor List Inversor - Control Inversor - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="TableExtension 2963331395 - Field 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2798690647">
           <source>Nº Proyecto</source>
@@ -5142,6 +5182,11 @@
           <source>No.Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension SalesInvoiceHeaderMyB - Field No.Proyecto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 466526024 - Field 3598112252 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1936001480">
+          <source>Inversor</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Vendor Inversor - Field Inversor - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1225766744 - Field 1731803925 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 406314583">
           <source>Entrada Pago Proyecto</source>
