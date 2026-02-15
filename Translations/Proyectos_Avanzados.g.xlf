@@ -4888,6 +4888,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Amount Paid - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 698455820 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Bruto Factura</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Bruto Factura - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 1736630463 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>Coste Forecast</source>
           <note from="Developer" annotates="general" priority="2"></note>

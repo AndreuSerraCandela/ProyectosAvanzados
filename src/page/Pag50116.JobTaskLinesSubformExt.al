@@ -276,7 +276,7 @@ page 50116 "Job Task Lines Subform Ext"
                         Page.RunModal(0, JobEntries);
                     end;
                 }
-                field("Amount Pending"; Rec."Tota Cost" - Rec."Amount Paid")// CalculaImportePendiente())
+                field("Amount Pending"; CalculaBrutoFactura() - Rec."Amount Paid")// CalculaImportePendiente())
                 {
                     ApplicationArea = All;
                     Caption = 'Importe Pendiente';
@@ -898,6 +898,8 @@ page 50116 "Job Task Lines Subform Ext"
         CodeEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
         DescriptionEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
         DescriptionIndent := Rec.Indentation;
+        Rec.CalcFields("Bruto Factura", "Amount Paid");
+        //If Rec."Bruto Factura" = 0 Then Rec."Bruto Factura" := CalculaBrutoFactura();
 
 
 
@@ -929,71 +931,101 @@ page 50116 "Job Task Lines Subform Ext"
 
     end;
 
-    local procedure CalculaImportePendiente(): Decimal
+    local procedure CalculaBrutoFactura(): Decimal
     var
         JobTask: Record "Job Task";
-        ImportePagado: Decimal;
-        ImporteCoste: Decimal;
-        Pagos: Record "Proyecto Movimiento Pago";
+        BrutoFactura: Decimal;
         Coste: Record "Job Ledger Entry";
     begin
-        Rec.CalcFields("Tota Cost", "Amount Paid");
-        If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
-            exit(Rec."Usage (Total Cost)" - Rec."Amount Paid")
-        else begin
+        If Rec."Job Task Type" = Rec."Job Task Type"::Posting then begin
+            JobTask.SetRange("Job No.", Rec."Job No.");
+            JobTask.SetFilter("Job Task No.", Rec."Job Task No.");
+            JobTask.SetRange("Job Task Type", Rec."Job Task Type"::Posting);
+        end else begin
             JobTask.SetRange("Job No.", Rec."Job No.");
             JobTask.SetFilter("Job Task No.", Rec.Totaling);
             JobTask.SetRange("Job Task Type", Rec."Job Task Type"::Posting);
-
-            If JobTask.FindSet() then begin
-
-                repeat
-                    Coste.SetRange("Job No.", JobTask."Job No.");
-                    Coste.SetRange("Job Task No.", JobTask."Job Task No.");
-                    if Coste.FindFirst() then
-                        repeat
-                            ImporteCoste += Coste."Total Cost (LCY)";
-                        until Coste.Next() = 0;
-                    Pagos.SetRange("Job No.", JobTask."Job No.");
-                    Pagos.SetFilter("Job Task No.", JobTask."Job Task No.");
-                    If Pagos.FindSet() then
-                        repeat
-                            ImportePagado += Pagos."Amount Paid";
-
-                        until Pagos.Next() = 0;
-                until JobTask.Next() = 0;
-            end;
-            exit(ImporteCoste - ImportePagado);
         end;
+        If JobTask.FindSet() then begin
+
+            repeat
+                Coste.SetRange("Job No.", JobTask."Job No.");
+                Coste.SetRange("Job Task No.", JobTask."Job Task No.");
+                if Coste.FindFirst() then
+                    repeat
+                        BrutoFactura += Coste."Bruto Factura";
+                    until Coste.Next() = 0;
+            until JobTask.Next() = 0;
+        end;
+        exit(BrutoFactura);
+
     end;
 
-    local procedure CalculaImportePagado(): Decimal
-    var
-        JobTask: Record "Job Task";
-        Pagos: Record "Proyecto Movimiento Pago";
-        ImportePendiente: Decimal;
-    begin
-        Rec.CalcFields("Amount Paid");
-        If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
-            exit(Rec."Amount Paid")
-        else begin
-            JobTask.SetRange("Job No.", Rec."Job No.");
-            JobTask.SetFilter("Job Task No.", Rec.Totaling);
+    // local procedure CalculaImportePendiente(): Decimal
+    // var
+    //     JobTask: Record "Job Task";
+    //     ImportePagado: Decimal;
+    //     ImporteCoste: Decimal;
+    //     Pagos: Record "Proyecto Movimiento Pago";
+    //     Coste: Record "Job Ledger Entry";
+    // begin
+    //     Rec.CalcFields("Tota Cost", "Amount Paid");
+    //     If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
+    //         exit(Rec."Usage (Total Cost)" - Rec."Amount Paid")
+    //     else begin
+    //         JobTask.SetRange("Job No.", Rec."Job No.");
+    //         JobTask.SetFilter("Job Task No.", Rec.Totaling);
+    //         JobTask.SetRange("Job Task Type", Rec."Job Task Type"::Posting);
 
-            If JobTask.FindSet() then
-                repeat
-                    Pagos.SetRange("Job No.", JobTask."Job No.");
-                    Pagos.SetFilter("Job Task No.", JobTask."Job Task No.");
-                    If Pagos.FindSet() then
-                        repeat
-                            ImportePendiente += Pagos."Amount Paid";
-                        until Pagos.Next() = 0;
+    //         If JobTask.FindSet() then begin
+
+    //             repeat
+    //                 Coste.SetRange("Job No.", JobTask."Job No.");
+    //                 Coste.SetRange("Job Task No.", JobTask."Job Task No.");
+    //                 if Coste.FindFirst() then
+    //                     repeat
+    //                         ImporteCoste += Coste."Total Cost (LCY)";
+    //                     until Coste.Next() = 0;
+    //                 Pagos.SetRange("Job No.", JobTask."Job No.");
+    //                 Pagos.SetFilter("Job Task No.", JobTask."Job Task No.");
+    //                 If Pagos.FindSet() then
+    //                     repeat
+    //                         ImportePagado += Pagos."Amount Paid";
+
+    //                     until Pagos.Next() = 0;
+    //             until JobTask.Next() = 0;
+    //         end;
+    //         exit(ImporteCoste - ImportePagado);
+    //     end;
+    // end;
+
+    // local procedure CalculaImportePagado(): Decimal
+    // var
+    //     JobTask: Record "Job Task";
+    //     Pagos: Record "Proyecto Movimiento Pago";
+    //     ImportePagado: Decimal;
+    // begin
+    //     Rec.CalcFields("Amount Paid");
+    //     If Rec."Job Task Type" = Rec."Job Task Type"::Posting then
+    //         exit(Rec."Amount Paid")
+    //     else begin
+    //         JobTask.SetRange("Job No.", Rec."Job No.");
+    //         JobTask.SetFilter("Job Task No.", Rec.Totaling);
+
+    //         If JobTask.FindSet() then
+    //             repeat
+    //                 Pagos.SetRange("Job No.", JobTask."Job No.");
+    //                 Pagos.SetFilter("Job Task No.", JobTask."Job Task No.");
+    //                 If Pagos.FindSet() then
+    //                     repeat
+    //                         ImportePagado += Pagos."Amount Paid";
+    //                     until Pagos.Next() = 0;
 
 
-                until JobTask.Next() = 0;
-            exit(ImportePendiente);
-        end;
-    end;
+    //             until JobTask.Next() = 0;
+    //         exit(ImportePagado);
+    //     end;
+    // end;
 
 
 

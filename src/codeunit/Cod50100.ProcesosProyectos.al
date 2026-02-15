@@ -1828,7 +1828,7 @@ codeunit 50301 "ProcesosProyectos"
         esProveedor: Boolean;
         esEmpleado: Boolean;
         rInf: Record "Company Information";
-        CtaCble: Text[30];
+        //CtaCble: Text[30];
         GenNegPostingGrup: Record "Gen. Business Posting Group";
         GenPostingSetup: Record "General Posting Setup";
         ClasificacionGasto: Text[100];
@@ -1969,7 +1969,7 @@ codeunit 50301 "ProcesosProyectos"
                                     end;
                             end;
                             If TempExcelBuffer.xlColID = '' Then TempExcelBuffer.Validate("Column No.");
-                            if TempExcelBuffer.xlColID = rInf."Cta Contable Mov" Then CtaCble := TempExcelBuffer."Cell Value as Text";
+                        //if TempExcelBuffer.xlColID = rInf."Cta Contable Mov" Then CtaCble := TempExcelBuffer."Cell Value as Text";
                         until TempExcelBuffer.Next() = 0;
                     If FacturadoContra <> '' Then begin
                         IcParter.SetRange("Inbox Details", FacturadoContra);
@@ -2022,23 +2022,23 @@ codeunit 50301 "ProcesosProyectos"
                             end;
                         end;
 
-                        // Si no se encontró cuenta, usar Budget Code como cuenta contable
-                        if NoCuenta = '' then begin
-                            if Tipo = 'CUENTA' then begin
-                                NoCuenta := CopyStr(BudgetCode, 1, MaxStrLen(NoCuenta));
-                                // Verificar si es una cuenta contable válida
-                                if not GLAccount.Get(NoCuenta) then begin
-                                    // Crear cuenta contable si no existe
-                                    GLAccount.Init();
-                                    GLAccount."No." := NoCuenta;
-                                    GLAccount.Name := CopyStr(Descripcion, 1, MaxStrLen(GLAccount.Name));
-                                    GLAccount."Account Type" := GLAccount."Account Type"::Posting;
-                                    GLAccount."Direct Posting" := true;
-                                    GLAccount.Insert(true);
-                                end;
-                                Tipo := 'CUENTA';
-                            end;
-                        end;
+                        // // Si no se encontró cuenta, usar Budget Code como cuenta contable
+                        // if NoCuenta = '' then begin
+                        //     if Tipo = 'CUENTA' then begin
+                        //         NoCuenta := CopyStr(BudgetCode, 1, MaxStrLen(NoCuenta));
+                        //         // Verificar si es una cuenta contable válida
+                        //         if not GLAccount.Get(NoCuenta) then begin
+                        //             // Crear cuenta contable si no existe
+                        //             GLAccount.Init();
+                        //             GLAccount."No." := NoCuenta;
+                        //             GLAccount.Name := CopyStr(Descripcion, 1, MaxStrLen(GLAccount.Name));
+                        //             GLAccount."Account Type" := GLAccount."Account Type"::Posting;
+                        //             GLAccount."Direct Posting" := true;
+                        //             GLAccount.Insert(true);
+                        //         end;
+                        //         Tipo := 'CUENTA';
+                        //     end;
+                        // end;
 
                         // Solo crear Job Planning Line y Job Ledger Entry si hay una cuenta válida
                         if NoCuenta <> '' then begin
@@ -2238,15 +2238,15 @@ codeunit 50301 "ProcesosProyectos"
 
                             JobLedgerEntry.Description := Descripcion;
                             JobLedgerEntry.Quantity := 1;
-                            if BrutoFactura <> 0 then begin
-                                //   JobLedgerEntry."Unit Cost" := BrutoFactura;   DFS
-                                JobLedgerEntry."Unit Cost (LCY)" := BrutoFactura;   //DFS    
+                            // if BrutoFactura <> 0 then begin
+                            //     //   JobLedgerEntry."Unit Cost" := BrutoFactura;   DFS
+                            //     JobLedgerEntry."Unit Cost (LCY)" := BrutoFactura;   //DFS    
 
-                                // JobLedgerEntry."Total Cost" := BrutoFactura;  //DFS
-                                JobLedgerEntry."Total Cost (LCY)" := BrutoFactura;
-                                JobLedgerEntry."Total Cost" := BrutoFactura;
-                                JobLedgerEntry."Unit Cost" := BrutoFactura;
-                            end;
+                            //     // JobLedgerEntry."Total Cost" := BrutoFactura;  //DFS
+                            //     JobLedgerEntry."Total Cost (LCY)" := BrutoFactura;
+                            //     JobLedgerEntry."Total Cost" := BrutoFactura;
+                            //     JobLedgerEntry."Unit Cost" := BrutoFactura;
+                            // end;
 
                             // Campos personalizados
                             JobLedgerEntry."Budget Code" := BudgetCode;

@@ -597,9 +597,9 @@ pageextension 50307 "JobCard" extends "Job Card" //88
         DescripcionCuenta: Text[100];
         LargoCodigo: Integer;
         Cantidad: Decimal;
-        Cost: Decimal;
-        Venta: Decimal;
-        TipoLinea: Text[20];
+        //Cost: Decimal;
+        //Venta: Decimal;
+        //TipoLinea: Text[20];
         EsSumatorio: Boolean;
         ImportedTasks: Integer;
         ParentTaskNo: Code[20];
@@ -622,6 +622,8 @@ pageextension 50307 "JobCard" extends "Job Card" //88
         GenNegPostingGrup: Record "Gen. Business Posting Group";
         GenPostingSetup: Record "General Posting Setup";
         GrupoProducto: Text;
+        GrupoRegistroIvaProducto: Text;
+        IngresoGasto: Text[1];
     begin
         rInf.Get();
         rInf.TestField("Cta Contable Estructura");
@@ -664,11 +666,12 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                     Tipo := '';
                     NoCuenta := '';
                     GrupoProducto := '';
+                    GrupoRegistroIvaProducto := '';
                     LargoCodigo := 0;
                     Cantidad := 0;
-                    Cost := 0;
-                    Venta := 0;
-                    TipoLinea := '';
+                    //Cost := 0;
+                    //Venta := 0;
+                    //TipoLinea := '';
                     EsSumatorio := false;
 
 
@@ -689,23 +692,20 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                     Tipo := CopyStr(UpperCase(TempExcelBuffer."Cell Value as Text"), 1, 20);
                                 4: // Columna D - Número de cuenta/producto/recurso
                                     NoCuenta := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NoCuenta));
-                                5: // Columna E - Descripción cuenta contable
+                                5: // Columna E - Grupo Contable
                                     GrupoProducto := TempExcelBuffer."Cell Value as Text";
-                                6: // Columna F - Largo del código
-                                    begin
-                                        If Not Evaluate(LargoCodigo, TempExcelBuffer."Cell Value as Text") then LargoCodigo := 0;
-                                    end;
-                                7: // Columna G - Cantidad
-                                    If Not Evaluate(Cantidad, TempExcelBuffer."Cell Value as Text") then
-                                        Cantidad := 0;
-                                8: // Columna H - Importe Coste
-                                    If Not Evaluate(Cost, TempExcelBuffer."Cell Value as Text") then
-                                        Cost := 0;
-                                9: // Columna I - Importe Venta
-                                    If Not Evaluate(Venta, TempExcelBuffer."Cell Value as Text") then
-                                        Venta := 0;
-                                10: // Columna J - Tipo línea (Planificacion, Uso, Ambos)
-                                    TipoLinea := CopyStr(UpperCase(TempExcelBuffer."Cell Value as Text"), 1, 20);
+                                6: // Columna F - Grupo Registro Iva Producto
+                                    GrupoRegistroIvaProducto := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(GrupoRegistroIvaProducto));
+                                7: // Columna G - Ingreso o Gasto "I/G"
+                                    IngresoGasto := CopyStr(UpperCase(TempExcelBuffer."Cell Value as Text"), 1, 2);
+                            // 8: // Columna H - Importe Coste
+                            //     If Not Evaluate(Cost, TempExcelBuffer."Cell Value as Text") then
+                            //         Cost := 0;
+                            // 9: // Columna I - Importe Venta
+                            //     If Not Evaluate(Venta, TempExcelBuffer."Cell Value as Text") then
+                            //         Venta := 0;
+                            // 10: // Columna J - Tipo línea (Planificacion, Uso, Ambos)
+                            //     TipoLinea := CopyStr(UpperCase(TempExcelBuffer."Cell Value as Text"), 1, 20);
                             end;
                         // if TempExcelBuffer.xlColID = rInf."Cta Contable Estructura" Then CtaCta := TempExcelBuffer."Cell Value as Text";
                         until TempExcelBuffer.Next() = 0;
@@ -774,17 +774,23 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                                             Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
                                                             //Grear Grupo registro prodducto por producto
                                                             Item."Gen. Prod. Posting Group" := GrupoProducto;
+                                                            Item."VAT Prod. Posting Group" := GrupoRegistroIvaProducto;
                                                             If Not GeNProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
                                                                 GenProdPostingGroup.Init();
                                                                 GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
                                                                 GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
+                                                                GenProdPostingGroup."Def. VAT Prod. Posting Group" := GrupoRegistroIvaProducto;
                                                                 GenProdPostingGroup.Insert(true);
                                                                 If GenNegPostingGrup.FindFirst Then
                                                                     repeat
                                                                         GenPostingSetup.Init;
                                                                         GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
                                                                         GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
-                                                                        GenPostingSetup."Purch. Account" := NoCuenta;
+                                                                        //Dependiendo si es I=Ingreso o G=Gasto, se crea la cuenta de compra o venta
+                                                                        if IngresoGasto = 'G' then
+                                                                            GenPostingSetup."Purch. Account" := NoCuenta
+                                                                        else
+                                                                            GenPostingSetup."Sales Account" := NoCuenta;
                                                                         GenPostingSetup.Insert();
                                                                     until GenNegPostingGrup.next = 0;
                                                             end;
@@ -797,17 +803,22 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                                 end else begin
                                                     Item.Description := CopyStr(Descripcion, 1, MaxStrLen(Item.Description));
                                                     Item."Gen. Prod. Posting Group" := GrupoProducto;
+                                                    Item."VAT Prod. Posting Group" := GrupoRegistroIvaProducto;
                                                     If Not GeNProdPostingGroup.Get(Item."Gen. Prod. Posting Group") then begin
                                                         GenProdPostingGroup.Init();
                                                         GenProdPostingGroup."Code" := Item."Gen. Prod. Posting Group";
                                                         GenProdPostingGroup.Description := Item."Gen. Prod. Posting Group";
+                                                        GenProdPostingGroup."Def. VAT Prod. Posting Group" := GrupoRegistroIvaProducto;
                                                         GenProdPostingGroup.Insert(true);
                                                         If GenNegPostingGrup.FindFirst Then
                                                             repeat
                                                                 GenPostingSetup.Init;
                                                                 GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
                                                                 GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
-                                                                GenPostingSetup."Purch. Account" := NoCuenta;
+                                                                if IngresoGasto = 'G' then
+                                                                    GenPostingSetup."Purch. Account" := NoCuenta
+                                                                else
+                                                                    GenPostingSetup."Sales Account" := NoCuenta;
                                                                 GenPostingSetup.Insert();
                                                             until GenNegPostingGrup.next = 0;
                                                     end;
@@ -827,65 +838,65 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                             end;
                                     end;
 
-                                    // Determinar el tipo de Job Planning Line según el Tipo
-                                    LineNo := 10000;
-                                    if (TipoLinea = 'PLANIFICACION') or (TipoLinea = 'AMBOS') then begin
-                                        // Crear Job Planning Line
-                                        JobTaskPlanningLine.Init();
-                                        JobTaskPlanningLine."Job No." := Rec."No.";
-                                        JobTaskPlanningLine."Job Task No." := JobTask."Job Task No.";
-                                        JobTaskPlanningLine."Line No." := LineNo;
+                                    // // Determinar el tipo de Job Planning Line según el Tipo
+                                    // LineNo := 10000;
+                                    // if (TipoLinea = 'PLANIFICACION') or (TipoLinea = 'AMBOS') then begin
+                                    //     // Crear Job Planning Line
+                                    //     JobTaskPlanningLine.Init();
+                                    //     JobTaskPlanningLine."Job No." := Rec."No.";
+                                    //     JobTaskPlanningLine."Job Task No." := JobTask."Job Task No.";
+                                    //     JobTaskPlanningLine."Line No." := LineNo;
 
-                                        // Determinar Line Type según TipoLinea
-                                        if TipoLinea = 'PLANIFICACION' then
-                                            JobTaskPlanningLine."Line Type" := JobTaskPlanningLine."Line Type"::Budget
-                                        else if TipoLinea = 'AMBOS' then
-                                            JobTaskPlanningLine."Line Type" := JobTaskPlanningLine."Line Type"::"Both Budget and Billable";
+                                    //     // Determinar Line Type según TipoLinea
+                                    //     if TipoLinea = 'PLANIFICACION' then
+                                    //         JobTaskPlanningLine."Line Type" := JobTaskPlanningLine."Line Type"::Budget
+                                    //     else if TipoLinea = 'AMBOS' then
+                                    //         JobTaskPlanningLine."Line Type" := JobTaskPlanningLine."Line Type"::"Both Budget and Billable";
 
-                                        // Determinar Type según el Tipo (columna C)
-                                        case UpperCase(Tipo) of
-                                            'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
-                                                begin
-                                                    JobTaskPlanningLine."Type" := JobTaskPlanningLine."Type"::"G/L Account";
-                                                    JobTaskPlanningLine."No." := NoCuenta;
-                                                end;
-                                            'PRODUCTO', 'ITEM':
-                                                begin
-                                                    JobTaskPlanningLine."Type" := JobTaskPlanningLine."Type"::Item;
-                                                    JobTaskPlanningLine."No." := NoCuenta;
-                                                end;
-                                            'RECURSO', 'RESOURCE':
-                                                begin
-                                                    JobTaskPlanningLine."Type" := JobTaskPlanningLine."Type"::Resource;
-                                                    JobTaskPlanningLine."No." := NoCuenta;
-                                                end;
-                                        end;
+                                    //     // Determinar Type según el Tipo (columna C)
+                                    //     case UpperCase(Tipo) of
+                                    //         'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
+                                    //             begin
+                                    //                 JobTaskPlanningLine."Type" := JobTaskPlanningLine."Type"::"G/L Account";
+                                    //                 JobTaskPlanningLine."No." := NoCuenta;
+                                    //             end;
+                                    //         'PRODUCTO', 'ITEM':
+                                    //             begin
+                                    //                 JobTaskPlanningLine."Type" := JobTaskPlanningLine."Type"::Item;
+                                    //                 JobTaskPlanningLine."No." := NoCuenta;
+                                    //             end;
+                                    //         'RECURSO', 'RESOURCE':
+                                    //             begin
+                                    //                 JobTaskPlanningLine."Type" := JobTaskPlanningLine."Type"::Resource;
+                                    //                 JobTaskPlanningLine."No." := NoCuenta;
+                                    //             end;
+                                    //     end;
 
-                                        JobTaskPlanningLine.Description := Descripcion;
-                                        if Cantidad <> 0 then
-                                            JobTaskPlanningLine.Quantity := Cantidad
-                                        else
-                                            JobTaskPlanningLine.Quantity := 1;
+                                    //     JobTaskPlanningLine.Description := Descripcion;
+                                    //     if Cantidad <> 0 then
+                                    //         JobTaskPlanningLine.Quantity := Cantidad
+                                    //     else
+                                    //         JobTaskPlanningLine.Quantity := 1;
 
-                                        if Cost <> 0 then begin
-                                            JobTaskPlanningLine."Unit Cost (LCY)" := Cost / JobTaskPlanningLine.Quantity;
-                                            JobTaskPlanningLine."Total Cost (LCY)" := Cost;
-                                        end;
+                                    //     if Cost <> 0 then begin
+                                    //         JobTaskPlanningLine."Unit Cost (LCY)" := Cost / JobTaskPlanningLine.Quantity;
+                                    //         JobTaskPlanningLine."Total Cost (LCY)" := Cost;
+                                    //     end;
 
-                                        if Venta <> 0 then begin
-                                            JobTaskPlanningLine."Unit Price (LCY)" := Venta / JobTaskPlanningLine.Quantity;
-                                            JobTaskPlanningLine."Total Price (LCY)" := Venta;
-                                        end;
+                                    //     if Venta <> 0 then begin
+                                    //         JobTaskPlanningLine."Unit Price (LCY)" := Venta / JobTaskPlanningLine.Quantity;
+                                    //         JobTaskPlanningLine."Total Price (LCY)" := Venta;
+                                    //     end;
 
-                                        JobTaskPlanningLine."Usage Link" := true;
-                                        JobTaskPlanningLine.INSERT;
-                                        LineNo += 10000;
-                                    end;
+                                    //     JobTaskPlanningLine."Usage Link" := true;
+                                    //     JobTaskPlanningLine.INSERT;
+                                    //     LineNo += 10000;
+                                    // end;
 
-                                    // Crear Job Ledger Entry si es Uso o Ambos
-                                    if (TipoLinea = 'USO') or (TipoLinea = 'AMBOS') then begin
-                                        CodProyecto.CreaLineaUso(Rec."No.", JobTask."Job Task No.", Tipo, NoCuenta, Descripcion, Cantidad, Cost, Venta);
-                                    end;
+                                    // // Crear Job Ledger Entry si es Uso o Ambos
+                                    // if (TipoLinea = 'USO') or (TipoLinea = 'AMBOS') then begin
+                                    //     CodProyecto.CreaLineaUso(Rec."No.", JobTask."Job Task No.", Tipo, NoCuenta, Descripcion, Cantidad, Cost, Venta);
+                                    // end;
                                 end;
                             end;
                         end;

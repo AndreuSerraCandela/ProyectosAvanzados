@@ -284,6 +284,16 @@ tableextension 50303 "JobTaskEx" extends "Job Task" //1001
             Editable = false;
             DecimalPlaces = 2 : 2;
         }
+        //Campo Calculado Bruto Factura
+        field(50021; "Bruto Factura"; Decimal)
+        {
+            Caption = 'Bruto Factura';
+            FieldClass = FlowField;
+            CalcFormula = sum("Job Ledger Entry"."Bruto Factura" where("Job No." = field("Job No."), "Job Task No." = field("Job Task No."),
+                                                                            "Job Task No." = field(filter(Totaling))));
+            Editable = false;
+            DecimalPlaces = 2 : 2;
+        }
         field(50020; "Importe Comprometido"; Decimal)
         {
             Caption = 'Importe Comprometido';
