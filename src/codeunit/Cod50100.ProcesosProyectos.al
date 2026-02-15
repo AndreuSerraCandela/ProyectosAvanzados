@@ -2238,15 +2238,15 @@ codeunit 50301 "ProcesosProyectos"
 
                             JobLedgerEntry.Description := Descripcion;
                             JobLedgerEntry.Quantity := 1;
-                            // if BrutoFactura <> 0 then begin
-                            //     //   JobLedgerEntry."Unit Cost" := BrutoFactura;   DFS
-                            //     JobLedgerEntry."Unit Cost (LCY)" := BrutoFactura;   //DFS    
+                            if NetoFactura <> 0 then begin
+                                //   JobLedgerEntry."Unit Cost" := BrutoFactura;   DFS
+                                JobLedgerEntry."Unit Cost (LCY)" := NetoFactura;   //DFS    
 
-                            //     // JobLedgerEntry."Total Cost" := BrutoFactura;  //DFS
-                            //     JobLedgerEntry."Total Cost (LCY)" := BrutoFactura;
-                            //     JobLedgerEntry."Total Cost" := BrutoFactura;
-                            //     JobLedgerEntry."Unit Cost" := BrutoFactura;
-                            // end;
+                                // JobLedgerEntry."Total Cost" := BrutoFactura;  //DFS
+                                JobLedgerEntry."Total Cost (LCY)" := NetoFactura;
+                                JobLedgerEntry."Total Cost" := NetoFactura;
+                                JobLedgerEntry."Unit Cost" := NetoFactura;
+                            end;
 
                             // Campos personalizados
                             JobLedgerEntry."Budget Code" := BudgetCode;
