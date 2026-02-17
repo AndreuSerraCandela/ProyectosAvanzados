@@ -84,10 +84,20 @@ page 50215 "Configuración Nominas"
                         ApplicationArea = All;
                         Caption = 'Embargos';
                     }
+                    field("Account Type"; Rec."Account Type")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Ficha Personal/Cuenta';
+                        trigger OnValidate()
+                        begin
+                            Cuenta := Rec."Account Type" = Rec."Account Type"::"G/L Account";
+                        end;
+                    }
                     field(Personal; Rec.Personal)
                     {
                         ApplicationArea = All;
                         Caption = 'Personal';
+                        Editable = Cuenta;
                     }
                 }
             }
@@ -220,5 +230,7 @@ page 50215 "Configuración Nominas"
             }
         }
     }
+    var
+        Cuenta: Boolean;
 }
 
