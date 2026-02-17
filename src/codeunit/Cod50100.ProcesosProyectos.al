@@ -3481,7 +3481,7 @@ Fila: Integer)
             GenJnlLine."Posting Date" := Fecha;
             GenJnlLine."Document No." := DocNo;
             GenJnlLine."Source Code" := rOr.Code;
-            GenJnlLine."Account Type" := GenJnlLine."Account Type"::"G/L Account";
+            GenJnlLine."Account Type" := AcountType(EmpresaNombre, Employee."No.", 'Personal');
             GenJnlLine.Validate("Account Type");
             // Usar cuenta 465 (Personal/Cobro Nómina)
             Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Personal');
@@ -3692,7 +3692,13 @@ Fila: Integer)
                 'Banco':
                     Cuenta := rConf.Banco;
                 'Personal':
-                    Cuenta := rConf.Personal;
+                    begin
+                        if rConf."Account Type" = rConf."Account Type"::"G/L Account" then
+                            Cuenta := rConf.Personal
+                        else
+                            Cuenta := Empleado;
+                    end;
+
                 'Cobro Nómina':
                     Cuenta := rConf."Cobro Nómina";
                 'Ant.diet':
@@ -3738,7 +3744,10 @@ Fila: Integer)
                 'Banco':
                     Cuenta := rConf.Banco;
                 'Personal':
-                    Cuenta := rConf.Personal;
+                    if rConf."Account Type" = rConf."Account Type"::"G/L Account" then
+                        Cuenta := rConf.Personal
+                    else
+                        Cuenta := Empleado;
                 'Cobro Nómina':
                     Cuenta := rConf."Cobro Nómina";
                 'Ant.diet':
@@ -3749,8 +3758,8 @@ Fila: Integer)
         end;
 
         // Si no hay configuración por empresa, buscar configuración general (empresa y empleado vacíos)
-        rConf.ChangeCompany('');
-        if rConf.Get('', '') then begin
+        rConf.ChangeCompany(Empresa);
+        if rConf.Get(Empleado) then begin
             case Concepto of
                 'Devengado':
                     Cuenta := rConf.Devengado;
@@ -3784,7 +3793,70 @@ Fila: Integer)
                     Cuenta := rConf.Embargos;
                 'Banco':
                     Cuenta := rConf.Banco;
+                'Personal':
+                    begin
+                        if rConf."Account Type" = rConf."Account Type"::"G/L Account" then
+                            Cuenta := rConf.Personal
+                        else
+                            Cuenta := Empleado;
+                    end;
+
+                'Cobro Nómina':
+                    Cuenta := rConf."Cobro Nómina";
+                'Ant.diet':
+                    Cuenta := rConf."Ant.diet";
             end;
+            if Cuenta <> '' then
+                exit(Cuenta);
+        end;
+
+        // Si no hay configuración específica del empleado, buscar configuración general (empleado vacío)
+        if rConf.Get('') then begin
+            case Concepto of
+                'Devengado':
+                    Cuenta := rConf.Devengado;
+                'IRPF':
+                    Cuenta := rConf.IRPF;
+                'S.S Obrero':
+                    Cuenta := rConf."S.S Obrero";
+                'SS Empresa':
+                    Cuenta := rConf."SS empresa";
+                'SS Empresa 2':
+                    Cuenta := rConf."SS empresa 2";
+                'Enfermedad Accidente':
+                    Cuenta := rConf."Enfermedad Accidente";
+                'Enfermedad Accidente 2':
+                    Cuenta := rConf."Enfermedad Accidente 2";
+                'Bonificación':
+                    Cuenta := rConf.Bonificación;
+                'Bonificación Fundae':
+                    Cuenta := rConf."Bonificación Fundae";
+                'Kms':
+                    Cuenta := rConf.Kms;
+                'Dieta':
+                    Cuenta := rConf.Dieta;
+                'Especie Debe':
+                    Cuenta := rConf."Especie Debe";
+                'Especie Haber':
+                    Cuenta := rConf."Especie Haber";
+                'Anticipos':
+                    Cuenta := rConf.Anticipos;
+                'Embargos':
+                    Cuenta := rConf.Embargos;
+                'Banco':
+                    Cuenta := rConf.Banco;
+                'Personal':
+                    if rConf."Account Type" = rConf."Account Type"::"G/L Account" then
+                        Cuenta := rConf.Personal
+                    else
+                        Cuenta := Empleado;
+                'Cobro Nómina':
+                    Cuenta := rConf."Cobro Nómina";
+                'Ant.diet':
+                    Cuenta := rConf."Ant.diet";
+            end;
+            if Cuenta <> '' then
+                exit(Cuenta);
         end;
 
         exit(Cuenta);
@@ -3973,6 +4045,25 @@ Fila: Integer)
         DimValue."Dimension Value Type" := DimValue."Dimension Value Type"::Standard;
         DimValue.Blocked := false;
         DimValue.Insert(true);
+    end;
+
+    local procedure AcountType(EmpresaNombre: Text[30]; Empleado: Code[20]; Concepto: Text): Enum Microsoft.Finance.GeneralLedger.Journal."Gen. Journal Account Type"
+    var
+        rConf: Record "Nominas Configuración";
+    begin
+        if rConf.Get(Empleado) then
+            exit(rConf."Account Type");
+        if rConf.Get('') then
+            exit(rConf."Account Type");
+        if rConf.ChangeCompany(EmpresaNombre) then begin
+            if rConf.Get(Empleado) then
+                exit(rConf."Account Type");
+            if rConf.Get('') then
+                exit(rConf."Account Type");
+
+        end;
+        exit(rConf."Account Type");
+
     end;
 
     /// <summary>

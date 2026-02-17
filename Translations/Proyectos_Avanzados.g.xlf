@@ -363,6 +363,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 217841478 - Field 3699788827 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Account Type</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Account Type - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 217841478 - Field 39582071 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Alquileres</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1772,6 +1777,11 @@
           <source>Haber</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control HaberGeneral - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 3699788827 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ficha Personal/Cuenta</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Account Type - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 988312646 - Control 3782970832 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Anticipos</source>
