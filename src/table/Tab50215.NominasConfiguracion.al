@@ -70,12 +70,19 @@ table 50215 "Nominas Configuración"
             Caption = 'Banco';
             TableRelation = "Bank Account";
         }
+        field(3; "Account Type"; Enum "Gen. Journal Account Type")
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Account Type';
+
+        }
         field(13; Personal; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Personal';
             Editable = true;
-            TableRelation = "G/L Account";
+            // Depende de Account Type Employee o G/L Account
+            TableRelation = if ("Account Type" = CONST("G/L Account")) "G/L Account" else if ("Account Type" = CONST("Employee")) Employee;
         }
         field(14; "Bonificación Fundae"; Code[20])
         {

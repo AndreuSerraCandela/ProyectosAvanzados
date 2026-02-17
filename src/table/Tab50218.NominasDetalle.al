@@ -29,7 +29,7 @@ table 50218 "Nominas Detalle"
         {
             DataClassification = ToBeClassified;
             Caption = 'Departamento';
-            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(1));
+            TableRelation = "Dimension Value".Code WHERE("Dimension Code" = CONST('DEPARTAMENTO'));
         }
         field(14; Devengado; Decimal)
         {
