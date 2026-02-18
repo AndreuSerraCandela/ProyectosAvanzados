@@ -1,0 +1,27 @@
+EVENTO PARA ESCRIBIR NETO FACTURA, BRUTO FACTURA, IVA E IRPF EN JOB LEDGER ENTRY
+=================================================================================
+
+EVENTO PRINCIPAL (RECOMENDADO)
+------------------------------
+Codeunit "Job Transfer Line" (1004) - OnAfterFromJnlLineToLedgEntry
+
+Se dispara cuando se crea el Job Ledger Entry desde la línea de diario en el flujo
+de transferencia (planificación -> diario -> registro). Recibe:
+  var JobLedgerEntry  (el movimiento recién creado; se puede modificar)
+  JobJournalLine     (la línea del diario origen)
+
+Punto principal para rellenar Neto Factura, Bruto Factura, IVA e IRPF.
+
+EVENTO COMPLEMENTARIO
+---------------------
+Codeunit "Job Jnl.-Post Line" (1012) - OnBeforeApplyUsageLink
+
+Cubre el caso en que se registra el diario de proyectos sin pasar por Job Transfer Line
+(p. ej. líneas introducidas directamente en el diario). También se llama a DatosFactura
+y se mantiene IsHandled := true para el enlace de uso.
+
+IMPLEMENTACIÓN
+--------------
+- ProcesosProyectos.OnAfterFromJnlLineToLedgEntry (Job Transfer Line) -> EventosProyectos.DatosFactura(JobLedgerEntry).
+- ProcesosProyectos.OnBeforeApplyUsageLink (Job Jnl.-Post Line) -> EventosProyectos.DatosFactura(JobLedgerEntry) + IsHandled := true.
+- DatosFactura: si documento es factura compra, rellena desde Purch. Inv. Header; si no, desde Total Cost/Total Price; IVA/IRPF según caso.

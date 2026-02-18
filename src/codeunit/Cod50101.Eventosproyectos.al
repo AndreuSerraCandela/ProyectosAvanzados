@@ -1,10 +1,11 @@
 codeunit 50302 "Eventos-proyectos"
 {
-    Permissions = TableData "G/L Entry" = rimd;
+    Permissions = TableData "G/L Entry" = rimd, Tabledata "Job Ledger Entry" = rimd;
     trigger OnRun()
     begin
 
     end;
+
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Batch", OnBeforeUpdateAndDeleteLines, '', false, false)]
     local procedure OnBeforeUpdateAndDeleteLines(var GenJournalLine: Record "Gen. Journal Line"; CommitIsSuppressed: Boolean; var IsHandled: Boolean)
@@ -31,6 +32,34 @@ codeunit 50302 "Eventos-proyectos"
         if GenJournalLine."Job No." <> '' then begin
             GLEntry."Job No." := GenJournalLine."Job No.";
             GLEntry."Job Task No." := GenJournalLine."Job Task No.";
+        end;
+    end;
+
+    /// <summary>
+    /// Rellena Neto Factura, Bruto Factura, IVA e IRPF en Job Ledger Entry (desde factura compra si aplica, si no desde Total Cost/Total Price).
+    /// Se llama desde el evento OnBeforeApplyUsageLink del codeunit "Job Jnl.-Post Line" (ProcesosProyectos).
+    /// </summary>
+    procedure DatosFactura(var Rec: Record "Job Ledger Entry")
+    var
+        PurchaseInvHeader: Record "Purch. Inv. Header";
+    begin
+        if Rec.IsTemporary then
+            exit;
+        if PurchaseInvHeader.Get(Rec."Document No.") then begin
+            PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT");
+            Rec."Neto Factura" := PurchaseInvHeader.Amount;
+            Rec."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
+            Rec."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
+            Rec."IRPF" := 0;
+            Rec.Modify(false);
+        end else begin
+            Rec."Neto Factura" := Rec."Total Cost";
+            Rec."Bruto Factura" := Rec."Total Price";
+            // IVA/IRPF: de momento 0; rellenar desde fuente (ej. extensión Job Journal Line) si se necesita
+            Rec."IGIC O IVA" := 0;
+            Rec."Importe IGIC O IVA" := 0;
+            Rec."IRPF" := 0;
+            Rec.Modify(false);
         end;
     end;
 

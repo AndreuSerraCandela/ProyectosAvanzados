@@ -4268,6 +4268,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobCard - Change JobTaskLines - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 2925211723 - Action 3763312648 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
+          <source>Rellenar Datos Factura</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobLedgerEntriesExt - Action Rellenar Datos Factura - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 2925211723 - Control 1330443460 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 225828172">
           <source>Especifica el importe total pagado para esta entrada del mayor de proyectos.</source>
           <note from="Developer" annotates="general" priority="2"></note>

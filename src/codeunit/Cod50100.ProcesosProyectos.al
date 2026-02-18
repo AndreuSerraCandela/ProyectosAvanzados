@@ -241,10 +241,25 @@ codeunit 50301 "ProcesosProyectos"
     //         JobPlaningLine.Modify();
     //     end;
     // end;
-    [EventSubscriber(ObjectType::Codeunit, 1012, 'OnBeforeApplyUsageLink', '', false, false)]
-    local procedure OnBeforeApplyUsageLink(var JobLedgerEntry: Record "Job Ledger Entry"; var JobJournalLine: Record "Job Journal Line"; var IsHandled: Boolean)
+
+
+    /// <summary>
+    /// Codeunit "Job Transfer Line" (1004): después de crear el Job Ledger Entry desde la línea de diario. Punto principal para rellenar Neto Factura, Bruto Factura, IVA e IRPF.
+    /// </summary>
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Transfer Line", 'OnAfterFromJnlLineToLedgEntry', '', false, false)]
+    local procedure OnAfterFromJnlLineToLedgEntry(var JobLedgerEntry: Record "Job Ledger Entry"; JobJournalLine: Record "Job Journal Line")
+    var
+        EventosProyectos: Codeunit "Eventos-proyectos";
     begin
-        IsHandled := true;
+        EventosProyectos.DatosFactura(JobLedgerEntry);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Transfer Line", 'OnAfterFromJnlLineToLedgEntry', '', false, false)]
+    local procedure OnAfterFromJnlLineToLedgEntry2(var JobLedgerEntry: Record "Job Ledger Entry"; JobJournalLine: Record "Job Journal Line")
+    var
+        EventosProyectos: Codeunit "Eventos-proyectos";
+    begin
+        EventosProyectos.DatosFactura(JobLedgerEntry);
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Job Planning Line", 'OnUseOnBeforeModify', '', false, false)]

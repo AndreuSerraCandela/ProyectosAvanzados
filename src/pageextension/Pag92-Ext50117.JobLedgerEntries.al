@@ -112,7 +112,21 @@ pageextension 50323 "JobLedgerEntriesExt" extends "Job Ledger Entries"
 
     actions
     {
-        // Add changes to page actions here
+        addafter("Transfer To Planning Lines")
+        {
+            action("Rellenar Datos Factura")
+            {
+                ApplicationArea = All;
+                Image = Invoice;
+                trigger OnAction()
+                var
+                    Eventosproyectos: Codeunit "Eventos-proyectos";
+                begin
+                    Eventosproyectos.DatosFactura(Rec);
+                end;
+
+            }
+        }
     }
 }
 
