@@ -100,12 +100,13 @@ codeunit 50301 "ProcesosProyectos"
             if TempExcelBuffer.FindSet() then
                 repeat
                     case TempExcelBuffer."Column No." of
+
                         1:
-                            JobNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(JobNo));
-                        2:
-                            JobTaskNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(JobTaskNo));
-                        3:
                             DocumentToLiquidate := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(DocumentToLiquidate));
+                        2:
+                            JobNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(JobNo));
+                        3:
+                            JobTaskNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(JobTaskNo));
                     end;
                 until TempExcelBuffer.Next() = 0;
 

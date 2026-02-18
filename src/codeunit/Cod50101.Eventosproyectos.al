@@ -1,5 +1,6 @@
 codeunit 50302 "Eventos-proyectos"
 {
+    Permissions = TableData "G/L Entry" = rimd;
     trigger OnRun()
     begin
 
@@ -22,6 +23,15 @@ codeunit 50302 "Eventos-proyectos"
                 ProcesosProyectos.CrearMovimientosEmpleadosDesdeDiario(DocNo, Fecha);
             end;
 
+    end;
+    //Añadir Que se rellene el campo Job Task No. de gl entry en la codeunit 12
+    [EventSubscriber(ObjectType::Table, Database::"G/L Entry", OnAfterCopyGLEntryFromGenJnlLine, '', false, false)]
+    local procedure OnAfterCopyGLEntryFromGenJnlLine(var GLEntry: Record "G/L Entry"; var GenJournalLine: Record "Gen. Journal Line")
+    begin
+        if GenJournalLine."Job No." <> '' then begin
+            GLEntry."Job No." := GenJournalLine."Job No.";
+            GLEntry."Job Task No." := GenJournalLine."Job Task No.";
+        end;
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Job", 'OnAfterInsertEvent', '', false, false)]
