@@ -122,6 +122,14 @@ table 50117 "Proyecto Movimiento Pago"
             "Vendor Ledger Entry"."Entry No.";
             ValidateTableRelation = false;
         }
+        //documento a liquidar
+        field(15; "Document to Liquidate"; Code[20])
+        {
+            Caption = 'Documento a liquidar';
+            DataClassification = ToBeClassified;
+            TableRelation = "Purchase Header"."No.";
+            Editable = false;
+        }
     }
 
     keys

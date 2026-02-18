@@ -6,7 +6,7 @@
 codeunit 50301 "ProcesosProyectos"
 {
     Permissions = TableData "G/L Budget Entry" = rimd, TableData "Job Ledger Entry" = rimd,
-    Tabledata "Employee Ledger Entry" = rimd, TableData "Job Register" = rimd;
+    Tabledata "Employee Ledger Entry" = rimd, TableData "Job Register" = rimd, TableData "Proyecto Movimiento Pago" = rimd;
     trigger OnRun()
     begin
     end;
@@ -55,6 +55,78 @@ codeunit 50301 "ProcesosProyectos"
         JobRegister.Insert(true);
 
         Message('Registro de proyectos creado: No. %1, From Entry No. %2, To Entry No. %3.', JobRegister."No.", JobRegister."From Entry No.", JobRegister."To Entry No.");
+    end;
+
+    /// <summary>
+    /// Importa desde Excel una lista de pagarés con Nº Proyecto y Nº Tarea; actualiza Proyecto Movimiento Pago filtrando por proyecto y tarea y rellenando Document to Liquidate con el nº de pagaré.
+    /// Excel: fila 1 = encabezados (Nº Proyecto, Nº Tarea, Nº Pagaré). Desde fila 2: col A = Job No., col B = Job Task No., col C = Document to Liquidate.
+    /// </summary>
+    procedure ImportarPagaresDocumentToLiquidate()
+    var
+        TempExcelBuffer: Record "Excel Buffer" temporary;
+        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
+        JobNo: Code[20];
+        JobTaskNo: Code[20];
+        DocumentToLiquidate: Code[20];
+        RowNo: Integer;
+        FilasProcesadas: Integer;
+        RegistrosActualizados: Integer;
+        FileName: Text[250];
+        InStream: InStream;
+        SheetName: Text[250];
+        MsgImportacion: Label 'Importación finalizada. Filas procesadas: %1. Registros de Proyecto Movimiento Pago actualizados: %2.';
+    begin
+        if not UploadIntoStream('Seleccionar archivo Excel de pagarés', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos los archivos (*.*)|*.*', FileName, InStream) then
+            exit;
+
+        TempExcelBuffer.DeleteAll();
+        SheetName := TempExcelBuffer.SelectSheetsNameStream(InStream);
+        TempExcelBuffer.OpenBookStream(InStream, SheetName);
+        TempExcelBuffer.ReadSheet();
+
+        FilasProcesadas := 0;
+        RegistrosActualizados := 0;
+
+        // Iterar por filas: columna 1 tiene una celda por fila
+        TempExcelBuffer.SetRange("Column No.", 1);
+        TempExcelBuffer.SetFilter("Row No.", '>1');
+        while TempExcelBuffer.FindFirst() do begin
+            RowNo := TempExcelBuffer."Row No.";
+            JobNo := '';
+            JobTaskNo := '';
+            DocumentToLiquidate := '';
+
+            TempExcelBuffer.SetRange("Row No.", RowNo);
+            if TempExcelBuffer.FindSet() then
+                repeat
+                    case TempExcelBuffer."Column No." of
+                        1:
+                            JobNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(JobNo));
+                        2:
+                            JobTaskNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(JobTaskNo));
+                        3:
+                            DocumentToLiquidate := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(DocumentToLiquidate));
+                    end;
+                until TempExcelBuffer.Next() = 0;
+
+            if (JobNo <> '') and (JobTaskNo <> '') and (DocumentToLiquidate <> '') then begin
+                ProyectoMovimientoPago.SetRange("Job No.", JobNo);
+                ProyectoMovimientoPago.SetRange("Job Task No.", JobTaskNo);
+                if ProyectoMovimientoPago.FindSet() then
+                    repeat
+                        ProyectoMovimientoPago."Document to Liquidate" := DocumentToLiquidate;
+                        ProyectoMovimientoPago.Modify();
+                        RegistrosActualizados += 1;
+                    until ProyectoMovimientoPago.Next() = 0;
+                FilasProcesadas += 1;
+            end;
+
+            // Siguiente fila: excluir las ya procesadas
+            TempExcelBuffer.SetRange("Column No.", 1);
+            TempExcelBuffer.SetFilter("Row No.", '>%1', RowNo);
+        end;
+
+        Message(MsgImportacion, FilasProcesadas, RegistrosActualizados);
     end;
 
     var

@@ -123,8 +123,6 @@ page 50125 "Pagos Proyecto"
                 Caption = 'Recargar';
                 ToolTip = 'Recarga los datos de pagos';
                 Image = Refresh;
-                Promoted = true;
-                PromotedCategory = Process;
 
                 trigger OnAction()
                 begin
@@ -137,8 +135,6 @@ page 50125 "Pagos Proyecto"
                 Caption = 'Ver Factura';
                 ToolTip = 'Abre la factura de compra registrada';
                 Image = Document;
-                Promoted = true;
-                PromotedCategory = Category4;
 
                 trigger OnAction()
                 var
@@ -155,8 +151,6 @@ page 50125 "Pagos Proyecto"
                 Caption = 'Ver Pagos';
                 ToolTip = 'Muestra los pagos realizados para esta factura';
                 Image = Payment;
-                Promoted = true;
-                PromotedCategory = Category4;
 
                 trigger OnAction()
                 begin
@@ -169,8 +163,6 @@ page 50125 "Pagos Proyecto"
                 Caption = 'Ver Líneas del Proyecto';
                 ToolTip = 'Muestra las líneas de la factura relacionadas con este proyecto';
                 Image = JobLines;
-                Promoted = true;
-                PromotedCategory = Category4;
 
                 trigger OnAction()
                 begin
@@ -200,6 +192,64 @@ page 50125 "Pagos Proyecto"
                     end;
                 end;
             }
+            action("Marcar para liquidar")
+            {
+                ApplicationArea = All;
+                Caption = 'Marcar para liquidar';
+                Image = ApplyEntries;
+                ToolTip = 'Marca el documento para liquidar';
+                trigger OnAction()
+                begin
+                    MarkForLiquidation();
+                end;
+            }
+            action("Desmarcar para liquidar")
+            {
+                ApplicationArea = All;
+                Caption = 'Desmarcar para liquidar';
+                Image = Cancel;
+                ToolTip = 'Desmarca el documento para liquidar';
+                trigger OnAction()
+                begin
+                    UnmarkForLiquidation();
+                end;
+            }
+            action(ImportarPagares)
+            {
+                ApplicationArea = All;
+                Caption = 'Importar pagarés (Documento a liquidar)';
+                Image = Import;
+                ToolTip = 'Importa desde Excel una lista de pagarés con Nº Proyecto y Nº Tarea, y rellena el campo Documento a liquidar en Proyecto Movimiento Pago. Excel: col A = Nº Proyecto, col B = Nº Tarea, col C = Nº Pagaré. Fila 1 = encabezados.';
+
+                trigger OnAction()
+                var
+                    ProcesosProyectos: Codeunit ProcesosProyectos;
+                begin
+                    ProcesosProyectos.ImportarPagaresDocumentToLiquidate();
+                    CurrPage.Update(false);
+                end;
+            }
+        }
+        area(Promoted)
+        {
+            actionref(MarcarParaLiquidacionAction; "Marcar para liquidar")
+            {
+            }
+            actionref(DesmarcarParaLiquidacionAction; "Desmarcar para liquidar")
+            {
+            }
+            actionref(VerPagosAction; VerPagos)
+            {
+            }
+            actionref(VerLíneasProyectoAction; VerLíneasProyecto)
+            {
+            }
+            actionref(RecalcularPagosAction; RecalcularPagos)
+            {
+            }
+            actionref(VerFacturaAction; VerFactura)
+            {
+            }
         }
     }
 
@@ -215,8 +265,39 @@ page 50125 "Pagos Proyecto"
             SetJobFilter(JobNo);
     end;
 
+    procedure SetDocumento(NewDocumento: Code[20])
+    begin
+        GDocumento := NewDocumento;
+
+    end;
+
+    procedure MarkForLiquidation()
+    var
+        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
+    begin
+        CurrPage.SetSelectionFilter(ProyectoMovimientoPago);
+        if ProyectoMovimientoPago.FindSet() then
+            repeat
+                ProyectoMovimientoPago."Document to Liquidate" := GDocumento;
+                ProyectoMovimientoPago.Modify();
+            until ProyectoMovimientoPago.Next() = 0;
+    end;
+
+    procedure UnmarkForLiquidation()
+    var
+        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
+    begin
+        CurrPage.SetSelectionFilter(ProyectoMovimientoPago);
+        if ProyectoMovimientoPago.FindSet() then
+            repeat
+                ProyectoMovimientoPago."Document to Liquidate" := '';
+                ProyectoMovimientoPago.Modify();
+            until ProyectoMovimientoPago.Next() = 0;
+    end;
+
     var
         JobNo: Code[20];
+        GDocumento: Code[20];
 
     procedure SetJobFilter(NewJobNo: Code[20])
     begin
