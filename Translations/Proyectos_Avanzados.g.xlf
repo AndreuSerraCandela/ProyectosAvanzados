@@ -4053,6 +4053,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension GlEntriesUt - Action Desmarcar Automático - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 2066003616 - Action 3035375685 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3294115343">
+          <source>Crea una nueva línea en el registro de proyectos con el No. siguiente. From Entry No. = último To Entry No. del registro anterior (si existe). To Entry No. = último movimiento de Job Ledger Entry.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Job Registers Ext - Action ActualizarUltimoRegistro - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2066003616 - Action 3035375685 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3294115343">
+          <source>Actualizar último registro</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Job Registers Ext - Action ActualizarUltimoRegistro - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1863770389 - Action 279625425 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4010542053">
           <source>Actualizar Total Cost</source>
           <note from="Developer" annotates="general" priority="2"></note>

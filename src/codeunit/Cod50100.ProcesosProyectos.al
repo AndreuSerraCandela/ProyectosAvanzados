@@ -6,9 +6,55 @@
 codeunit 50301 "ProcesosProyectos"
 {
     Permissions = TableData "G/L Budget Entry" = rimd, TableData "Job Ledger Entry" = rimd,
-    Tabledata "Employee Ledger Entry" = rimd;
+    Tabledata "Employee Ledger Entry" = rimd, TableData "Job Register" = rimd;
     trigger OnRun()
     begin
+    end;
+
+    /// <summary>
+    /// Crea una nueva línea en Job Register con el No. siguiente.
+    /// From Entry No. = último To Entry No. del registro anterior (si existe).
+    /// To Entry No. = último Entry No. de Job Ledger Entry.
+    /// </summary>
+    procedure ActualizarUltimoRegistroJob()
+    var
+        JobRegister: Record "Job Register";
+        JobLedgerEntry: Record "Job Ledger Entry";
+        FromEntryNo: Integer;
+        ToEntryNo: Integer;
+        NextNo: Integer;
+    begin
+        // Último To Entry No. del registro anterior (para From Entry No.)
+        if JobRegister.FindLast() then begin
+            NextNo := JobRegister."No." + 1;
+            FromEntryNo := JobRegister."To Entry No.";
+        end else begin
+            NextNo := 1;
+            FromEntryNo := 0;
+        end;
+
+        // Último movimiento de Job Ledger Entry (para To Entry No.)
+        if JobLedgerEntry.FindLast() then
+            ToEntryNo := JobLedgerEntry."Entry No."
+        else
+            ToEntryNo := 0;
+
+        if ToEntryNo = 0 then
+            Error('No hay movimientos en Job Ledger Entry.');
+
+        if FromEntryNo >= ToEntryNo then
+            Error('El último registro ya incluye hasta el movimiento %1. No hay nuevos movimientos que registrar.', ToEntryNo);
+
+        JobRegister.Init();
+        JobRegister."No." := NextNo;
+        JobRegister."From Entry No." := FromEntryNo + 1;
+        JobRegister."To Entry No." := ToEntryNo;
+        JobRegister."Creation Date" := Today();
+        JobRegister."User ID" := UserId;
+        //JobRegister."Source Code" := CopyStr('JOB-JNL', 1, MaxStrLen(JobRegister."Source Code"));
+        JobRegister.Insert(true);
+
+        Message('Registro de proyectos creado: No. %1, From Entry No. %2, To Entry No. %3.', JobRegister."No.", JobRegister."From Entry No.", JobRegister."To Entry No.");
     end;
 
     var
@@ -1835,9 +1881,17 @@ codeunit 50301 "ProcesosProyectos"
         Categorias: Record Categorias;
         IcParter: Record "Ic Partner";
         Customer: Record Customer;
+        RegistroProyectos: Record "Job Register";
+        IdJobRegister: Integer;
+        Desde: Integer;
     begin
         rInf.Get();
         rInf.TestField("Cta Contable Mov");
+        if RegistroProyectos.FindLast() then
+            IdJobRegister := RegistroProyectos."No." + 1
+        else
+            IdJobRegister := 1;
+
         if not Job.Get(JobNo) then
             Error('El proyecto %1 no existe.', JobNo);
 
@@ -2208,6 +2262,7 @@ codeunit 50301 "ProcesosProyectos"
                                 LineNo := JobLedgerEntry."Entry No." + 1
                             else
                                 LineNo := 1;
+                            if Desde = 0 Then Desde := LineNo;
                             JobLedgerEntry.Init();
                             JobLedgerEntry."Entry No." := LineNo;
                             JobLedgerEntry."Job No." := JobNo;
@@ -2281,6 +2336,14 @@ codeunit 50301 "ProcesosProyectos"
                     TempExcelBuffer.SetRange("Row No.");
                 end;
             until TempExcelBuffer.Next() = 0;
+        RegistroProyectos.Init();
+        RegistroProyectos."No." := IdJobRegister;
+        RegistroProyectos."Creation Date" := Today;
+        RegistroProyectos."Creation Time" := Time;
+        RegistroProyectos."From Entry No." := Desde;
+        RegistroProyectos."To Entry No." := LineNo;
+        RegistroProyectos."User ID" := UserId;
+        RegistroProyectos.Insert();
 
         Message('Se importaron %1 movimientos correctamente.', ImportedEntries);
     end;
