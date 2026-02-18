@@ -778,6 +778,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Proyecto Movimiento Pago - Field Document No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3856100107 - Field 3439626172 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Documento a liquidar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Proyecto Movimiento Pago - Field Document to Liquidate - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3856100107 - Field 2363328873 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Tipo Documento</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1487,6 +1492,11 @@
           <source>Fila %1: El proyecto %2 no existe.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasDesdeExcel - NamedType ErrProyecto</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 3452363447 - NamedType 378565434" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importación finalizada. Filas procesadas: %1. Registros de Proyecto Movimiento Pago actualizados: %2.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarPagaresDocumentToLiquidate - NamedType MsgImportacion</note>
         </trans-unit>
         <trans-unit id="Codeunit 3200460114 - Method 2983573584 - NamedType 3994261301" size-unit="char" translate="yes" xml:space="preserve">
           <source>Esta tarea tiene dependencias que no estan completadas</source>
@@ -3118,6 +3128,36 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Control Vendor No. - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 4006525853 - Action 3232513139 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Desmarca el documento para liquidar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action Desmarcar para liquidar - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4006525853 - Action 3232513139 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Desmarcar para liquidar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action Desmarcar para liquidar - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4006525853 - Action 1282730351 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importa desde Excel una lista de pagarés con Nº Proyecto y Nº Tarea, y rellena el campo Documento a liquidar en Proyecto Movimiento Pago. Excel: col A = Nº Proyecto, col B = Nº Tarea, col C = Nº Pagaré. Fila 1 = encabezados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action ImportarPagares - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4006525853 - Action 1282730351 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importar pagarés (Documento a liquidar)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action ImportarPagares - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4006525853 - Action 2814409445 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Marca el documento para liquidar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action Marcar para liquidar - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4006525853 - Action 2814409445 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Marcar para liquidar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action Marcar para liquidar - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 4006525853 - Action 684180350 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Recalcula los importes pagados para todas las facturas</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4533,6 +4573,26 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Importe Comprometido - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 144601934 - Control 1908272084 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3196174509">
+          <source>Especifica el número del proyecto asociado a esta línea del diario de pagos.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Payment Journal Ext - Control Job No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 144601934 - Control 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3196174509">
+          <source>Nº Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Payment Journal Ext - Control Job No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 144601934 - Control 561421623 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3196174509">
+          <source>Especifica el número de la tarea del proyecto asociada a esta línea del diario de pagos.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Payment Journal Ext - Control Job Task No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 144601934 - Control 561421623 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3196174509">
+          <source>Nº Tarea Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Payment Journal Ext - Control Job Task No. - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 4048657685 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
           <source>Specifies the value of the No. Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4678,6 +4738,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension Vendor Card Inversor - Control Inversor - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3152102566 - Action 3358040077 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1567633909">
+          <source>Asocia un documento (pedido/factura) a liquidar a los movimientos de la tabla Proyecto Movimiento Pago vinculados a los movimientos de proveedor seleccionados.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Vendor Ledger Entries Ext - Action AsociarDocumentoLiquidar - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3152102566 - Action 3358040077 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1567633909">
+          <source>Asociar documento a liquidar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Vendor Ledger Entries Ext - Action AsociarDocumentoLiquidar - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 3880025898 - Control 3598112252 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4194195770">
           <source>Indica si el proveedor es inversor.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4732,6 +4802,11 @@
           <source>Nº Tarea Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension EmployeeLedgerEntryExt - Field Job Task No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 71500435 - Field 561421623 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2825951060">
+          <source>Nº Tarea Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension G/L Entry Ext - Field Job Task No. - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 3315447413 - Field 2165121140 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 4274826855">
           <source>Mostrar en lineas de planif.</source>
