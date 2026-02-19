@@ -39,7 +39,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                 ProyectoFacturaCompra."Amount" := PurchaseLine."Job Assignment Amount"
             else
                 // Si no hay asignación específica, asignar el 100% o el importe completo
-                ProyectoFacturaCompra."Amount" := Rec."Line Amount";
+                ProyectoFacturaCompra."Amount" := Rec."Amount Including VAT";
 
             ProyectoFacturaCompra.Insert(true);
         end;
@@ -83,7 +83,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                 ProyectoFacturaCompra."Amount" := PurchaseLine."Job Assignment Amount"
             else
                 // Si no hay asignación específica, asignar el 100% o el importe completo
-                ProyectoFacturaCompra."Amount" := Rec."Line Amount";
+                ProyectoFacturaCompra."Amount" := Rec."Amount Including VAT";
 
             ProyectoFacturaCompra.Insert(true);
         end;
@@ -370,7 +370,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                 PurchaseLine.SetRange("Document No.", VendLedgEntry."Document No.");
                 if PurchaseLine.FindFirst() then
                     repeat
-                        CreateProjectAssignment(PurchaseLine, PurchaseLine."Job No.", PurchaseLine."Job Task No.", PurchaseLine."Job Planning Line No.", 0, PurchaseLine."Amount", VendLedgEntry."Entry No.");
+                        CreateProjectAssignment(PurchaseLine, PurchaseLine."Job No.", PurchaseLine."Job Task No.", PurchaseLine."Job Planning Line No.", 0, PurchaseLine."Amount Including VAT", VendLedgEntry."Entry No.");
                     until PurchaseLine.Next() = 0;
             end;
         end;

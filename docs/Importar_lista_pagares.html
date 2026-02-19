@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Importar lista de pagarés - Proyectos Avanzados</title>
+<style>
+body { font-family: Calibri, Arial, sans-serif; margin: 2cm; line-height: 1.4; }
+h1 { font-size: 18pt; color: #1a5276; border-bottom: 2px solid #1a5276; padding-bottom: 4px; }
+h2 { font-size: 14pt; color: #2874a6; margin-top: 18pt; }
+p { margin: 0 0 8pt; }
+table { border-collapse: collapse; margin: 12pt 0; }
+th, td { border: 1px solid #333; padding: 6pt 10pt; text-align: left; }
+th { background: #eee; font-weight: bold; }
+ul { margin: 8pt 0; }
+li { margin: 4pt 0; }
+.note { background: #f9f9f9; padding: 10pt; margin: 12pt 0; border-left: 4px solid #2874a6; }
+.footer { margin-top: 24pt; font-size: 9pt; color: #666; }
+</style>
+</head>
+<body>
+
+<h1>Cómo importar la lista de pagarés (Documento a liquidar)</h1>
+<p><strong>Proyectos Avanzados – Business Central</strong></p>
+
+<h2>1. Objetivo</h2>
+<p>Este proceso permite importar desde un archivo Excel una lista de <strong>pagarés</strong> asociados a proyectos y tareas. El sistema actualiza la tabla <strong>Proyecto Movimiento Pago</strong> y rellena el campo <strong>Documento a liquidar</strong> con el número de pagaré correspondiente, filtrando por <strong>Nº Proyecto</strong> y <strong>Nº Tarea</strong>.</p>
+
+<h2>2. Dónde se ejecuta</h2>
+<ul>
+<li>Menú: <strong>Pagos Vinculados al Proyecto</strong> (página Pagos Proyecto).</li>
+<li>Acción: <strong>Importar pagarés (Documento a liquidar)</strong> (icono de importar).</li>
+</ul>
+
+<h2>3. Formato del archivo Excel</h2>
+<p>El archivo debe ser <strong>.xlsx</strong> y tener una hoja con la siguiente estructura:</p>
+<table>
+<tr><th>Columna</th><th>Contenido</th><th>Descripción</th></tr>
+<tr><td><strong>A</strong></td><td>Nº Proyecto</td><td>Código del proyecto (Job No.)</td></tr>
+<tr><td><strong>B</strong></td><td>Nº Tarea</td><td>Código de la tarea del proyecto (Job Task No.)</td></tr>
+<tr><td><strong>C</strong></td><td>Nº Pagaré</td><td>Número del pagaré (Documento a liquidar)</td></tr>
+</table>
+<ul>
+<li><strong>Fila 1:</strong> debe contener los encabezados (se ignora en la importación).</li>
+<li><strong>Desde la fila 2:</strong> cada fila es una línea a importar.</li>
+</ul>
+
+<h3>Ejemplo de contenido</h3>
+<table>
+<tr><th>A (Nº Proyecto)</th><th>B (Nº Tarea)</th><th>C (Nº Pagaré)</th></tr>
+<tr><td>PROY-2024-001</td><td>1000</td><td>PAG-0001</td></tr>
+<tr><td>PROY-2024-001</td><td>2000</td><td>PAG-0002</td></tr>
+<tr><td>PROY-2024-002</td><td>1000</td><td>PAG-0003</td></tr>
+</table>
+
+<h2>4. Pasos para importar</h2>
+<ol>
+<li>Abrir <strong>Pagos Vinculados al Proyecto</strong> (página Pagos Proyecto).</li>
+<li>Pulsar la acción <strong>Importar pagarés (Documento a liquidar)</strong>.</li>
+<li>En el cuadro de diálogo, seleccionar el archivo <strong>Excel (.xlsx)</strong> con la lista de pagarés.</li>
+<li>Elegir la <strong>hoja</strong> a importar (si el libro tiene varias) y confirmar.</li>
+<li>El sistema procesa el archivo y muestra un mensaje al final con:
+<ul>
+<li><strong>Filas procesadas:</strong> número de filas de datos válidas.</li>
+<li><strong>Registros actualizados:</strong> número de registros de Proyecto Movimiento Pago actualizados.</li>
+</ul>
+</li>
+</ol>
+
+<h2>5. Comportamiento del proceso</h2>
+<ul>
+<li>Para cada fila del Excel (desde la fila 2) con Nº Proyecto, Nº Tarea y Nº Pagaré informados, se buscan en <strong>Proyecto Movimiento Pago</strong> todos los registros con ese Job No. y Job Task No. y se rellena en ellos el campo <strong>Documento a liquidar</strong> con el Nº Pagaré.</li>
+<li>Las filas en blanco o con algún valor vacío en A, B o C se omiten.</li>
+<li>Si para un proyecto/tarea no existe ningún movimiento en Proyecto Movimiento Pago, esa fila no actualiza registros pero se cuenta como fila procesada.</li>
+</ul>
+
+<h2>6. Recomendaciones</h2>
+<ul>
+<li>Comprobar que los Nº Proyecto y Nº Tarea existan en Business Central.</li>
+<li>Usar la primera hoja del libro o la que contenga la tabla con el formato indicado.</li>
+<li>No dejar filas vacías entre los datos; la primera fila debe ser siempre la de encabezados.</li>
+</ul>
+
+<h2>7. Resumen rápido</h2>
+<table>
+<tr><th>Concepto</th><th>Detalle</th></tr>
+<tr><td>Dónde</td><td>Pagos Proyecto → Importar pagarés (Documento a liquidar)</td></tr>
+<tr><td>Formato</td><td>Excel .xlsx, fila 1 = encabezados</td></tr>
+<tr><td>Columnas</td><td>A = Nº Proyecto, B = Nº Tarea, C = Nº Pagaré</td></tr>
+<tr><td>Tabla actualizada</td><td>Proyecto Movimiento Pago</td></tr>
+<tr><td>Campo rellenado</td><td>Documento a liquidar</td></tr>
+</table>
+
+<p class="footer">Documento generado para la extensión Proyectos Avanzados.</p>
+
+</body>
+</html>

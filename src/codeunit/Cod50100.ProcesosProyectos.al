@@ -241,25 +241,67 @@ codeunit 50301 "ProcesosProyectos"
     //         JobPlaningLine.Modify();
     //     end;
     // end;
-
-
-    /// <summary>
-    /// Codeunit "Job Transfer Line" (1004): después de crear el Job Ledger Entry desde la línea de diario. Punto principal para rellenar Neto Factura, Bruto Factura, IVA e IRPF.
-    /// </summary>
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Transfer Line", 'OnAfterFromJnlLineToLedgEntry', '', false, false)]
-    local procedure OnAfterFromJnlLineToLedgEntry(var JobLedgerEntry: Record "Job Ledger Entry"; JobJournalLine: Record "Job Journal Line")
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", OnAfterPostPurchaseDoc, '', false, false)]
+    procedure OnAfterPostPurchaseDoc(var PurchaseHeader: Record "Purchase Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; PurchRcpHdrNo: Code[20]; RetShptHdrNo: Code[20]; PurchInvHdrNo: Code[20]; PurchCrMemoHdrNo: Code[20]; CommitIsSupressed: Boolean)
     var
-        EventosProyectos: Codeunit "Eventos-proyectos";
+        PurchaseInvHeader: Record "Purch. Inv. Header";
+        JobLedgerEntry: Record "Job Ledger Entry";
     begin
-        EventosProyectos.DatosFactura(JobLedgerEntry);
+        if PurchInvHdrNo = '' then
+            exit;
+        JobLedgerEntry.SetRange("Document No.", PurchInvHdrNo);
+        if JobLedgerEntry.FindFirst() then begin
+            if JobLedgerEntry."Neto Factura" <> 0 Then exit;
+            if PurchaseInvHeader.Get(JobLedgerEntry."Document No.") then begin
+                PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT");
+                JobLedgerEntry."Neto Factura" := PurchaseInvHeader.Amount;
+                JobLedgerEntry."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
+                JobLedgerEntry."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
+                JobLedgerEntry."IRPF" := 0;
+                if JobLedgerEntry."Entry No." <> 0 Then
+                    JobLedgerEntry.Modify(false);
+
+            end else begin
+                JobLedgerEntry."Neto Factura" := JobLedgerEntry."Total Cost";
+                JobLedgerEntry."Bruto Factura" := JobLedgerEntry."Total Cost (LCY)";
+                // IVA/IRPF: de momento 0; rellenar desde fuente (ej. extensión Job Journal Line) si se necesita
+                JobLedgerEntry."IGIC O IVA" := 0;
+                JobLedgerEntry."Importe IGIC O IVA" := 0;
+                JobLedgerEntry."IRPF" := 0;
+                if JobLedgerEntry."Entry No." <> 0 Then
+                    JobLedgerEntry.Modify(false);
+
+            end;
+        end;
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Transfer Line", 'OnAfterFromJnlLineToLedgEntry', '', false, false)]
-    local procedure OnAfterFromJnlLineToLedgEntry2(var JobLedgerEntry: Record "Job Ledger Entry"; JobJournalLine: Record "Job Journal Line")
+
+
+    //evento pn insert Job Ledger Entry
+    [EventSubscriber(ObjectType::Table, Database::"Job Ledger Entry", OnBeforeInsertEvent, '', false, false)]
+    local procedure OnBeforeInsertEvent(var Rec: Record "Job Ledger Entry"; RunTrigger: Boolean)
     var
-        EventosProyectos: Codeunit "Eventos-proyectos";
+        PurchaseInvHeader: Record "Purch. Inv. Header";
     begin
-        EventosProyectos.DatosFactura(JobLedgerEntry);
+        if Rec.IsTemporary then
+            exit;
+        if Rec."Neto Factura" <> 0 Then exit;
+        if PurchaseInvHeader.Get(Rec."Document No.") then begin
+            PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT");
+            Rec."Neto Factura" := PurchaseInvHeader.Amount;
+            Rec."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
+            Rec."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
+            Rec."IRPF" := 0;
+
+        end else begin
+            Rec."Neto Factura" := Rec."Total Cost";
+            Rec."Bruto Factura" := Rec."Total Cost (LCY)";
+            // IVA/IRPF: de momento 0; rellenar desde fuente (ej. extensión Job Journal Line) si se necesita
+            Rec."IGIC O IVA" := 0;
+            Rec."Importe IGIC O IVA" := 0;
+            Rec."IRPF" := 0;
+
+        end;
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Job Planning Line", 'OnUseOnBeforeModify', '', false, false)]

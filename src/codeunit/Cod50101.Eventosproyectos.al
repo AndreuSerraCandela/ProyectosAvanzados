@@ -46,20 +46,56 @@ codeunit 50302 "Eventos-proyectos"
         if Rec.IsTemporary then
             exit;
         if PurchaseInvHeader.Get(Rec."Document No.") then begin
-            PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT");
+            PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT", "Remaining Amount");
             Rec."Neto Factura" := PurchaseInvHeader.Amount;
             Rec."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
             Rec."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
             Rec."IRPF" := 0;
-            Rec.Modify(false);
+            Rec."Amount Paid" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader."Remaining Amount";
+            If Rec."Entry No." <> 0 Then
+                Rec.Modify(false);
         end else begin
             Rec."Neto Factura" := Rec."Total Cost";
-            Rec."Bruto Factura" := Rec."Total Price";
+            Rec."Bruto Factura" := Rec."Total Cost (LCY)";
             // IVA/IRPF: de momento 0; rellenar desde fuente (ej. extensión Job Journal Line) si se necesita
             Rec."IGIC O IVA" := 0;
             Rec."Importe IGIC O IVA" := 0;
             Rec."IRPF" := 0;
-            Rec.Modify(false);
+            If Rec."Entry No." <> 0 Then
+                Rec.Modify(false);
+        end;
+    end;
+
+
+    procedure DatosFactura(DocumentNo: Code[20])
+    var
+        Rec: Record "Job Ledger Entry";
+        PurchaseInvHeader: Record "Purch. Inv. Header";
+    begin
+        if Rec.IsTemporary then
+            exit;
+        Rec.SetRange("Document No.", DocumentNo);
+        if Rec.FindFirst() then begin
+            If Rec."Neto Factura" <> 0 Then exit;
+            if PurchaseInvHeader.Get(Rec."Document No.") then begin
+                PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT", "Remaining Amount");
+                Rec."Neto Factura" := PurchaseInvHeader.Amount;
+                Rec."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
+                Rec."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
+                Rec."IRPF" := 0;
+                Rec."Amount Paid" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader."Remaining Amount";
+                If Rec."Entry No." <> 0 Then
+                    Rec.Modify(false);
+            end else begin
+                Rec."Neto Factura" := Rec."Total Cost";
+                Rec."Bruto Factura" := Rec."Total Cost (LCY)";
+                // IVA/IRPF: de momento 0; rellenar desde fuente (ej. extensión Job Journal Line) si se necesita
+                Rec."IGIC O IVA" := 0;
+                Rec."Importe IGIC O IVA" := 0;
+                Rec."IRPF" := 0;
+                If Rec."Entry No." <> 0 Then
+                    Rec.Modify(false);
+            end;
         end;
     end;
 

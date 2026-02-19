@@ -396,6 +396,7 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                     CodEstimacion: Code[20];
                     Dialogo: Page DialogoEstimacion;
                     page1007: Page 1007;
+                    JobTask: Record "Job Task";
                 begin
                     if Dialogo.RunModal() = Action::OK then begin
                         //  if Confirm('Desea rellenar el codigo de estimacion %1', false, CodEstimacion) then;
@@ -440,6 +441,10 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                             JobPlanningLine."Importe Inicial Coste" := HistJobPlanningLine."Total Cost (LCY)";
                             JobPlanningLine.Modify();
                         until JobPlanningLine.NEXT = 0;
+                    JobTask.SetRange("Job No.", Rec."No.");
+                    JobTask.ModifyAll("Versión Base", Job."Versión Base");
+                    JobTask.ModifyAll("Versión Final", Ver);
+
 
                 end;
 

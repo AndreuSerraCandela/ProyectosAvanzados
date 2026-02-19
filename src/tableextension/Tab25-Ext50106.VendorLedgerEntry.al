@@ -19,6 +19,7 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
         TotalInvoiceAmount: Decimal;
         PaymentAmount: Decimal;
         GlEntry: Record "G/L Entry";
+        Eventosproyectos: Codeunit "Eventos-proyectos";
     begin
         // Si es un pago (aplicación), distribuir entre proyectos
         if "Document Type" <> "Document Type"::Payment then
@@ -35,6 +36,7 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                 VendorLedgerEntry.SetRange("Entry No.", DetailedVendorLedgEntry."Applied Vend. Ledger Entry No.");
                 if VendorLedgerEntry.FindFirst() then begin
                     if VendorLedgerEntry."Document Type" = VendorLedgerEntry."Document Type"::Invoice then begin
+                        Eventosproyectos.DatosFactura(VendorLedgerEntry."Document No.");
                         PaymentAmount := -DetailedVendorLedgEntry.Amount; // Convertir a positivo
 
                         // Buscar asignaciones de proyecto para esta factura
@@ -45,7 +47,7 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                             PurchInvLine.SetRange("Document No.", VendorLedgerEntry."Document No.");
                             if PurchInvLine.FindSet() then
                                 repeat
-                                    TotalInvoiceAmount += PurchInvLine."Line Amount";
+                                    TotalInvoiceAmount += PurchInvLine."Amount Including VAT";
                                 until PurchInvLine.Next() = 0;
 
                             // Distribuir el pago proporcionalmente

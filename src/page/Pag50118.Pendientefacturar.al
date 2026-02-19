@@ -561,8 +561,8 @@ page 50118 "Pendiente facturar"
                         JobUsageLink.SetRange("Line No.", Rec."Line No.");
                         if JobUsageLink.FindSet() then
                             repeat
-                                JobLedgerEntry.Get(JobUsageLink."Entry No.");
-                                JobLedgerEntry.Mark := true;
+                                If JobLedgerEntry.Get(JobUsageLink."Entry No.") then
+                                    JobLedgerEntry.Mark := true;
                             until JobUsageLink.Next() = 0;
 
                         JobLedgerEntry.MarkedOnly(true);
