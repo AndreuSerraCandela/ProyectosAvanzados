@@ -77,6 +77,13 @@ page 50125 "Pagos Proyecto"
                     Editable = false;
                     Style = Favorable;
                 }
+                field("Base Amount Paid"; Rec."Base Amount Paid")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Importe Base Pagado';
+                    ToolTip = 'Especifica el importe pagado sin IVA correspondiente a este proyecto';
+                    Editable = false;
+                }
                 field("Amount Pending"; Rec."Amount Pending")
                 {
                     ApplicationArea = All;

@@ -130,13 +130,22 @@ table 50117 "Proyecto Movimiento Pago"
             TableRelation = "Purchase Header"."No.";
             Editable = false;
         }
+        field(16; "Base Amount Paid"; Decimal)
+        {
+            Caption = 'Importe Base Pagado';
+            DataClassification = ToBeClassified;
+            AutoFormatType = 1;
+            AutoFormatExpression = GetCurrencyCode();
+            DecimalPlaces = 2 : 5;
+            Editable = false;
+        }
     }
 
     keys
     {
         key(Key1; "Document Type", "Document No.", "Line No.", "Job No.", "Job Planning Line No.", "Entry No.")
         {
-            SumIndexFields = "Amount Paid", "Amount Pending";
+            SumIndexFields = "Amount Paid", "Amount Pending", "Base Amount Paid";
             Clustered = true;
         }
         key(Key2; "Job No.", "Job Planning Line No.", "Document No.", "Line No.")
@@ -267,7 +276,9 @@ table 50117 "Proyecto Movimiento Pago"
         VendorLedgerEntry: Record "Vendor Ledger Entry";
         DetailedVendorLedgEntry: Record "Detailed Vendor Ledg. Entry";
         PurchaseLine: Record "Purchase Line";
+        PurchInvLine: Record "Purch. Inv. Line";
         TotalInvoiceAmount: Decimal;
+        TotalInvoiceBaseAmount: Decimal;
         TotalPaidAmount: Decimal;
         ProjectPaidAmount: Decimal;
     begin
@@ -283,6 +294,7 @@ table 50117 "Proyecto Movimiento Pago"
         if not VendorLedgerEntry.FindFirst() then begin
             Clear("Amount Paid");
             Clear("Amount Pending");
+            Clear("Base Amount Paid");
             Clear("Last Payment Date");
             exit;
         end;
@@ -309,6 +321,15 @@ table 50117 "Proyecto Movimiento Pago"
 
             "Amount Paid" := ProjectPaidAmount;
             "Amount Pending" := "Amount" - "Amount Paid";
+
+            // Importe base pagado (sin IVA): proporción sobre líneas de factura registrada
+            PurchInvLine.SetRange("Document No.", "Posted Document No.");
+            PurchInvLine.CalcSums("Line Amount", "Amount Including VAT");
+            TotalInvoiceBaseAmount := PurchInvLine."Line Amount";
+            if PurchInvLine."Amount Including VAT" <> 0 then
+                "Base Amount Paid" := Round(ProjectPaidAmount * TotalInvoiceBaseAmount / PurchInvLine."Amount Including VAT", 0.01)
+            else
+                "Base Amount Paid" := ProjectPaidAmount;
         end;
 
         // Buscar fecha del último pago

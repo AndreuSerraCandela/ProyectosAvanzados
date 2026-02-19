@@ -309,6 +309,16 @@ tableextension 50303 "JobTaskEx" extends "Job Task" //1001
             Editable = false;
             DecimalPlaces = 2 : 2;
         }
+        field(50022; "Base Amount Paid"; Decimal)
+        {
+            Caption = 'Importe Base Pagado';
+            FieldClass = FlowField;
+            CalcFormula = sum("Proyecto Movimiento Pago"."Base Amount Paid" where("Job No." = field("Job No."),
+                                                                                      "Job Task No." = field("Job Task No."),
+                                                                                      "Job Task No." = field(filter(Totaling))));
+            Editable = false;
+            DecimalPlaces = 2 : 2;
+        }
 
     }
 

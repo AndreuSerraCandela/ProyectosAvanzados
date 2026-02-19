@@ -276,6 +276,13 @@ page 50116 "Job Task Lines Subform Ext"
                         Page.RunModal(0, JobEntries);
                     end;
                 }
+                field("Base Amount Paid"; Rec."Base Amount Paid")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Importe Base Pagado';
+                    ToolTip = 'Especifica el importe pagado sin IVA para esta tarea.';
+                    Editable = false;
+                }
                 field("Amount Pending"; CalculaBrutoFactura() - Rec."Amount Paid")// CalculaImportePendiente())
                 {
                     ApplicationArea = All;
@@ -898,7 +905,7 @@ page 50116 "Job Task Lines Subform Ext"
         CodeEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
         DescriptionEmphasize := Rec."Tipo Partida" = Rec."Tipo Partida"::Capítulo;
         DescriptionIndent := Rec.Indentation;
-        Rec.CalcFields("Bruto Factura", "Amount Paid");
+        Rec.CalcFields("Bruto Factura", "Amount Paid", "Base Amount Paid");
         //If Rec."Bruto Factura" = 0 Then Rec."Bruto Factura" := CalculaBrutoFactura();
 
 
