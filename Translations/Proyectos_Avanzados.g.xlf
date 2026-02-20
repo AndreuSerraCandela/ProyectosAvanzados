@@ -773,6 +773,21 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Proyecto Movimiento Pago - Field Amount Pending - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 3856100107 - Field 3278951291 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importe Base</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Proyecto Movimiento Pago - Field Base Amount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3856100107 - Field 2772596055 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importe Base Pagado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Proyecto Movimiento Pago - Field Base Amount Paid - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3856100107 - Field 3267049074 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importe Base Pendiente</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Proyecto Movimiento Pago - Field Base Amount Pending - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 3856100107 - Field 486908828 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Nº Documento</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -2058,6 +2073,26 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Amt. Rcd. Not Invoiced - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 2772596055 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el importe pagado sin IVA para esta tarea.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Base Amount Paid - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 2772596055 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importe Base Pagado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Base Amount Paid - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3267049074 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el importe pendiente de pago para esta tarea.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Base Amount Pending - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3008278152 - Control 3267049074 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importe Pendiente</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Base Amount Pending - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3008278152 - Control 1546456287 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies, in the local currency, the total billable cost for the job task that has been invoiced during the time period in the Posting Date Filter field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3047,6 +3082,16 @@
           <source>Importe Pendiente</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Control Amount Pending - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4006525853 - Control 2772596055 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el importe pagado sin IVA correspondiente a este proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Control Base Amount Paid - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4006525853 - Control 2772596055 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Importe Base Pagado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Control Base Amount Paid - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 4006525853 - Control 486908828 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Especifica el número de documento de compra</source>
@@ -4823,6 +4868,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Amount Paid - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2487241009 - Field 2772596055 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
+          <source>Importe Base Pagado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobLedgerEntryExt - Field Base Amount Paid - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2487241009 - Field 698455820 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 53801266">
           <source>Bruto Factura</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4987,6 +5037,11 @@
           <source>Importe Pagado</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Amount Paid - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2012152121 - Field 2772596055 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
+          <source>Importe Base Pagado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension JobTaskEx - Field Base Amount Paid - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2012152121 - Field 698455820 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2014770230">
           <source>Bruto Factura</source>
@@ -5243,30 +5298,30 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurcharseLine_Job - Field Work Description - Property Caption</note>
         </trans-unit>
-        <trans-unit id="TableExtension 4199099589 - Field 1148871529 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
+        <trans-unit id="TableExtension 1056179366 - Field 1148871529 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
           <source>Aceptada</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeader - Field Aceptada - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeaderExt - Field Aceptada - Property Caption</note>
         </trans-unit>
-        <trans-unit id="TableExtension 4199099589 - Field 3377152574 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
+        <trans-unit id="TableExtension 1056179366 - Field 3377152574 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
           <source>Categorias</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeader - Field Categorias - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeaderExt - Field Categorias - Property Caption</note>
         </trans-unit>
-        <trans-unit id="TableExtension 4199099589 - Field 2249167151 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
+        <trans-unit id="TableExtension 1056179366 - Field 2249167151 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
           <source>Cod. Oferta</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeader - Field Cod. Oferta - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeaderExt - Field Cod. Oferta - Property Caption</note>
         </trans-unit>
-        <trans-unit id="TableExtension 4199099589 - Field 2410433474 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
+        <trans-unit id="TableExtension 1056179366 - Field 2410433474 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
           <source>No. Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeader - Field No. Proyecto - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeaderExt - Field No. Proyecto - Property Caption</note>
         </trans-unit>
-        <trans-unit id="TableExtension 4199099589 - Field 22244033 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
+        <trans-unit id="TableExtension 1056179366 - Field 22244033 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
           <source>Work Description</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeader - Field Work Description - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension PurchHeaderExt - Field Work Description - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 3240715643 - Field 2797495759 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1192395785">
           <source>Cod. Oferta de Proyecto</source>
