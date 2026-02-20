@@ -59,6 +59,10 @@ codeunit 50302 "Eventos-proyectos"
             else
                 Rec."IRPF" := 0;
             PagoProyecto.SetRange("Document No.", Rec."Document No.");
+            If Rec."Facturado Contra" <> '' Then
+                PagoProyecto.SetRange("Vendor No.", Rec."Facturado Contra")
+            else
+                PagoProyecto.SetRange("Vendor No.");
             PagoProyecto.SetRange("Job No.", Rec."Job No.");
             PagoProyecto.SetRange("Job Task No.", Rec."Job Task No.");
             if PagoProyecto.FindFirst() then begin
@@ -66,6 +70,15 @@ codeunit 50302 "Eventos-proyectos"
                 PagoProyecto."Base Amount Pending" := PagoProyecto."Base Amount" - PagoProyecto."Base Amount Paid";
                 PagoProyecto."Amount Pending" := PagoProyecto."Amount" - PagoProyecto."Amount Paid";
                 if PagoProyecto."Amount Pending" = 0 Then begin
+                    PagoProyecto."Base Amount Paid" := PagoProyecto."Base Amount";
+                    PagoProyecto."Base Amount Pending" := 0;
+                end;
+                // no dejar que los importes pagados sean mallores que la factura
+                if PagoProyecto."Amount Paid" > PagoProyecto.Amount then begin
+                    PagoProyecto."Amount Paid" := PagoProyecto.Amount;
+                    PagoProyecto."Amount Pending" := 0;
+                end;
+                if PagoProyecto."Base Amount Paid" > PagoProyecto."Base Amount" then begin
                     PagoProyecto."Base Amount Paid" := PagoProyecto."Base Amount";
                     PagoProyecto."Base Amount Pending" := 0;
                 end;
@@ -118,6 +131,15 @@ codeunit 50302 "Eventos-proyectos"
                     PagoProyecto."Amount Pending" := PagoProyecto."Amount" - PagoProyecto."Amount Paid";
 
                     if PagoProyecto."Amount Pending" = 0 Then begin
+                        PagoProyecto."Base Amount Paid" := PagoProyecto."Base Amount";
+                        PagoProyecto."Base Amount Pending" := 0;
+                    end;
+                    // no dejar que los importes pagados sean mallores que la factura
+                    if PagoProyecto."Amount Paid" > PagoProyecto.Amount then begin
+                        PagoProyecto."Amount Paid" := PagoProyecto.Amount;
+                        PagoProyecto."Amount Pending" := 0;
+                    end;
+                    if PagoProyecto."Base Amount Paid" > PagoProyecto."Base Amount" then begin
                         PagoProyecto."Base Amount Paid" := PagoProyecto."Base Amount";
                         PagoProyecto."Base Amount Pending" := 0;
                     end;

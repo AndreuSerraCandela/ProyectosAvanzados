@@ -78,6 +78,15 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                                     ProyectoFacturaCompra."Last Payment Date" := "Posting Date";
                                     ProyectoFacturaCompra.Modify(true);
                                     encontrado := true;
+                                    // no dejar que los importes pagados sean mallores que la factura
+                                    if ProyectoFacturaCompra."Amount Paid" > ProyectoFacturaCompra.Amount then begin
+                                        ProyectoFacturaCompra."Amount Paid" := ProyectoFacturaCompra.Amount;
+                                        ProyectoFacturaCompra."Amount Pending" := 0;
+                                    end;
+                                    if ProyectoFacturaCompra."Base Amount Paid" > ProyectoFacturaCompra."Base Amount" then begin
+                                        ProyectoFacturaCompra."Base Amount Paid" := ProyectoFacturaCompra."Base Amount";
+                                        ProyectoFacturaCompra."Base Amount Pending" := 0;
+                                    end;
                                 until ProyectoFacturaCompra.Next() = 0;
                             if encontrado then exit;
                         end;
@@ -86,6 +95,7 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                     PaymentAmount := -DetailedVendorLedgEntry.Amount; // Convertir a positivo
                                                                       // Buscar el Nº de Documento en la tabla ProyectoFacturaCompra por Document To Liquidate
                     ProyectoFacturaCompra.SetRange("Document to Liquidate", VendorLedgerEntry."Document No.");
+                    ProyectoFacturaCompra.SetRange("Vendor No.", VendorLedgerEntry."Vendor No.");
                     if ProyectoFacturaCompra.FindSet() then
                         repeat
                             TotalInvoiceAmount += ProyectoFacturaCompra.Amount;
@@ -98,6 +108,16 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                                 ProyectoFacturaCompra."Amount Paid" += (PaymentAmount * ProyectoFacturaCompra."Amount") / TotalInvoiceAmount;
                             ProyectoFacturaCompra."Amount Pending" := ProyectoFacturaCompra."Amount" - ProyectoFacturaCompra."Amount Paid";
                             ProyectoFacturaCompra."Last Payment Date" := "Posting Date";
+                            // no dejar que los importes pagados sean mallores que la factura
+                            if ProyectoFacturaCompra."Amount Paid" > ProyectoFacturaCompra.Amount then begin
+                                ProyectoFacturaCompra."Amount Paid" := ProyectoFacturaCompra.Amount;
+                                ProyectoFacturaCompra."Amount Pending" := 0;
+                            end;
+                            if ProyectoFacturaCompra."Base Amount Paid" > ProyectoFacturaCompra."Base Amount" then begin
+                                ProyectoFacturaCompra."Base Amount Paid" := ProyectoFacturaCompra."Base Amount";
+                                ProyectoFacturaCompra."Base Amount Pending" := 0;
+                            end;
+
                             ProyectoFacturaCompra.Modify(true);
                             encontrado := true;
                         until ProyectoFacturaCompra.Next() = 0;
@@ -105,9 +125,11 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                     If (not encontrado) and (GlEntry.Get(VendorLedgerEntry."Entry No.")) then
                         if (GlEntry."Job No." <> '') and (GlEntry."Job Task No." <> '') then begin
                             PaymentAmount := -DetailedVendorLedgEntry.Amount; // Convertir a positivo
-                                                                              // Buscar el Nº de Documento en la tabla ProyectoFacturaCompra por Document To Liquidate
+                            ProyectoFacturaCompra.reset;                                                  // Buscar el Nº de Documento en la tabla ProyectoFacturaCompra por Document To Liquidate
                             ProyectoFacturaCompra.SetRange("Job No.", GlEntry."Job No.");
                             ProyectoFacturaCompra.SetRange("Job Task No.", GlEntry."Job Task No.");
+                            ProyectoFacturaCompra.SetRange("Vendor No.", VendorLedgerEntry."Vendor No.");
+                            ProyectoFacturaCompra.SetRange("Document No.", GlEntry."Document No.");
                             if ProyectoFacturaCompra.FindSet() then
                                 repeat
                                     TotalInvoiceAmount += ProyectoFacturaCompra.Amount;
@@ -121,6 +143,15 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                                     ProyectoFacturaCompra."Amount Pending" := ProyectoFacturaCompra."Amount" - ProyectoFacturaCompra."Amount Paid";
                                     ProyectoFacturaCompra."Last Payment Date" := "Posting Date";
                                     ProyectoFacturaCompra.Modify(true);
+                                    // no dejar que los importes pagados sean mallores que la factura
+                                    if ProyectoFacturaCompra."Amount Paid" > ProyectoFacturaCompra.Amount then begin
+                                        ProyectoFacturaCompra."Amount Paid" := ProyectoFacturaCompra.Amount;
+                                        ProyectoFacturaCompra."Amount Pending" := 0;
+                                    end;
+                                    if ProyectoFacturaCompra."Base Amount Paid" > ProyectoFacturaCompra."Base Amount" then begin
+                                        ProyectoFacturaCompra."Base Amount Paid" := ProyectoFacturaCompra."Base Amount";
+                                        ProyectoFacturaCompra."Base Amount Pending" := 0;
+                                    end;
                                 until ProyectoFacturaCompra.Next() = 0;
 
 

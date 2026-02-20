@@ -2398,6 +2398,14 @@ codeunit 50301 "ProcesosProyectos"
                                 end;
 
                                 ProyectoMovimientoPago."Job Planning Line No." := JobPlanningLine."Line No.";
+                                if ProyectoMovimientoPago."Base Amount Paid" > ProyectoMovimientoPago."Base Amount" then begin
+                                    ProyectoMovimientoPago."Base Amount Paid" := ProyectoMovimientoPago."Base Amount";
+                                    ProyectoMovimientoPago."Base Amount Pending" := 0;
+                                end;
+                                if ProyectoMovimientoPago."Amount Paid" > ProyectoMovimientoPago."Amount" then begin
+                                    ProyectoMovimientoPago."Amount Paid" := ProyectoMovimientoPago."Amount";
+                                    ProyectoMovimientoPago."Amount Pending" := 0;
+                                end;
                                 repeat
                                     ProyectoMovimientoPago."Line No." := LineNo;
                                     LineNo += 10000;
