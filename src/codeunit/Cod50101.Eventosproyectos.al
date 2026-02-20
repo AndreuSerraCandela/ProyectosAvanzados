@@ -43,6 +43,7 @@ codeunit 50302 "Eventos-proyectos"
     var
         PurchaseInvHeader: Record "Purch. Inv. Header";
         MovRetencion: Record "Payments Retention Ledger Ent.";
+        PagoProyecto: Record "Proyecto Movimiento Pago";
     begin
         if Rec.IsTemporary then
             exit;
@@ -57,8 +58,19 @@ codeunit 50302 "Eventos-proyectos"
                 Rec."IRPF" := MovRetencion.Amount
             else
                 Rec."IRPF" := 0;
-            Rec."Amount Paid" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader."Remaining Amount";
-            Rec."Base Amount Paid" := PurchaseInvHeader."Amount" - PurchaseInvHeader."Amount Including VAT" + Rec."IRPF";
+            PagoProyecto.SetRange("Document No.", Rec."Document No.");
+            PagoProyecto.SetRange("Job No.", Rec."Job No.");
+            PagoProyecto.SetRange("Job Task No.", Rec."Job Task No.");
+            if PagoProyecto.FindFirst() then begin
+                PagoProyecto."Amount Paid" := PagoProyecto."Amount Paid";
+                PagoProyecto."Base Amount Pending" := PagoProyecto."Base Amount" - PagoProyecto."Base Amount Paid";
+                PagoProyecto."Amount Pending" := PagoProyecto."Amount" - PagoProyecto."Amount Paid";
+                if PagoProyecto."Amount Pending" = 0 Then begin
+                    PagoProyecto."Base Amount Paid" := PagoProyecto."Base Amount";
+                    PagoProyecto."Base Amount Pending" := 0;
+                end;
+                PagoProyecto.Modify(false);
+            end;
             If Rec."Entry No." <> 0 Then
                 Rec.Modify(false);
         end else begin
@@ -79,6 +91,7 @@ codeunit 50302 "Eventos-proyectos"
         Rec: Record "Job Ledger Entry";
         PurchaseInvHeader: Record "Purch. Inv. Header";
         MovRetencion: Record "Payments Retention Ledger Ent.";
+        PagoProyecto: Record "Proyecto Movimiento Pago";
     begin
         if Rec.IsTemporary then
             exit;
@@ -96,8 +109,20 @@ codeunit 50302 "Eventos-proyectos"
                     Rec."IRPF" := MovRetencion.Amount
                 else
                     Rec."IRPF" := 0;
-                Rec."Amount Paid" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader."Remaining Amount";
-                Rec."Base Amount Paid" := PurchaseInvHeader."Amount" - PurchaseInvHeader."Amount Including VAT" + Rec."IRPF";
+                PagoProyecto.SetRange("Document No.", Rec."Document No.");
+                PagoProyecto.SetRange("Job No.", Rec."Job No.");
+                PagoProyecto.SetRange("Job Task No.", Rec."Job Task No.");
+                if PagoProyecto.FindFirst() then begin
+                    PagoProyecto."Amount Paid" := PagoProyecto."Amount Paid";
+                    PagoProyecto."Base Amount Pending" := PagoProyecto."Base Amount" - PagoProyecto."Base Amount Paid";
+                    PagoProyecto."Amount Pending" := PagoProyecto."Amount" - PagoProyecto."Amount Paid";
+
+                    if PagoProyecto."Amount Pending" = 0 Then begin
+                        PagoProyecto."Base Amount Paid" := PagoProyecto."Base Amount";
+                        PagoProyecto."Base Amount Pending" := 0;
+                    end;
+                    PagoProyecto.Modify(false);
+                end;
                 If Rec."Entry No." <> 0 Then
                     Rec.Modify(false);
             end else begin

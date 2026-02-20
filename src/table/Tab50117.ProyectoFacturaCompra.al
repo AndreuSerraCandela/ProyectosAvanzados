@@ -130,7 +130,7 @@ table 50117 "Proyecto Movimiento Pago"
             TableRelation = "Purchase Header"."No.";
             Editable = false;
         }
-        field(16;"Base Amount"; Decimal)
+        field(16; "Base Amount"; Decimal)
         {
             Caption = 'Importe Base';
             DataClassification = ToBeClassified;
@@ -243,7 +243,7 @@ table 50117 "Proyecto Movimiento Pago"
         if not PurchaseLine.Get("Document Type", "Document No.", "Line No.") then
             exit;
 
-        LineAmount := PurchaseLine."Line Amount"*(1+PurchaseLine."VAT %"/100);
+        LineAmount := PurchaseLine."Line Amount" * (1 + PurchaseLine."VAT %" / 100);
 
         // Calcular total ya asignado en porcentaje (excluyendo este registro)
         TotalAssignedPct := GetTotalAssignedPercentage("Document Type", "Document No.", "Line No.", "Job No.");
@@ -374,5 +374,36 @@ table 50117 "Proyecto Movimiento Pago"
     procedure RecalculatePaymentAmounts()
     begin
         UpdatePaymentAmounts();
+    end;
+
+    /// <summary>
+    /// Reconstruye Amount, Base Amount, importes pagados y pendientes desde la factura registrada.
+    /// Si Base Amount Paid queda 0 y Amount Paid no, asigna Base Amount Paid := Amount Paid.
+    /// </summary>
+    procedure RebuildPaymentAmounts()
+    var
+        PurchInvLine: Record "Purch. Inv. Line";
+    begin
+        if "Posted Document No." <> '' then begin
+            PurchInvLine.SetRange("Document No.", "Posted Document No.");
+            PurchInvLine.SetRange("Line No.", "Line No.");
+            PurchInvLine.CalcSums("Line Amount", "Amount Including VAT");
+            if PurchInvLine.FindFirst() then begin
+                If Amount = 0 then Amount := PurchInvLine."Amount Including VAT";
+                If "Base Amount" = 0 then "Base Amount" := PurchInvLine."Line Amount";
+            end;
+        end;
+        "Amount Pending" := "Amount" - "Amount Paid";
+
+        if ("Base Amount Paid" = 0) and ("Amount Paid" <> 0) then begin
+            "Base Amount Paid" := "Base Amount" * "Amount Paid" / "Amount";
+            "Base Amount Pending" := "Base Amount" - "Base Amount Paid";
+            if "Amount Paid" = Amount Then begin
+                "Base Amount Paid" := "Base Amount";
+                "Base Amount Pending" := 0;
+                "Amount Pending" := 0;
+            end;
+            Modify(true);
+        end;
     end;
 }

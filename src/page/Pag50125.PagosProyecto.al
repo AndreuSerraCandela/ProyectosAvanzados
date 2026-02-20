@@ -199,6 +199,29 @@ page 50125 "Pagos Proyecto"
                     end;
                 end;
             }
+            action(ReconstruirImportes)
+            {
+                ApplicationArea = All;
+                Caption = 'Reconstruir importes';
+                ToolTip = 'Reconstruye Amount, Importe Base, importes pagados y pendientes desde la factura. Si Importe Base Pagado es 0 e Importe Pagado no, lo recalcula.';
+                Image = Restore;
+
+                trigger OnAction()
+                var
+                    ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
+                begin
+                    CurrPage.SetSelectionFilter(ProyectoFacturaCompra);
+                    if Confirm('¿Reconstruir Amount, Importe Base, importes pagados y pendientes para los movimientos mostrados?') then begin
+                        if ProyectoFacturaCompra.FindSet() then
+                            repeat
+                                ProyectoFacturaCompra.RebuildPaymentAmounts();
+                            until ProyectoFacturaCompra.Next() = 0;
+
+                        CurrPage.Update(false);
+                        Message('Importes reconstruidos correctamente.');
+                    end;
+                end;
+            }
             action("Marcar para liquidar")
             {
                 ApplicationArea = All;

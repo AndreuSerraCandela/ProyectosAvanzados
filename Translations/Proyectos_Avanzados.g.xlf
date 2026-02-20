@@ -3223,6 +3223,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action Recargar - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 4006525853 - Action 1545077807 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Reconstruye Amount, Importe Base, importes pagados y pendientes desde la factura. Si Importe Base Pagado es 0 e Importe Pagado no, lo recalcula.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action ReconstruirImportes - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4006525853 - Action 1545077807 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Reconstruir importes</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action ReconstruirImportes - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 4006525853 - Action 3205391057 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Abre la factura de compra registrada</source>
           <note from="Developer" annotates="general" priority="2"></note>

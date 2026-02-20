@@ -2390,6 +2390,13 @@ codeunit 50301 "ProcesosProyectos"
                                     ProyectoMovimientoPago."Base Amount Paid" := ImportedEntriesPagado * NetoFactura / BrutoFactura;
 
                                 ProyectoMovimientoPago.Validate("Amount Paid", ImportedEntriesPagado);
+                                ProyectoMovimientoPago."Base Amount Pending" := ProyectoMovimientoPago."Base Amount" - ProyectoMovimientoPago."Base Amount Paid";
+                                ProyectoMovimientoPago."Amount Pending" := ProyectoMovimientoPago."Amount" - ProyectoMovimientoPago."Amount Paid";
+                                if ProyectoMovimientoPago."Amount Pending" = 0 Then begin
+                                    ProyectoMovimientoPago."Base Amount Paid" := ProyectoMovimientoPago."Base Amount";
+                                    ProyectoMovimientoPago."Base Amount Pending" := 0;
+                                end;
+
                                 ProyectoMovimientoPago."Job Planning Line No." := JobPlanningLine."Line No.";
                                 repeat
                                     ProyectoMovimientoPago."Line No." := LineNo;

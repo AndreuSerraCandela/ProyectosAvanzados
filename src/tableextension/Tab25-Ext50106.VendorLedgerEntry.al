@@ -23,6 +23,7 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
         MovRetencion: Record "Payments Retention Ledger Ent.";
         Irpf: Decimal;
         TotalAmount: Decimal;
+        encontrado: Boolean;
     begin
         // Si es un pago (aplicación), distribuir entre proyectos
         if "Document Type" <> "Document Type"::Payment then
@@ -76,7 +77,9 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                                     end;
                                     ProyectoFacturaCompra."Last Payment Date" := "Posting Date";
                                     ProyectoFacturaCompra.Modify(true);
+                                    encontrado := true;
                                 until ProyectoFacturaCompra.Next() = 0;
+                            if encontrado then exit;
                         end;
 
                     end;
@@ -87,7 +90,7 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                         repeat
                             TotalInvoiceAmount += ProyectoFacturaCompra.Amount;
                         until ProyectoFacturaCompra.Next() = 0;
-                    if TotalInvoiceAmount <> 0 then
+                    if (not encontrado) and (TotalInvoiceAmount <> 0) then
                         repeat
                             if ProyectoFacturaCompra."Percentage" <> 0 then
                                 ProyectoFacturaCompra."Amount Paid" += (PaymentAmount * ProyectoFacturaCompra."Percentage") / 100
@@ -96,8 +99,10 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                             ProyectoFacturaCompra."Amount Pending" := ProyectoFacturaCompra."Amount" - ProyectoFacturaCompra."Amount Paid";
                             ProyectoFacturaCompra."Last Payment Date" := "Posting Date";
                             ProyectoFacturaCompra.Modify(true);
+                            encontrado := true;
                         until ProyectoFacturaCompra.Next() = 0;
-                    If GlEntry.Get(VendorLedgerEntry."Entry No.") then
+
+                    If (not encontrado) and (GlEntry.Get(VendorLedgerEntry."Entry No.")) then
                         if (GlEntry."Job No." <> '') and (GlEntry."Job Task No." <> '') then begin
                             PaymentAmount := -DetailedVendorLedgEntry.Amount; // Convertir a positivo
                                                                               // Buscar el Nº de Documento en la tabla ProyectoFacturaCompra por Document To Liquidate
