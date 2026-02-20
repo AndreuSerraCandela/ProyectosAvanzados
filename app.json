@@ -2,7 +2,7 @@
   "id": "4cc7c1f9-6c82-4ed1-9ad8-dc1681ea3de1",
   "name": "Proyectos_Avanzados",
   "publisher": "MaybeCloud",
-  "version": "1.0.2.98",
+  "version": "1.0.2.99",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -10,8 +10,13 @@
   "help": "",
   "url": "",
   "logo": "",
-  "dependencies": [   
-    
+  "dependencies": [
+    {
+    "id": "b357807f-e6d7-4e6a-bf37-af840932e4bc",
+    "name": "MayBe_Retenciones",
+    "publisher": "MayBe Cloud",
+    "version": "1.1.0.18"
+    }
     ],
   "screenshots": [],
   "platform": "26.0.0.0",

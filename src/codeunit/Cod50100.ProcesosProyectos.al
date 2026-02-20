@@ -246,6 +246,7 @@ codeunit 50301 "ProcesosProyectos"
     var
         PurchaseInvHeader: Record "Purch. Inv. Header";
         JobLedgerEntry: Record "Job Ledger Entry";
+        MovRetencion: Record "Payments Retention Ledger Ent.";
     begin
         if PurchInvHdrNo = '' then
             exit;
@@ -257,14 +258,19 @@ codeunit 50301 "ProcesosProyectos"
                 JobLedgerEntry."Neto Factura" := PurchaseInvHeader.Amount;
                 JobLedgerEntry."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
                 JobLedgerEntry."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
-                JobLedgerEntry."IRPF" := 0;
+                MovRetencion.SetRange("Document Type", MovRetencion."Document Type"::Invoice);
+                MovRetencion.SetRange("Document No.", PurchInvHdrNo);
+                if MovRetencion.FindFirst() then begin
+                    JobLedgerEntry."IRPF" := MovRetencion.Amount;
+                end else begin
+                    JobLedgerEntry."IRPF" := 0;
+                end;
                 if JobLedgerEntry."Entry No." <> 0 Then
                     JobLedgerEntry.Modify(false);
 
             end else begin
                 JobLedgerEntry."Neto Factura" := JobLedgerEntry."Total Cost";
                 JobLedgerEntry."Bruto Factura" := JobLedgerEntry."Total Cost (LCY)";
-                // IVA/IRPF: de momento 0; rellenar desde fuente (ej. extensión Job Journal Line) si se necesita
                 JobLedgerEntry."IGIC O IVA" := 0;
                 JobLedgerEntry."Importe IGIC O IVA" := 0;
                 JobLedgerEntry."IRPF" := 0;
@@ -2378,6 +2384,11 @@ codeunit 50301 "ProcesosProyectos"
                                 if LineNo = 10000 Then ProyectoMovimientoPago.Validate(Amount, BrutoFactura);
                                 ProyectoMovimientoPago."Job No." := JobNo;
                                 ProyectoMovimientoPago."Job Task No." := JobTaskNo;
+                                ProyectoMovimientoPago.Amount := BrutoFactura;
+                                ProyectoMovimientoPago."Base Amount" := NetoFactura;
+                                if BrutoFactura <> 0 Then
+                                    ProyectoMovimientoPago."Base Amount Paid" := ImportedEntriesPagado * NetoFactura / BrutoFactura;
+
                                 ProyectoMovimientoPago.Validate("Amount Paid", ImportedEntriesPagado);
                                 ProyectoMovimientoPago."Job Planning Line No." := JobPlanningLine."Line No.";
                                 repeat

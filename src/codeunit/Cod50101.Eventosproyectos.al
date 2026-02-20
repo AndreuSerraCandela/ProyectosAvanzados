@@ -42,6 +42,7 @@ codeunit 50302 "Eventos-proyectos"
     procedure DatosFactura(var Rec: Record "Job Ledger Entry")
     var
         PurchaseInvHeader: Record "Purch. Inv. Header";
+        MovRetencion: Record "Payments Retention Ledger Ent.";
     begin
         if Rec.IsTemporary then
             exit;
@@ -50,8 +51,14 @@ codeunit 50302 "Eventos-proyectos"
             Rec."Neto Factura" := PurchaseInvHeader.Amount;
             Rec."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
             Rec."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
-            Rec."IRPF" := 0;
+            MovRetencion.SetRange("Document Type", MovRetencion."Document Type"::Invoice);
+            MovRetencion.SetRange("Document No.", Rec."Document No.");
+            if MovRetencion.FindFirst() then
+                Rec."IRPF" := MovRetencion.Amount
+            else
+                Rec."IRPF" := 0;
             Rec."Amount Paid" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader."Remaining Amount";
+            Rec."Base Amount Paid" := PurchaseInvHeader."Amount" - PurchaseInvHeader."Amount Including VAT" + Rec."IRPF";
             If Rec."Entry No." <> 0 Then
                 Rec.Modify(false);
         end else begin
@@ -71,6 +78,7 @@ codeunit 50302 "Eventos-proyectos"
     var
         Rec: Record "Job Ledger Entry";
         PurchaseInvHeader: Record "Purch. Inv. Header";
+        MovRetencion: Record "Payments Retention Ledger Ent.";
     begin
         if Rec.IsTemporary then
             exit;
@@ -82,8 +90,14 @@ codeunit 50302 "Eventos-proyectos"
                 Rec."Neto Factura" := PurchaseInvHeader.Amount;
                 Rec."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
                 Rec."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
-                Rec."IRPF" := 0;
+                MovRetencion.SetRange("Document Type", MovRetencion."Document Type"::Invoice);
+                MovRetencion.SetRange("Document No.", Rec."Document No.");
+                if MovRetencion.FindFirst() then
+                    Rec."IRPF" := MovRetencion.Amount
+                else
+                    Rec."IRPF" := 0;
                 Rec."Amount Paid" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader."Remaining Amount";
+                Rec."Base Amount Paid" := PurchaseInvHeader."Amount" - PurchaseInvHeader."Amount Including VAT" + Rec."IRPF";
                 If Rec."Entry No." <> 0 Then
                     Rec.Modify(false);
             end else begin

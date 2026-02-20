@@ -37,10 +37,11 @@ codeunit 50102 "Gestión Pagos Proyecto"
                 ProyectoFacturaCompra."Percentage" := PurchaseLine."Job Assignment Percentage"
             else if PurchaseLine."Job Assignment Amount" <> 0 then
                 ProyectoFacturaCompra."Amount" := PurchaseLine."Job Assignment Amount"
-            else
+            else begin
                 // Si no hay asignación específica, asignar el 100% o el importe completo
                 ProyectoFacturaCompra."Amount" := Rec."Amount Including VAT";
-
+                ProyectoFacturaCompra."Base Amount" := Rec.Amount;
+            end;
             ProyectoFacturaCompra.Insert(true);
         end;
     end;
@@ -77,13 +78,18 @@ codeunit 50102 "Gestión Pagos Proyecto"
             ProyectoFacturaCompra."Posted Document No." := Rec."Document No.";
 
             // Si hay campos de asignación, usarlos
-            if PurchaseLine."Job Assignment Percentage" <> 0 then
-                ProyectoFacturaCompra."Percentage" := PurchaseLine."Job Assignment Percentage"
-            else if PurchaseLine."Job Assignment Amount" <> 0 then
-                ProyectoFacturaCompra."Amount" := PurchaseLine."Job Assignment Amount"
-            else
+            if PurchaseLine."Job Assignment Percentage" <> 0 then begin
+                ProyectoFacturaCompra."Percentage" := PurchaseLine."Job Assignment Percentage";
+                PurchaseLine."Job Assignment Amount" := Rec."Amount Including VAT" * PurchaseLine."Job Assignment Percentage" / 100;
+            end;
+            if PurchaseLine."Job Assignment Amount" <> 0 then begin
+                ProyectoFacturaCompra."Amount" := PurchaseLine."Job Assignment Amount";
+                ProyectoFacturaCompra."Base Amount" := PurchaseLine."Job Assignment Amount" / (1 + PurchaseLine."VAT %" / 100);
+            end else begin
                 // Si no hay asignación específica, asignar el 100% o el importe completo
                 ProyectoFacturaCompra."Amount" := Rec."Amount Including VAT";
+                ProyectoFacturaCompra."Base Amount" := Rec.Amount;
+            end;
 
             ProyectoFacturaCompra.Insert(true);
         end;
@@ -154,7 +160,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
     //end;
 
     // Procedimiento para crear asignación manual desde línea de compra
-    procedure CreateProjectAssignment(PurchaseLine: Record "Purch. Inv. Line"; JobNo: Code[20]; JobTaskNo: Code[20]; JobPlanningLineNo: Integer; Percentage: Decimal; Amount: Decimal; EntryNo: Integer)
+    procedure CreateProjectAssignment(PurchaseLine: Record "Purch. Inv. Line"; JobNo: Code[20]; JobTaskNo: Code[20]; JobPlanningLineNo: Integer; Percentage: Decimal; Amount: Decimal; BaseAmount: Decimal; EntryNo: Integer)
     var
         ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
         ProyectoFacturaCompraOld: Record "Proyecto Movimiento Pago";
@@ -198,6 +204,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         else
             Error('Debe especificar un porcentaje o un importe.');
         ProyectoFacturaCompra."Amount Paid" := Amount;
+        ProyectoFacturaCompra."Base Amount" := BaseAmount;
         ProyectoFacturaCompraOld.SetRange("Document Type", ProyectoFacturaCompra."Document Type");
         ProyectoFacturaCompraOld.SetRange("Document No.", ProyectoFacturaCompra."Document No.");
         ProyectoFacturaCompraOld.Setrange("Line No.", PurchaseLine."Line No.");
@@ -212,6 +219,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         AmoindPaid += Importe;
         If JobPlaningLine.Get(JobNo, JobTaskNo, JobPlanningLineNo) Then
             ProyectoFacturaCompra."Amount Pending" := JobPlaningLine."total Cost" - AmoindPaid;
+        ProyectoFacturaCompra."Base Amount Pending" := ProyectoFacturaCompra."Base Amount" - ProyectoFacturaCompra."Base Amount Paid";
         ProyectoFacturaCompra.Insert;
     end;
 
@@ -309,6 +317,9 @@ codeunit 50102 "Gestión Pagos Proyecto"
         ProyectoFacturaCompra."Amount" := JobPlanningLine."Total Cost (LCY)";
         ProyectoFacturaCompra."Amount Paid" := 0;
         ProyectoFacturaCompra."Amount Pending" := ProyectoFacturaCompra."Amount";
+        ProyectoFacturaCompra."Base Amount" := JobPlanningLine."Total Cost (LCY)";
+        ProyectoFacturaCompra."Base Amount Paid" := 0;
+        ProyectoFacturaCompra."Base Amount Pending" := ProyectoFacturaCompra."Amount";
         ProyectoFacturaCompra.Insert(true);
     end;
 
@@ -370,7 +381,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                 PurchaseLine.SetRange("Document No.", VendLedgEntry."Document No.");
                 if PurchaseLine.FindFirst() then
                     repeat
-                        CreateProjectAssignment(PurchaseLine, PurchaseLine."Job No.", PurchaseLine."Job Task No.", PurchaseLine."Job Planning Line No.", 0, PurchaseLine."Amount Including VAT", VendLedgEntry."Entry No.");
+                        CreateProjectAssignment(PurchaseLine, PurchaseLine."Job No.", PurchaseLine."Job Task No.", PurchaseLine."Job Planning Line No.", 0, PurchaseLine."Amount Including VAT", PurchaseLine.Amount, VendLedgEntry."Entry No.");
                     until PurchaseLine.Next() = 0;
             end;
         end;

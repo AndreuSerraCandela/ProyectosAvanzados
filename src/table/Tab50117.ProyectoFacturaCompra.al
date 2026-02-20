@@ -130,9 +130,28 @@ table 50117 "Proyecto Movimiento Pago"
             TableRelation = "Purchase Header"."No.";
             Editable = false;
         }
-        field(16; "Base Amount Paid"; Decimal)
+        field(16;"Base Amount"; Decimal)
+        {
+            Caption = 'Importe Base';
+            DataClassification = ToBeClassified;
+            AutoFormatType = 1;
+            AutoFormatExpression = GetCurrencyCode();
+            DecimalPlaces = 2 : 5;
+            Editable = false;
+        }
+        field(17; "Base Amount Paid"; Decimal)
         {
             Caption = 'Importe Base Pagado';
+            DataClassification = ToBeClassified;
+            AutoFormatType = 1;
+            AutoFormatExpression = GetCurrencyCode();
+            DecimalPlaces = 2 : 5;
+            Editable = false;
+        }
+        //Base amount pending
+        field(18; "Base Amount Pending"; Decimal)
+        {
+            Caption = 'Importe Base Pendiente';
             DataClassification = ToBeClassified;
             AutoFormatType = 1;
             AutoFormatExpression = GetCurrencyCode();
@@ -224,7 +243,7 @@ table 50117 "Proyecto Movimiento Pago"
         if not PurchaseLine.Get("Document Type", "Document No.", "Line No.") then
             exit;
 
-        LineAmount := PurchaseLine."Line Amount";
+        LineAmount := PurchaseLine."Line Amount"*(1+PurchaseLine."VAT %"/100);
 
         // Calcular total ya asignado en porcentaje (excluyendo este registro)
         TotalAssignedPct := GetTotalAssignedPercentage("Document Type", "Document No.", "Line No.", "Job No.");
@@ -275,7 +294,6 @@ table 50117 "Proyecto Movimiento Pago"
     var
         VendorLedgerEntry: Record "Vendor Ledger Entry";
         DetailedVendorLedgEntry: Record "Detailed Vendor Ledg. Entry";
-        PurchaseLine: Record "Purchase Line";
         PurchInvLine: Record "Purch. Inv. Line";
         TotalInvoiceAmount: Decimal;
         TotalInvoiceBaseAmount: Decimal;
@@ -326,10 +344,16 @@ table 50117 "Proyecto Movimiento Pago"
             PurchInvLine.SetRange("Document No.", "Posted Document No.");
             PurchInvLine.CalcSums("Line Amount", "Amount Including VAT");
             TotalInvoiceBaseAmount := PurchInvLine."Line Amount";
+
             if PurchInvLine."Amount Including VAT" <> 0 then
                 "Base Amount Paid" := Round(ProjectPaidAmount * TotalInvoiceBaseAmount / PurchInvLine."Amount Including VAT", 0.01)
             else
                 "Base Amount Paid" := ProjectPaidAmount;
+            if VendorLedgerEntry."Remaining Amount" = 0 Then
+                "Base Amount Paid" := PurchInvLine."Line Amount";
+            "Base Amount Pending" := PurchInvLine."Line Amount" - "Base Amount Paid";
+            if VendorLedgerEntry."Remaining Amount" = 0 Then
+                "Base Amount Pending" := 0;
         end;
 
         // Buscar fecha del último pago

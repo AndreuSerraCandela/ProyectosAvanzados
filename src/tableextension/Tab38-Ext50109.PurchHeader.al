@@ -1,7 +1,7 @@
 //namespace Microsoft.Projects.Project.Job;
 
 //namespace Microsoft.Purchases.Document."Purchase Header";
-tableextension 50309 "PurchHeader" extends "Purchase Header" //38
+tableextension 50309 "PurchHeaderExt" extends "Purchase Header" //38
 {
     fields
     {

@@ -20,6 +20,9 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
         PaymentAmount: Decimal;
         GlEntry: Record "G/L Entry";
         Eventosproyectos: Codeunit "Eventos-proyectos";
+        MovRetencion: Record "Payments Retention Ledger Ent.";
+        Irpf: Decimal;
+        TotalAmount: Decimal;
     begin
         // Si es un pago (aplicación), distribuir entre proyectos
         if "Document Type" <> "Document Type"::Payment then
@@ -37,6 +40,12 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                 if VendorLedgerEntry.FindFirst() then begin
                     if VendorLedgerEntry."Document Type" = VendorLedgerEntry."Document Type"::Invoice then begin
                         Eventosproyectos.DatosFactura(VendorLedgerEntry."Document No.");
+                        MovRetencion.SetRange("Document Type", MovRetencion."Document Type"::Invoice);
+                        MovRetencion.SetRange("Document No.", VendorLedgerEntry."Document No.");
+                        if MovRetencion.FindFirst() then
+                            Irpf := MovRetencion.Amount
+                        else
+                            Irpf := 0;
                         PaymentAmount := -DetailedVendorLedgEntry.Amount; // Convertir a positivo
 
                         // Buscar asignaciones de proyecto para esta factura
@@ -48,8 +57,9 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                             if PurchInvLine.FindSet() then
                                 repeat
                                     TotalInvoiceAmount += PurchInvLine."Amount Including VAT";
+                                    TotalAmount += PurchInvLine."Line Amount";
                                 until PurchInvLine.Next() = 0;
-
+                            //TotalAmount := TotalAmount + Irpf;
                             // Distribuir el pago proporcionalmente
                             if TotalInvoiceAmount <> 0 then
                                 repeat
@@ -57,8 +67,13 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                                         ProyectoFacturaCompra."Amount Paid" += (PaymentAmount * ProyectoFacturaCompra."Percentage") / 100
                                     else
                                         ProyectoFacturaCompra."Amount Paid" += (PaymentAmount * ProyectoFacturaCompra."Amount") / TotalInvoiceAmount;
-
+                                    ProyectoFacturaCompra."Base Amount Paid" += (PaymentAmount * ProyectoFacturaCompra."Base Amount") / TotalAmount;
                                     ProyectoFacturaCompra."Amount Pending" := ProyectoFacturaCompra."Amount" - ProyectoFacturaCompra."Amount Paid";
+                                    ProyectoFacturaCompra."Base Amount Pending" := ProyectoFacturaCompra."Base Amount" - ProyectoFacturaCompra."Base Amount Paid";
+                                    if ProyectoFacturaCompra."Amount Pending" = 0 Then begin
+                                        ProyectoFacturaCompra."Base Amount Paid" := ProyectoFacturaCompra."Base Amount";
+                                        ProyectoFacturaCompra."Base Amount Pending" := 0;
+                                    end;
                                     ProyectoFacturaCompra."Last Payment Date" := "Posting Date";
                                     ProyectoFacturaCompra.Modify(true);
                                 until ProyectoFacturaCompra.Next() = 0;
