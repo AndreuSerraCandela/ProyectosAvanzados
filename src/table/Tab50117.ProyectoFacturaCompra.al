@@ -164,7 +164,7 @@ table 50117 "Proyecto Movimiento Pago"
     {
         key(Key1; "Document Type", "Document No.", "Line No.", "Job No.", "Job Planning Line No.", "Entry No.")
         {
-            SumIndexFields = "Amount Paid", "Amount Pending", "Base Amount Paid";
+            SumIndexFields = Amount, "Base Amount", "Amount Paid", "Amount Pending", "Base Amount Paid";
             Clustered = true;
         }
         key(Key2; "Job No.", "Job Planning Line No.", "Document No.", "Line No.")
@@ -172,12 +172,23 @@ table 50117 "Proyecto Movimiento Pago"
         }
         key(Key3; "Posted Document No.", "Line No.", "Job No.", "Job Planning Line No.")
         {
+            SumIndexFields = Amount, "Base Amount", "Amount Paid", "Amount Pending", "Base Amount Paid";
+        }
+        key(Key6; "Posted Document No.", "Vendor No.")
+        {
+            SumIndexFields = Amount, "Base Amount", "Amount Paid", "Amount Pending", "Base Amount Paid";
         }
         key(Key4; "Vendor No.", "Document No.")
         {
+            SumIndexFields = Amount, "Base Amount", "Amount Paid", "Amount Pending", "Base Amount Paid";
         }
         key(Key5; "Job Planning Line No.", "Job No.")
         {
+        }
+        //Documento To liquidate
+        key(Key7; "Document to Liquidate", "Vendor No.")
+        {
+            SumIndexFields = Amount, "Base Amount", "Amount Paid", "Amount Pending", "Base Amount Paid";
         }
     }
 
@@ -189,7 +200,7 @@ table 50117 "Proyecto Movimiento Pago"
     trigger OnModify()
     begin
         ValidateProjectAssignment();
-        UpdatePaymentAmounts();
+        // UpdatePaymentAmounts();
     end;
 
     trigger OnDelete()
@@ -290,91 +301,91 @@ table 50117 "Proyecto Movimiento Pago"
             exit('');
     end;
 
-    local procedure UpdatePaymentAmounts()
-    var
-        VendorLedgerEntry: Record "Vendor Ledger Entry";
-        DetailedVendorLedgEntry: Record "Detailed Vendor Ledg. Entry";
-        PurchInvLine: Record "Purch. Inv. Line";
-        TotalInvoiceAmount: Decimal;
-        TotalInvoiceBaseAmount: Decimal;
-        TotalPaidAmount: Decimal;
-        ProjectPaidAmount: Decimal;
-    begin
-        if "Posted Document No." = '' then
-            exit;
+    // local procedure UpdatePaymentAmounts()
+    // var
+    //     VendorLedgerEntry: Record "Vendor Ledger Entry";
+    //     DetailedVendorLedgEntry: Record "Detailed Vendor Ledg. Entry";
+    //     PurchInvLine: Record "Purch. Inv. Line";
+    //     TotalInvoiceAmount: Decimal;
+    //     TotalInvoiceBaseAmount: Decimal;
+    //     TotalPaidAmount: Decimal;
+    //     ProjectPaidAmount: Decimal;
+    // begin
+    //     if "Posted Document No." = '' then
+    //         exit;
 
-        // Buscar el asiento del mayor de proveedores
-        VendorLedgerEntry.SetRange("Document Type", VendorLedgerEntry."Document Type"::Invoice);
-        VendorLedgerEntry.SetRange("Document No.", "Posted Document No.");
-        VendorLedgerEntry.SetRange("Vendor No.", "Vendor No.");
-        VendorLedgerEntry.SetRange("Entry No.", "Entry No.");
+    //     // Buscar el asiento del mayor de proveedores
+    //     VendorLedgerEntry.SetRange("Document Type", VendorLedgerEntry."Document Type"::Invoice);
+    //     VendorLedgerEntry.SetRange("Document No.", "Posted Document No.");
+    //     VendorLedgerEntry.SetRange("Vendor No.", "Vendor No.");
+    //     VendorLedgerEntry.SetRange("Entry No.", "Entry No.");
 
-        if not VendorLedgerEntry.FindFirst() then begin
-            Clear("Amount Paid");
-            Clear("Amount Pending");
-            Clear("Base Amount Paid");
-            Clear("Last Payment Date");
-            exit;
-        end;
+    //     if not VendorLedgerEntry.FindFirst() then begin
+    //         Clear("Amount Paid");
+    //         Clear("Amount Pending");
+    //         Clear("Base Amount Paid");
+    //         Clear("Last Payment Date");
+    //         exit;
+    //     end;
 
-        VendorLedgerEntry.CalcFields("Original Amount", "Remaining Amount");
-        TotalInvoiceAmount := VendorLedgerEntry."Original Amount";
-        TotalPaidAmount := TotalInvoiceAmount - VendorLedgerEntry."Remaining Amount";
+    //     VendorLedgerEntry.CalcFields("Original Amount", "Remaining Amount");
+    //     TotalInvoiceAmount := VendorLedgerEntry."Original Amount";
+    //     TotalPaidAmount := TotalInvoiceAmount - VendorLedgerEntry."Remaining Amount";
 
-        // Calcular el importe total de la línea de factura
-        PurchaseLine.SetRange("Document Type", PurchaseLine."Document Type"::Invoice);
-        PurchaseLine.SetRange("Document No.", "Document No.");
-        if PurchaseLine.FindSet() then
-            repeat
-                if PurchaseLine."Document No." = "Posted Document No." then
-                    TotalInvoiceAmount += PurchaseLine."Line Amount";
-            until PurchaseLine.Next() = 0;
+    //     // Calcular el importe total de la línea de factura
+    //     PurchaseLine.SetRange("Document Type", PurchaseLine."Document Type"::Invoice);
+    //     PurchaseLine.SetRange("Document No.", "Document No.");
+    //     if PurchaseLine.FindSet() then
+    //         repeat
+    //             if PurchaseLine."Document No." = "Posted Document No." then
+    //                 TotalInvoiceAmount += PurchaseLine."Line Amount";
+    //         until PurchaseLine.Next() = 0;
 
-        // Calcular proporción pagada para este proyecto
-        if TotalInvoiceAmount <> 0 then begin
-            if "Percentage" <> 0 then
-                ProjectPaidAmount := (TotalPaidAmount * "Percentage") / 100
-            else
-                ProjectPaidAmount := (TotalPaidAmount * "Amount") / TotalInvoiceAmount;
+    //     // Calcular proporción pagada para este proyecto
+    //     if TotalInvoiceAmount <> 0 then begin
+    //         if "Percentage" <> 0 then
+    //             ProjectPaidAmount := (TotalPaidAmount * "Percentage") / 100
+    //         else
+    //             ProjectPaidAmount := (TotalPaidAmount * "Amount") / TotalInvoiceAmount;
 
-            "Amount Paid" := ProjectPaidAmount;
-            "Amount Pending" := "Amount" - "Amount Paid";
+    //         "Amount Paid" := ProjectPaidAmount;
+    //         "Amount Pending" := "Amount" - "Amount Paid";
 
-            // Importe base pagado (sin IVA): proporción sobre líneas de factura registrada
-            PurchInvLine.SetRange("Document No.", "Posted Document No.");
-            PurchInvLine.CalcSums("Line Amount", "Amount Including VAT");
-            TotalInvoiceBaseAmount := PurchInvLine."Line Amount";
+    //         // Importe base pagado (sin IVA): proporción sobre líneas de factura registrada
+    //         PurchInvLine.SetRange("Document No.", "Posted Document No.");
+    //         PurchInvLine.CalcSums("Line Amount", "Amount Including VAT");
+    //         TotalInvoiceBaseAmount := PurchInvLine."Line Amount";
 
-            if PurchInvLine."Amount Including VAT" <> 0 then
-                "Base Amount Paid" := Round(ProjectPaidAmount * TotalInvoiceBaseAmount / PurchInvLine."Amount Including VAT", 0.01)
-            else
-                "Base Amount Paid" := ProjectPaidAmount;
-            if VendorLedgerEntry."Remaining Amount" = 0 Then
-                "Base Amount Paid" := PurchInvLine."Line Amount";
-            "Base Amount Pending" := PurchInvLine."Line Amount" - "Base Amount Paid";
-            if VendorLedgerEntry."Remaining Amount" = 0 Then
-                "Base Amount Pending" := 0;
-        end;
+    //         if PurchInvLine."Amount Including VAT" <> 0 then
+    //             "Base Amount Paid" := Round(ProjectPaidAmount * TotalInvoiceBaseAmount / PurchInvLine."Amount Including VAT", 0.01)
+    //         else
+    //             "Base Amount Paid" := ProjectPaidAmount;
+    //         if VendorLedgerEntry."Remaining Amount" = 0 Then
+    //             "Base Amount Paid" := PurchInvLine."Line Amount";
+    //         "Base Amount Pending" := PurchInvLine."Line Amount" - "Base Amount Paid";
+    //         if VendorLedgerEntry."Remaining Amount" = 0 Then
+    //             "Base Amount Pending" := 0;
+    //     end;
 
-        // Buscar fecha del último pago
-        DetailedVendorLedgEntry.SetRange("Vendor Ledger Entry No.", VendorLedgerEntry."Entry No.");
-        DetailedVendorLedgEntry.SetRange("Entry Type", DetailedVendorLedgEntry."Entry Type"::Application);
-        DetailedVendorLedgEntry.SetRange(Unapplied, false);
-        DetailedVendorLedgEntry.SetFilter(Amount, '<0');
+    //     // Buscar fecha del último pago
+    //     DetailedVendorLedgEntry.SetRange("Vendor Ledger Entry No.", VendorLedgerEntry."Entry No.");
+    //     DetailedVendorLedgEntry.SetRange("Entry Type", DetailedVendorLedgEntry."Entry Type"::Application);
+    //     DetailedVendorLedgEntry.SetRange(Unapplied, false);
+    //     DetailedVendorLedgEntry.SetFilter(Amount, '<0');
 
-        if DetailedVendorLedgEntry.FindSet() then
-            repeat
-                if DetailedVendorLedgEntry."Posting Date" > "Last Payment Date" then
-                    "Last Payment Date" := DetailedVendorLedgEntry."Posting Date";
-            until DetailedVendorLedgEntry.Next() = 0;
+    //     if DetailedVendorLedgEntry.FindSet() then
+    //         repeat
+    //             if DetailedVendorLedgEntry."Posting Date" > "Last Payment Date" then
+    //                 "Last Payment Date" := DetailedVendorLedgEntry."Posting Date";
+    //         until DetailedVendorLedgEntry.Next() = 0;
 
-        Modify(true);
-    end;
+    //     Modify(true);
+    // end;
 
-    procedure RecalculatePaymentAmounts()
-    begin
-        UpdatePaymentAmounts();
-    end;
+    // procedure RecalculatePaymentAmounts()
+    // begin
+    //     UpdatePaymentAmounts();
+    // end;
 
     /// <summary>
     /// Reconstruye Amount, Base Amount, importes pagados y pendientes desde la factura registrada.

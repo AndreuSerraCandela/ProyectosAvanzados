@@ -2089,7 +2089,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Base Amount Pending - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 3008278152 - Control 3267049074 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Importe Pendiente</source>
+          <source>Importe Pendiente s/iva</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Control Base Amount Pending - Property Caption</note>
         </trans-unit>
@@ -3028,16 +3028,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Asociados Factbox - Control Vendor No. - Property ToolTip</note>
         </trans-unit>
-        <trans-unit id="Page 1214637907 - Action 3976801580 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Recalcula los importes pagados para todas las facturas del proyecto</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Asociados Factbox - Action Recalcular - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 1214637907 - Action 3976801580 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Recalcular Pagos</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Asociados Factbox - Action Recalcular - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Page 1214637907 - Action 2395192980 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Abre la página completa de pagos del proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3203,16 +3193,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action Marcar para liquidar - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 4006525853 - Action 684180350 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Recalcula los importes pagados para todas las facturas</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action RecalcularPagos - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 4006525853 - Action 684180350 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Recalcular Pagos</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action RecalcularPagos - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Page 4006525853 - Action 3647456845 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Recarga los datos de pagos</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3232,6 +3212,16 @@
           <source>Reconstruir importes</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action ReconstruirImportes - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4006525853 - Action 1191070952 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Compara con Job Ledger Entry (Uso): añade movimientos que faltan, rellena Amount/Importe Base si están a 0, y recalcula pendientes si Importe Base Pagado está relleno.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action ReconstruirTabla - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4006525853 - Action 1191070952 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Reconstruir tabla</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Pagos Proyecto - Action ReconstruirTabla - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 4006525853 - Action 3205391057 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Abre la factura de compra registrada</source>
@@ -5232,6 +5222,11 @@
           <source>Importe Inicial Venta</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Importe Inicial Venta - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1862886636 - Field 3143542455 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
+          <source>Importe Factura.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension LineasPlanificacion - Field Invoice Amount - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1862886636 - Field 1378147549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1537641792">
           <source>Naturaleza Contable</source>

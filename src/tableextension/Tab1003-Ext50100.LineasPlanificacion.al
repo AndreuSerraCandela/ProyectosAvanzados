@@ -120,6 +120,14 @@ tableextension 50300 "LineasPlanificacion" extends "Job Planning Line"//1003
             Editable = false;
             DecimalPlaces = 2 : 2;
         }
+        field(50028; "Invoice Amount"; Decimal)
+        {
+            Caption = 'Importe Factura.';
+            FieldClass = FlowField;
+            CalcFormula = sum("Proyecto Movimiento Pago"."Amount" where("Job Planning Line No." = field("Line No."), "Job Task No." = field("Job Task No."), "Job No." = field("Job No.")));
+            Editable = false;
+            DecimalPlaces = 2 : 2;
+        }
         field(50019; "Employee Entry No."; Integer)
         {
             Caption = 'Nº Movimiento Empleado';

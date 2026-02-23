@@ -310,11 +310,13 @@ codeunit 50301 "ProcesosProyectos"
         end;
     end;
 
-    [EventSubscriber(ObjectType::Table, Database::"Job Planning Line", 'OnUseOnBeforeModify', '', false, false)]
-    local procedure OnUseOnBeforeModify(var JobPlanningLine: Record "Job Planning Line")
+    [EventSubscriber(ObjectType::Table, Database::"Job Planning Line", OnBeforeCheckQuantityPosted, '', false, false)]
+    local procedure OnBeforeCheckQuantityPosted(var JobPlanningLine: Record "Job Planning Line"; xJobPlanningLine: Record "Job Planning Line"; var IsHandled: Boolean)
     begin
-        JobPlanningLine.Validate(Quantity, JobPlanningLine.QB);
-        //JobPlanningLine.Modify();
+        // No reducir Quantity por debajo de la cantidad ya registrada (evita "Cantidad no puede ser inferior que cantidad registrada" al facturar varias líneas de la misma tarea/proyecto)
+        // if JobPlanningLine.QB >= JobPlanningLine."Qty. Posted" then
+        //     JobPlanningLine.Validate(Quantity, JobPlanningLine.QB);
+        IsHandled := true;
     end;
     //OnBeforeRunWithCheck OnBeforeRunWithCheck(var JobJournalLine: Record "Job Journal Line")
     //Job Jnl.-Post Line
@@ -2360,7 +2362,8 @@ codeunit 50301 "ProcesosProyectos"
                             until JobPlanningLine.Insert(true);
 
                             //end;
-                            if ImportedEntriesPagado <> 0 then begin
+                            //Tontería, es decir entra siempre, ya lo cambiaré, tengo prisa
+                            if (ImportedEntriesPagado <> 0) Or (ImportedEntriesPagado = 0) then begin
                                 ProyectoMovimientoPago.SetRange("Job No.", JobNo);
                                 ProyectoMovimientoPago.SetRange("Document No.", CopyStr(NumeroFactura, 1, MaxStrLen(ProyectoMovimientoPago."Document No.")));
                                 ProyectoMovimientoPago.SetRange("Job Task No.", JobTaskNo);

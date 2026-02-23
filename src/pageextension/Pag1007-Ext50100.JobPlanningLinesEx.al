@@ -105,7 +105,7 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 Caption = 'Importe Pagado';
                 ToolTip = 'Especifica el importe total pagado para esta línea de planificación del proyecto.';
             }
-            field("Amount Pending"; Rec."Total Cost" - Rec."Amount Paid")
+            field("Amount Pending"; CalculaBrutoFactura() - Rec."Amount Paid")
             {
                 ApplicationArea = All;
                 Caption = 'Importe Pendiente';
@@ -308,6 +308,23 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
             DescriptionEmphasize := 'StrongAccent'
         else
             DescriptionEmphasize := '';
+    end;
+
+    local procedure CalculaBrutoFactura(): Decimal
+    var
+        Pago: Record "Proyecto Movimiento Pago";
+        Importe: Decimal;
+    begin
+        Pago.SetRange("Job No.", Rec."Job No.");
+        Pago.SetRange("Job Task No.", Rec."Job Task No.");
+
+        Pago.SetRange("Job Planning Line No.", Rec."Line No.");
+        if Pago.FindFirst() then
+            repeat
+                Importe += Pago.Amount;
+            until Pago.Next() = 0;
+        exit(Importe);
+
     end;
 
 

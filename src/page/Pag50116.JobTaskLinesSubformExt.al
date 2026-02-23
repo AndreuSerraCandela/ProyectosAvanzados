@@ -303,7 +303,7 @@ page 50116 "Job Task Lines Subform Ext"
                 field("Base Amount Pending"; CalculaNetoFactura() - Rec."Base Amount Paid")// CalculaImportePendiente())
                 {
                     ApplicationArea = All;
-                    Caption = 'Importe Pendiente';
+                    Caption = 'Importe Pendiente s/iva';
                     ToolTip = 'Especifica el importe pendiente de pago para esta tarea.';
                     trigger OnDrillDown()
                     var

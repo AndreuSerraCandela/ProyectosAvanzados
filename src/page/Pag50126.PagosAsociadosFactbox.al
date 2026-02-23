@@ -91,29 +91,29 @@ page 50126 "Pagos Asociados Factbox"
                     PagosProyecto.RunModal();
                 end;
             }
-            action(Recalcular)
-            {
-                ApplicationArea = All;
-                Caption = 'Recalcular Pagos';
-                ToolTip = 'Recalcula los importes pagados para todas las facturas del proyecto';
-                Image = Refresh;
+            // action(Recalcular)
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Recalcular Pagos';
+            //     ToolTip = 'Recalcula los importes pagados para todas las facturas del proyecto';
+            //     Image = Refresh;
 
-                trigger OnAction()
-                var
-                    ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
-                begin
-                    if Confirm('¿Desea recalcular los importes pagados para todas las facturas del proyecto?') then begin
-                        ProyectoFacturaCompra.SetRange("Job No.", JobNoFilter);
-                        if ProyectoFacturaCompra.FindSet() then
-                            repeat
-                                ProyectoFacturaCompra.RecalculatePaymentAmounts();
-                            until ProyectoFacturaCompra.Next() = 0;
+            //     trigger OnAction()
+            //     var
+            //         ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
+            //     begin
+            //         if Confirm('¿Desea recalcular los importes pagados para todas las facturas del proyecto?') then begin
+            //             ProyectoFacturaCompra.SetRange("Job No.", JobNoFilter);
+            //             if ProyectoFacturaCompra.FindSet() then
+            //                 repeat
+            //                     ProyectoFacturaCompra.RecalculatePaymentAmounts();
+            //                 until ProyectoFacturaCompra.Next() = 0;
 
-                        CurrPage.Update(false);
-                        Message('Recálculo completado correctamente.');
-                    end;
-                end;
-            }
+            //             CurrPage.Update(false);
+            //             Message('Recálculo completado correctamente.');
+            //         end;
+            //     end;
+            // }
         }
     }
 

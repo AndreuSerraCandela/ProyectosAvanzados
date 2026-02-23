@@ -176,29 +176,29 @@ page 50125 "Pagos Proyecto"
                     ShowProjectLines();
                 end;
             }
-            action(RecalcularPagos)
-            {
-                ApplicationArea = All;
-                Caption = 'Recalcular Pagos';
-                ToolTip = 'Recalcula los importes pagados para todas las facturas';
-                Image = Refresh;
+            // action(RecalcularPagos)
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Recalcular Pagos';
+            //     ToolTip = 'Recalcula los importes pagados para todas las facturas';
+            //     Image = Refresh;
 
-                trigger OnAction()
-                var
-                    ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
-                begin
-                    if Confirm('¿Desea recalcular los importes pagados para todas las facturas mostradas?') then begin
-                        if Rec.FindSet() then
-                            repeat
-                                ProyectoFacturaCompra := Rec;
-                                ProyectoFacturaCompra.RecalculatePaymentAmounts();
-                            until Rec.Next() = 0;
+            //     trigger OnAction()
+            //     var
+            //         ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
+            //     begin
+            //         if Confirm('¿Desea recalcular los importes pagados para todas las facturas mostradas?') then begin
+            //             if Rec.FindSet() then
+            //                 repeat
+            //                     ProyectoFacturaCompra := Rec;
+            //                     ProyectoFacturaCompra.RecalculatePaymentAmounts();
+            //                 until Rec.Next() = 0;
 
-                        CurrPage.Update(false);
-                        Message('Recálculo completado correctamente.');
-                    end;
-                end;
-            }
+            //             CurrPage.Update(false);
+            //             Message('Recálculo completado correctamente.');
+            //         end;
+            //     end;
+            // }
             action(ReconstruirImportes)
             {
                 ApplicationArea = All;
@@ -219,6 +219,26 @@ page 50125 "Pagos Proyecto"
 
                         CurrPage.Update(false);
                         Message('Importes reconstruidos correctamente.');
+                    end;
+                end;
+            }
+            action(ReconstruirTabla)
+            {
+                ApplicationArea = All;
+                Caption = 'Reconstruir tabla';
+                ToolTip = 'Compara con Job Ledger Entry (Uso): añade movimientos que faltan, rellena Amount/Importe Base si están a 0, y recalcula pendientes si Importe Base Pagado está relleno.';
+                Image = RefreshLines;
+
+                trigger OnAction()
+                var
+                    GestionPagosProyecto: Codeunit "Gestión Pagos Proyecto";
+                    Addidos: Integer;
+                    Actualizados: Integer;
+                begin
+                    if Confirm('¿Reconstruir la tabla comparando con Job Ledger Entry (tipo Uso)? Se añadirán movimientos faltantes y se actualizarán importes a 0 y pendientes.') then begin
+                        GestionPagosProyecto.RebuildTablaPagosProyectoDesdeJobLedger(Addidos, Actualizados);
+                        CurrPage.Update(false);
+                        Message('Reconstrucción completada. Movimientos añadidos: %1. Registros actualizados: %2.', Addidos, Actualizados);
                     end;
                 end;
             }
@@ -274,9 +294,9 @@ page 50125 "Pagos Proyecto"
             actionref(VerLíneasProyectoAction; VerLíneasProyecto)
             {
             }
-            actionref(RecalcularPagosAction; RecalcularPagos)
-            {
-            }
+            // actionref(RecalcularPagosAction; RecalcularPagos)
+            // {
+            // }
             actionref(VerFacturaAction; VerFactura)
             {
             }

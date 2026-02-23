@@ -387,4 +387,143 @@ codeunit 50102 "Gestión Pagos Proyecto"
         end;
 
     end;
+
+    /// <summary>
+    /// Reconstruye la tabla Proyecto Movimiento Pago comparando con Job Ledger Entry (tipo Uso):
+    /// - Añade movimientos que están en JLE Usage y no en Pagos Proyecto.
+    /// - Rellena Amount y Base Amount si están a 0 (desde factura o JLE).
+    /// - Si Base Amount Paid está relleno, recalcula Amount Pending y Base Amount Pending.
+    /// </summary>
+    procedure RebuildTablaPagosProyectoDesdeJobLedger(var Addidos: Integer; var Actualizados: Integer)
+    var
+        JobLedgerEntry: Record "Job Ledger Entry";
+        Pago: Record "Proyecto Movimiento Pago";
+    begin
+        Addidos := 0;
+        Actualizados := 0;
+
+        // 1) Añadir movimientos que están en JLE (Usage) y no en Proyecto Movimiento Pago
+        JobLedgerEntry.Reset();
+        JobLedgerEntry.SetRange("Entry Type", JobLedgerEntry."Entry Type"::Usage);
+        if JobLedgerEntry.FindSet() then
+            repeat
+                Pago.Reset();
+                Pago.SetRange("Document No.", JobLedgerEntry."Document No.");
+                Pago.SetRange("Job No.", JobLedgerEntry."Job No.");
+                Pago.SetRange("Job Task No.", JobLedgerEntry."Job Task No.");
+                //Pago.SetRange("Job Planning Line No.", JobLedgerEntry."Job Planning Line No.");
+                if not Pago.FindFirst() then begin
+                    CrearPagoDesdeJobLedgerEntry(JobLedgerEntry, Pago);
+                    Addidos += 1;
+                end;
+            until JobLedgerEntry.Next() = 0;
+
+        // 2) Rellenar Amount y Base Amount en 0 desde factura o JLE
+        Pago.Reset();
+        if Pago.FindSet() then
+            repeat
+                if (Pago.Amount = 0) or (Pago."Base Amount" = 0) then begin
+                    RellenarAmountYBaseAmountSiCero(Pago);
+                    Actualizados += 1;
+                end;
+            until Pago.Next() = 0;
+
+        // 3) Si Base Amount Paid está relleno, recalcular pendientes
+        Pago.Reset();
+        Pago.SetFilter("Base Amount Paid", '<>0');
+        if Pago.FindSet() then
+            repeat
+                Pago."Amount Pending" := Pago.Amount - Pago."Amount Paid";
+                Pago."Base Amount Pending" := Pago."Base Amount" - Pago."Base Amount Paid";
+                Pago.Modify(true);
+                Actualizados += 1;
+            until Pago.Next() = 0;
+    end;
+
+    local procedure CrearPagoDesdeJobLedgerEntry(JobLedgerEntry: Record "Job Ledger Entry"; var Pago: Record "Proyecto Movimiento Pago")
+    var
+        PurchInvHeader: Record "Purch. Inv. Header";
+        Amnt: Decimal;
+        EntryNo: Integer;
+        BaseAmnt: Decimal;
+    begin
+        Pago.Init();
+        if PurchInvHeader.Get(JobLedgerEntry."Document No.") then begin
+            Pago."Document Type" := Pago."Document Type"::Invoice;
+            Pago."Vendor No." := PurchInvHeader."Buy-from Vendor No.";
+            Pago."Posted Document No." := JobLedgerEntry."Document No.";
+        end else
+            Pago."Document Type" := Pago."Document Type"::" ";
+
+        Pago."Document No." := JobLedgerEntry."Document No.";
+        Pago."Line No." := 0;
+        Pago."Job No." := JobLedgerEntry."Job No.";
+        Pago."Job Task No." := JobLedgerEntry."Job Task No.";
+        Pago."Job Planning Line No." := 10000;//JobLedgerEntry."Job Planning Line No.";
+        Pago."Entry No." := 0;
+
+        if JobLedgerEntry."Bruto Factura" <> 0 then
+            Amnt := JobLedgerEntry."Bruto Factura"
+        else
+            Amnt := JobLedgerEntry."Total Cost (LCY)";
+        if JobLedgerEntry."Neto Factura" <> 0 then
+            BaseAmnt := JobLedgerEntry."Neto Factura"
+        else
+            BaseAmnt := JobLedgerEntry."Total Cost";
+
+        Pago.Amount := Amnt;
+        Pago."Base Amount" := BaseAmnt;
+        Pago."Amount Paid" := 0;
+        Pago."Amount Pending" := Amnt;
+        Pago."Base Amount Paid" := 0;
+        Pago."Base Amount Pending" := BaseAmnt;
+        EntryNo := Pago."Entry No.";
+        repeat
+            EntryNo += 1;
+            Pago."Entry No." := EntryNo;
+        until Pago.Insert(true);
+
+    end;
+
+    local procedure RellenarAmountYBaseAmountSiCero(var Pago: Record "Proyecto Movimiento Pago")
+    var
+        PurchInvLine: Record "Purch. Inv. Line";
+        JobLedgerEntry: Record "Job Ledger Entry";
+    begin
+        if (Pago."Posted Document No." <> '') and ((Pago.Amount = 0) or (Pago."Base Amount" = 0)) then begin
+            PurchInvLine.SetRange("Document No.", Pago."Posted Document No.");
+            PurchInvLine.SetRange("Line No.", Pago."Line No.");
+            PurchInvLine.SetRange("Job No.", Pago."Job No.");
+            PurchInvLine.SetRange("Job Task No.", Pago."Job Task No.");
+            if PurchInvLine.FindFirst() then begin
+                Pago.Amount := 0;
+                Pago."Base Amount" := 0;
+                repeat
+                    Pago.Amount += PurchInvLine."Amount Including VAT";
+                    Pago."Base Amount" += PurchInvLine."Line Amount";
+
+                until PurchInvLine.Next() = 0;
+            end else begin
+                // Sin línea con ese Line No.; intentar primera línea del documento
+                JobLedgerEntry.SetRange("Document No.", Pago."Document No.");
+                JobLedgerEntry.SetRange("Job No.", Pago."Job No.");
+                JobLedgerEntry.SetRange("Job Task No.", Pago."Job Task No.");
+                JobLedgerEntry.SetRange("Entry Type", JobLedgerEntry."Entry Type"::Usage);
+                if JobLedgerEntry.FindFirst() then begin
+                    Pago.Amount := 0;
+                    Pago."Base Amount" := 0;
+                    repeat
+                        Pago.Amount += JobLedgerEntry."Bruto Factura";
+                        Pago."Base Amount" += JobLedgerEntry."Neto Factura";
+                    until JobLedgerEntry.Next() = 0;
+                end;
+            end;
+        end;
+
+
+
+        Pago."Amount Pending" := Pago.Amount - Pago."Amount Paid";
+        Pago."Base Amount Pending" := Pago."Base Amount" - Pago."Base Amount Paid";
+        Pago.Modify(true);
+    end;
 }
