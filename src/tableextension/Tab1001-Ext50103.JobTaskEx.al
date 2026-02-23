@@ -319,6 +319,27 @@ tableextension 50303 "JobTaskEx" extends "Job Task" //1001
             Editable = false;
             DecimalPlaces = 2 : 2;
         }
+        // añade los pendientes de Proyecto Movimiento Pago
+        field(50023; "Base Amount Pending"; Decimal)
+        {
+            Caption = 'Importe Base Pendiente';
+            FieldClass = FlowField;
+            CalcFormula = sum("Proyecto Movimiento Pago"."Base Amount Pending" where("Job No." = field("Job No."),
+                                                                                      "Job Task No." = field("Job Task No."),
+                                                                                      "Job Task No." = field(filter(Totaling))));
+            Editable = false;
+            DecimalPlaces = 2 : 2;
+        }
+        field(50024; "Amount Pending"; Decimal)
+        {
+            Caption = 'Importe Pendiente';
+            FieldClass = FlowField;
+            CalcFormula = sum("Proyecto Movimiento Pago"."Amount Pending" where("Job No." = field("Job No."),
+                                                                                      "Job Task No." = field("Job Task No."),
+                                                                                      "Job Task No." = field(filter(Totaling))));
+            Editable = false;
+            DecimalPlaces = 2 : 2;
+        }
 
     }
 
