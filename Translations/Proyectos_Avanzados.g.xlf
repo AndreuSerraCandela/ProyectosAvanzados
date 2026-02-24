@@ -4643,6 +4643,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension Payment Journal Ext - Control Job Task No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 4048657685 - Action 3597678073 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
+          <source>Genera Mov Pago</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Purchase Invoice - Action GeneraMovPago - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 4048657685 - Action 3597678073 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
+          <source>Genera Mov Pago</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Purchase Invoice - Action GeneraMovPago - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 4048657685 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
           <source>Specifies the value of the No. Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>

@@ -2362,8 +2362,8 @@ codeunit 50301 "ProcesosProyectos"
                             until JobPlanningLine.Insert(true);
 
                             //end;
-                            //Tontería, es decir entra siempre, ya lo cambiaré, tengo prisa
-                            if (ImportedEntriesPagado <> 0) Or (ImportedEntriesPagado = 0) then begin
+
+                            if (ImportedEntriesPagado <> 0) Or (BrutoFactura <> 0) then begin
                                 ProyectoMovimientoPago.SetRange("Job No.", JobNo);
                                 ProyectoMovimientoPago.SetRange("Document No.", CopyStr(NumeroFactura, 1, MaxStrLen(ProyectoMovimientoPago."Document No.")));
                                 ProyectoMovimientoPago.SetRange("Job Task No.", JobTaskNo);

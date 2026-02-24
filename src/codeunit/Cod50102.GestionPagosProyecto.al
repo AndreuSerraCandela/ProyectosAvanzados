@@ -4,43 +4,53 @@ codeunit 50102 "Gestión Pagos Proyecto"
     [EventSubscriber(ObjectType::Table, Database::"Purch. Inv. Line", 'OnAfterInsertEvent', '', false, false)]
     local procedure OnAfterPurchInvLineInsert(var Rec: Record "Purch. Inv. Line")
     var
-        PurchaseLine: Record "Purchase Line";
         ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
         PurchInvHeader: Record "Purch. Inv. Header";
         VendorNo: Code[20];
+        PurchaseLine: Record "Purchase Line";
+        PreassignedNo: Code[20];
+        JobAssignmentPercentage: Decimal;
+        JobAssignmentAmount: Decimal;
     begin
-        // Buscar la línea de compra original
-        PurchaseLine.SetRange("Document Type", PurchaseLine."Document Type"::Invoice);
-        PurchaseLine.SetRange("Document No.", Rec."Document No.");
-        PurchaseLine.SetRange("Line No.", Rec."Line No.");
-
-        if not PurchaseLine.FindFirst() then
-            exit;
 
         // Si la línea tiene Job No., crear asignación automática
-        if PurchaseLine."Job No." <> '' then begin
-            if PurchInvHeader.Get(Rec."Document No.") then
+        if Rec."Job No." <> '' then begin
+            if PurchInvHeader.Get(Rec."Document No.") then begin
                 VendorNo := PurchInvHeader."Buy-from Vendor No.";
+                PreassignedNo := PurchInvHeader."Pre-Assigned No.";
+            end;
 
             ProyectoFacturaCompra.Init();
-            ProyectoFacturaCompra."Document Type" := PurchaseLine."Document Type";
-            ProyectoFacturaCompra."Document No." := PurchaseLine."Document No.";
-            ProyectoFacturaCompra."Line No." := PurchaseLine."Line No.";
-            ProyectoFacturaCompra."Job No." := PurchaseLine."Job No.";
-            ProyectoFacturaCompra."Job Task No." := PurchaseLine."Job Task No.";
-            ProyectoFacturaCompra."Job Planning Line No." := PurchaseLine."Job Planning Line No.";
+            ProyectoFacturaCompra."Document Type" := ProyectoFacturaCompra."Document Type"::Invoice;
+            ProyectoFacturaCompra."Document No." := PurchInvHeader."Pre-Assigned No.";
+            ProyectoFacturaCompra."Line No." := Rec."Line No.";
+            ProyectoFacturaCompra."Job No." := Rec."Job No.";
+            ProyectoFacturaCompra."Job Task No." := Rec."Job Task No.";
+            ProyectoFacturaCompra."Job Planning Line No." := Rec."Job Planning Line No.";
             ProyectoFacturaCompra."Vendor No." := VendorNo;
             ProyectoFacturaCompra."Posted Document No." := Rec."Document No.";
 
             // Si hay campos de asignación, usarlos
-            if PurchaseLine."Job Assignment Percentage" <> 0 then
-                ProyectoFacturaCompra."Percentage" := PurchaseLine."Job Assignment Percentage"
-            else if PurchaseLine."Job Assignment Amount" <> 0 then
-                ProyectoFacturaCompra."Amount" := PurchaseLine."Job Assignment Amount"
-            else begin
+            PurchaseLine.SetRange("Document Type", PurchaseLine."Document Type"::Invoice);
+            PurchaseLine.SetRange("Document No.", PreassignedNo);
+            PurchaseLine.SetRange("Line No.", Rec."Line No.");
+            if PurchaseLine.FindFirst() then begin
+                JobAssignmentPercentage := PurchaseLine."Job Assignment Percentage";
+                JobAssignmentAmount := PurchaseLine."Job Assignment Amount";
+            end else
+                JobAssignmentAmount := Rec."Amount Including VAT";
+            if JobAssignmentPercentage <> 0 then begin
+                ProyectoFacturaCompra."Percentage" := JobAssignmentPercentage;
+                JobAssignmentAmount := Rec."Amount Including VAT" * JobAssignmentPercentage / 100;
+            end;
+            if JobAssignmentAmount <> 0 then begin
+                ProyectoFacturaCompra."Amount" := JobAssignmentAmount;
+                ProyectoFacturaCompra."Base Amount" := JobAssignmentAmount / (1 + Rec."VAT %" / 100);
+            end else begin
                 // Si no hay asignación específica, asignar el 100% o el importe completo
                 ProyectoFacturaCompra."Amount" := Rec."Amount Including VAT";
                 ProyectoFacturaCompra."Base Amount" := Rec.Amount;
+
             end;
             ProyectoFacturaCompra.Insert(true);
         end;
@@ -51,25 +61,33 @@ codeunit 50102 "Gestión Pagos Proyecto"
     var
         PurchaseLine: Record "Purchase Line";
         ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
-        PurchInvHeader: Record "Purch. Inv. Header";
+        PurchCrMemoHeader: Record "Purch. Cr. Memo Hdr.";
         VendorNo: Code[20];
+        JobAssignmentAmount: Decimal;
+        JobAssignmentPercentage: Decimal;
+        PreassignedNo: Code[20];
     begin
+        if PurchCrMemoHeader.Get(Rec."Document No.") then
+            PreassignedNo := PurchCrMemoHeader."Pre-Assigned No.";
         // Buscar la línea de compra original
         PurchaseLine.SetRange("Document Type", PurchaseLine."Document Type"::"Credit Memo");
-        PurchaseLine.SetRange("Document No.", Rec."Document No.");
+        PurchaseLine.SetRange("Document No.", PreassignedNo);
         PurchaseLine.SetRange("Line No.", Rec."Line No.");
 
-        if not PurchaseLine.FindFirst() then
-            exit;
+        if PurchaseLine.FindFirst() then begin
+            "JobAssignmentAmount" := PurchaseLine."Job Assignment Amount";
+            JobAssignmentPercentage := PurchaseLine."Job Assignment Percentage";
+        end else
+            JobAssignmentAmount := -PurchCrMemoHeader."Amount Including VAT";
 
         // Si la línea tiene Job No., crear asignación automática
         if PurchaseLine."Job No." <> '' then begin
-            if PurchInvHeader.Get(Rec."Document No.") then
-                VendorNo := PurchInvHeader."Buy-from Vendor No.";
+            if PurchCrMemoHeader.Get(Rec."Document No.") then
+                VendorNo := PurchCrMemoHeader."Buy-from Vendor No.";
 
             ProyectoFacturaCompra.Init();
-            ProyectoFacturaCompra."Document Type" := PurchaseLine."Document Type";
-            ProyectoFacturaCompra."Document No." := PurchaseLine."Document No.";
+            ProyectoFacturaCompra."Document Type" := ProyectoFacturaCompra."Document Type"::"Credit Memo";
+            ProyectoFacturaCompra."Document No." := PurchCrMemoHeader."Pre-Assigned No.";
             ProyectoFacturaCompra."Line No." := PurchaseLine."Line No.";
             ProyectoFacturaCompra."Job No." := PurchaseLine."Job No.";
             ProyectoFacturaCompra."Job Task No." := PurchaseLine."Job Task No.";
@@ -78,17 +96,17 @@ codeunit 50102 "Gestión Pagos Proyecto"
             ProyectoFacturaCompra."Posted Document No." := Rec."Document No.";
 
             // Si hay campos de asignación, usarlos
-            if PurchaseLine."Job Assignment Percentage" <> 0 then begin
-                ProyectoFacturaCompra."Percentage" := PurchaseLine."Job Assignment Percentage";
-                PurchaseLine."Job Assignment Amount" := Rec."Amount Including VAT" * PurchaseLine."Job Assignment Percentage" / 100;
+            if JobAssignmentPercentage <> 0 then begin
+                ProyectoFacturaCompra."Percentage" := JobAssignmentPercentage;
+                JobAssignmentAmount := -Rec."Amount Including VAT" * JobAssignmentPercentage / 100;
             end;
-            if PurchaseLine."Job Assignment Amount" <> 0 then begin
-                ProyectoFacturaCompra."Amount" := PurchaseLine."Job Assignment Amount";
-                ProyectoFacturaCompra."Base Amount" := PurchaseLine."Job Assignment Amount" / (1 + PurchaseLine."VAT %" / 100);
+            if JobAssignmentAmount <> 0 then begin
+                ProyectoFacturaCompra."Amount" := -JobAssignmentAmount;
+                ProyectoFacturaCompra."Base Amount" := -JobAssignmentAmount / (1 + Rec."VAT %" / 100);
             end else begin
                 // Si no hay asignación específica, asignar el 100% o el importe completo
-                ProyectoFacturaCompra."Amount" := Rec."Amount Including VAT";
-                ProyectoFacturaCompra."Base Amount" := Rec.Amount;
+                ProyectoFacturaCompra."Amount" := -Rec."Amount Including VAT";
+                ProyectoFacturaCompra."Base Amount" := -Rec.Amount;
             end;
 
             ProyectoFacturaCompra.Insert(true);
@@ -168,6 +186,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         VendorNo: Code[20];
         Importe: Decimal;
         JobPlaningLine: Record "Job Planning Line";
+        NewProyectoFacturaCompra: Record "Proyecto Movimiento Pago" temporary;
         AmoindPaid: Decimal;
     begin
         if JobNo = '' then
@@ -184,10 +203,18 @@ codeunit 50102 "Gestión Pagos Proyecto"
         ProyectoFacturaCompra.SetRange("Entry No.", EntryNo);
         ProyectoFacturaCompra.DeleteAll();
         ProyectoFacturaCompra.SetRange("Entry No.", 0);
+        If ProyectoFacturaCompra.FindSet() Then begin
+
+            NewProyectoFacturaCompra.TransferFields(ProyectoFacturaCompra);
+            NewProyectoFacturaCompra.Insert();
+        end;
         ProyectoFacturaCompra.DeleteAll();
         ProyectoFacturaCompra.Init();
+        ProyectoFacturaCompra := NewProyectoFacturaCompra;
+
         ProyectoFacturaCompra."Document Type" := ProyectoFacturaCompra."Document Type"::Invoice;
-        ProyectoFacturaCompra."Document No." := PurchaseLine."Document No.";
+        If ProyectoFacturaCompra."Document No." = '' Then
+            ProyectoFacturaCompra."Document No." := PurchaseLine."Document No.";
         ProyectoFacturaCompra."Line No." := PurchaseLine."Line No.";
         ProyectoFacturaCompra."Job No." := JobNo;
         ProyectoFacturaCompra."Job Task No." := JobTaskNo;
@@ -456,6 +483,12 @@ codeunit 50102 "Gestión Pagos Proyecto"
             Pago."Document Type" := Pago."Document Type"::" ";
 
         Pago."Document No." := JobLedgerEntry."Document No.";
+        if JobLedgerEntry."Document No." = '' then
+            Pago."Document No." := JobLedgerEntry."External Document No.";
+        if JobLedgerEntry."Facturado Contra" = '' then
+            Pago."Vendor No." := JobLedgerEntry."NombreProveedor o Empleado"
+        else
+            pago."Vendor No." := JobLedgerEntry."Facturado Contra";
         Pago."Line No." := 0;
         Pago."Job No." := JobLedgerEntry."Job No.";
         Pago."Job Task No." := JobLedgerEntry."Job Task No.";
@@ -470,7 +503,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
             BaseAmnt := JobLedgerEntry."Neto Factura"
         else
             BaseAmnt := JobLedgerEntry."Total Cost";
-
+        if (amnt = 0) and (BaseAmnt = 0) then exit;
         Pago.Amount := Amnt;
         Pago."Base Amount" := BaseAmnt;
         Pago."Amount Paid" := 0;
@@ -481,7 +514,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         repeat
             EntryNo += 1;
             Pago."Entry No." := EntryNo;
-        until Pago.Insert(true);
+        until Pago.Insert();
 
     end;
 
