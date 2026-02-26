@@ -41,12 +41,44 @@ codeunit 50302 "Eventos-proyectos"
     /// </summary>
     procedure DatosFactura(var Rec: Record "Job Ledger Entry")
     var
+        PurchaseInvLine: Record "Purch. Inv. Line";
+        PurchaseCrMemoLine: Record "Purch. Cr. Memo Line";
         PurchaseInvHeader: Record "Purch. Inv. Header";
+        ResLedgerEntry: Record "Res. Ledger Entry";
+        GLEntry: Record "G/L Entry";
+        ItLedgerEntry: Record "Item Ledger Entry";
+        JobPlaningLineInvoice: Record "Job Planning Line";
+        JobEntry: Record "Job Ledger Entry";
         MovRetencion: Record "Payments Retention Ledger Ent.";
         PagoProyecto: Record "Proyecto Movimiento Pago";
     begin
+
         if Rec.IsTemporary then
             exit;
+        If Rec."Ledger Entry Type" = Rec."Ledger Entry Type"::Item then begin
+            itledgerentry.Get(Rec."Ledger Entry No.");
+            If ItLedgerEntry."Document Type" = ItLedgerEntry."Document Type"::"Purchase Invoice" then
+                PurchaseInvLine.Get(itledgerentry."Document No.", itledgerentry."Document Line No.");
+            If ItLedgerEntry."Document Type" = ItLedgerEntry."Document Type"::"Purchase Credit Memo" then
+                PurchaseCrMemoLine.Get(itledgerentry."Document No.", itledgerentry."Document Line No.");
+        end;
+        If PurchaseInvLine."Line No." <> 0 then begin
+            Rec."Neto Factura" := PurchaseInvLine.Amount;
+            Rec."Bruto Factura" := PurchaseInvLine."Amount Including VAT";
+            Rec."IGIC O IVA" := PurchaseInvLine."Amount Including VAT" - PurchaseInvLine.Amount;
+            rec.IRPF := PurchaseInvLine."Retention Amount (IRPF)";
+            Rec.Modify(false);
+            exit;
+        end;
+        if PurchaseCrMemoLine."Line No." <> 0 then begin
+            Rec."Neto Factura" := -PurchaseCrMemoLine.Amount;
+            Rec."Bruto Factura" := -PurchaseCrMemoLine."Amount Including VAT";
+            Rec."IGIC O IVA" := -PurchaseCrMemoLine."Amount Including VAT" - PurchaseCrMemoLine.Amount;
+            rec.IRPF := -PurchaseCrMemoLine."Retention Amount (IRPF)";
+            Rec.Modify(false);
+            exit;
+        end;
+
         if PurchaseInvHeader.Get(Rec."Document No.") then begin
             PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT", "Remaining Amount");
             Rec."Neto Factura" := PurchaseInvHeader.Amount;
@@ -99,66 +131,66 @@ codeunit 50302 "Eventos-proyectos"
     end;
 
 
-    procedure DatosFactura(DocumentNo: Code[20])
-    var
-        Rec: Record "Job Ledger Entry";
-        PurchaseInvHeader: Record "Purch. Inv. Header";
-        MovRetencion: Record "Payments Retention Ledger Ent.";
-        PagoProyecto: Record "Proyecto Movimiento Pago";
-    begin
-        if Rec.IsTemporary then
-            exit;
-        Rec.SetRange("Document No.", DocumentNo);
-        if Rec.FindFirst() then begin
-            If Rec."Neto Factura" <> 0 Then exit;
-            if PurchaseInvHeader.Get(Rec."Document No.") then begin
-                PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT", "Remaining Amount");
-                Rec."Neto Factura" := PurchaseInvHeader.Amount;
-                Rec."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
-                Rec."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
-                MovRetencion.SetRange("Document Type", MovRetencion."Document Type"::Invoice);
-                MovRetencion.SetRange("Document No.", Rec."Document No.");
-                if MovRetencion.FindFirst() then
-                    Rec."IRPF" := MovRetencion.Amount
-                else
-                    Rec."IRPF" := 0;
-                PagoProyecto.SetRange("Document No.", Rec."Document No.");
-                PagoProyecto.SetRange("Job No.", Rec."Job No.");
-                PagoProyecto.SetRange("Job Task No.", Rec."Job Task No.");
-                if PagoProyecto.FindFirst() then begin
-                    PagoProyecto."Amount Paid" := PagoProyecto."Amount Paid";
-                    PagoProyecto."Base Amount Pending" := PagoProyecto."Base Amount" - PagoProyecto."Base Amount Paid";
-                    PagoProyecto."Amount Pending" := PagoProyecto."Amount" - PagoProyecto."Amount Paid";
+    // procedure DatosFactura(DocumentNo: Code[20])
+    // var
+    //     Rec: Record "Job Ledger Entry";
+    //     PurchaseInvHeader: Record "Purch. Inv. Header";
+    //     MovRetencion: Record "Payments Retention Ledger Ent.";
+    //     PagoProyecto: Record "Proyecto Movimiento Pago";
+    // begin
+    //     if Rec.IsTemporary then
+    //         exit;
+    //     Rec.SetRange("Document No.", DocumentNo);
+    //     if Rec.FindFirst() then begin
+    //         If Rec."Neto Factura" <> 0 Then exit;
+    //         if PurchaseInvHeader.Get(Rec."Document No.") then begin
+    //             PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT", "Remaining Amount");
+    //             Rec."Neto Factura" := PurchaseInvHeader.Amount;
+    //             Rec."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
+    //             Rec."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
+    //             MovRetencion.SetRange("Document Type", MovRetencion."Document Type"::Invoice);
+    //             MovRetencion.SetRange("Document No.", Rec."Document No.");
+    //             if MovRetencion.FindFirst() then
+    //                 Rec."IRPF" := MovRetencion.Amount
+    //             else
+    //                 Rec."IRPF" := 0;
+    //             PagoProyecto.SetRange("Document No.", Rec."Document No.");
+    //             PagoProyecto.SetRange("Job No.", Rec."Job No.");
+    //             PagoProyecto.SetRange("Job Task No.", Rec."Job Task No.");
+    //             if PagoProyecto.FindFirst() then begin
+    //                 PagoProyecto."Amount Paid" := PagoProyecto."Amount Paid";
+    //                 PagoProyecto."Base Amount Pending" := PagoProyecto."Base Amount" - PagoProyecto."Base Amount Paid";
+    //                 PagoProyecto."Amount Pending" := PagoProyecto."Amount" - PagoProyecto."Amount Paid";
 
-                    if PagoProyecto."Amount Pending" = 0 Then begin
-                        PagoProyecto."Base Amount Paid" := PagoProyecto."Base Amount";
-                        PagoProyecto."Base Amount Pending" := 0;
-                    end;
-                    // no dejar que los importes pagados sean mallores que la factura
-                    if PagoProyecto."Amount Paid" > PagoProyecto.Amount then begin
-                        PagoProyecto."Amount Paid" := PagoProyecto.Amount;
-                        PagoProyecto."Amount Pending" := 0;
-                    end;
-                    if PagoProyecto."Base Amount Paid" > PagoProyecto."Base Amount" then begin
-                        PagoProyecto."Base Amount Paid" := PagoProyecto."Base Amount";
-                        PagoProyecto."Base Amount Pending" := 0;
-                    end;
-                    PagoProyecto.Modify(false);
-                end;
-                If Rec."Entry No." <> 0 Then
-                    Rec.Modify(false);
-            end else begin
-                Rec."Neto Factura" := Rec."Total Cost";
-                Rec."Bruto Factura" := Rec."Total Cost (LCY)";
-                // IVA/IRPF: de momento 0; rellenar desde fuente (ej. extensión Job Journal Line) si se necesita
-                Rec."IGIC O IVA" := 0;
-                Rec."Importe IGIC O IVA" := 0;
-                Rec."IRPF" := 0;
-                If Rec."Entry No." <> 0 Then
-                    Rec.Modify(false);
-            end;
-        end;
-    end;
+    //                 if PagoProyecto."Amount Pending" = 0 Then begin
+    //                     PagoProyecto."Base Amount Paid" := PagoProyecto."Base Amount";
+    //                     PagoProyecto."Base Amount Pending" := 0;
+    //                 end;
+    //                 // no dejar que los importes pagados sean mallores que la factura
+    //                 if PagoProyecto."Amount Paid" > PagoProyecto.Amount then begin
+    //                     PagoProyecto."Amount Paid" := PagoProyecto.Amount;
+    //                     PagoProyecto."Amount Pending" := 0;
+    //                 end;
+    //                 if PagoProyecto."Base Amount Paid" > PagoProyecto."Base Amount" then begin
+    //                     PagoProyecto."Base Amount Paid" := PagoProyecto."Base Amount";
+    //                     PagoProyecto."Base Amount Pending" := 0;
+    //                 end;
+    //                 PagoProyecto.Modify(false);
+    //             end;
+    //             If Rec."Entry No." <> 0 Then
+    //                 Rec.Modify(false);
+    //         end else begin
+    //             Rec."Neto Factura" := Rec."Total Cost";
+    //             Rec."Bruto Factura" := Rec."Total Cost (LCY)";
+    //             // IVA/IRPF: de momento 0; rellenar desde fuente (ej. extensión Job Journal Line) si se necesita
+    //             Rec."IGIC O IVA" := 0;
+    //             Rec."Importe IGIC O IVA" := 0;
+    //             Rec."IRPF" := 0;
+    //             If Rec."Entry No." <> 0 Then
+    //                 Rec.Modify(false);
+    //         end;
+    //     end;
+    // end;
 
     [EventSubscriber(ObjectType::Table, Database::"Job", 'OnAfterInsertEvent', '', false, false)]
     local procedure OnAfterInsertEvent(var Rec: Record Job)

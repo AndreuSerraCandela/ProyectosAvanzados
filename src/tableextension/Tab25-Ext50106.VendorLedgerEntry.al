@@ -40,7 +40,7 @@ tableextension 50319 "Vendor Ledger Entry Ext" extends "Vendor Ledger Entry"
                 VendorLedgerEntry.SetRange("Entry No.", DetailedVendorLedgEntry."Applied Vend. Ledger Entry No.");
                 if VendorLedgerEntry.FindFirst() then begin
                     if VendorLedgerEntry."Document Type" = VendorLedgerEntry."Document Type"::Invoice then begin
-                        Eventosproyectos.DatosFactura(VendorLedgerEntry."Document No.");
+                        //Eventosproyectos.DatosFactura(VendorLedgerEntry."Document No.");
                         MovRetencion.SetRange("Document Type", MovRetencion."Document Type"::Invoice);
                         MovRetencion.SetRange("Document No.", VendorLedgerEntry."Document No.");
                         if MovRetencion.FindFirst() then

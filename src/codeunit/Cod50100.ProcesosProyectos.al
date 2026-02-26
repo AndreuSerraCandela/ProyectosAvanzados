@@ -244,12 +244,45 @@ codeunit 50301 "ProcesosProyectos"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", OnAfterPostPurchaseDoc, '', false, false)]
     procedure OnAfterPostPurchaseDoc(var PurchaseHeader: Record "Purchase Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; PurchRcpHdrNo: Code[20]; RetShptHdrNo: Code[20]; PurchInvHdrNo: Code[20]; PurchCrMemoHdrNo: Code[20]; CommitIsSupressed: Boolean)
     var
+        ItemLedgerEntry: Record "Item Ledger Entry";
+        PurchaseInvLine: Record "Purch. Inv. Line";
+        PurchaseCrMemoLine: Record "Purch. Cr. Memo Line";
         PurchaseInvHeader: Record "Purch. Inv. Header";
         JobLedgerEntry: Record "Job Ledger Entry";
         MovRetencion: Record "Payments Retention Ledger Ent.";
     begin
-        if PurchInvHdrNo = '' then
+        if (PurchInvHdrNo = '') and (PurchCrMemoHdrNo = '') then
             exit;
+        ItemLedgerEntry.SetRange("Document No.", PurchInvHdrNo);
+        if not ItemLedgerEntry.FindFirst() then
+            ItemLedgerEntry.SetRange("Document No.", PurchCrMemoHdrNo);
+        if ItemLedgerEntry.FindFirst() then begin
+            repeat
+                JobLedgerEntry.SetRange("Ledger Entry Type", JobLedgerEntry."Ledger Entry Type"::Item);
+                JobLedgerEntry.SetRange("Ledger Entry No.", ItemLedgerEntry."Entry No.");
+                if JobLedgerEntry.FindFirst() then begin
+
+                    if PurchaseInvLine.Get(JobLedgerEntry."Document No.", ItemLedgerEntry."Document Line No.") then begin
+                        JobLedgerEntry."Neto Factura" := PurchaseInvLine.Amount;
+                        JobLedgerEntry."Bruto Factura" := PurchaseInvline."Amount Including VAT";
+                        JobLedgerEntry."IGIC O IVA" := PurchaseInvline."Amount Including VAT" - PurchaseInvLine.Amount;
+                        JobLedgerEntry.IRPF := PurchaseInvline."Retention Amount (IRPF)";
+                        if JobLedgerEntry."Entry No." <> 0 Then
+                            JobLedgerEntry.Modify(false);
+                    end;
+                end else begin
+                    if PurchaseCrMemoLine.Get(JobLedgerEntry."Document No.", ItemLedgerEntry."Document Line No.") then begin
+                        JobLedgerEntry."Neto Factura" := -PurchaseCrMemoLine.Amount;
+                        JobLedgerEntry."Bruto Factura" := -PurchaseCrMemoLine."Amount Including VAT";
+                        JobLedgerEntry."IGIC O IVA" := -PurchaseCrMemoLine."Amount Including VAT" - PurchaseCrMemoLine.Amount;
+                        JobLedgerEntry.IRPF := -PurchaseCrMemoLine."Retention Amount (IRPF)";
+                        if JobLedgerEntry."Entry No." <> 0 Then
+                            JobLedgerEntry.Modify(false);
+                    end;
+                end;
+            until ItemLedgerEntry.Next() = 0;
+            exit;
+        end;
         JobLedgerEntry.SetRange("Document No.", PurchInvHdrNo);
         if JobLedgerEntry.FindFirst() then begin
             if JobLedgerEntry."Neto Factura" <> 0 Then exit;
