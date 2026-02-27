@@ -130,6 +130,32 @@ codeunit 50302 "Eventos-proyectos"
         end;
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", 'OnAfterValidateEvent', 'Vendor Invoice No.', false, false)]
+    LOCAL PROCEDURE Table38_OnValidateVendorInvoiceNo(VAR Rec: Record "Purchase Header"; VAR xRec: Record "Purchase Header"; CurrFieldNo: Integer)
+    var
+        Vendor: Record Vendor;
+    begin
+        If Vendor.Get(Rec."Buy-from Vendor No.")
+        then
+            Rec."Posting Description" := Copystr(FORMAT(Rec."Document Type") + ' ' + Rec."Vendor Invoice No." + ' ' + Vendor.Name, 1, MaxStrLen(Rec."Posting Description"))
+        else
+            Rec."Posting Description" := FORMAT(Rec."Document Type") + ' ' + Rec."Vendor Invoice No.";
+    END;
+
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", 'OnAfterValidateEvent', 'Vendor Cr. Memo No.', false, false)]
+    LOCAL PROCEDURE Table38_OnValidateVendorCRNo(VAR Rec: Record "Purchase Header"; VAR xRec: Record "Purchase Header"; CurrFieldNo: Integer)
+    var
+        Vendor: Record Vendor;
+    begin
+        If Vendor.Get(Rec."Buy-from Vendor No.")
+        then
+            Rec."Posting Description" := Copystr(FORMAT(Rec."Document Type") + ' ' + Rec."Vendor Cr. Memo No." + ' ' + Vendor.Name, 1, MaxStrLen(Rec."Posting Description"))
+        else
+            Rec."Posting Description" := FORMAT(Rec."Document Type") + ' ' + Rec."Vendor Cr. Memo No.";
+
+
+    END;
+
 
     // procedure DatosFactura(DocumentNo: Code[20])
     // var

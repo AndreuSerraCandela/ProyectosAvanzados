@@ -4355,6 +4355,7 @@ Fila: Integer)
         ErrCuenta: Label 'Fila %1: La cuenta contable %2 no existe.';
         ErrProyecto: Label 'Fila %1: El proyecto %2 no existe.';
         VatPostingSetup: Record "VAT Posting Setup";
+        Dimensiones: array[8] of Code[20];
     begin
         TempExcelBuffer.DeleteAll();
         if not UploadIntoStream('Seleccionar archivo Excel de facturas', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos (*.*)|*.*', FileName, InStream) then
@@ -4382,7 +4383,14 @@ Fila: Integer)
                 CuentaContable := '';
                 NumeroFactura := '';
                 ProyectoNo := '';
-
+                Dimensiones[1] := '';
+                Dimensiones[2] := '';
+                Dimensiones[3] := '';
+                Dimensiones[4] := '';
+                Dimensiones[5] := '';
+                Dimensiones[6] := '';
+                Dimensiones[7] := '';
+                Dimensiones[8] := '';
                 TempExcelBuffer.SetRange("Row No.", RowNo);
                 if TempExcelBuffer.FindSet() then
                     repeat
@@ -4415,6 +4423,20 @@ Fila: Integer)
                                 NumeroFactura := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NumeroFactura));
                             11: // K - Proyecto
                                 ProyectoNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(ProyectoNo));
+                            12: // L - Dimension 1
+                                Dimensiones[1] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[1]));
+                            13: // M - Dimension 2
+                                Dimensiones[2] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[2]));
+                            14: // N - Dimension 3
+                                Dimensiones[3] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[3]));
+                            15: // O - Dimension 4
+                                Dimensiones[4] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[4]));
+                            16: // P - Dimension 5
+                                Dimensiones[5] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[5]));
+                            17: // Q - Dimension 6
+                                Dimensiones[6] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[6]));
+                            18: // R - Dimension 7
+                                Dimensiones[7] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[7]));
                         end;
                     until TempExcelBuffer.Next() = 0;
                 TempExcelBuffer.SetRange("Row No.");
@@ -4482,6 +4504,8 @@ Fila: Integer)
                     end;
                     SalesLine.Validate("VAT Prod. Posting Group", VatPostingSetup."VAT Prod. Posting Group");
                     SalesLine."Job No." := ProyectoNo;
+                    // Cargar dimensiones: construir Dimension Set ID desde array Dimensiones (columnas L a R) y asignar a la línea
+                    SalesLine.Validate("Dimension Set ID", GetDimSetIDFromDimensionesArray(Dimensiones));
                     SalesLine.Insert(true);
                     Importadas += 1;
                 end; // CIFCliente <> ''
@@ -4490,5 +4514,39 @@ Fila: Integer)
         until TempExcelBuffer.Next() = 0;
 
         Message('Se importaron %1 línea(s) de factura correctamente.', Importadas);
+    end;
+
+    /// <summary>
+    /// Construye un Dimension Set ID a partir del array de códigos de valor de dimensión (Dimensiones[1]..[8]).
+    /// Los códigos de dimensión se toman de General Ledger Setup: [1]=Global Dim 1, [2]=Global Dim 2, [3]=Shortcut Dim 3, [4]=Shortcut Dim 4.
+    /// </summary>
+    local procedure GetDimSetIDFromDimensionesArray(Dimensiones: array[8] of Code[20]): Integer
+    var
+        GlSetup: Record "General Ledger Setup";
+        DimValue: Record "Dimension Value";
+        TempDimSetEntry: Record "Dimension Set Entry" temporary;
+        DimMgt: Codeunit DimensionManagement;
+        DimCode: Code[20];
+        i: Integer;
+    begin
+        GlSetup.Get();
+        for i := 1 to 8 do
+            if Dimensiones[i] <> '' then begin
+                case i of
+                    1: DimCode := GlSetup."Global Dimension 1 Code";
+                    2: DimCode := GlSetup."Global Dimension 2 Code";
+                    3: DimCode := GlSetup."Shortcut Dimension 3 Code";
+                    4: DimCode := GlSetup."Shortcut Dimension 4 Code";
+                    else
+                        DimCode := '';
+                end;
+                if (DimCode <> '') and DimValue.Get(DimCode, Dimensiones[i]) then begin
+                    TempDimSetEntry."Dimension Code" := DimCode;
+                    TempDimSetEntry."Dimension Value Code" := Dimensiones[i];
+                    TempDimSetEntry."Dimension Value ID" := DimValue."Dimension Value ID";
+                    TempDimSetEntry.Insert(true);
+                end;
+            end;
+        exit(DimMgt.GetDimensionSetID(TempDimSetEntry));
     end;
 }
