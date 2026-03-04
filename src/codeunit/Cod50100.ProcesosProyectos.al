@@ -4468,6 +4468,7 @@ Fila: Integer)
                     if not SalesHeader.FindFirst() then begin
                         SalesHeader.Init();
                         SalesHeader."Document Type" := SalesHeader."Document Type"::Invoice;
+                        SalesHeader."No." := '';
                         SalesHeader.Insert(true);
                         SalesHeader.Validate("Sell-to Customer No.", Customer."No.");
                         SalesHeader.Validate("Posting Date", Fecha);
@@ -4533,10 +4534,14 @@ Fila: Integer)
         for i := 1 to 8 do
             if Dimensiones[i] <> '' then begin
                 case i of
-                    1: DimCode := GlSetup."Global Dimension 1 Code";
-                    2: DimCode := GlSetup."Global Dimension 2 Code";
-                    3: DimCode := GlSetup."Shortcut Dimension 3 Code";
-                    4: DimCode := GlSetup."Shortcut Dimension 4 Code";
+                    1:
+                        DimCode := GlSetup."Global Dimension 1 Code";
+                    2:
+                        DimCode := GlSetup."Global Dimension 2 Code";
+                    3:
+                        DimCode := GlSetup."Shortcut Dimension 3 Code";
+                    4:
+                        DimCode := GlSetup."Shortcut Dimension 4 Code";
                     else
                         DimCode := '';
                 end;
