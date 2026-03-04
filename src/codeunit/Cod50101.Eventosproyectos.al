@@ -141,6 +141,59 @@ codeunit 50302 "Eventos-proyectos"
         JobLedgerEntry.Modify();
     end;
 
+    /// <summary>
+    /// Crea un registro en Proyecto Movimiento Pago con tipo documento blanco para cada Job Ledger Entry seleccionado
+    /// que aún no tenga un movimiento de pago. Solo genera cuando no existe ya un Pago con ese Job Entry No.
+    /// </summary>
+    procedure GenerarMovDePago(var JobLedgerEntry: Record "Job Ledger Entry")
+    var
+        Pago: Record "Proyecto Movimiento Pago";
+    begin
+        if not JobLedgerEntry.FindSet() then
+            exit;
+        repeat
+            Pago.Reset();
+            Pago.SetRange("Job Entry No.", JobLedgerEntry."Entry No.");
+            if not Pago.FindFirst() then
+                if not ProvieneDeFacturaCompra(JobLedgerEntry) then
+                    CrearPagoTipoBlanco(JobLedgerEntry);
+        until JobLedgerEntry.Next() = 0;
+    end;
+
+    local procedure ProvieneDeFacturaCompra(JobLedgerEntry: Record "Job Ledger Entry"): Boolean
+    var
+        PurchInvLine: Record "Purch. Inv. Line";
+        PurchCrMemoLine: Record "Purch. Cr. Memo Line";
+    begin
+        if PurchInvLine.Get(JobLedgerEntry."Document No.", JobLedgerEntry."Document Line No.") then
+            exit(true);
+        if PurchCrMemoLine.Get(JobLedgerEntry."Document No.", JobLedgerEntry."Document Line No.") then
+            exit(true);
+        exit(false);
+    end;
+
+    local procedure CrearPagoTipoBlanco(JobLedgerEntry: Record "Job Ledger Entry")
+    var
+        Pago: Record "Proyecto Movimiento Pago";
+    begin
+        Pago.Init();
+        Pago."Document Type" := Pago."Document Type"::" ";
+        Pago."Document No." := JobLedgerEntry."Document No.";
+        Pago."Line No." := JobLedgerEntry."Entry No.";
+        Pago."Job No." := JobLedgerEntry."Job No.";
+        Pago."Job Task No." := JobLedgerEntry."Job Task No.";
+        Pago."Job Planning Line No." := 0;
+        Pago."Entry No." := 0;
+        Pago."Job Entry No." := JobLedgerEntry."Entry No.";
+        Pago."Posted Document No." := JobLedgerEntry."Document No.";
+        if JobLedgerEntry."Facturado Contra" <> '' then
+            Pago."Vendor No." := CopyStr(JobLedgerEntry."Facturado Contra", 1, MaxStrLen(Pago."Vendor No."))
+        else
+            if JobLedgerEntry."NombreProveedor o Empleado" <> '' then
+                Pago."Vendor No." := CopyStr(JobLedgerEntry."NombreProveedor o Empleado", 1, MaxStrLen(Pago."Vendor No."));
+        Pago.Insert(true);
+    end;
+
     [EventSubscriber(ObjectType::Table, Database::"Purchase Header", 'OnAfterValidateEvent', 'Vendor Invoice No.', false, false)]
     LOCAL PROCEDURE Table38_OnValidateVendorInvoiceNo(VAR Rec: Record "Purchase Header"; VAR xRec: Record "Purchase Header"; CurrFieldNo: Integer)
     var

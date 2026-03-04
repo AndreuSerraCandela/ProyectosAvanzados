@@ -124,6 +124,46 @@ codeunit 50102 "Gestión Pagos Proyecto"
         JobLedgerEntry.Modify();
     end;
 
+    /// <summary>
+    /// Recalcula Amount Pending y Base Amount Pending para los Job Ledger Entries pasados (p. ej. selección en página).
+    /// Usa Bruto Factura / Neto Factura y los campos calculados Amount Paid / Base Amount Paid.
+    /// </summary>
+    procedure RecalcularImportePendiente(var JobLedgerEntry: Record "Job Ledger Entry")
+    var
+        PurchInvLine: Record "Purch. Inv. Line";
+        PurchCrMemoLine: Record "Purch. Cr. Memo Line";
+    begin
+        if JobLedgerEntry.FindSet() then
+            repeat
+                JobLedgerEntry.CalcFields("Amount Paid", "Base Amount Paid");
+                if jobledgerentry."Neto Factura" = 0 Then
+                    JobLedgerEntry."Neto Factura" := JobLedgerEntry."Total Cost (LCY)";
+                if jobledgerentry."Bruto Factura" = 0 Then begin
+                    If PurchInvLine.Get(jobledgerentry."Document No.", jobledgerentry."Document Line No.") then begin
+                        PurchInvLine.SetRange("Document No.", jobledgerentry."Document No.");
+                        if PurchInvLine.FindFirst() then begin
+                            JobLedgerEntry."Bruto Factura" := PurchInvLine."Amount Including VAT";
+                            JobLedgerEntry."IGIC O IVA" := PurchInvLine."VAT %";
+                            JobLedgerEntry."Importe IGIC O IVA" := PurchInvLine."Amount Including VAT" - PurchInvLine.Amount;
+                            JobLedgerEntry.IRPF := PurchInvLine."Retention Amount (IRPF)";
+                        end;
+                    end else begin
+                        if PurchCrMemoLine.Get(jobledgerentry."Document No.", jobledgerentry."Document Line No.") then begin
+                            PurchCrMemoLine.SetRange("Document No.", jobledgerentry."Document No.");
+                            if PurchCrMemoLine.FindFirst() then
+                                JobLedgerEntry."Bruto Factura" := PurchCrMemoLine."Amount Including VAT";
+                            JobLedgerEntry."IGIC O IVA" := PurchCrMemoLine."VAT %";
+                            JobLedgerEntry."Importe IGIC O IVA" := PurchCrMemoLine."Amount Including VAT" - PurchCrMemoLine.Amount;
+                            JobLedgerEntry.IRPF := PurchCrMemoLine."Retention Amount (IRPF)";
+                        end;
+                    end;
+                end;
+                JobLedgerEntry."Amount Pending" := JobLedgerEntry."Bruto Factura" - JobLedgerEntry."Amount Paid";
+                JobLedgerEntry."Base Amount Pending" := JobLedgerEntry."Neto Factura" - JobLedgerEntry."Base Amount Paid";
+                JobLedgerEntry.Modify();
+            until JobLedgerEntry.Next() = 0;
+    end;
+
     procedure LiquidarPago(var VendorLedgerEntry: Record "Vendor Ledger Entry"; PaymentAmount: Decimal)
     var
         ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
@@ -204,6 +244,39 @@ codeunit 50102 "Gestión Pagos Proyecto"
                             end;
                         until PurchCrMemoLine.Next() = 0;
                 end;
+            VendorLedgerEntry."Document Type"::Bill:
+                begin
+                    PurchInvLine.SetRange("Document No.", VendorLedgerEntry."Document No.");
+                    if PurchInvLine.FindSet() then
+                        repeat
+                            TotalInvoiceAmount += PurchInvLine."Amount Including VAT";
+
+                        until PurchInvLine.Next() = 0;
+                    ProjectPaymentAmount := abs(PurchInvLine."Amount Including VAT") / TotalInvoiceAmount;
+                    if PurchInvLine.FindFirst() then
+                        repeat
+                            jobledgerentry.SetRange("Entry Type", jobledgerentry."Entry Type"::Usage);
+                            jobledgerentry.SetRange("Document No.", VendorLedgerEntry."Document No.");
+                            jobledgerentry.SetRange("Document Line No.", PurchInvLine."Line No.");
+                            If jobledgerentry.FindFirst() then begin
+                                ProyectoFacturaCompra.Init();
+                                ProyectoFacturaCompra."Document Type" := ProyectoFacturaCompra."Document Type"::Invoice;
+                                ProyectoFacturaCompra."Document No." := VendorLedgerEntry."Document No.";
+                                ProyectoFacturaCompra."Line No." := PurchInvLine."Line No.";
+                                ProyectoFacturaCompra."Job No." := PurchInvLine."Job No.";
+                                ProyectoFacturaCompra."Job Task No." := PurchInvLine."Job Task No.";
+                                ProyectoFacturaCompra."Job Planning Line No." := PurchInvLine."Job Planning Line No.";
+                                ProyectoFacturaCompra."Vendor No." := VendorLedgerEntry."Vendor No.";
+                                ProyectoFacturaCompra."Entry No." := VendorLedgerEntry."Entry No.";
+                                ProyectoFacturaCompra."Amount Paid" := ProjectPaymentAmount * PurchInvLine."Amount Including VAT";
+                                ProyectoFacturaCompra."Base Amount Paid" := ProjectPaymentAmount * PurchInvLine.Amount;
+                                ProyectoFacturaCompra."Job Entry No." := jobledgerentry."Entry No.";
+                                ProyectoFacturaCompra.Insert(true);
+                                Salir := true;
+                            end;
+                        until PurchInvLine.Next() = 0;
+
+                end;
         end;
         if Salir then begin
             jobledgerentry.Reset();
@@ -250,8 +323,12 @@ codeunit 50102 "Gestión Pagos Proyecto"
         VendorLedgerEntry: Record "Vendor Ledger Entry";
     begin
         // Solo procesar aplicaciones de pago
-        if (Rec."Entry Type" <> Rec."Entry Type"::Application) or Rec.Unapplied then
-            exit;
+        if (Rec."Entry Type" <> Rec."Entry Type"::Application) or Rec.Unapplied then begin
+            If not VendorLedgerEntry.Get(Rec."Vendor Ledger Entry No.") then
+                exit;
+            if VendorLedgerEntry."Document Type" <> VendorLedgerEntry."Document Type"::Bill then
+                exit;
+        end;
         VendorLedgerEntry.SetRange("Entry No.", Rec."Applied Vend. Ledger Entry No.");
         if not VendorLedgerEntry.FindFirst() then
             exit;

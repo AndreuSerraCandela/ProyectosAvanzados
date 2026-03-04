@@ -147,6 +147,39 @@ pageextension 50323 "JobLedgerEntriesExt" extends "Job Ledger Entries"
                 end;
 
             }
+            action("Recalcular Importe Pendiente")
+            {
+                ApplicationArea = All;
+                Caption = 'Recalcular Importe Pendiente';
+                Image = Refresh;
+                ToolTip = 'Recalcula el importe pendiente de pago';
+                trigger OnAction()
+                var
+                    GestionPagosProyecto: Codeunit "Gestión Pagos Proyecto";
+                    JobLedgerEntry: Record "Job Ledger Entry";
+                begin
+                    CurrPage.SetSelectionFilter(JobLedgerEntry);
+                    GestionPagosProyecto.RecalcularImportePendiente(JobLedgerEntry);
+                    CurrPage.Update(false);
+                end;
+            }
+            //Generar Mov de pago si el tipo de doc es blanco
+            action("Generar Mov de pago")
+            {
+                ApplicationArea = All;
+                Caption = 'Generar Mov de pago';
+                Image = Refresh;
+                ToolTip = 'Genera el movimiento de pago';
+                trigger OnAction()
+                var
+                    Eventosproyectos: Codeunit "Eventos-proyectos";
+                    JobLedgerEntry: Record "Job Ledger Entry";
+                begin
+                    CurrPage.SetSelectionFilter(JobLedgerEntry);
+                    Eventosproyectos.GenerarMovDePago(JobLedgerEntry);
+                    CurrPage.Update(false);
+                end;
+            }
             action("Marcar para liquidar")
             {
                 ApplicationArea = All;

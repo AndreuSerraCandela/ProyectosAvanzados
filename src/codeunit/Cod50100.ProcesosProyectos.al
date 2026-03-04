@@ -4456,6 +4456,7 @@ Fila: Integer)
                     if not SalesHeader.FindFirst() then begin
                         SalesHeader.Init();
                         SalesHeader."Document Type" := SalesHeader."Document Type"::Invoice;
+                        SalesHeader."No." := '';
                         SalesHeader.Insert(true);
                         SalesHeader.Validate("Sell-to Customer No.", Customer."No.");
                         SalesHeader.Validate("Posting Date", Fecha);

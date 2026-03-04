@@ -136,6 +136,7 @@ page 50125 "Pagos Proyecto"
                     CurrPage.Update(false);
                 end;
             }
+
             action(VerFactura)
             {
                 ApplicationArea = All;
