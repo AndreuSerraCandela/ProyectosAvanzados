@@ -4349,12 +4349,13 @@ Fila: Integer)
         CodCliente: Code[20];
         Tarea: Code[20];
         Empresa: Text;
-
+        GenSetupPostingGroup: Record "General Posting Setup";
+        FillInvPostingNo: Boolean;
     begin
         TempExcelBuffer.DeleteAll();
         if not UploadIntoStream('Seleccionar archivo Excel de facturas', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos (*.*)|*.*', FileName, InStream) then
             exit;
-
+        FillInvPostingNo := Confirm('Rellenar No. de Registro de Factura?', false);
         SheetName := TempExcelBuffer.SelectSheetsNameStream(InStream);
         TempExcelBuffer.OpenBookStream(InStream, SheetName);
         TempExcelBuffer.ReadSheet();
@@ -4490,6 +4491,8 @@ Fila: Integer)
                             exit;
                         end;
                     end;
+                    Customer.TestField("Gen. Bus. Posting Group");
+                    Customer.TestField("VAT Bus. Posting Group");
 
                     // Buscar o crear cabecera: mismo cliente + mismo External Document No. + mismo proyecto
                     SalesHeader.Reset();
@@ -4506,6 +4509,8 @@ Fila: Integer)
                         SalesHeader.Validate("Posting Date", Fecha);
                         SalesHeader."External Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(SalesHeader."External Document No."));
                         SalesHeader."No.Proyecto" := ProyectoNo;
+                        if FillInvPostingNo then
+                            SalesHeader."Posting No." := NumeroFactura;
                         SalesHeader.Modify(true);
                     end;
 
@@ -4536,11 +4541,20 @@ Fila: Integer)
                         exit;
                     end;
                     SalesLine.Validate("VAT Prod. Posting Group", VatPostingSetup."VAT Prod. Posting Group");
+
                     SalesLine."Job No." := ProyectoNo;
                     SalesLine."Job Task No." := Tarea;
+                    GLAccount.Get(CuentaContable);
+                    GLAccount.TestField("Gen. Bus. Posting Group");
+                    SalesLine.Validate("VAT Prod. Posting Group", GLAccount."VAT Prod. Posting Group");
                     // Cargar dimensiones: construir Dimension Set ID desde array Dimensiones (columnas L a R) y asignar a la línea
+                    SalesLine."Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
+                    SalesLine."Gen. Prod. Posting Group" := GLAccount."Gen. Prod. Posting Group";
                     SalesLine.Validate("Dimension Set ID", GetDimSetIDFromDimensionesArray(Dimensiones));
                     SalesLine.Insert(true);
+                    SalesLine."Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
+                    SalesLine."Gen. Prod. Posting Group" := GLAccount."Gen. Prod. Posting Group";
+                    SalesLine.Modify();
                     Importadas += 1;
                 end; // CIFCliente <> ''
             end; // RowNo > 1
