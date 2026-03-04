@@ -188,6 +188,8 @@ codeunit 50102 "Gestión Pagos Proyecto"
                             TotalInvoiceAmount += PurchInvLine."Amount Including VAT";
 
                         until PurchInvLine.Next() = 0;
+                    if TotalInvoiceAmount = 0 then
+                        exit;
                     ProjectPaymentAmount := abs(PurchInvLine."Amount Including VAT") / TotalInvoiceAmount;
                     if PurchInvLine.FindFirst() then
                         repeat
@@ -215,11 +217,14 @@ codeunit 50102 "Gestión Pagos Proyecto"
                 end;
             VendorLedgerEntry."Document Type"::"Credit Memo":
                 begin
+                    TotalInvoiceAmount := 0;
                     PurchCrMemoLine.SetRange("Document No.", VendorLedgerEntry."Document No.");
                     if PurchCrMemoLine.FindSet() then
                         repeat
                             TotalInvoiceAmount += PurchCrMemoLine."Amount Including VAT";
                         until PurchCrMemoLine.Next() = 0;
+                    if TotalInvoiceAmount = 0 then
+                        exit;
                     ProjectPaymentAmount := abs(PurchCrMemoLine."Amount Including VAT") / TotalInvoiceAmount;
                     if PurchCrMemoLine.FindFirst() then
                         repeat
@@ -246,12 +251,15 @@ codeunit 50102 "Gestión Pagos Proyecto"
                 end;
             VendorLedgerEntry."Document Type"::Bill:
                 begin
+                    TotalInvoiceAmount := 0;
                     PurchInvLine.SetRange("Document No.", VendorLedgerEntry."Document No.");
                     if PurchInvLine.FindSet() then
                         repeat
                             TotalInvoiceAmount += PurchInvLine."Amount Including VAT";
 
                         until PurchInvLine.Next() = 0;
+                    if TotalInvoiceAmount = 0 then
+                        exit;
                     ProjectPaymentAmount := abs(PurchInvLine."Amount Including VAT") / TotalInvoiceAmount;
                     if PurchInvLine.FindFirst() then
                         repeat
@@ -292,11 +300,14 @@ codeunit 50102 "Gestión Pagos Proyecto"
         end;
 
         //Buscar el documento a liquidar
+        TotalInvoiceAmount := 0;
         JobLedgerEntry.SetRange("Document to Liquidate", VendorLedgerEntry."Document No.");
         if JobLedgerEntry.FindSet() then
             repeat
                 TotalInvoiceAmount += JobLedgerEntry."Bruto Factura";
             until JobLedgerEntry.Next() = 0;
+        if TotalInvoiceAmount = 0 then
+            exit;
         ProjectPaymentAmount := abs(TotalInvoiceAmount) / TotalInvoiceAmount;
         if JobLedgerEntry.FindFirst() then
             repeat

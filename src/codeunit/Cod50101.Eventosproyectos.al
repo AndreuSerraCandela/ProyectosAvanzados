@@ -243,7 +243,8 @@ codeunit 50302 "Eventos-proyectos"
         // ProyectoFacturaCompra.Insert(true);
         JobJnlLine."Neto Factura" := PurchLine.Amount;
         JobJnlLine."Bruto Factura" := PurchLine."Amount Including VAT";
-        JobJnlLine."IGIC O IVA" := PurchLine."Amount Including VAT" - PurchLine.Amount;
+        JobJnlLine."Importe IGIC O IVA" := PurchLine."Amount Including VAT" - PurchLine.Amount;
+        JobJnlLine."IGIC O IVA" := PurchLine."VAT %";
         JobJnlLine.IRPF := PurchLine."Retention Amount (IRPF)";
         JobJnlLine."Document Line No." := PurchLine."Line No.";
         JobJnlLine."NombreProveedor o Empleado" := PurchHeader."Buy-from Vendor No.";
@@ -267,7 +268,11 @@ codeunit 50302 "Eventos-proyectos"
         JobLedgerEntry.Get(JobLedgEntryNo);
         JobLedgerEntry."Neto Factura" := JobJournalLine."Neto Factura";
         JobLedgerEntry."Bruto Factura" := JobJournalLine."Bruto Factura";
+        jobledgerentry.CalcFields("Amount Paid", "Base Amount Paid");
+        JobLedgerEntry."Amount Pending" := JobJournalLine."Bruto Factura" - JobLedgerEntry."Amount Paid";
+        JobLedgerEntry."Base Amount Pending" := JobJournalLine."Neto Factura" - JobLedgerEntry."Base Amount Paid";
         JobLedgerEntry."IGIC O IVA" := JobJournalLine."IGIC O IVA";
+        JobLedgerEntry."Importe IGIC O IVA" := JobJournalLine."Importe IGIC O IVA";
         JobLedgerEntry.IRPF := JobJournalLine.IRPF;
         JobLedgerEntry."Document Line No." := JobJournalLine."Document Line No.";
 
@@ -470,6 +475,18 @@ codeunit 50302 "Eventos-proyectos"
                 end;
             end;
         end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnAfterPostPurchaseDoc', '', false, false)]
+    procedure OnAfterPostPurchaseDoc(var PurchaseHeader: Record "Purchase Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; PurchRcpHdrNo: Code[20]; RetShptHdrNo: Code[20]; PurchInvHdrNo: Code[20]; PurchCrMemoHdrNo: Code[20]; CommitIsSupressed: Boolean)
+    var
+        JobLedgerEntry: Record "Job Ledger Entry";
+    begin
+        JobLedgerEntry.SetRange("Document No.", PurchInvHdrNo);
+        if JobLedgerEntry.FindFirst() then
+            repeat
+                datosfactura(JobLedgerEntry);
+            until JobLedgerEntry.Next() = 0;
     end;
 
     //OnAfterSetPurchaseLineFilters

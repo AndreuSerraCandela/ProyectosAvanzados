@@ -1774,6 +1774,54 @@ codeunit 50301 "ProcesosProyectos"
         JobLedgerEntry.INSERT(true);
     end;
 
+    /// <summary>
+    /// Crea un movimiento de proyecto (Job Ledger Entry) de tipo uso a partir de una línea de factura de venta,
+    /// de forma análoga a CreaLineaUso pero con datos de Sales Header y Sales Line.
+    /// </summary>
+    local procedure CrearMovProyectoFacturaVenta(SalesHeader: Record "Sales Header"; SalesLine: Record "Sales Line")
+    var
+        JobLedgerEntry: Record "Job Ledger Entry";
+        Cantidad: Decimal;
+        Venta: Decimal;
+        EntryNo: Integer;
+    begin
+        if JobLedgerEntry.FindLast() then
+            EntryNo := JobLedgerEntry."Entry No." + 1
+        else
+            EntryNo := 1;
+        if SalesLine."Job No." = '' then
+            exit;
+
+        JobLedgerEntry.Init();
+        JobLedgerEntry."Line Type" := JobLedgerEntry."Line Type"::Billable;
+        JobLedgerEntry."Job No." := SalesLine."Job No.";
+        JobLedgerEntry."Job Task No." := SalesLine."Job Task No.";
+        JobLedgerEntry."Posting Date" := SalesHeader."Document Date";
+        JobLedgerEntry."Document No." := CopyStr(SalesHeader."No.", 1, MaxStrLen(JobLedgerEntry."Document No."));
+
+        JobLedgerEntry.Type := SalesLine.Type;
+        JobLedgerEntry."No." := SalesLine."No.";
+        JobLedgerEntry.Description := SalesLine.Description;
+
+        Cantidad := SalesLine.Quantity;
+        if Cantidad = 0 then
+            Cantidad := 1;
+        JobLedgerEntry.Quantity := Cantidad;
+
+        Venta := SalesLine."Line Amount";
+        if Venta <> 0 then begin
+            JobLedgerEntry."Unit Price" := Venta / JobLedgerEntry.Quantity;
+            JobLedgerEntry."Total Price" := Venta;
+        end;
+
+        repeat
+            JobLedgerEntry."Entry No." := EntryNo;
+            EntryNo += 1;
+        until JobLedgerEntry.INSERT(true);
+
+
+    end;
+
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::DimensionManagement, 'OnBeforeCreateDimSetFromJobTaskDim', '', false, false)]
 
@@ -2424,8 +2472,9 @@ codeunit 50301 "ProcesosProyectos"
                                 if ProyectoMovimientoPago."Amount Paid" = BrutoFactura Then begin
                                     ProyectoMovimientoPago."Base Amount Paid" := NetoFactura;
                                 end else
-                                    //calcular en base al % del pruto sobre el importe pagado
-                                    ProyectoMovimientoPago."Base Amount Paid" := ImportedEntriesPagado * NetoFactura / BrutoFactura;
+                                    if BrutoFactura <> 0 then
+                                        //calcular en base al % del pruto sobre el importe pagado
+                                        ProyectoMovimientoPago."Base Amount Paid" := ImportedEntriesPagado * NetoFactura / BrutoFactura;
 
                                 ProyectoMovimientoPago."Job Planning Line No." := JobPlanningLine."Line No.";
                                 repeat
@@ -4319,7 +4368,8 @@ Fila: Integer)
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
         Customer: Record Customer;
-        GLAccount: Record "G/L Account";
+        //GLAccount: Record "G/L Account";
+        Item: Record Item;
         Job: Record Job;
         JobTask: Record "Job Task";
         SalesSetup: Record "Sales & Receivables Setup";
@@ -4344,6 +4394,7 @@ Fila: Integer)
         ErrCuenta: Label 'Fila %1: La cuenta contable %2 no existe.';
         ErrProyecto: Label 'Fila %1: El proyecto %2 no existe.';
         ErrTarea: Label 'Fila %1: La tarea %2 no existe.';
+        ErrItem: Label 'Fila %1: El item %2 no existe.';
         VatPostingSetup: Record "VAT Posting Setup";
         Dimensiones: array[8] of Code[20];
         CodCliente: Code[20];
@@ -4475,8 +4526,8 @@ Fila: Integer)
                         end;
                     end else
                         Customer.Get(CodCliente);
-                    if not GLAccount.Get(CuentaContable) then begin
-                        Error(ErrCuenta, RowNo, CuentaContable);
+                    if not Item.Get(Tarea) then begin
+                        Error(ErrItem, RowNo, Tarea);
                         exit;
                     end;
                     if ProyectoNo <> '' then begin
@@ -4527,8 +4578,8 @@ Fila: Integer)
                     SalesLine."Document Type" := SalesHeader."Document Type";
                     SalesLine."Document No." := SalesHeader."No.";
                     SalesLine."Line No." := LineNo;
-                    SalesLine.Validate(Type, SalesLine.Type::"G/L Account");
-                    SalesLine.Validate("No.", CuentaContable);
+                    SalesLine.Validate(Type, SalesLine.Type::Item);
+                    SalesLine.Validate("No.", Tarea);
                     SalesLine.Description := TextoRegistro;
                     SalesLine.Validate(Quantity, 1);
                     SalesLine.Validate("Unit Price", Importe);
@@ -4544,18 +4595,19 @@ Fila: Integer)
 
                     SalesLine."Job No." := ProyectoNo;
                     SalesLine."Job Task No." := Tarea;
-                    GLAccount.Get(CuentaContable);
-                    GLAccount.TestField("Gen. Bus. Posting Group");
-                    SalesLine.Validate("VAT Prod. Posting Group", GLAccount."VAT Prod. Posting Group");
+                    Item.Get(Tarea);
+                    Item.TestField("Gen. Prod. Posting Group");
+                    SalesLine.Validate("VAT Prod. Posting Group", Item."VAT Prod. Posting Group");
                     // Cargar dimensiones: construir Dimension Set ID desde array Dimensiones (columnas L a R) y asignar a la línea
                     SalesLine."Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
-                    SalesLine."Gen. Prod. Posting Group" := GLAccount."Gen. Prod. Posting Group";
+                    SalesLine."Gen. Prod. Posting Group" := Item."Gen. Prod. Posting Group";
                     SalesLine.Validate("Dimension Set ID", GetDimSetIDFromDimensionesArray(Dimensiones));
                     SalesLine.Insert(true);
                     SalesLine."Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
-                    SalesLine."Gen. Prod. Posting Group" := GLAccount."Gen. Prod. Posting Group";
+                    SalesLine."Gen. Prod. Posting Group" := Item."Gen. Prod. Posting Group";
                     SalesLine.Modify();
                     Importadas += 1;
+                    CrearMovProyectoFacturaVenta(SalesHeader, SalesLine);
                 end; // CIFCliente <> ''
             end; // RowNo > 1
 
