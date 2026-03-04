@@ -10,6 +10,10 @@ tableextension 50311 "SalesHeaderMyb" extends "Sales Header" //36
         {
             DataClassification = ToBeClassified;
         }
+        field(50102; "Importar desde excel"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     var

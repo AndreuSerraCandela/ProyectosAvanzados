@@ -175,6 +175,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         PurchCrMemoLine: Record "Purch. Cr. Memo Line";
         jobledgerentry: Record "Job Ledger Entry";
         Salir: Boolean;
+        JobEntrTemp: Record "Job Ledger Entry" temporary;
     begin
         Salir := false;
 
@@ -209,7 +210,9 @@ codeunit 50102 "Gestión Pagos Proyecto"
                                 ProyectoFacturaCompra."Amount Paid" := ProjectPaymentAmount * PurchInvLine."Amount Including VAT";
                                 ProyectoFacturaCompra."Base Amount Paid" := ProjectPaymentAmount * PurchInvLine.Amount;
                                 ProyectoFacturaCompra."Job Entry No." := jobledgerentry."Entry No.";
+                                ProyectoFacturaCompra."Job Planning Line No." := PurchInvLine."Job Planning Line No.";
                                 ProyectoFacturaCompra.Insert(true);
+
                                 Salir := true;
                             end;
                         until PurchInvLine.Next() = 0;
@@ -244,6 +247,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                                 ProyectoFacturaCompra."Amount Paid" := -ProjectPaymentAmount * PurchCrMemoLine."Amount Including VAT";
                                 ProyectoFacturaCompra."Base Amount Paid" := -ProjectPaymentAmount * PurchCrMemoLine.Amount;
                                 ProyectoFacturaCompra."Job Entry No." := jobledgerentry."Entry No.";
+                                ProyectoFacturaCompra."Job Planning Line No." := PurchCrMemoLine."Job Planning Line No.";
                                 ProyectoFacturaCompra.Insert(true);
                                 Salir := true;
                             end;
@@ -276,9 +280,10 @@ codeunit 50102 "Gestión Pagos Proyecto"
                                 ProyectoFacturaCompra."Job Planning Line No." := PurchInvLine."Job Planning Line No.";
                                 ProyectoFacturaCompra."Vendor No." := VendorLedgerEntry."Vendor No.";
                                 ProyectoFacturaCompra."Entry No." := VendorLedgerEntry."Entry No.";
-                                ProyectoFacturaCompra."Amount Paid" := ProjectPaymentAmount * PurchInvLine."Amount Including VAT";
-                                ProyectoFacturaCompra."Base Amount Paid" := ProjectPaymentAmount * PurchInvLine.Amount;
+                                ProyectoFacturaCompra."Amount Paid" := -ProjectPaymentAmount * PurchInvLine."Amount Including VAT";
+                                ProyectoFacturaCompra."Base Amount Paid" := -ProjectPaymentAmount * PurchInvLine.Amount;
                                 ProyectoFacturaCompra."Job Entry No." := jobledgerentry."Entry No.";
+                                ProyectoFacturaCompra."Job Planning Line No." := PurchInvLine."Job Planning Line No.";
                                 ProyectoFacturaCompra.Insert(true);
                                 Salir := true;
                             end;
@@ -292,6 +297,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
             jobledgerentry.SetRange("Document No.", VendorLedgerEntry."Document No.");
             jobledgerentry.CalcFields("Amount Paid", "Base Amount Paid");
             if jobledgerentry.FindFirst() then begin
+                jobledgerentry.CalcFields("Amount Paid", "Base Amount Paid");
                 jobledgerentry."Amount Pending" := jobledgerentry."Bruto Factura" - jobledgerentry."Amount Paid";
                 jobledgerentry."Base Amount Pending" := jobledgerentry."Neto Factura" - jobledgerentry."Base Amount Paid";
                 jobledgerentry.Modify();
@@ -339,11 +345,11 @@ codeunit 50102 "Gestión Pagos Proyecto"
                 exit;
             if VendorLedgerEntry."Document Type" <> VendorLedgerEntry."Document Type"::Bill then
                 exit;
+
         end;
-        VendorLedgerEntry.SetRange("Entry No.", Rec."Applied Vend. Ledger Entry No.");
-        if not VendorLedgerEntry.FindFirst() then
-            exit;
-        LiquidarPago(VendorLedgerEntry, -Rec.Amount);
+        If VendorLedgerEntry.Get(Rec."Vendor Ledger Entry No.")
+        then
+            LiquidarPago(VendorLedgerEntry, -Rec.Amount);
 
     end;
 

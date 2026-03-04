@@ -25,6 +25,12 @@ codeunit 50302 "Eventos-proyectos"
             end;
 
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Create-Invoice", 'OnBeforeTestSalesHeader', '', false, false)]
+    local procedure OnBeforeTestSalesHeader(var SalesHeader: Record "Sales Header"; Job: Record Job; var IsHandled: Boolean; var JobPlanningLine: Record "Job Planning Line")
+    begin
+        IsHandled := true;
+    end;
     //Añadir Que se rellene el campo Job Task No. de gl entry en la codeunit 12
     [EventSubscriber(ObjectType::Table, Database::"G/L Entry", OnAfterCopyGLEntryFromGenJnlLine, '', false, false)]
     local procedure OnAfterCopyGLEntryFromGenJnlLine(var GLEntry: Record "G/L Entry"; var GenJournalLine: Record "Gen. Journal Line")
@@ -170,6 +176,68 @@ codeunit 50302 "Eventos-proyectos"
         if PurchCrMemoLine.Get(JobLedgerEntry."Document No.", JobLedgerEntry."Document Line No.") then
             exit(true);
         exit(false);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterPostSalesDoc, '', false, false)]
+    local procedure OnAfterPostSalesDoc(var SalesHeader: Record "Sales Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20]; CommitIsSuppressed: Boolean; InvtPickPutaway: Boolean; var CustLedgerEntry: Record "Cust. Ledger Entry"; WhseShip: Boolean; WhseReceiv: Boolean; PreviewMode: Boolean)
+    var
+        JobLedgerEntry: Record "Job Ledger Entry";
+        Cantidad: Decimal;
+        Venta: Decimal;
+        EntryNo: Integer;
+        SalesLine: Record "Sales Invoice Line";
+    begin
+        if not SalesHeader."Importar desde excel" then
+            exit;
+        if JobLedgerEntry.FindLast() then
+            EntryNo := JobLedgerEntry."Entry No." + 1
+        else
+            EntryNo := 1;
+        SalesLine.SetRange("Document No.", SalesInvHdrNo);
+        if SalesLine.FindFirst() then
+            repeat
+                if SalesLine."Job No." <> '' then begin
+
+                    JobLedgerEntry.Init();
+                    JobLedgerEntry."Line Type" := JobLedgerEntry."Line Type"::Billable;
+                    JobLedgerEntry."Job No." := SalesLine."Job No.";
+                    JobLedgerEntry."Job Task No." := SalesLine."Job Task No.";
+                    JobLedgerEntry."Posting Date" := SalesHeader."Posting Date";
+                    JobLedgerEntry."Document No." := SalesInvHdrNo;
+
+                    JobLedgerEntry.Type := JobLedgerEntry.Type::Item;
+                    JobLedgerEntry."No." := SalesLine."No.";
+                    JobLedgerEntry.Description := SalesLine.Description;
+
+                    Cantidad := -SalesLine.Quantity;
+                    if Cantidad = 0 then
+                        Cantidad := -1;
+                    JobLedgerEntry.Quantity := Cantidad;
+
+                    Venta := SalesLine."Line Amount";
+                    if Venta <> 0 then begin
+                        JobLedgerEntry."Unit Price" := Abs(Venta / JobLedgerEntry.Quantity);
+                        JobLedgerEntry."Total Price" := -Venta;
+                        JobLedgerEntry."Dimension Set ID" := SalesLine."Dimension Set ID";
+                        JobLedgerEntry."Gen. Bus. Posting Group" := SalesLine."Gen. Bus. Posting Group";
+                        JobLedgerEntry."Gen. Prod. Posting Group" := SalesLine."Gen. Prod. Posting Group";
+                        JobLedgerEntry."Entry Type" := JobLedgerEntry."Entry Type"::Sale;
+                        JobLedgerEntry."Global Dimension 1 Code" := SalesLine."Shortcut Dimension 1 Code";
+                        JobLedgerEntry."Global Dimension 2 Code" := SalesLine."Shortcut Dimension 2 Code";
+                        JobLedgerEntry."Line Amount" := -SalesLine."Line Amount";
+                        JobLedgerEntry."Line Amount (LCY)" := -SalesLine."Line Amount";
+                        JobLedgerEntry."Unit Price (LCY)" := SalesLine."Unit Price";
+                        JobLedgerEntry."Total Price (LCY)" := -SalesLine."Line Amount";
+
+                        JobLedgerEntry."Unit of Measure Code" := SalesLine."Unit of Measure Code";
+                    end;
+
+                    repeat
+                        JobLedgerEntry."Entry No." := EntryNo;
+                        EntryNo += 1;
+                    until JobLedgerEntry.INSERT(true);
+                end;
+            until SalesLine.Next() = 0;
     end;
 
     local procedure CrearPagoTipoBlanco(JobLedgerEntry: Record "Job Ledger Entry")

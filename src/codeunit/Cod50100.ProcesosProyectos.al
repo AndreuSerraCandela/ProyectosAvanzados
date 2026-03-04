@@ -1778,46 +1778,56 @@ codeunit 50301 "ProcesosProyectos"
     /// Crea un movimiento de proyecto (Job Ledger Entry) de tipo uso a partir de una línea de factura de venta,
     /// de forma análoga a CreaLineaUso pero con datos de Sales Header y Sales Line.
     /// </summary>
-    local procedure CrearMovProyectoFacturaVenta(SalesHeader: Record "Sales Header"; SalesLine: Record "Sales Line")
+    internal procedure CrearJobPlaningLineVta(SalesHeader: Record "Sales Header"; SalesLine: Record "Sales Line")
     var
-        JobLedgerEntry: Record "Job Ledger Entry";
+        JobPlanningLine: Record "Job Planning Line";
+        JobPlanningLineInvoice: Record "Job Planning Line Invoice";
         Cantidad: Decimal;
         Venta: Decimal;
-        EntryNo: Integer;
+        lineNo: Integer;
     begin
-        if JobLedgerEntry.FindLast() then
-            EntryNo := JobLedgerEntry."Entry No." + 1
-        else
-            EntryNo := 1;
-        if SalesLine."Job No." = '' then
-            exit;
+        JobPlanningLine.SetRange("Job No.", SalesLine."Job No.");
+        JobPlanningLine.SetRange("Job Task No.", SalesLine."Job Task No.");
+        JobPlanningLine.SetRange("Document No.", SalesHeader."Posting No.");
+        JobPlanningLine.SetRange("Line No.", SalesLine."Line No.");
+        JobPlanningLine.DeleteAll();
+        JobPlanningLine.Reset();
+        JobPlanningLine.SetRange("Job No.", SalesLine."Job No.");
+        JobPlanningLine.SetRange("Job Task No.", SalesLine."Job Task No.");
+        If JobPlanningLine.Findlast() then lineNo := JobPlanningLine."Line No." + 10000 else lineNo := 10000;
 
-        JobLedgerEntry.Init();
-        JobLedgerEntry."Line Type" := JobLedgerEntry."Line Type"::Billable;
-        JobLedgerEntry."Job No." := SalesLine."Job No.";
-        JobLedgerEntry."Job Task No." := SalesLine."Job Task No.";
-        JobLedgerEntry."Posting Date" := SalesHeader."Document Date";
-        JobLedgerEntry."Document No." := CopyStr(SalesHeader."No.", 1, MaxStrLen(JobLedgerEntry."Document No."));
-
-        JobLedgerEntry.Type := SalesLine.Type;
-        JobLedgerEntry."No." := SalesLine."No.";
-        JobLedgerEntry.Description := SalesLine.Description;
-
+        JobPlanningLine.Init();
+        JobPlanningLine."Job No." := SalesLine."Job No.";
+        JobPlanningLine."Job Task No." := SalesLine."Job Task No.";
+        JobPlanningLine."Planning Date" := SalesHeader."Document Date";
+        JobPlanningLine."Document No." := SalesHeader."Posting No.";
+        JobPlanningLine."Line No." := lineNo;
+        JobPlanningLine.Description := SalesLine.Description;
         Cantidad := SalesLine.Quantity;
         if Cantidad = 0 then
             Cantidad := 1;
-        JobLedgerEntry.Quantity := Cantidad;
+        JobPlanningLine."Qty. to Invoice" := Cantidad;
+        JobPlanningLine.Quantity := Cantidad;
 
         Venta := SalesLine."Line Amount";
         if Venta <> 0 then begin
-            JobLedgerEntry."Unit Price" := Venta / JobLedgerEntry.Quantity;
-            JobLedgerEntry."Total Price" := Venta;
+            JobPlanningLine."Unit Price" := Venta / JobPlanningLine.Quantity;
+            JobPlanningLine."Total Price" := Venta;
         end;
+        JobPlanningLine.Type := JobPlanningLine.Type::Item;
+        JobPlanningLine."No." := SalesLine."No.";
+        JobPlanningLine."Line Type" := JobPlanningLine."Line Type"::Billable;
+        JobPlanningLine.Insert();
+        JobPlanningLineInvoice.Init();
+        JobPlanningLineInvoice."Job No." := SalesLine."Job No.";
+        JobPlanningLineInvoice."Job Task No." := SalesLine."Job Task No.";
+        JobPlanningLineInvoice."Job Planning Line No." := JobPlanningLine."Line No.";
+        JobPlanningLineInvoice."Document No." := SalesHeader."Posting No.";
+        JobPlanningLineInvoice."Line No." := SalesLine."Line No.";
+        JobPlanningLineInvoice."Quantity Transferred" := Cantidad;
+        JobPlanningLineInvoice."Document Type" := JobPlanningLineInvoice."Document Type"::Invoice;
+        JobPlanningLineInvoice.Insert();
 
-        repeat
-            JobLedgerEntry."Entry No." := EntryNo;
-            EntryNo += 1;
-        until JobLedgerEntry.INSERT(true);
 
 
     end;
@@ -4366,7 +4376,6 @@ Fila: Integer)
     var
         TempExcelBuffer: Record "Excel Buffer" temporary;
         SalesHeader: Record "Sales Header";
-        SalesLine: Record "Sales Line";
         Customer: Record Customer;
         //GLAccount: Record "G/L Account";
         Item: Record Item;
@@ -4402,6 +4411,9 @@ Fila: Integer)
         Empresa: Text;
         GenSetupPostingGroup: Record "General Posting Setup";
         FillInvPostingNo: Boolean;
+        JobPlanningLine: Record "Job Planning Line";
+        CreateInvoice: codeunit "Job Create-Invoice";
+        SalesLine: Record "Sales Line";
     begin
         TempExcelBuffer.DeleteAll();
         if not UploadIntoStream('Seleccionar archivo Excel de facturas', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos (*.*)|*.*', FileName, InStream) then
@@ -4558,31 +4570,53 @@ Fila: Integer)
                         SalesHeader.Insert(true);
                         SalesHeader.Validate("Sell-to Customer No.", Customer."No.");
                         SalesHeader.Validate("Posting Date", Fecha);
+                        SalesHeader."Importar desde excel" := true;
                         SalesHeader."External Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(SalesHeader."External Document No."));
                         SalesHeader."No.Proyecto" := ProyectoNo;
                         if FillInvPostingNo then
                             SalesHeader."Posting No." := NumeroFactura;
                         SalesHeader.Modify(true);
-                    end;
+                        jobplanningline.SetRange("Document No.", SalesHeader."No.");
+                        jobplanningline.DeleteAll();
 
-                    // Obtener siguiente número de línea
+                    end;
+                    //Crear Jobline
+                    JobPlanningLine.Reset();
+                    JobPlanningLine.SetRange("Job No.", ProyectoNo);
+                    JobPlanningLine.SetRange("Job Task No.", Tarea);
+                    If JobPlanningLine.FindLast() then
+                        LineNo := JobPlanningLine."Line No." + 10000
+                    else
+                        LineNo := 10000;
+                    JobPlanningLine.Init();
+                    JobPlanningLine."Job No." := ProyectoNo;
+                    JobPlanningLine."Job Task No." := Tarea;
+                    JobPlanningLine."Document No." := SalesHeader."No.";
+                    JobPlanningLine."Planning Date" := SalesHeader."Posting Date";
+                    JobPlanningLine."Line No." := LineNo;
+                    JobPlanningLine.Description := TextoRegistro;
+                    JobPlanningLine.Quantity := 1;
+                    JobPlanningLine.Validate("Unit Price", Importe);
+                    Item.Get(Tarea);
+                    JobPlanningLine."Unit of Measure Code" := item."Base Unit of Measure";
+                    JobPlanningLine."Unit Price" := Importe;
+                    JobPlanningLine."Total Price" := Importe;
+                    JobPlanningLine."Qty. to Transfer to Invoice" := 1;
+                    JobPlanningLine."Contract Line" := true;
+                    JobPlanningLine.Type := JobPlanningLine.Type::Item;
+                    JobPlanningLine."No." := Tarea;
+                    JobPlanningLine."Line Type" := JobPlanningLine."Line Type"::Billable;
+
+                    JobPlanningLine.Insert();
+                    // OCrear Job Planning Line
+                    CreateInvoice.CreateSalesInvoiceLines(ProyectoNo, JobPlanningLine, SalesHeader."No.", false, SalesHeader."Posting Date", SalesHeader."Posting Date", false);
+                    Commit();
                     SalesLine.Reset();
                     SalesLine.SetRange("Document Type", SalesHeader."Document Type");
                     SalesLine.SetRange("Document No.", SalesHeader."No.");
-                    if SalesLine.FindLast() then
-                        LineNo := SalesLine."Line No." + 10000
-                    else
-                        LineNo := 10000;
+                    SalesLine.FindLast();
 
-                    SalesLine.Init();
-                    SalesLine."Document Type" := SalesHeader."Document Type";
-                    SalesLine."Document No." := SalesHeader."No.";
-                    SalesLine."Line No." := LineNo;
-                    SalesLine.Validate(Type, SalesLine.Type::Item);
-                    SalesLine.Validate("No.", Tarea);
-                    SalesLine.Description := TextoRegistro;
-                    SalesLine.Validate(Quantity, 1);
-                    SalesLine.Validate("Unit Price", Importe);
+
                     // deberia buscar un grupo registro iva producto que en la configurtacion con el grupo viva negocio del cliente , tenga un PCTIV
                     VatPostingSetup.Reset();
                     VatPostingSetup.SetRange("VAT Bus. Posting Group", Customer."VAT Bus. Posting Group");
@@ -4593,21 +4627,44 @@ Fila: Integer)
                     end;
                     SalesLine.Validate("VAT Prod. Posting Group", VatPostingSetup."VAT Prod. Posting Group");
 
-                    SalesLine."Job No." := ProyectoNo;
-                    SalesLine."Job Task No." := Tarea;
                     Item.Get(Tarea);
                     Item.TestField("Gen. Prod. Posting Group");
+                    SalesLine.Validate("Unit Price", Importe);
                     SalesLine.Validate("VAT Prod. Posting Group", Item."VAT Prod. Posting Group");
                     // Cargar dimensiones: construir Dimension Set ID desde array Dimensiones (columnas L a R) y asignar a la línea
                     SalesLine."Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
                     SalesLine."Gen. Prod. Posting Group" := Item."Gen. Prod. Posting Group";
                     SalesLine.Validate("Dimension Set ID", GetDimSetIDFromDimensionesArray(Dimensiones));
-                    SalesLine.Insert(true);
                     SalesLine."Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
                     SalesLine."Gen. Prod. Posting Group" := Item."Gen. Prod. Posting Group";
                     SalesLine.Modify();
+                    //Importadas += 1;
+
+                    // deberia buscar un grupo registro iva producto que en la configurtacion con el grupo viva negocio del cliente , tenga un PCTIV
+                    // VatPostingSetup.Reset();
+                    // VatPostingSetup.SetRange("VAT Bus. Posting Group", Customer."VAT Bus. Posting Group");
+                    // VatPostingSetup.SetRange("VAT %", PctIVA);
+                    // if not VatPostingSetup.FindFirst() then begin
+                    //     Error(ErrVatPostingSetup, RowNo, Customer."Gen. Bus. Posting Group", PctIVA);
+                    //     exit;
+                    // end;
+                    // SalesLine.Validate("VAT Prod. Posting Group", VatPostingSetup."VAT Prod. Posting Group");
+
+                    // SalesLine."Job No." := ProyectoNo;
+                    // SalesLine."Job Task No." := Tarea;
+                    // Item.Get(Tarea);
+                    // Item.TestField("Gen. Prod. Posting Group");
+                    // SalesLine.Validate("VAT Prod. Posting Group", Item."VAT Prod. Posting Group");
+                    // // Cargar dimensiones: construir Dimension Set ID desde array Dimensiones (columnas L a R) y asignar a la línea
+                    // SalesLine."Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
+                    // SalesLine."Gen. Prod. Posting Group" := Item."Gen. Prod. Posting Group";
+                    // SalesLine.Validate("Dimension Set ID", GetDimSetIDFromDimensionesArray(Dimensiones));
+                    // SalesLine.Insert(true);
+                    // SalesLine."Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
+                    // SalesLine."Gen. Prod. Posting Group" := Item."Gen. Prod. Posting Group";
+                    // SalesLine.Modify();
                     Importadas += 1;
-                    CrearMovProyectoFacturaVenta(SalesHeader, SalesLine);
+                    //CrearJobPlaningLineVta(SalesHeader, SalesLine);
                 end; // CIFCliente <> ''
             end; // RowNo > 1
 

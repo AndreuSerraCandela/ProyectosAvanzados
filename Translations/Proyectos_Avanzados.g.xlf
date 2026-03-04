@@ -5438,6 +5438,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension SalesHeaderMyb - Field Cod. Oferta de Proyecto - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 3240715643 - Field 130796494 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1192395785">
+          <source>Importar desde excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension SalesHeaderMyb - Field Importar desde excel - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 3240715643 - Field 978309330 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1192395785">
           <source>No.Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
