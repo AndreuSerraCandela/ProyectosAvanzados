@@ -124,7 +124,7 @@ tableextension 50300 "LineasPlanificacion" extends "Job Planning Line"//1003
         {
             Caption = 'Importe Factura.';
             FieldClass = FlowField;
-            CalcFormula = sum("Proyecto Movimiento Pago"."Amount" where("Job Planning Line No." = field("Line No."), "Job Task No." = field("Job Task No."), "Job No." = field("Job No.")));
+            CalcFormula = sum("Purch. Inv. Line"."Amount Including VAT" where("Job Planning Line No." = field("Line No."), "Job Task No." = field("Job Task No."), "Job No." = field("Job No.")));
             Editable = false;
             DecimalPlaces = 2 : 2;
         }

@@ -1,31 +1,17 @@
 /// <summary>
-/// TableExtension JobLedgerEntryExt (ID 50116) extends Record Job Ledger Entry//169.
+/// TableExtension JobJournalLineExt (ID 50117) extends Record Job Journal Line (210).
+/// Incluye los mismos campos que la extensión de Job Ledger Entry para uso en diario.
 /// </summary>
-tableextension 50322 "JobLedgerEntryExt" extends "Job Ledger Entry" //169
+tableextension 50323 "JobJournalLineExt" extends "Job Journal Line" //210
 {
     fields
     {
-        field(50017; Pendiente; Boolean)
-        {
-            Caption = 'Pendiente';
-            DataClassification = ToBeClassified;
-        }
-        field(50018; "Amount Paid"; Decimal)
-        {
-            Caption = 'Importe Pagado';
-            FieldClass = FlowField;
-            CalcFormula = sum("Proyecto Movimiento Pago"."Amount Paid" where("Job Entry No." = field("Entry No.")));
-            Editable = false;
-            DecimalPlaces = 2 : 2;
-        }
         field(50019; "Employee Entry No."; Integer)
         {
             Caption = 'Nº Movimiento Empleado';
             DataClassification = ToBeClassified;
             TableRelation = "Employee Ledger Entry"."Entry No.";
-            Editable = false;
         }
-        //CÓDIGO PRESUPUESTARIO
         field(50020; "Budget Code"; Code[100])
         {
             Caption = 'Código Presupuestario';
@@ -71,83 +57,42 @@ tableextension 50322 "JobLedgerEntryExt" extends "Job Ledger Entry" //169
             Caption = 'Estado';
             DataClassification = ToBeClassified;
         }
-        //NombreProveedor o Empleado
         field(50028; "NombreProveedor o Empleado"; Text[100])
         {
             Caption = 'Nombre Proveedor o Empleado';
             DataClassification = ToBeClassified;
         }
-        //FacturadoContra
         field(50029; "Facturado Contra"; Text[100])
         {
             Caption = 'Facturado Contra';
             DataClassification = ToBeClassified;
         }
-        //FIC
         field(50030; "FIC"; Text[100])
         {
             Caption = 'FIC';
             DataClassification = ToBeClassified;
         }
-        //RegistroPresupuestario
         field(50031; "RegistroPresupuestario"; Text[100])
         {
             Caption = 'Registro Presupuestario';
             DataClassification = ToBeClassified;
         }
-        // field(50028; "Numero Factura"; Code[50])
-        // {
-        //     Caption = 'Número Factura';
-        //     DataClassification = ToBeClassified;
-        // }
-        // field(50029; "Fecha Factura"; Date)
-        // {
-        //     Caption = 'Fecha Factura';
-        //     DataClassification = ToBeClassified;
-        // }
         field(50032; "Fecha Pago"; Date)
         {
             Caption = 'Fecha Pago';
             DataClassification = ToBeClassified;
         }
-        //Clasificación Gasto
         field(50033; "Clasificación Gasto"; Text[100])
         {
             Caption = 'Clasificación Gasto';
             DataClassification = ToBeClassified;
         }
-        field(50034; "Base Amount Paid"; Decimal)
-        {
-            Caption = 'Importe Base Pagado';
-            FieldClass = FlowField;
-            CalcFormula = sum("Proyecto Movimiento Pago"."Base Amount Paid" where("Job Entry No." = field("Entry No.")));
-            Editable = false;
-            DecimalPlaces = 2 : 2;
-        }
-        //Document Line No.
-        field(50035; "Document Line No."; Integer)
+        field(50037; "Document Line No."; Integer)
         {
             Caption = 'Nº Línea Documento';
             DataClassification = ToBeClassified;
         }
-        field(50036; "Document to Liquidate"; Code[20])
-        {
-            Caption = 'Documento a liquidar';
-            DataClassification = ToBeClassified;
-            TableRelation = "Purchase Header"."No.";
-            Editable = false;
-        }
-        field(50037; "Amount Pending"; Decimal)
-        {
-            Caption = 'Importe Pendiente';
-            Editable = false;
-            DecimalPlaces = 2 : 2;
-        }
-        field(50038; "Base Amount Pending"; Decimal)
-        {
-            Caption = 'Importe Base Pendiente';
-            Editable = false;
-            DecimalPlaces = 2 : 2;
-        }
+
+
     }
 }

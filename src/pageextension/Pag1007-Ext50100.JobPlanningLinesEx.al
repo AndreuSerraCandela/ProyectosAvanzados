@@ -312,7 +312,8 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
 
     local procedure CalculaBrutoFactura(): Decimal
     var
-        Pago: Record "Proyecto Movimiento Pago";
+        Pago: Record "Purch. Inv. Line";
+        Abono: Record "Purch. Cr. Memo Line";
         Importe: Decimal;
     begin
         Pago.SetRange("Job No.", Rec."Job No.");
@@ -321,8 +322,15 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
         Pago.SetRange("Job Planning Line No.", Rec."Line No.");
         if Pago.FindFirst() then
             repeat
-                Importe += Pago.Amount;
+                Importe += Pago."Amount Including VAT";
             until Pago.Next() = 0;
+        Abono.SetRange("Document No.", Rec."Nº documento Compra");
+        Abono.SetRange("Job Task No.", Rec."Job Task No.");
+        Abono.SetRange("Job Planning Line No.", Rec."Line No.");
+        if Abono.FindFirst() then
+            repeat
+                Importe -= Abono."Amount Including VAT";
+            until Abono.Next() = 0;
         exit(Importe);
 
     end;

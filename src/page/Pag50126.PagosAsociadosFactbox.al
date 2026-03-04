@@ -29,12 +29,12 @@ page 50126 "Pagos Asociados Factbox"
                     ToolTip = 'Especifica el número de documento registrado';
                     Visible = false;
                 }
-                field("Amount"; Rec."Amount")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Especifica el importe asignado al proyecto';
-                    Style = Strong;
-                }
+                // field("Amount"; Rec."Amount")
+                // {
+                //     ApplicationArea = All;
+                //     ToolTip = 'Especifica el importe asignado al proyecto';
+                //     Style = Strong;
+                // }
                 field("Amount Paid"; Rec."Amount Paid")
                 {
                     ApplicationArea = All;
@@ -42,27 +42,27 @@ page 50126 "Pagos Asociados Factbox"
                     Style = Favorable;
                     StyleExpr = ShowFavorableStyle;
                 }
-                field("Amount Pending"; Rec."Amount Pending")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Especifica el importe pendiente';
-                    Style = Unfavorable;
-                    StyleExpr = ShowUnfavorableStyle;
-                }
+                // field("Amount Pending"; Rec."Amount Pending")
+                // {
+                //     ApplicationArea = All;
+                //     ToolTip = 'Especifica el importe pendiente';
+                //     Style = Unfavorable;
+                //     StyleExpr = ShowUnfavorableStyle;
+                // }
                 field("Percentage"; Rec."Percentage")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Especifica el porcentaje asignado';
                     Visible = false;
                 }
-                field(PercentagePaid; GetPercentagePaid())
-                {
-                    ApplicationArea = All;
-                    Caption = '% Pagado';
-                    ToolTip = 'Especifica el porcentaje pagado';
-                    DecimalPlaces = 1 : 1;
-                    Style = Strong;
-                }
+                // field(PercentagePaid; GetPercentagePaid())
+                // {
+                //     ApplicationArea = All;
+                //     Caption = '% Pagado';
+                //     ToolTip = 'Especifica el porcentaje pagado';
+                //     DecimalPlaces = 1 : 1;
+                //     Style = Strong;
+                // }
                 field("Last Payment Date"; Rec."Last Payment Date")
                 {
                     ApplicationArea = All;
@@ -117,10 +117,10 @@ page 50126 "Pagos Asociados Factbox"
         }
     }
 
-    trigger OnAfterGetRecord()
-    begin
-        UpdateStyleExpressions();
-    end;
+    // trigger OnAfterGetRecord()
+    // begin
+    //     UpdateStyleExpressions();
+    // end;
 
     var
         JobNoFilter: Code[20];
@@ -134,18 +134,18 @@ page 50126 "Pagos Asociados Factbox"
         Rec.SetRange("Job No.", JobNo);
     end;
 
-    local procedure GetPercentagePaid(): Decimal
-    begin
-        if Rec."Amount" = 0 then
-            exit(0);
+    // local procedure GetPercentagePaid(): Decimal
+    // begin
+    //     if Rec."Amount" = 0 then
+    //         exit(0);
 
-        exit(Round((Rec."Amount Paid" / Rec."Amount") * 100, 0.1));
-    end;
+    //     exit(Round((Rec."Amount Paid" / Rec."Amount") * 100, 0.1));
+    // end;
 
-    local procedure UpdateStyleExpressions()
-    begin
-        ShowFavorableStyle := (Rec."Amount Paid" > 0) and (Rec."Amount Pending" > 0);
-        ShowUnfavorableStyle := Rec."Amount Pending" > 0;
-        ShowStrongStyle := Rec."Amount Pending" = 0; // Pagado completamente
-    end;
+    // local procedure UpdateStyleExpressions()
+    // begin
+    //     ShowFavorableStyle := (Rec."Amount Paid" > 0) and (Rec."Amount Pending" > 0);
+    //     ShowUnfavorableStyle := Rec."Amount Pending" > 0;
+    //     ShowStrongStyle := Rec."Amount Pending" = 0; // Pagado completamente
+    // end;
 }

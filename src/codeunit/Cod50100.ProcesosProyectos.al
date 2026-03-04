@@ -64,7 +64,7 @@ codeunit 50301 "ProcesosProyectos"
     procedure ImportarPagaresDocumentToLiquidate()
     var
         TempExcelBuffer: Record "Excel Buffer" temporary;
-        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
+        JobLedgerEntry: Record "Job Ledger Entry";
         JobNo: Code[20];
         JobTaskNo: Code[20];
         DocumentToLiquidate: Code[20];
@@ -111,14 +111,14 @@ codeunit 50301 "ProcesosProyectos"
                 until TempExcelBuffer.Next() = 0;
 
             if (JobNo <> '') and (JobTaskNo <> '') and (DocumentToLiquidate <> '') then begin
-                ProyectoMovimientoPago.SetRange("Job No.", JobNo);
-                ProyectoMovimientoPago.SetRange("Job Task No.", JobTaskNo);
-                if ProyectoMovimientoPago.FindSet() then
+                JobLedgerEntry.SetRange("Job No.", JobNo);
+                JobLedgerEntry.SetRange("Job Task No.", JobTaskNo);
+                if JobLedgerEntry.FindSet() then
                     repeat
-                        ProyectoMovimientoPago."Document to Liquidate" := DocumentToLiquidate;
-                        ProyectoMovimientoPago.Modify();
+                        JobLedgerEntry."Document to Liquidate" := DocumentToLiquidate;
+                        JobLedgerEntry.Modify();
                         RegistrosActualizados += 1;
-                    until ProyectoMovimientoPago.Next() = 0;
+                    until JobLedgerEntry.Next() = 0;
                 FilasProcesadas += 1;
             end;
 
@@ -241,107 +241,107 @@ codeunit 50301 "ProcesosProyectos"
     //         JobPlaningLine.Modify();
     //     end;
     // end;
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", OnAfterPostPurchaseDoc, '', false, false)]
-    procedure OnAfterPostPurchaseDoc(var PurchaseHeader: Record "Purchase Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; PurchRcpHdrNo: Code[20]; RetShptHdrNo: Code[20]; PurchInvHdrNo: Code[20]; PurchCrMemoHdrNo: Code[20]; CommitIsSupressed: Boolean)
-    var
-        ItemLedgerEntry: Record "Item Ledger Entry";
-        PurchaseInvLine: Record "Purch. Inv. Line";
-        PurchaseCrMemoLine: Record "Purch. Cr. Memo Line";
-        PurchaseInvHeader: Record "Purch. Inv. Header";
-        JobLedgerEntry: Record "Job Ledger Entry";
-        MovRetencion: Record "Payments Retention Ledger Ent.";
-    begin
-        if (PurchInvHdrNo = '') and (PurchCrMemoHdrNo = '') then
-            exit;
-        ItemLedgerEntry.SetRange("Document No.", PurchInvHdrNo);
-        if not ItemLedgerEntry.FindFirst() then
-            ItemLedgerEntry.SetRange("Document No.", PurchCrMemoHdrNo);
-        if ItemLedgerEntry.FindFirst() then begin
-            repeat
-                JobLedgerEntry.SetRange("Ledger Entry Type", JobLedgerEntry."Ledger Entry Type"::Item);
-                JobLedgerEntry.SetRange("Ledger Entry No.", ItemLedgerEntry."Entry No.");
-                if JobLedgerEntry.FindFirst() then begin
+    // [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", OnAfterPostPurchaseDoc, '', false, false)]
+    // procedure OnAfterPostPurchaseDoc(var PurchaseHeader: Record "Purchase Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; PurchRcpHdrNo: Code[20]; RetShptHdrNo: Code[20]; PurchInvHdrNo: Code[20]; PurchCrMemoHdrNo: Code[20]; CommitIsSupressed: Boolean)
+    // var
+    //     ItemLedgerEntry: Record "Item Ledger Entry";
+    //     PurchaseInvLine: Record "Purch. Inv. Line";
+    //     PurchaseCrMemoLine: Record "Purch. Cr. Memo Line";
+    //     PurchaseInvHeader: Record "Purch. Inv. Header";
+    //     JobLedgerEntry: Record "Job Ledger Entry";
+    //     MovRetencion: Record "Payments Retention Ledger Ent.";
+    // begin
+    //     if (PurchInvHdrNo = '') and (PurchCrMemoHdrNo = '') then
+    //         exit;
+    //     ItemLedgerEntry.SetRange("Document No.", PurchInvHdrNo);
+    //     if not ItemLedgerEntry.FindFirst() then
+    //         ItemLedgerEntry.SetRange("Document No.", PurchCrMemoHdrNo);
+    //     if ItemLedgerEntry.FindFirst() then begin
+    //         repeat
+    //             JobLedgerEntry.SetRange("Ledger Entry Type", JobLedgerEntry."Ledger Entry Type"::Item);
+    //             JobLedgerEntry.SetRange("Ledger Entry No.", ItemLedgerEntry."Entry No.");
+    //             if JobLedgerEntry.FindFirst() then begin
 
-                    if PurchaseInvLine.Get(JobLedgerEntry."Document No.", ItemLedgerEntry."Document Line No.") then begin
-                        JobLedgerEntry."Neto Factura" := PurchaseInvLine.Amount;
-                        JobLedgerEntry."Bruto Factura" := PurchaseInvline."Amount Including VAT";
-                        JobLedgerEntry."IGIC O IVA" := PurchaseInvline."Amount Including VAT" - PurchaseInvLine.Amount;
-                        JobLedgerEntry.IRPF := PurchaseInvline."Retention Amount (IRPF)";
-                        if JobLedgerEntry."Entry No." <> 0 Then
-                            JobLedgerEntry.Modify(false);
-                    end;
-                end else begin
-                    if PurchaseCrMemoLine.Get(JobLedgerEntry."Document No.", ItemLedgerEntry."Document Line No.") then begin
-                        JobLedgerEntry."Neto Factura" := -PurchaseCrMemoLine.Amount;
-                        JobLedgerEntry."Bruto Factura" := -PurchaseCrMemoLine."Amount Including VAT";
-                        JobLedgerEntry."IGIC O IVA" := -PurchaseCrMemoLine."Amount Including VAT" - PurchaseCrMemoLine.Amount;
-                        JobLedgerEntry.IRPF := -PurchaseCrMemoLine."Retention Amount (IRPF)";
-                        if JobLedgerEntry."Entry No." <> 0 Then
-                            JobLedgerEntry.Modify(false);
-                    end;
-                end;
-            until ItemLedgerEntry.Next() = 0;
-            exit;
-        end;
-        JobLedgerEntry.SetRange("Document No.", PurchInvHdrNo);
-        if JobLedgerEntry.FindFirst() then begin
-            if JobLedgerEntry."Neto Factura" <> 0 Then exit;
-            if PurchaseInvHeader.Get(JobLedgerEntry."Document No.") then begin
-                PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT");
-                JobLedgerEntry."Neto Factura" := PurchaseInvHeader.Amount;
-                JobLedgerEntry."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
-                JobLedgerEntry."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
-                MovRetencion.SetRange("Document Type", MovRetencion."Document Type"::Invoice);
-                MovRetencion.SetRange("Document No.", PurchInvHdrNo);
-                if MovRetencion.FindFirst() then begin
-                    JobLedgerEntry."IRPF" := MovRetencion.Amount;
-                end else begin
-                    JobLedgerEntry."IRPF" := 0;
-                end;
-                if JobLedgerEntry."Entry No." <> 0 Then
-                    JobLedgerEntry.Modify(false);
+    //                 if PurchaseInvLine.Get(JobLedgerEntry."Document No.", ItemLedgerEntry."Document Line No.") then begin
+    //                     JobLedgerEntry."Neto Factura" := PurchaseInvLine.Amount;
+    //                     JobLedgerEntry."Bruto Factura" := PurchaseInvline."Amount Including VAT";
+    //                     JobLedgerEntry."IGIC O IVA" := PurchaseInvline."Amount Including VAT" - PurchaseInvLine.Amount;
+    //                     JobLedgerEntry.IRPF := PurchaseInvline."Retention Amount (IRPF)";
+    //                     if JobLedgerEntry."Entry No." <> 0 Then
+    //                         JobLedgerEntry.Modify(false);
+    //                 end;
+    //             end else begin
+    //                 if PurchaseCrMemoLine.Get(JobLedgerEntry."Document No.", ItemLedgerEntry."Document Line No.") then begin
+    //                     JobLedgerEntry."Neto Factura" := -PurchaseCrMemoLine.Amount;
+    //                     JobLedgerEntry."Bruto Factura" := -PurchaseCrMemoLine."Amount Including VAT";
+    //                     JobLedgerEntry."IGIC O IVA" := -PurchaseCrMemoLine."Amount Including VAT" - PurchaseCrMemoLine.Amount;
+    //                     JobLedgerEntry.IRPF := -PurchaseCrMemoLine."Retention Amount (IRPF)";
+    //                     if JobLedgerEntry."Entry No." <> 0 Then
+    //                         JobLedgerEntry.Modify(false);
+    //                 end;
+    //             end;
+    //         until ItemLedgerEntry.Next() = 0;
+    //         exit;
+    //     end;
+    //     JobLedgerEntry.SetRange("Document No.", PurchInvHdrNo);
+    //     if JobLedgerEntry.FindFirst() then begin
+    //         if JobLedgerEntry."Neto Factura" <> 0 Then exit;
+    //         if PurchaseInvHeader.Get(JobLedgerEntry."Document No.") then begin
+    //             PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT");
+    //             JobLedgerEntry."Neto Factura" := PurchaseInvHeader.Amount;
+    //             JobLedgerEntry."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
+    //             JobLedgerEntry."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
+    //             MovRetencion.SetRange("Document Type", MovRetencion."Document Type"::Invoice);
+    //             MovRetencion.SetRange("Document No.", PurchInvHdrNo);
+    //             if MovRetencion.FindFirst() then begin
+    //                 JobLedgerEntry."IRPF" := MovRetencion.Amount;
+    //             end else begin
+    //                 JobLedgerEntry."IRPF" := 0;
+    //             end;
+    //             if JobLedgerEntry."Entry No." <> 0 Then
+    //                 JobLedgerEntry.Modify(false);
 
-            end else begin
-                JobLedgerEntry."Neto Factura" := JobLedgerEntry."Total Cost";
-                JobLedgerEntry."Bruto Factura" := JobLedgerEntry."Total Cost (LCY)";
-                JobLedgerEntry."IGIC O IVA" := 0;
-                JobLedgerEntry."Importe IGIC O IVA" := 0;
-                JobLedgerEntry."IRPF" := 0;
-                if JobLedgerEntry."Entry No." <> 0 Then
-                    JobLedgerEntry.Modify(false);
+    //         end else begin
+    //             JobLedgerEntry."Neto Factura" := JobLedgerEntry."Total Cost";
+    //             JobLedgerEntry."Bruto Factura" := JobLedgerEntry."Total Cost (LCY)";
+    //             JobLedgerEntry."IGIC O IVA" := 0;
+    //             JobLedgerEntry."Importe IGIC O IVA" := 0;
+    //             JobLedgerEntry."IRPF" := 0;
+    //             if JobLedgerEntry."Entry No." <> 0 Then
+    //                 JobLedgerEntry.Modify(false);
 
-            end;
-        end;
-    end;
+    //         end;
+    //     end;
+    // end;
 
 
 
     //evento pn insert Job Ledger Entry
-    [EventSubscriber(ObjectType::Table, Database::"Job Ledger Entry", OnBeforeInsertEvent, '', false, false)]
-    local procedure OnBeforeInsertEvent(var Rec: Record "Job Ledger Entry"; RunTrigger: Boolean)
-    var
-        PurchaseInvHeader: Record "Purch. Inv. Header";
-    begin
-        if Rec.IsTemporary then
-            exit;
-        if Rec."Neto Factura" <> 0 Then exit;
-        if PurchaseInvHeader.Get(Rec."Document No.") then begin
-            PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT");
-            Rec."Neto Factura" := PurchaseInvHeader.Amount;
-            Rec."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
-            Rec."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
-            Rec."IRPF" := 0;
+    // [EventSubscriber(ObjectType::Table, Database::"Job Ledger Entry", OnBeforeInsertEvent, '', false, false)]
+    // local procedure OnBeforeInsertEvent(var Rec: Record "Job Ledger Entry"; RunTrigger: Boolean)
+    // var
+    //     PurchaseInvHeader: Record "Purch. Inv. Header";
+    // begin
+    //     if Rec.IsTemporary then
+    //         exit;
+    //     if Rec."Neto Factura" <> 0 Then exit;
+    //     if PurchaseInvHeader.Get(Rec."Document No.") then begin
+    //         PurchaseInvHeader.CalcFields(Amount, "Amount Including VAT");
+    //         Rec."Neto Factura" := PurchaseInvHeader.Amount;
+    //         Rec."Bruto Factura" := PurchaseInvHeader."Amount Including VAT";
+    //         Rec."IGIC O IVA" := PurchaseInvHeader."Amount Including VAT" - PurchaseInvHeader.Amount;
+    //         Rec."IRPF" := 0;
 
-        end else begin
-            Rec."Neto Factura" := Rec."Total Cost";
-            Rec."Bruto Factura" := Rec."Total Cost (LCY)";
-            // IVA/IRPF: de momento 0; rellenar desde fuente (ej. extensión Job Journal Line) si se necesita
-            Rec."IGIC O IVA" := 0;
-            Rec."Importe IGIC O IVA" := 0;
-            Rec."IRPF" := 0;
+    //     end else begin
+    //         Rec."Neto Factura" := Rec."Total Cost";
+    //         Rec."Bruto Factura" := Rec."Total Cost (LCY)";
+    //         // IVA/IRPF: de momento 0; rellenar desde fuente (ej. extensión Job Journal Line) si se necesita
+    //         Rec."IGIC O IVA" := 0;
+    //         Rec."Importe IGIC O IVA" := 0;
+    //         Rec."IRPF" := 0;
 
-        end;
-    end;
+    //     end;
+    // end;
 
     [EventSubscriber(ObjectType::Table, Database::"Job Planning Line", OnBeforeCheckQuantityPosted, '', false, false)]
     local procedure OnBeforeCheckQuantityPosted(var JobPlanningLine: Record "Job Planning Line"; xJobPlanningLine: Record "Job Planning Line"; var IsHandled: Boolean)
@@ -2396,7 +2396,7 @@ codeunit 50301 "ProcesosProyectos"
 
                             //end;
 
-                            if (ImportedEntriesPagado <> 0) Or (BrutoFactura <> 0) then begin
+                            if (ImportedEntriesPagado <> 0) then begin
                                 ProyectoMovimientoPago.SetRange("Job No.", JobNo);
                                 ProyectoMovimientoPago.SetRange("Document No.", CopyStr(NumeroFactura, 1, MaxStrLen(ProyectoMovimientoPago."Document No.")));
                                 ProyectoMovimientoPago.SetRange("Job Task No.", JobTaskNo);
@@ -2416,32 +2416,18 @@ codeunit 50301 "ProcesosProyectos"
                                     ProyectoMovimientoPago."Vendor No." := Employee."No.";
                                 ProyectoMovimientoPago."Document Type" := ProyectoMovimientoPago."Document Type"::" ";
                                 ProyectoMovimientoPago."Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(ProyectoMovimientoPago."Document No."));
+                                ProyectoMovimientoPago."Job Entry No." := JobLedgerEntry."Entry No.";
                                 ProyectoMovimientoPago."Line No." := 0;
-                                if LineNo = 10000 Then ProyectoMovimientoPago.Validate(Amount, BrutoFactura);
                                 ProyectoMovimientoPago."Job No." := JobNo;
                                 ProyectoMovimientoPago."Job Task No." := JobTaskNo;
-                                ProyectoMovimientoPago.Amount := BrutoFactura;
-                                ProyectoMovimientoPago."Base Amount" := NetoFactura;
-                                if BrutoFactura <> 0 Then
+                                ProyectoMovimientoPago.Validate("Amount Paid", ImportedEntriesPagado);
+                                if ProyectoMovimientoPago."Amount Paid" = BrutoFactura Then begin
+                                    ProyectoMovimientoPago."Base Amount Paid" := NetoFactura;
+                                end else
+                                    //calcular en base al % del pruto sobre el importe pagado
                                     ProyectoMovimientoPago."Base Amount Paid" := ImportedEntriesPagado * NetoFactura / BrutoFactura;
 
-                                ProyectoMovimientoPago.Validate("Amount Paid", ImportedEntriesPagado);
-                                ProyectoMovimientoPago."Base Amount Pending" := ProyectoMovimientoPago."Base Amount" - ProyectoMovimientoPago."Base Amount Paid";
-                                ProyectoMovimientoPago."Amount Pending" := ProyectoMovimientoPago."Amount" - ProyectoMovimientoPago."Amount Paid";
-                                if ProyectoMovimientoPago."Amount Pending" = 0 Then begin
-                                    ProyectoMovimientoPago."Base Amount Paid" := ProyectoMovimientoPago."Base Amount";
-                                    ProyectoMovimientoPago."Base Amount Pending" := 0;
-                                end;
-
                                 ProyectoMovimientoPago."Job Planning Line No." := JobPlanningLine."Line No.";
-                                if ProyectoMovimientoPago."Base Amount Paid" > ProyectoMovimientoPago."Base Amount" then begin
-                                    ProyectoMovimientoPago."Base Amount Paid" := ProyectoMovimientoPago."Base Amount";
-                                    ProyectoMovimientoPago."Base Amount Pending" := 0;
-                                end;
-                                if ProyectoMovimientoPago."Amount Paid" > ProyectoMovimientoPago."Amount" then begin
-                                    ProyectoMovimientoPago."Amount Paid" := ProyectoMovimientoPago."Amount";
-                                    ProyectoMovimientoPago."Amount Pending" := 0;
-                                end;
                                 repeat
                                     ProyectoMovimientoPago."Line No." := LineNo;
                                     LineNo += 10000;
@@ -2498,6 +2484,8 @@ codeunit 50301 "ProcesosProyectos"
                             // Campos personalizados
                             JobLedgerEntry."Budget Code" := BudgetCode;
                             JobLedgerEntry."Neto Factura" := NetoFactura;
+                            JobLedgerEntry."Base Amount Pending" := NetoFactura;
+                            JobLedgerEntry."Amount Pending" := BrutoFactura;
                             JobLedgerEntry."IGIC O IVA" := IGICOIVA;
                             JobLedgerEntry."Importe IGIC O IVA" := ImporteIGICOIVA;
                             JobLedgerEntry."IRPF" := IRPF;
@@ -4533,10 +4521,14 @@ Fila: Integer)
         for i := 1 to 8 do
             if Dimensiones[i] <> '' then begin
                 case i of
-                    1: DimCode := GlSetup."Global Dimension 1 Code";
-                    2: DimCode := GlSetup."Global Dimension 2 Code";
-                    3: DimCode := GlSetup."Shortcut Dimension 3 Code";
-                    4: DimCode := GlSetup."Shortcut Dimension 4 Code";
+                    1:
+                        DimCode := GlSetup."Global Dimension 1 Code";
+                    2:
+                        DimCode := GlSetup."Global Dimension 2 Code";
+                    3:
+                        DimCode := GlSetup."Shortcut Dimension 3 Code";
+                    4:
+                        DimCode := GlSetup."Shortcut Dimension 4 Code";
                     else
                         DimCode := '';
                 end;

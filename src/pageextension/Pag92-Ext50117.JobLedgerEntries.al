@@ -7,12 +7,7 @@ pageextension 50323 "JobLedgerEntriesExt" extends "Job Ledger Entries"
     {
         addafter("Job Task No.")
         {
-            field("Amount Paid"; Rec."Amount Paid")
-            {
-                ApplicationArea = All;
-                Caption = 'Importe Pagado';
-                ToolTip = 'Especifica el importe total pagado para esta entrada del mayor de proyectos.';
-            }
+
             field("Employee Entry No."; Rec."Employee Entry No.")
             {
                 ApplicationArea = All;
@@ -77,6 +72,18 @@ pageextension 50323 "JobLedgerEntriesExt" extends "Job Ledger Entries"
                 Caption = 'Neto Factura';
                 ToolTip = 'Especifica el importe neto de la factura.';
             }
+            field("Base Amount Paid"; Rec."Base Amount Paid")
+            {
+                ApplicationArea = All;
+                Caption = 'Importe Base Pagado';
+                ToolTip = 'Especifica el importe base pagado para esta entrada del mayor de proyectos.';
+            }
+            field("Base Amount Pending"; Rec."Base Amount Pending")
+            {
+                ApplicationArea = All;
+                Caption = 'Importe Base Pendiente';
+                ToolTip = 'Especifica el importe base pendiente de pago para esta entrada del mayor de proyectos.';
+            }
             field("IGIC O IVA"; Rec."IGIC O IVA")
             {
                 ApplicationArea = All;
@@ -101,6 +108,18 @@ pageextension 50323 "JobLedgerEntriesExt" extends "Job Ledger Entries"
                 Caption = 'Bruto Factura';
                 ToolTip = 'Especifica el importe bruto de la factura.';
             }
+            field("Amount Paid"; Rec."Amount Paid")
+            {
+                ApplicationArea = All;
+                Caption = 'Importe Pagado';
+                ToolTip = 'Especifica el importe total pagado para esta entrada del mayor de proyectos.';
+            }
+            field("Amount Pending"; Rec."Amount Pending")
+            {
+                ApplicationArea = All;
+                Caption = 'Importe Pendiente';
+                ToolTip = 'Especifica el importe pendiente de pago para esta entrada del mayor de proyectos.';
+            }
             field(Pendiente; Rec.Pendiente)
             {
                 ApplicationArea = All;
@@ -121,10 +140,45 @@ pageextension 50323 "JobLedgerEntriesExt" extends "Job Ledger Entries"
                 trigger OnAction()
                 var
                     Eventosproyectos: Codeunit "Eventos-proyectos";
+                    JobLedgerEntry: Record "Job Ledger Entry";
                 begin
-                    Eventosproyectos.DatosFactura(Rec);
+                    CurrPage.SetSelectionFilter(JobLedgerEntry);
+                    Eventosproyectos.DatosFactura(JobLedgerEntry);
                 end;
 
+            }
+            action("Marcar para liquidar")
+            {
+                ApplicationArea = All;
+                Caption = 'Marcar para liquidar';
+                Image = ApplyEntries;
+                ToolTip = 'Marca el documento para liquidar';
+                trigger OnAction()
+                var
+                    Eventosproyectos: Codeunit "Eventos-proyectos";
+                    JobLedgerEntry: Record "Job Ledger Entry";
+                begin
+                    CurrPage.SetSelectionFilter(JobLedgerEntry);
+                    Eventosproyectos.MarkForLiquidation(JobLedgerEntry);
+                    CurrPage.Update(false);
+                end;
+
+            }
+            action("Desmarcar para liquidar")
+            {
+                ApplicationArea = All;
+                Caption = 'Desmarcar para liquidar';
+                Image = Cancel;
+                ToolTip = 'Desmarca el documento para liquidar';
+                trigger OnAction()
+                var
+                    Eventosproyectos: Codeunit "Eventos-proyectos";
+                    JobLedgerEntry: Record "Job Ledger Entry";
+                begin
+                    CurrPage.SetSelectionFilter(JobLedgerEntry);
+                    Eventosproyectos.UnmarkForLiquidation(JobLedgerEntry);
+                    CurrPage.Update(false);
+                end;
             }
         }
     }
