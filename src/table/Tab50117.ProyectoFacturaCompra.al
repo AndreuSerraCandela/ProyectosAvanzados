@@ -54,16 +54,12 @@ table 50117 "Proyecto Movimiento Pago"
             MinValue = 0;
             MaxValue = 100;
 
-            trigger OnValidate()
-            begin
-                if "Percentage" <> 0 then
-                    "Amount" := 0
-                else
-                    ValidateAmount();
-            end;
+
         }
         field(7; "Amount"; Decimal)
         {
+            ObsoleteState = Removed;
+            ObsoleteReason = 'Se ha reemplazado por la tabla  "Movimiento Proyecto"';
             Caption = 'Importe';
             DataClassification = ToBeClassified;
             AutoFormatType = 1;
@@ -71,13 +67,6 @@ table 50117 "Proyecto Movimiento Pago"
             DecimalPlaces = 2 : 5;
             MinValue = 0;
 
-            trigger OnValidate()
-            begin
-                if "Amount" <> 0 then
-                    "Percentage" := 0
-                else
-                    ValidatePercentage();
-            end;
         }
         field(8; "Amount Paid"; Decimal)
         {
@@ -90,6 +79,8 @@ table 50117 "Proyecto Movimiento Pago"
         }
         field(9; "Amount Pending"; Decimal)
         {
+            ObsoleteState = Removed;
+            ObsoleteReason = 'Se ha reemplazado por la tabla  "Movimiento Proyecto"';
             Caption = 'Importe Pendiente';
             DataClassification = ToBeClassified;
             AutoFormatType = 1;
@@ -125,6 +116,8 @@ table 50117 "Proyecto Movimiento Pago"
         //documento a liquidar
         field(15; "Document to Liquidate"; Code[20])
         {
+            ObsoleteState = Removed;
+            ObsoleteReason = 'Se ha reemplazado por la tabla  "Movimiento Proyecto"';
             Caption = 'Documento a liquidar';
             DataClassification = ToBeClassified;
             TableRelation = "Purchase Header"."No.";
@@ -132,6 +125,9 @@ table 50117 "Proyecto Movimiento Pago"
         }
         field(16; "Base Amount"; Decimal)
         {
+            ObsoleteState = Removed;
+            ObsoleteReason = 'Se ha reemplazado por la tabla  "Movimiento Proyecto"';
+
             Caption = 'Importe Base';
             DataClassification = ToBeClassified;
             AutoFormatType = 1;
@@ -151,11 +147,22 @@ table 50117 "Proyecto Movimiento Pago"
         //Base amount pending
         field(18; "Base Amount Pending"; Decimal)
         {
+            ObsoleteState = Removed;
+            ObsoleteReason = 'Se ha reemplazado por la tabla  "Movimiento Proyecto"';
+
             Caption = 'Importe Base Pendiente';
             DataClassification = ToBeClassified;
             AutoFormatType = 1;
             AutoFormatExpression = GetCurrencyCode();
             DecimalPlaces = 2 : 5;
+            Editable = false;
+        }
+        //Job Entry No.
+        field(19; "Job Entry No."; Integer)
+        {
+            Caption = 'Nº Movimiento Proyecto';
+            DataClassification = ToBeClassified;
+            TableRelation = "Job Ledger Entry"."Entry No.";
             Editable = false;
         }
     }
@@ -164,7 +171,7 @@ table 50117 "Proyecto Movimiento Pago"
     {
         key(Key1; "Document Type", "Document No.", "Line No.", "Job No.", "Job Planning Line No.", "Entry No.")
         {
-            SumIndexFields = Amount, "Base Amount", "Amount Paid", "Amount Pending", "Base Amount Paid";
+            SumIndexFields = "Amount Paid", "Base Amount Paid";
             Clustered = true;
         }
         key(Key2; "Job No.", "Job Planning Line No.", "Document No.", "Line No.")
@@ -172,24 +179,24 @@ table 50117 "Proyecto Movimiento Pago"
         }
         key(Key3; "Posted Document No.", "Line No.", "Job No.", "Job Planning Line No.")
         {
-            SumIndexFields = Amount, "Base Amount", "Amount Paid", "Amount Pending", "Base Amount Paid";
+            SumIndexFields = "Amount Paid", "Base Amount Paid";
         }
         key(Key6; "Posted Document No.", "Vendor No.")
         {
-            SumIndexFields = Amount, "Base Amount", "Amount Paid", "Amount Pending", "Base Amount Paid";
+            SumIndexFields = "Amount Paid", "Base Amount Paid";
         }
         key(Key4; "Vendor No.", "Document No.")
         {
-            SumIndexFields = Amount, "Base Amount", "Amount Paid", "Amount Pending", "Base Amount Paid";
+            SumIndexFields = "Amount Paid", "Base Amount Paid";
         }
         key(Key5; "Job Planning Line No.", "Job No.")
         {
         }
-        //Documento To liquidate
-        key(Key7; "Document to Liquidate", "Vendor No.")
+        key(Key7; "Job Entry No.")
         {
-            SumIndexFields = Amount, "Base Amount", "Amount Paid", "Amount Pending", "Base Amount Paid";
+            SumIndexFields = "Amount Paid", "Base Amount Paid";
         }
+
     }
 
     trigger OnInsert()
@@ -227,69 +234,7 @@ table 50117 "Proyecto Movimiento Pago"
             Error('El proyecto %1 debe estar en estado Abierto.', "Job No.");
     end;
 
-    local procedure ValidateAmount()
-    var
-        PurchaseLine: Record "Purchase Line";
-        LineAmount: Decimal;
-        TotalAssigned: Decimal;
-    begin
-        if not PurchaseLine.Get("Document Type", "Document No.", "Line No.") then
-            exit;
 
-        LineAmount := PurchaseLine."Line Amount";
-
-        // Calcular total ya asignado (excluyendo este registro)
-        TotalAssigned := GetTotalAssignedAmount("Document Type", "Document No.", "Line No.", "Job No.");
-
-        if "Amount" + TotalAssigned > LineAmount then
-            Error('El importe total asignado (%1) no puede exceder el importe de la línea (%2).', "Amount" + TotalAssigned, LineAmount);
-    end;
-
-    local procedure ValidatePercentage()
-    var
-        PurchaseLine: Record "Purchase Line";
-        LineAmount: Decimal;
-        TotalAssignedPct: Decimal;
-    begin
-        if not PurchaseLine.Get("Document Type", "Document No.", "Line No.") then
-            exit;
-
-        LineAmount := PurchaseLine."Line Amount" * (1 + PurchaseLine."VAT %" / 100);
-
-        // Calcular total ya asignado en porcentaje (excluyendo este registro)
-        TotalAssignedPct := GetTotalAssignedPercentage("Document Type", "Document No.", "Line No.", "Job No.");
-
-        if "Percentage" + TotalAssignedPct > 100 then
-            Error('El porcentaje total asignado (%1%%) no puede exceder el 100%%.', "Percentage" + TotalAssignedPct);
-    end;
-
-    procedure GetTotalAssignedAmount(DocType: Enum "Purchase Document Type"; DocNo: Code[20]; LineNo: Integer; ExcludeJobNo: Code[20]): Decimal
-    var
-        ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
-    begin
-        ProyectoFacturaCompra.Reset();
-        ProyectoFacturaCompra.SetRange("Document Type", DocType);
-        ProyectoFacturaCompra.SetRange("Document No.", DocNo);
-        ProyectoFacturaCompra.SetRange("Line No.", LineNo);
-        ProyectoFacturaCompra.SetFilter("Job No.", '<>%1', ExcludeJobNo);
-
-        ProyectoFacturaCompra.CalcSums("Amount");
-        exit(ProyectoFacturaCompra."Amount");
-    end;
-
-    procedure GetTotalAssignedPercentage(DocType: Enum "Purchase Document Type"; DocNo: Code[20]; LineNo: Integer; ExcludeJobNo: Code[20]): Decimal
-    var
-        ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
-    begin
-        ProyectoFacturaCompra.Reset();
-        ProyectoFacturaCompra.SetRange("Document Type", DocType);
-        ProyectoFacturaCompra.SetRange("Document No.", DocNo);
-        ProyectoFacturaCompra.SetRange("Line No.", LineNo);
-        ProyectoFacturaCompra.SetFilter("Job No.", '<>%1', ExcludeJobNo);
-
-        ProyectoFacturaCompra.CalcSums("Percentage");
-        exit(ProyectoFacturaCompra."Percentage");
-    end;
 
     local procedure GetCurrencyCode(): Code[10]
     var
@@ -391,30 +336,30 @@ table 50117 "Proyecto Movimiento Pago"
     /// Reconstruye Amount, Base Amount, importes pagados y pendientes desde la factura registrada.
     /// Si Base Amount Paid queda 0 y Amount Paid no, asigna Base Amount Paid := Amount Paid.
     /// </summary>
-    procedure RebuildPaymentAmounts()
-    var
-        PurchInvLine: Record "Purch. Inv. Line";
-    begin
-        if "Posted Document No." <> '' then begin
-            PurchInvLine.SetRange("Document No.", "Posted Document No.");
-            PurchInvLine.SetRange("Line No.", "Line No.");
-            PurchInvLine.CalcSums("Line Amount", "Amount Including VAT");
-            if PurchInvLine.FindFirst() then begin
-                If Amount = 0 then Amount := PurchInvLine."Amount Including VAT";
-                If "Base Amount" = 0 then "Base Amount" := PurchInvLine."Line Amount";
-            end;
-        end;
-        "Amount Pending" := "Amount" - "Amount Paid";
+    // procedure RebuildPaymentAmounts()
+    // var
+    //     PurchInvLine: Record "Purch. Inv. Line";
+    // begin
+    //     if "Posted Document No." <> '' then begin
+    //         PurchInvLine.SetRange("Document No.", "Posted Document No.");
+    //         PurchInvLine.SetRange("Line No.", "Line No.");
+    //         PurchInvLine.CalcSums("Line Amount", "Amount Including VAT");
+    //         if PurchInvLine.FindFirst() then begin
+    //             If Amount = 0 then Amount := PurchInvLine."Amount Including VAT";
+    //             If "Base Amount" = 0 then "Base Amount" := PurchInvLine."Line Amount";
+    //         end;
+    //     end;
+    //     "Amount Pending" := "Amount" - "Amount Paid";
 
-        if ("Base Amount Paid" = 0) and ("Amount Paid" <> 0) then begin
-            "Base Amount Paid" := "Base Amount" * "Amount Paid" / "Amount";
-            "Base Amount Pending" := "Base Amount" - "Base Amount Paid";
-            if "Amount Paid" = Amount Then begin
-                "Base Amount Paid" := "Base Amount";
-                "Base Amount Pending" := 0;
-                "Amount Pending" := 0;
-            end;
-            Modify(true);
-        end;
-    end;
+    //     if ("Base Amount Paid" = 0) and ("Amount Paid" <> 0) then begin
+    //         "Base Amount Paid" := "Base Amount" * "Amount Paid" / "Amount";
+    //         "Base Amount Pending" := "Base Amount" - "Base Amount Paid";
+    //         if "Amount Paid" = Amount Then begin
+    //             "Base Amount Paid" := "Base Amount";
+    //             "Base Amount Pending" := 0;
+    //             "Amount Pending" := 0;
+    //         end;
+    //         Modify(true);
+    //     end;
+    // end;
 }

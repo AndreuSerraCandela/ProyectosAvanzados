@@ -53,14 +53,14 @@ page 50125 "Pagos Proyecto"
                     ApplicationArea = All;
                     ToolTip = 'Especifica el número de línea de planificación del proyecto';
                 }
-                field("Amount"; Rec."Amount")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Importe Asignado al Proyecto';
-                    ToolTip = 'Especifica el importe de la factura asignado a este proyecto';
-                    Editable = false;
-                    Style = Strong;
-                }
+                // field("Amount"; Rec."Amount")
+                // {
+                //     ApplicationArea = All;
+                //     Caption = 'Importe Asignado al Proyecto';
+                //     ToolTip = 'Especifica el importe de la factura asignado a este proyecto';
+                //     Editable = false;
+                //     Style = Strong;
+                // }
                 field("Percentage"; Rec."Percentage")
                 {
                     ApplicationArea = All;
@@ -84,31 +84,31 @@ page 50125 "Pagos Proyecto"
                     ToolTip = 'Especifica el importe pagado sin IVA correspondiente a este proyecto';
                     Editable = false;
                 }
-                field("Amount Pending"; Rec."Amount Pending")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Importe Pendiente';
-                    ToolTip = 'Especifica el importe pendiente de pago correspondiente a este proyecto';
-                    Editable = false;
-                    Style = Unfavorable;
-                }
-                field(PercentagePaid; GetPercentagePaid())
-                {
-                    ApplicationArea = All;
-                    Caption = '% Pagado';
-                    ToolTip = 'Especifica el porcentaje pagado respecto al importe asignado al proyecto';
-                    Editable = false;
-                    DecimalPlaces = 1 : 1;
-                    Style = Strong;
-                }
-                field(PaymentStatus; GetPaymentStatus())
-                {
-                    ApplicationArea = All;
-                    Caption = 'Estado de Pago';
-                    ToolTip = 'Especifica el estado de pago del documento';
-                    Editable = false;
-                    Style = Strong;
-                }
+                // field("Amount Pending"; Rec."Amount Pending")
+                // {
+                //     ApplicationArea = All;
+                //     Caption = 'Importe Pendiente';
+                //     ToolTip = 'Especifica el importe pendiente de pago correspondiente a este proyecto';
+                //     Editable = false;
+                //     Style = Unfavorable;
+                // }
+                // field(PercentagePaid; GetPercentagePaid())
+                // {
+                //     ApplicationArea = All;
+                //     Caption = '% Pagado';
+                //     ToolTip = 'Especifica el porcentaje pagado respecto al importe asignado al proyecto';
+                //     Editable = false;
+                //     DecimalPlaces = 1 : 1;
+                //     Style = Strong;
+                // }
+                // field(PaymentStatus; GetPaymentStatus())
+                // {
+                //     ApplicationArea = All;
+                //     Caption = 'Estado de Pago';
+                //     ToolTip = 'Especifica el estado de pago del documento';
+                //     Editable = false;
+                //     Style = Strong;
+                // }
                 field("Last Payment Date"; Rec."Last Payment Date")
                 {
                     ApplicationArea = All;
@@ -136,6 +136,7 @@ page 50125 "Pagos Proyecto"
                     CurrPage.Update(false);
                 end;
             }
+
             action(VerFactura)
             {
                 ApplicationArea = All;
@@ -176,6 +177,49 @@ page 50125 "Pagos Proyecto"
                     ShowProjectLines();
                 end;
             }
+            // asignar nº linea proyecto
+            action(AsignarNºLineaProyecto)
+            {
+                ApplicationArea = All;
+                Caption = 'Asignar Nº Mov Proyecto';
+                ToolTip = 'Asigna el número de línea del proyecto a los movimientos de la tabla Proyecto Movimiento Pago';
+                Image = JobLedger;
+                trigger OnAction()
+                begin
+                    AssignProjectLineNumber();
+                end;
+            }
+            //Recalcular Pagos Proyecto
+            action(RecalcularPagosProyecto)
+            {
+                ApplicationArea = All;
+                Caption = 'Recalcular Pagos Proyecto';
+                ToolTip = 'Recalcula los pagos del proyecto';
+                Image = Refresh;
+                trigger OnAction()
+                begin
+                    RecalculateProjectPayments();
+                end;
+
+            }
+            action(BorrarLineasPagosProyecto)
+            {
+                ApplicationArea = All;
+                Caption = 'Borrar Líneas de Pagos Proyecto';
+                ToolTip = 'Borra las líneas de pagos del proyecto';
+                Image = Delete;
+                trigger OnAction()
+                var
+                    ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
+                begin
+                    CurrPage.SetSelectionFilter(ProyectoFacturaCompra);
+                    if ProyectoFacturaCompra.FindSet() then
+                        repeat
+                            ProyectoFacturaCompra.Delete();
+                        until ProyectoFacturaCompra.Next() = 0;
+
+                end;
+            }
             // action(RecalcularPagos)
             // {
             //     ApplicationArea = All;
@@ -199,71 +243,51 @@ page 50125 "Pagos Proyecto"
             //         end;
             //     end;
             // }
-            action(ReconstruirImportes)
-            {
-                ApplicationArea = All;
-                Caption = 'Reconstruir importes';
-                ToolTip = 'Reconstruye Amount, Importe Base, importes pagados y pendientes desde la factura. Si Importe Base Pagado es 0 e Importe Pagado no, lo recalcula.';
-                Image = Restore;
+            // action(ReconstruirImportes)
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Reconstruir importes';
+            //     ToolTip = 'Reconstruye Amount, Importe Base, importes pagados y pendientes desde la factura. Si Importe Base Pagado es 0 e Importe Pagado no, lo recalcula.';
+            //     Image = Restore;
 
-                trigger OnAction()
-                var
-                    ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
-                begin
-                    CurrPage.SetSelectionFilter(ProyectoFacturaCompra);
-                    if Confirm('¿Reconstruir Amount, Importe Base, importes pagados y pendientes para los movimientos mostrados?') then begin
-                        if ProyectoFacturaCompra.FindSet() then
-                            repeat
-                                ProyectoFacturaCompra.RebuildPaymentAmounts();
-                            until ProyectoFacturaCompra.Next() = 0;
+            //     trigger OnAction()
+            //     var
+            //         ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
+            //     begin
+            //         CurrPage.SetSelectionFilter(ProyectoFacturaCompra);
+            //         if Confirm('¿Reconstruir Amount, Importe Base, importes pagados y pendientes para los movimientos mostrados?') then begin
+            //             if ProyectoFacturaCompra.FindSet() then
+            //                 repeat
+            //                     ProyectoFacturaCompra.RebuildPaymentAmounts();
+            //                 until ProyectoFacturaCompra.Next() = 0;
 
-                        CurrPage.Update(false);
-                        Message('Importes reconstruidos correctamente.');
-                    end;
-                end;
-            }
-            action(ReconstruirTabla)
-            {
-                ApplicationArea = All;
-                Caption = 'Reconstruir tabla';
-                ToolTip = 'Compara con Job Ledger Entry (Uso): añade movimientos que faltan, rellena Amount/Importe Base si están a 0, y recalcula pendientes si Importe Base Pagado está relleno.';
-                Image = RefreshLines;
+            //             CurrPage.Update(false);
+            //             Message('Importes reconstruidos correctamente.');
+            //         end;
+            //     end;
+            // }
+            // action(ReconstruirTabla)
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Reconstruir tabla';
+            //     ToolTip = 'Compara con Job Ledger Entry (Uso): añade movimientos que faltan, rellena Amount/Importe Base si están a 0, y recalcula pendientes si Importe Base Pagado está relleno.';
+            //     Image = RefreshLines;
 
-                trigger OnAction()
-                var
-                    GestionPagosProyecto: Codeunit "Gestión Pagos Proyecto";
-                    Addidos: Integer;
-                    Actualizados: Integer;
-                begin
-                    if Confirm('¿Reconstruir la tabla comparando con Job Ledger Entry (tipo Uso)? Se añadirán movimientos faltantes y se actualizarán importes a 0 y pendientes.') then begin
-                        GestionPagosProyecto.RebuildTablaPagosProyectoDesdeJobLedger(Addidos, Actualizados);
-                        CurrPage.Update(false);
-                        Message('Reconstrucción completada. Movimientos añadidos: %1. Registros actualizados: %2.', Addidos, Actualizados);
-                    end;
-                end;
-            }
-            action("Marcar para liquidar")
-            {
-                ApplicationArea = All;
-                Caption = 'Marcar para liquidar';
-                Image = ApplyEntries;
-                ToolTip = 'Marca el documento para liquidar';
-                trigger OnAction()
-                begin
-                    MarkForLiquidation();
-                end;
-            }
-            action("Desmarcar para liquidar")
-            {
-                ApplicationArea = All;
-                Caption = 'Desmarcar para liquidar';
-                Image = Cancel;
-                ToolTip = 'Desmarca el documento para liquidar';
-                trigger OnAction()
-                begin
-                    UnmarkForLiquidation();
-                end;
-            }
+            //     trigger OnAction()
+            //     var
+            //         GestionPagosProyecto: Codeunit "Gestión Pagos Proyecto";
+            //         Addidos: Integer;
+            //         Actualizados: Integer;
+            //     begin
+            //         if Confirm('¿Reconstruir la tabla comparando con Job Ledger Entry (tipo Uso)? Se añadirán movimientos faltantes y se actualizarán importes a 0 y pendientes.') then begin
+            //             GestionPagosProyecto.RebuildTablaPagosProyectoDesdeJobLedger(Addidos, Actualizados);
+            //             CurrPage.Update(false);
+            //             Message('Reconstrucción completada. Movimientos añadidos: %1. Registros actualizados: %2.', Addidos, Actualizados);
+            //         end;
+            //     end;
+            // }
+
+
             action(ImportarPagares)
             {
                 ApplicationArea = All;
@@ -282,12 +306,7 @@ page 50125 "Pagos Proyecto"
         }
         area(Promoted)
         {
-            actionref(MarcarParaLiquidacionAction; "Marcar para liquidar")
-            {
-            }
-            actionref(DesmarcarParaLiquidacionAction; "Desmarcar para liquidar")
-            {
-            }
+
             actionref(VerPagosAction; VerPagos)
             {
             }
@@ -321,29 +340,7 @@ page 50125 "Pagos Proyecto"
 
     end;
 
-    procedure MarkForLiquidation()
-    var
-        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
-    begin
-        CurrPage.SetSelectionFilter(ProyectoMovimientoPago);
-        if ProyectoMovimientoPago.FindSet() then
-            repeat
-                ProyectoMovimientoPago."Document to Liquidate" := GDocumento;
-                ProyectoMovimientoPago.Modify();
-            until ProyectoMovimientoPago.Next() = 0;
-    end;
 
-    procedure UnmarkForLiquidation()
-    var
-        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
-    begin
-        CurrPage.SetSelectionFilter(ProyectoMovimientoPago);
-        if ProyectoMovimientoPago.FindSet() then
-            repeat
-                ProyectoMovimientoPago."Document to Liquidate" := '';
-                ProyectoMovimientoPago.Modify();
-            until ProyectoMovimientoPago.Next() = 0;
-    end;
 
     var
         JobNo: Code[20];
@@ -355,23 +352,23 @@ page 50125 "Pagos Proyecto"
         Rec.SetRange("Job No.", NewJobNo);
     end;
 
-    local procedure GetPercentagePaid(): Decimal
-    begin
-        if Rec."Amount" = 0 then
-            exit(0);
+    // local procedure GetPercentagePaid(): Decimal
+    // begin
+    //     if Rec."Amount" = 0 then
+    //         exit(0);
 
-        exit(Round((Rec."Amount Paid" / Rec."Amount") * 100, 0.1));
-    end;
+    //     exit(Round((Rec."Amount Paid" / Rec."Amount") * 100, 0.1));
+    // end;
 
-    local procedure GetPaymentStatus(): Text[50]
-    begin
-        if Rec."Amount Pending" <= 0 then
-            exit('Pagado')
-        else if Rec."Amount Paid" > 0 then
-            exit('Parcialmente Pagado')
-        else
-            exit('Pendiente');
-    end;
+    // local procedure GetPaymentStatus(): Text[50]
+    // begin
+    //     if Rec."Amount Pending" <= 0 then
+    //         exit('Pagado')
+    //     else if Rec."Amount Paid" > 0 then
+    //         exit('Parcialmente Pagado')
+    //     else
+    //         exit('Pendiente');
+    // end;
 
     local procedure GetVendorName(): Text[100]
     var
@@ -432,5 +429,43 @@ page 50125 "Pagos Proyecto"
             PurchInvLinesPage.RunModal();
         end else
             Message('No se encontraron líneas de esta factura relacionadas con el proyecto %1.', Rec."Job No.");
+    end;
+
+    local procedure AssignProjectLineNumber()
+    var
+        JobLedgerEntry: Record "Job Ledger Entry";
+
+    begin
+        if Rec."Job Entry No." <> 0 then
+            Error('Ya hay un número de línea de proyecto asignado');
+        JobLedgerEntry.SetRange("Job No.", Rec."Job No.");
+        JobLedgerEntry.SetRange("Job Task No.", Rec."Job Task No.");
+        JobLedgerEntry.SetRange("Entry Type", JobLedgerEntry."Entry Type"::Usage);
+        JobLedgerEntry.SetRange("Document No.", Rec."Document No.");
+        if JobLedgerEntry.Count = 1 then begin
+            JobLedgerEntry.FindFirst();
+            Rec."Job Entry No." := JobLedgerEntry."Entry No.";
+            Rec.Modify();
+        end else
+            if Page.RunModal(Page::"Job Ledger Entries", JobLedgerEntry) = Action::LookupOK then begin
+                Rec."Job Entry No." := JobLedgerEntry."Entry No.";
+
+                Rec.Modify();
+            end;
+
+    end;
+
+    local procedure RecalculateProjectPayments()
+    var
+        ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
+        JobLedgerEntry: Record "Job Ledger Entry";
+        GestionPagosProyecto: Codeunit "Gestión Pagos Proyecto";
+    begin
+        CurrPage.SetSelectionFilter(ProyectoFacturaCompra);
+        if ProyectoFacturaCompra.FindSet() then
+            repeat
+                JobLedgerEntry.Get(ProyectoFacturaCompra."Job Entry No.");
+                GestionPagosProyecto.LiquidarPago(ProyectoFacturaCompra);
+            until ProyectoFacturaCompra.Next() = 0;
     end;
 }

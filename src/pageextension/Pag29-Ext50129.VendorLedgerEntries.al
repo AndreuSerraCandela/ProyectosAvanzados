@@ -26,6 +26,30 @@ pageextension 50331 "Vendor Ledger Entries Ext" extends "Vendor Ledger Entries"
                     CurrPage.Update(false);
                 end;
             }
+            //Liquidar pago
+            action(LiquidarPago)
+            {
+                ApplicationArea = All;
+                Caption = 'Liquidar pago';
+                Image = ApplyEntries;
+                ToolTip = 'Liquida el pago de los movimientos de la tabla Proyecto Movimiento Pago vinculados a los movimientos de proveedor seleccionados.';
+
+                trigger OnAction()
+                var
+                    GestionPagosProyecto: Codeunit "Gestión Pagos Proyecto";
+                    VendorLedgerEntry: Record "Vendor Ledger Entry";
+                begin
+                    CurrPage.SetSelectionFilter(VendorLedgerEntry);
+                    if VendorLedgerEntry.FindSet() then
+                        repeat
+                            if VendorLedgerEntry.Open then Error('No se puede liquidar el pago de un documento abierto');
+                            if VendorLedgerEntry."Document Type" in [VendorLedgerEntry."Document Type"::Invoice, VendorLedgerEntry."Document Type"::"Credit Memo"] then begin
+                                VendorLedgerEntry.CalcFields("Amount (LCY)");
+                                GestionPagosProyecto.LiquidarPago(VendorLedgerEntry, VendorLedgerEntry."Amount (LCY)");
+                            end;
+                        until VendorLedgerEntry.Next() = 0;
+                end;
+            }
         }
     }
 }

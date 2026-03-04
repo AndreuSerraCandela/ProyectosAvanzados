@@ -99,13 +99,13 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 ApplicationArea = All;
                 Visible = false;
             }
-            field("Amount Paid"; Rec."Amount Paid")
+            field("Base Amount Paid"; Rec."Base Amount Paid")
             {
                 ApplicationArea = All;
                 Caption = 'Importe Pagado';
                 ToolTip = 'Especifica el importe total pagado para esta línea de planificación del proyecto.';
             }
-            field("Amount Pending"; CalculaBrutoFactura() - Rec."Amount Paid")
+            field("Base Amount Pending"; CalculaImportePendiente())
             {
                 ApplicationArea = All;
                 Caption = 'Importe Pendiente';
@@ -310,19 +310,40 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
             DescriptionEmphasize := '';
     end;
 
-    local procedure CalculaBrutoFactura(): Decimal
+    local procedure CalculaImportePendiente(): Decimal
     var
-        Pago: Record "Proyecto Movimiento Pago";
+        Pago: Record "Purch. Inv. Line";
+        Abono: Record "Purch. Cr. Memo Line";
+        JobLedgerEntry: Record "Job Ledger Entry";
         Importe: Decimal;
     begin
-        Pago.SetRange("Job No.", Rec."Job No.");
-        Pago.SetRange("Job Task No.", Rec."Job Task No.");
+        // Pago.SetRange("Job No.", Rec."Job No.");
+        // Pago.SetRange("Job Task No.", Rec."Job Task No.");
 
-        Pago.SetRange("Job Planning Line No.", Rec."Line No.");
-        if Pago.FindFirst() then
-            repeat
-                Importe += Pago.Amount;
-            until Pago.Next() = 0;
+        // Pago.SetRange("Job Planning Line No.", Rec."Line No.");
+        // if Pago.FindFirst() then
+        //     repeat
+        //         Importe += Pago."Amount Including VAT";
+        //     until Pago.Next() = 0;
+
+        // Abono.SetRange("Job No.", Rec."Job No.");
+        // Abono.SetRange("Job Task No.", Rec."Job Task No.");
+        // Abono.SetRange("Job Planning Line No.", Rec."Line No.");
+        // if Abono.FindFirst() then
+        //     repeat
+        //         Importe -= Abono."Amount Including VAT";
+        //     until Abono.Next() = 0;
+        // if Importe = 0 then Importe := Rec."Total Cost (LCY)" * (1.21);
+        Importe := Rec."Total Cost (LCY)";
+        Rec.calcfields("Base Amount Paid");
+        If Importe >= 0 then begin
+            Importe := Importe - Rec."Base Amount Paid";
+            If Importe < 0 then exit(0);
+        end;
+        if Importe < 0 then begin
+            Importe := Importe - Rec."Base Amount Paid";
+            If Importe > 0 then exit(0);
+        end;
         exit(Importe);
 
     end;
