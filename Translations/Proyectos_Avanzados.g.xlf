@@ -1488,6 +1488,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasDesdeExcel - NamedType ErrProyecto</note>
         </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 3059483201 - NamedType 646029562" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: La tarea %2 no existe.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasDesdeExcel - NamedType ErrTarea</note>
+        </trans-unit>
         <trans-unit id="Codeunit 3200460114 - Method 3452363447 - NamedType 378565434" size-unit="char" translate="yes" xml:space="preserve">
           <source>Importación finalizada. Filas procesadas: %1. Registros de Proyecto Movimiento Pago actualizados: %2.</source>
           <note from="Developer" annotates="general" priority="2"></note>

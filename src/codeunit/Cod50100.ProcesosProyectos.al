@@ -4321,6 +4321,7 @@ Fila: Integer)
         Customer: Record Customer;
         GLAccount: Record "G/L Account";
         Job: Record Job;
+        JobTask: Record "Job Task";
         SalesSetup: Record "Sales & Receivables Setup";
         InStream: InStream;
         FileName: Text;
@@ -4342,8 +4343,13 @@ Fila: Integer)
         ErrMsg: Label 'Fila %1: No se encontró cliente con CIF %2.';
         ErrCuenta: Label 'Fila %1: La cuenta contable %2 no existe.';
         ErrProyecto: Label 'Fila %1: El proyecto %2 no existe.';
+        ErrTarea: Label 'Fila %1: La tarea %2 no existe.';
         VatPostingSetup: Record "VAT Posting Setup";
         Dimensiones: array[8] of Code[20];
+        CodCliente: Code[20];
+        Tarea: Code[20];
+        Empresa: Text;
+
     begin
         TempExcelBuffer.DeleteAll();
         if not UploadIntoStream('Seleccionar archivo Excel de facturas', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos (*.*)|*.*', FileName, InStream) then
@@ -4359,6 +4365,27 @@ Fila: Integer)
 
         repeat
             RowNo := TempExcelBuffer."Row No.";
+            // esta es la fila 1
+            //A-FECHA FACTURA	
+            //B-BASE IMPONIBLE	
+            //C-% IVA	
+            //D-IMPORTE IVA	
+            //E-TOTAL FACTURA	
+            //F-CIF CLIENTE	
+            //G-COD CLIENTE	
+            //H-NOMBRE  CLIENTE	
+            //I-TEXTO	
+            //J-CUENTA DE INGRESO
+            //K-Nº FACTURA	
+            //L-PROYECTO	
+            //M-TAREA	
+            //N-EMPRESA	DIM1
+            //O-PROYECTO	DIM2
+            //P-SUBMEDIO	
+            //Q-DIM4	
+            //R-DIM5	
+            //S-DIM6	
+
             if RowNo > 1 then begin
                 Fecha := 0D;
                 Importe := 0;
@@ -4366,11 +4393,14 @@ Fila: Integer)
                 ImporteIVA := 0;
                 Total := 0;
                 CIFCliente := '';
+                CodCliente := '';
+                Tarea := '';
                 NombreCliente := '';
                 TextoRegistro := '';
                 CuentaContable := '';
                 NumeroFactura := '';
                 ProyectoNo := '';
+                Empresa := '';
                 Dimensiones[1] := '';
                 Dimensiones[2] := '';
                 Dimensiones[3] := '';
@@ -4401,41 +4431,49 @@ Fila: Integer)
                                     Total := 0;
                             6: // F - CIF cliente
                                 CIFCliente := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Customer."VAT Registration No."));
-                            7: // G - Nombre
+
+                            7: // G - Cod cliente
+                                CodCliente := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(CodCliente));
+                            8: // H - Nombre cliente
                                 NombreCliente := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NombreCliente));
-                            8: // H - Texto registro
+                            9: // I - Texto registro
                                 TextoRegistro := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(TextoRegistro));
-                            9: // I - Cuenta contable
+                            10: // J - Cuenta contable
                                 CuentaContable := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(CuentaContable));
-                            10: // J - Nº factura (No. / Posting No. -> External Document No.)
+                            11: // K - Nº factura (No. / Posting No. -> External Document No.)
                                 NumeroFactura := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NumeroFactura));
-                            11: // K - Proyecto
+                            12: // L - Proyecto
                                 ProyectoNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(ProyectoNo));
-                            12: // L - Dimension 1
+                            13: // M - Tarea
+                                Tarea := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Tarea));
+                            14: // N - Dimension 1
                                 Dimensiones[1] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[1]));
-                            13: // M - Dimension 2
+                            15: // O - Dimension 2
                                 Dimensiones[2] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[2]));
-                            14: // N - Dimension 3
+                            16: // P - Dimension 3
                                 Dimensiones[3] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[3]));
-                            15: // O - Dimension 4
+                            17: // Q - Dimension 4
                                 Dimensiones[4] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[4]));
-                            16: // P - Dimension 5
+                            18: // R - Dimension 5
                                 Dimensiones[5] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[5]));
-                            17: // Q - Dimension 6
+                            19: // S - Dimension 6
                                 Dimensiones[6] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[6]));
-                            18: // R - Dimension 7
-                                Dimensiones[7] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[7]));
+                        // 20: // R - Dimension 7
+                        //     Dimensiones[7] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[7]));
                         end;
                     until TempExcelBuffer.Next() = 0;
                 TempExcelBuffer.SetRange("Row No.");
 
-                if (CIFCliente <> '') and (CuentaContable <> '') then begin
+                if ((CIFCliente <> '') or (CodCliente <> '')) and (CuentaContable <> '') then begin
                     Customer.Reset();
-                    Customer.SetRange("VAT Registration No.", CIFCliente);
-                    if not Customer.FindFirst() then begin
-                        Error(ErrMsg, RowNo, CIFCliente);
-                        exit;
-                    end;
+                    if CodCliente = '' then begin
+                        Customer.SetRange("VAT Registration No.", CIFCliente);
+                        if not Customer.FindFirst() then begin
+                            Error(ErrMsg, RowNo, CIFCliente);
+                            exit;
+                        end;
+                    end else
+                        Customer.Get(CodCliente);
                     if not GLAccount.Get(CuentaContable) then begin
                         Error(ErrCuenta, RowNo, CuentaContable);
                         exit;
@@ -4443,6 +4481,12 @@ Fila: Integer)
                     if ProyectoNo <> '' then begin
                         if not Job.Get(ProyectoNo) then begin
                             Error(ErrProyecto, RowNo, ProyectoNo);
+                            exit;
+                        end;
+                    end;
+                    if Tarea <> '' then begin
+                        if not JobTask.Get(ProyectoNo, Tarea) then begin
+                            Error(ErrTarea, RowNo, Tarea);
                             exit;
                         end;
                     end;
@@ -4493,6 +4537,7 @@ Fila: Integer)
                     end;
                     SalesLine.Validate("VAT Prod. Posting Group", VatPostingSetup."VAT Prod. Posting Group");
                     SalesLine."Job No." := ProyectoNo;
+                    SalesLine."Job Task No." := Tarea;
                     // Cargar dimensiones: construir Dimension Set ID desde array Dimensiones (columnas L a R) y asignar a la línea
                     SalesLine.Validate("Dimension Set ID", GetDimSetIDFromDimensionesArray(Dimensiones));
                     SalesLine.Insert(true);
