@@ -2,7 +2,7 @@
   "id": "4cc7c1f9-6c82-4ed1-9ad8-dc1681ea3de1",
   "name": "Proyectos_Avanzados",
   "publisher": "MaybeCloud",
-  "version": "1.0.3.07",
+  "version": "1.0.3.08",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -11,16 +11,17 @@
   "url": "",
   "logo": "",
   "dependencies": [
-    {
-    "id": "b357807f-e6d7-4e6a-bf37-af840932e4bc",
-    "name": "MayBe_Retenciones",
-    "publisher": "MayBe Cloud",
-    "version": "1.1.0.18"
-    }
+      {
+      "id": "b357807f-e6d7-4e6a-bf37-af840932e4bc",
+      "name": "MayBe_Retenciones",
+      "publisher": "MayBe Cloud",
+      "version": "1.1.0.18"
+      }
+      
     ],
   "screenshots": [],
-  "platform": "26.0.0.0",
-  "application": "26.0.0.0",
+  "platform": "27.0.0.0",
+  "application": "27.0.0.0",
   "idRanges": [
     {
       "from": 50100,
@@ -28,7 +29,7 @@
     }
   ],
   "contextSensitiveHelpUrl": "https://Planificaicon_Compra.com/help/",   
- "runtime": "13.0",    
+ "runtime": "16.0",    
   "features": [ "GenerateCaptions","TranslationFile"]
 
 }
