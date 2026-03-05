@@ -186,6 +186,10 @@ codeunit 50302 "Eventos-proyectos"
         Venta: Decimal;
         EntryNo: Integer;
         SalesLine: Record "Sales Invoice Line";
+        RegistroProyectos: Record "Job Register";
+        Desde: Integer;
+        IdJobRegister: Integer;
+        Hasta: Integer;
     begin
         if not SalesHeader."Importar desde excel" then
             exit;
@@ -193,6 +197,7 @@ codeunit 50302 "Eventos-proyectos"
             EntryNo := JobLedgerEntry."Entry No." + 1
         else
             EntryNo := 1;
+        Desde := EntryNo;
         SalesLine.SetRange("Document No.", SalesInvHdrNo);
         if SalesLine.FindFirst() then
             repeat
@@ -238,6 +243,19 @@ codeunit 50302 "Eventos-proyectos"
                     until JobLedgerEntry.INSERT(true);
                 end;
             until SalesLine.Next() = 0;
+        if RegistroProyectos.FindLast() then
+            IdJobRegister := RegistroProyectos."No." + 1
+        else
+            IdJobRegister := 1;
+        RegistroProyectos.Init();
+
+        RegistroProyectos."No." := IdJobRegister;
+        RegistroProyectos."Creation Date" := Today;
+        RegistroProyectos."Creation Time" := Time;
+        RegistroProyectos."From Entry No." := Desde;
+        RegistroProyectos."To Entry No." := EntryNo - 1;
+        RegistroProyectos."User ID" := UserId;
+        RegistroProyectos.Insert();
     end;
 
     local procedure CrearPagoTipoBlanco(JobLedgerEntry: Record "Job Ledger Entry")
