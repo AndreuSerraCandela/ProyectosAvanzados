@@ -6,6 +6,12 @@ codeunit 50302 "Eventos-proyectos"
 
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnGenProdPostingGroupOnBeforeValidate, '', false, false)]
+    local procedure OnGenProdPostingGroupOnBeforeValidate(var SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line"; var GenProdPostingGroup: Record "Gen. Product Posting Group"; var IsHandled: Boolean)
+    begin
+        IsHandled := true;
+    end;
+
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Batch", OnBeforeUpdateAndDeleteLines, '', false, false)]
     local procedure OnBeforeUpdateAndDeleteLines(var GenJournalLine: Record "Gen. Journal Line"; CommitIsSuppressed: Boolean; var IsHandled: Boolean)

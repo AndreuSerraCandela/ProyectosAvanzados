@@ -4606,6 +4606,9 @@ Fila: Integer)
                     JobPlanningLine.Type := JobPlanningLine.Type::Item;
                     JobPlanningLine."No." := Tarea;
                     JobPlanningLine."Line Type" := JobPlanningLine."Line Type"::Billable;
+                    Item.Get(Tarea);
+                    Item.TestField("VAT Prod. Posting Group");
+                    Item.TestField("Gen. Prod. Posting Group");
 
                     JobPlanningLine.Insert();
                     // OCrear Job Planning Line
@@ -4620,23 +4623,34 @@ Fila: Integer)
                     // deberia buscar un grupo registro iva producto que en la configurtacion con el grupo viva negocio del cliente , tenga un PCTIV
                     VatPostingSetup.Reset();
                     VatPostingSetup.SetRange("VAT Bus. Posting Group", Customer."VAT Bus. Posting Group");
+                    VatPostingSetup.SetFilter("VAT Prod. Posting Group", '<>%1', '');
                     VatPostingSetup.SetRange("VAT %", PctIVA);
                     if not VatPostingSetup.FindFirst() then begin
-                        Error(ErrVatPostingSetup, RowNo, Customer."Gen. Bus. Posting Group", PctIVA);
+                        Error(ErrVatPostingSetup, RowNo, Customer."VAT Bus. Posting Group", PctIVA);
                         exit;
                     end;
+                    SalesLine."VAT Bus. Posting Group" := Customer."VAT Bus. Posting Group";
                     SalesLine.Validate("VAT Prod. Posting Group", VatPostingSetup."VAT Prod. Posting Group");
 
                     Item.Get(Tarea);
                     Item.TestField("Gen. Prod. Posting Group");
+                    Item.TestField("VAT Prod. Posting Group");
                     SalesLine.Validate("Unit Price", Importe);
-                    SalesLine.Validate("VAT Prod. Posting Group", Item."VAT Prod. Posting Group");
+
                     // Cargar dimensiones: construir Dimension Set ID desde array Dimensiones (columnas L a R) y asignar a la línea
                     SalesLine."Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
                     SalesLine."Gen. Prod. Posting Group" := Item."Gen. Prod. Posting Group";
                     SalesLine.Validate("Dimension Set ID", GetDimSetIDFromDimensionesArray(Dimensiones));
                     SalesLine."Gen. Bus. Posting Group" := Customer."Gen. Bus. Posting Group";
                     SalesLine."Gen. Prod. Posting Group" := Item."Gen. Prod. Posting Group";
+                    SalesLine."VAT Bus. Posting Group" := Customer."VAT Bus. Posting Group";
+                    SalesLine."VAT Prod. Posting Group" := VatPostingSetup."VAT Prod. Posting Group";
+                    //testfield en salesline "VAT Bus. Posting Group" y "VAT Prod. Posting Group"
+                    SalesLine.TestField("VAT Bus. Posting Group");
+                    SalesLine.TestField("VAT Prod. Posting Group");
+                    //testfield en salesline "Gen. Bus. Posting Group" y "Gen. Prod. Posting Group"
+                    SalesLine.TestField("Gen. Bus. Posting Group");
+                    SalesLine.TestField("Gen. Prod. Posting Group");
                     SalesLine.Modify();
                     //Importadas += 1;
 
