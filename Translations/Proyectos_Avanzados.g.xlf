@@ -3843,6 +3843,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report Job Transf.to Purch. Quote - Control PostingDate - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3910192470 - Control 2756874254 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2292249509">
+          <source>Especifica el tipo de operación: Préstamo, Credito o ninguno.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Bank Account Card Ext - Control Operacion - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3910192470 - Control 2756874254 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2292249509">
+          <source>Operacion</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Bank Account Card Ext - Control Operacion - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1705639300 - Control 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4052886773">
           <source>Nº Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4803,6 +4813,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension Vendor List Inversor - Control Inversor - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="TableExtension 3033648794 - Field 2756874254 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1682139193">
+          <source>Operacion</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Bank Account Ext - Field Operacion - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2963331395 - Field 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2798690647">
           <source>Nº Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -5492,6 +5507,21 @@
           <source>Not awarded</source>
           <note from="Developer" annotates="general" priority="2">ESP="No adjudicado"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Enum Estado Proyecto - EnumValue Not awarded - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 2212850693 - EnumValue 1371923692 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source></source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Operacion Banco - EnumValue   - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 2212850693 - EnumValue 1007037022 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Credito</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Operacion Banco - EnumValue Credito - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 2212850693 - EnumValue 2230996877 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Préstamo</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Operacion Banco - EnumValue Prestamo - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 3781740971 - EnumValue 1371923692 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source> </source>

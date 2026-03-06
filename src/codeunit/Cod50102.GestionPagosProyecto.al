@@ -1,6 +1,6 @@
 codeunit 50102 "Gestión Pagos Proyecto"
 {
-    Permissions = tableData "Job Ledger Entry" = rimd;
+    Permissions = tableData "Job Ledger Entry" = rimd, TableData "Job Register" = rimd;
     // // Evento cuando se registra una línea de factura de compra
     // [EventSubscriber(ObjectType::Table, Database::"Purch. Inv. Line", 'OnAfterInsertEvent', '', false, false)]
     // local procedure OnAfterPurchInvLineInsert(var Rec: Record "Purch. Inv. Line")

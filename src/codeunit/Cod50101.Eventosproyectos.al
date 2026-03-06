@@ -1,6 +1,6 @@
 codeunit 50302 "Eventos-proyectos"
 {
-    Permissions = TableData "G/L Entry" = rimd, Tabledata "Job Ledger Entry" = rimd;
+    Permissions = TableData "G/L Entry" = rimd, Tabledata "Job Ledger Entry" = rimd, TableData "Job Register" = rimd;
     trigger OnRun()
     begin
 
