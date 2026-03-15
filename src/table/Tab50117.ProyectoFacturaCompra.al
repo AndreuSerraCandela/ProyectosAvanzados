@@ -202,6 +202,7 @@ table 50117 "Proyecto Movimiento Pago"
     trigger OnInsert()
     begin
         ValidateProjectAssignment();
+        ValidatePaymentAmounts();
     end;
 
     trigger OnModify()
@@ -232,6 +233,61 @@ table 50117 "Proyecto Movimiento Pago"
         // Verificar que el proyecto esté abierto
         if Job.Status <> Job.Status::Open then
             Error('El proyecto %1 debe estar en estado Abierto.', "Job No.");
+    end;
+
+    /// <summary>
+    /// Comprueba que la suma de movimientos de pago por Job Entry No. no supere el importe del movimiento de proyecto,
+    /// y que la suma de movimientos de pago por Entry No. (documento blanco) no supere el importe de ese entry.
+    /// Debe llamarse desde la función de la página/codeunit antes de Insert o al modificar desde la página.
+    /// </summary>
+    procedure ValidatePaymentAmounts()
+    var
+        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
+        JobLedgerEntry: Record "Job Ledger Entry";
+        GLEntry: Record "G/L Entry";
+        EmployeeLedgerEntry: Record "Employee Ledger Entry";
+        TotalPaidJob: Decimal;
+        TotalPaidEntry: Decimal;
+        MaxAmountJob: Decimal;
+        MaxAmountEntry: Decimal;
+    begin
+        // 1) Suma de movimientos de pago para este Job Entry No. no puede superar el importe del movimiento de proyecto
+        if "Job Entry No." <> 0 then begin
+            ProyectoMovimientoPago.Reset();
+            ProyectoMovimientoPago.SetRange("Job Entry No.", "Job Entry No.");
+            ProyectoMovimientoPago.CalcSums("Amount Paid");
+            TotalPaidJob := ProyectoMovimientoPago."Amount Paid" - xRec."Amount Paid" + Rec."Amount Paid";
+
+            if not JobLedgerEntry.Get("Job Entry No.") then
+                Error('No existe el movimiento de proyecto Nº %1.', "Job Entry No.");
+            MaxAmountJob := JobLedgerEntry."Bruto Factura";
+            if MaxAmountJob = 0 then
+                MaxAmountJob := Abs(JobLedgerEntry."Total Cost (LCY)");
+            if TotalPaidJob > MaxAmountJob then
+                Error('La suma de importes pagados (%1) para el movimiento de proyecto Nº %2 no puede superar el importe del movimiento (%3).',
+                    TotalPaidJob, "Job Entry No.", MaxAmountJob);
+        end;
+
+        // 2) Suma de movimientos de pago para este Entry No. (documento blanco) no puede superar el importe de ese entry
+        if ("Document Type" = "Document Type"::" ") and ("Entry No." <> 0) then begin
+            ProyectoMovimientoPago.Reset();
+            ProyectoMovimientoPago.SetRange("Document Type", "Document Type"::" ");
+            ProyectoMovimientoPago.SetRange("Entry No.", "Entry No.");
+            ProyectoMovimientoPago.CalcSums("Amount Paid");
+            TotalPaidEntry := ProyectoMovimientoPago."Amount Paid" - xRec."Amount Paid" + Rec."Amount Paid";
+
+            MaxAmountEntry := 0;
+            if GLEntry.Get("Entry No.") then
+                MaxAmountEntry := Abs(GLEntry.Amount)
+            else
+                if EmployeeLedgerEntry.Get("Entry No.") then begin
+                    EmployeeLedgerEntry.CalcFields("Original Amount");
+                    MaxAmountEntry := Abs(EmployeeLedgerEntry."Original Amount");
+                end;
+            if (MaxAmountEntry > 0) and (TotalPaidEntry > MaxAmountEntry) then
+                Error('La suma de importes pagados (%1) para el Entry No. %2 no puede superar el importe del movimiento (%3).',
+                    TotalPaidEntry, "Entry No.", MaxAmountEntry);
+        end;
     end;
 
 

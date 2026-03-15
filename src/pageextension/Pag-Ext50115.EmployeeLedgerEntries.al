@@ -30,7 +30,26 @@ pageextension 50321 "EmployeeLedgerEntriesExt" extends "Employee Ledger Entries"
 
     actions
     {
-        // Add changes to page actions here
+        addfirst(Processing)
+        {
+            action(LiquidarMovimientoProyecto)
+            {
+                ApplicationArea = All;
+                Caption = 'Liquidar movimiento proyecto';
+                Image = ApplyEntries;
+                ToolTip = 'Genera un movimiento de pago (Proyecto Movimiento Pago) que relaciona el movimiento de empleado seleccionado con el movimiento de proyecto correspondiente. Seleccione uno o varios movimientos con Nº Proyecto informado.';
+
+                trigger OnAction()
+                var
+                    EmployeeLedgerEntry: Record "Employee Ledger Entry";
+                    GestionPagosProyecto: Codeunit "Gestión Pagos Proyecto";
+                begin
+                    CurrPage.SetSelectionFilter(EmployeeLedgerEntry);
+                    GestionPagosProyecto.CrearProyectoMovimientoPagoDesdeEmpleado(EmployeeLedgerEntry);
+                    CurrPage.Update(false);
+                end;
+            }
+        }
     }
 }
 

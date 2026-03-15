@@ -1,6 +1,6 @@
 codeunit 50302 "Eventos-proyectos"
 {
-    Permissions = TableData "G/L Entry" = rimd, Tabledata "Job Ledger Entry" = rimd, TableData "Job Register" = rimd;
+    Permissions = TableData "G/L Entry" = rimd, Tabledata "Job Ledger Entry" = rimd, TableData "Job Register" = rimd, TableData "Proyecto Movimiento Pago" = ri, TableData "Employee Ledger Entry" = r;
     trigger OnRun()
     begin
 
@@ -12,6 +12,59 @@ codeunit 50302 "Eventos-proyectos"
         IsHandled := true;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", OnAfterGLFinishPosting, '', false, false)]
+    local procedure OnAfterGLFinishPosting(GLEntry: Record "G/L Entry"; var GenJnlLine: Record "Gen. Journal Line"; var IsTransactionConsistent: Boolean; FirstTransactionNo: Integer; var GLRegister: Record "G/L Register"; var TempGLEntryBuf: Record "G/L Entry" temporary; var NextEntryNo: Integer; var NextTransactionNo: Integer)
+    var
+        JobLedgerEntry: Record "Job Ledger Entry";
+        EmployeeLedgerEntry: Record "Employee Ledger Entry";
+        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
+        AmountToApply: Decimal;
+        HasEmplEntry: Boolean;
+    begin
+        // Solo si la línea es de pago y no es movimiento de proveedor
+        if GenJnlLine."Document Type" <> GenJnlLine."Document Type"::Payment then
+            exit;
+        if GenJnlLine."Account Type" = GenJnlLine."Account Type"::Vendor then
+            exit;
+        if GenJnlLine."Bal. Account Type" = GenJnlLine."Bal. Account Type"::Vendor Then Exit;
+
+
+        // Comprobar si hay mov de proyecto con este Entry No. (Job Ledger Entry con Ledger EntryNo. = G/L Entry No.)
+        JobLedgerEntry.SetRange("Ledger Entry No.", GLEntry."Entry No.");
+        if not JobLedgerEntry.FindFirst() then
+            exit;
+
+        // Evitar duplicados: ya existe un mov de pago para este Entry No.
+        ProyectoMovimientoPago.SetRange("Entry No.", GLEntry."Entry No.");
+        if ProyectoMovimientoPago.FindFirst() then
+            exit;
+
+        // Obtener importe y datos del movimiento de empleado si existe (mismo Entry No.)
+        HasEmplEntry := EmployeeLedgerEntry.Get(GLEntry."Entry No.");
+        AmountToApply := Abs(GLEntry.Amount);
+
+        if AmountToApply = 0 then
+            exit;
+
+        // Generar el mov de pago correspondiente
+        ProyectoMovimientoPago.Init();
+        ProyectoMovimientoPago."Document Type" := ProyectoMovimientoPago."Document Type"::" ";
+        ProyectoMovimientoPago."Document No." := GLEntry."Document No.";
+        ProyectoMovimientoPago."Line No." := GLEntry."Entry No.";
+        ProyectoMovimientoPago."Job No." := JobLedgerEntry."Job No.";
+        ProyectoMovimientoPago."Job Task No." := JobLedgerEntry."Job Task No.";
+        if HasEmplEntry then
+            ProyectoMovimientoPago."Job Planning Line No." := EmployeeLedgerEntry."Job Planning Line No."
+        else
+            ProyectoMovimientoPago."Job Planning Line No." := 0;
+        ProyectoMovimientoPago."Entry No." := GLEntry."Entry No.";
+        ProyectoMovimientoPago."Job Entry No." := JobLedgerEntry."Entry No.";
+        ProyectoMovimientoPago."Amount Paid" := AmountToApply;
+        ProyectoMovimientoPago."Base Amount Paid" := AmountToApply;
+        ProyectoMovimientoPago."Posted Document No." := GLEntry."Document No.";
+
+        ProyectoMovimientoPago.Insert(true);
+    end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Batch", OnBeforeUpdateAndDeleteLines, '', false, false)]
     local procedure OnBeforeUpdateAndDeleteLines(var GenJournalLine: Record "Gen. Journal Line"; CommitIsSuppressed: Boolean; var IsHandled: Boolean)

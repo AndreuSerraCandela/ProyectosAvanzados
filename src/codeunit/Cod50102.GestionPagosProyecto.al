@@ -164,6 +164,61 @@ codeunit 50102 "Gestión Pagos Proyecto"
             until JobLedgerEntry.Next() = 0;
     end;
 
+    /// <summary>
+    /// Liquida uno o varios movimientos de empleado de proyecto: crea registros en Proyecto Movimiento Pago
+    /// que relacionan cada Employee Ledger Entry seleccionado (con Job No. informado) con su Job Ledger Entry.
+    /// </summary>
+    procedure CrearProyectoMovimientoPagoDesdeEmpleado(var EmployeeLedgerEntry: Record "Employee Ledger Entry")
+    var
+        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
+        JobLedgerEntry: Record "Job Ledger Entry";
+        AmountToApply: Decimal;
+    begin
+        if not EmployeeLedgerEntry.FindSet() then
+            exit;
+        repeat
+            if EmployeeLedgerEntry."Job No." <> '' then begin
+                // Evitar duplicados: ya existe un pago para este movimiento de empleado (Entry No. = Employee Ledger Entry = G/L Entry)
+                ProyectoMovimientoPago.Reset();
+                ProyectoMovimientoPago.SetRange("Document Type", ProyectoMovimientoPago."Document Type"::" ");
+                ProyectoMovimientoPago.SetRange("Entry No.", EmployeeLedgerEntry."Entry No.");
+                if not ProyectoMovimientoPago.FindFirst() then begin
+                    // Buscar el Job Ledger Entry: primero por Employee Entry No., luego por Job/Task/Planning Line
+                    JobLedgerEntry.Reset();
+                    JobLedgerEntry.SetRange("Employee Entry No.", EmployeeLedgerEntry."Entry No.");
+                    if not JobLedgerEntry.FindFirst() then begin
+                        JobLedgerEntry.Reset();
+                        JobLedgerEntry.SetRange("Job No.", EmployeeLedgerEntry."Job No.");
+                        JobLedgerEntry.SetRange("Job Task No.", EmployeeLedgerEntry."Job Task No.");
+                        JobLedgerEntry.SetRange("Entry Type", JobLedgerEntry."Entry Type"::Usage);
+                    end;
+                    if JobLedgerEntry.FindFirst() then begin
+                        // Importe a liquidar: valor absoluto del movimiento de empleado
+                        EmployeeLedgerEntry.CalcFields("Original Amount");
+                        AmountToApply := Abs(EmployeeLedgerEntry."Original Amount");
+                        if AmountToApply = 0 then
+                            AmountToApply := Abs(EmployeeLedgerEntry.Amount);
+                        // Crear Proyecto Movimiento Pago (documento blanco = origen empleado)
+                        ProyectoMovimientoPago.Init();
+                        ProyectoMovimientoPago."Document Type" := ProyectoMovimientoPago."Document Type"::" ";
+                        ProyectoMovimientoPago."Document No." := EmployeeLedgerEntry."Document No.";
+                        ProyectoMovimientoPago."Line No." := EmployeeLedgerEntry."Entry No.";
+                        ProyectoMovimientoPago."Job No." := EmployeeLedgerEntry."Job No.";
+                        ProyectoMovimientoPago."Job Task No." := EmployeeLedgerEntry."Job Task No.";
+                        ProyectoMovimientoPago."Job Planning Line No." := EmployeeLedgerEntry."Job Planning Line No.";
+                        ProyectoMovimientoPago."Entry No." := EmployeeLedgerEntry."Entry No.";
+                        ProyectoMovimientoPago."Job Entry No." := JobLedgerEntry."Entry No.";
+                        ProyectoMovimientoPago."Amount Paid" := AmountToApply;
+                        ProyectoMovimientoPago."Base Amount Paid" := AmountToApply;
+                        ProyectoMovimientoPago."Posted Document No." := EmployeeLedgerEntry."Document No.";
+                        ProyectoMovimientoPago.ValidatePaymentAmounts();
+                        ProyectoMovimientoPago.Insert(true);
+                    end;
+                end;
+            end;
+        until EmployeeLedgerEntry.Next() = 0;
+    end;
+
     procedure LiquidarPago(var VendorLedgerEntry: Record "Vendor Ledger Entry"; PaymentAmount: Decimal)
     var
         ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
