@@ -2494,79 +2494,82 @@ codeunit 50301 "ProcesosProyectos"
                             end;
 
                             // Verificar si ya existe un Job Ledger Entry con los mismos datos para evitar duplicados
-                            JobLedgerEntry.Reset();
-                            if JobLedgerEntry.FindLast() then
-                                LineNo := JobLedgerEntry."Entry No." + 1
-                            else
-                                LineNo := 1;
-                            if Desde = 0 Then Desde := LineNo;
-                            JobLedgerEntry.Init();
-                            JobLedgerEntry."Entry No." := LineNo;
-                            JobLedgerEntry."Job No." := JobNo;
-                            JobLedgerEntry."Job Task No." := JobTaskNo;
-                            //JobLedgerEntry."Job Planning Line No." := JobPlanningLine."Line No.";
-                            JobLedgerEntry."Posting Date" := Today;
-                            if FechaFactura <> 0D then
-                                JobLedgerEntry."Posting Date" := FechaFactura;
-
-                            // Determinar Type según el Tipo
-                            case UpperCase(Tipo) of
-                                'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
-                                    begin
-                                        JobLedgerEntry."Type" := JobLedgerEntry."Type"::"G/L Account";
-                                        JobLedgerEntry."No." := NoCuenta;
-                                    end;
-                                'PRODUCTO', 'ITEM':
-                                    begin
-                                        JobLedgerEntry."Type" := JobLedgerEntry."Type"::Item;
-                                        JobLedgerEntry."No." := NoCuenta;
-                                    end;
-                                'RECURSO', 'RESOURCE':
-                                    begin
-                                        JobLedgerEntry."Type" := JobLedgerEntry."Type"::Resource;
-                                        JobLedgerEntry."No." := NoCuenta;
-                                    end;
-                            end;
-
-                            JobLedgerEntry.Description := Descripcion;
-                            JobLedgerEntry.Quantity := 1;
-                            if NetoFactura <> 0 then begin
-                                //   JobLedgerEntry."Unit Cost" := BrutoFactura;   DFS
-                                JobLedgerEntry."Unit Cost (LCY)" := NetoFactura;   //DFS    
-
-                                // JobLedgerEntry."Total Cost" := BrutoFactura;  //DFS
-                                JobLedgerEntry."Total Cost (LCY)" := NetoFactura;
-                                JobLedgerEntry."Total Cost" := NetoFactura;
-                                JobLedgerEntry."Unit Cost" := NetoFactura;
-                            end;
-
-                            // Campos personalizados
-                            JobLedgerEntry."Budget Code" := BudgetCode;
-                            JobLedgerEntry."Neto Factura" := NetoFactura;
-                            JobLedgerEntry."Base Amount Pending" := NetoFactura;
-                            JobLedgerEntry."Amount Pending" := BrutoFactura;
-                            JobLedgerEntry."IGIC O IVA" := IGICOIVA;
-                            JobLedgerEntry."Importe IGIC O IVA" := ImporteIGICOIVA;
-                            JobLedgerEntry."IRPF" := IRPF;
-                            JobLedgerEntry."Bruto Factura" := BrutoFactura;
-                            JobLedgerEntry."Fecha VTO" := FechaVTO;
-                            JobLedgerEntry."Estado" := Estado;
-
-                            if NumeroFactura <> '' then begin
-                                JobLedgerEntry."Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(JobLedgerEntry."Document No."));
-                                JobLedgerEntry."External Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(JobLedgerEntry."External Document No."));
-                            end;
-
-                            JobLedgerEntry."Fecha Pago" := FechaPago;
-                            JobLedgerEntry."NombreProveedor o Empleado" := ProveedorEmpleado;
-                            JobLedgerEntry."Facturado Contra" := FacturadoContra;
-                            JobLedgerEntry."FIC" := FIC;
-                            JobLedgerEntry."RegistroPresupuestario" := RegistroPresupuestario;
-                            repeat
+                            // Si NetoFactura+BrutoFactura no es 0, creo el Movimiento de Proyecto con el NetoFactura y el BrutoFactura
+                            if NetoFactura + BrutoFactura <> 0 then begin
+                                JobLedgerEntry.Reset();
+                                if JobLedgerEntry.FindLast() then
+                                    LineNo := JobLedgerEntry."Entry No." + 1
+                                else
+                                    LineNo := 1;
+                                if Desde = 0 Then Desde := LineNo;
+                                JobLedgerEntry.Init();
                                 JobLedgerEntry."Entry No." := LineNo;
-                                LineNo += 1;
-                            until JobLedgerEntry.Insert();
-                            ImportedEntries += 1;
+                                JobLedgerEntry."Job No." := JobNo;
+                                JobLedgerEntry."Job Task No." := JobTaskNo;
+                                //JobLedgerEntry."Job Planning Line No." := JobPlanningLine."Line No.";
+                                JobLedgerEntry."Posting Date" := Today;
+                                if FechaFactura <> 0D then
+                                    JobLedgerEntry."Posting Date" := FechaFactura;
+
+                                // Determinar Type según el Tipo
+                                case UpperCase(Tipo) of
+                                    'CUENTA', 'G/L ACCOUNT', 'GL ACCOUNT':
+                                        begin
+                                            JobLedgerEntry."Type" := JobLedgerEntry."Type"::"G/L Account";
+                                            JobLedgerEntry."No." := NoCuenta;
+                                        end;
+                                    'PRODUCTO', 'ITEM':
+                                        begin
+                                            JobLedgerEntry."Type" := JobLedgerEntry."Type"::Item;
+                                            JobLedgerEntry."No." := NoCuenta;
+                                        end;
+                                    'RECURSO', 'RESOURCE':
+                                        begin
+                                            JobLedgerEntry."Type" := JobLedgerEntry."Type"::Resource;
+                                            JobLedgerEntry."No." := NoCuenta;
+                                        end;
+                                end;
+
+                                JobLedgerEntry.Description := Descripcion;
+                                JobLedgerEntry.Quantity := 1;
+                                if NetoFactura <> 0 then begin
+                                    //   JobLedgerEntry."Unit Cost" := BrutoFactura;   DFS
+                                    JobLedgerEntry."Unit Cost (LCY)" := NetoFactura;   //DFS    
+
+                                    // JobLedgerEntry."Total Cost" := BrutoFactura;  //DFS
+                                    JobLedgerEntry."Total Cost (LCY)" := NetoFactura;
+                                    JobLedgerEntry."Total Cost" := NetoFactura;
+                                    JobLedgerEntry."Unit Cost" := NetoFactura;
+                                end;
+
+                                // Campos personalizados
+                                JobLedgerEntry."Budget Code" := BudgetCode;
+                                JobLedgerEntry."Neto Factura" := NetoFactura;
+                                JobLedgerEntry."Base Amount Pending" := NetoFactura;
+                                JobLedgerEntry."Amount Pending" := BrutoFactura;
+                                JobLedgerEntry."IGIC O IVA" := IGICOIVA;
+                                JobLedgerEntry."Importe IGIC O IVA" := ImporteIGICOIVA;
+                                JobLedgerEntry."IRPF" := IRPF;
+                                JobLedgerEntry."Bruto Factura" := BrutoFactura;
+                                JobLedgerEntry."Fecha VTO" := FechaVTO;
+                                JobLedgerEntry."Estado" := Estado;
+
+                                if NumeroFactura <> '' then begin
+                                    JobLedgerEntry."Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(JobLedgerEntry."Document No."));
+                                    JobLedgerEntry."External Document No." := CopyStr(NumeroFactura, 1, MaxStrLen(JobLedgerEntry."External Document No."));
+                                end;
+
+                                JobLedgerEntry."Fecha Pago" := FechaPago;
+                                JobLedgerEntry."NombreProveedor o Empleado" := ProveedorEmpleado;
+                                JobLedgerEntry."Facturado Contra" := FacturadoContra;
+                                JobLedgerEntry."FIC" := FIC;
+                                JobLedgerEntry."RegistroPresupuestario" := RegistroPresupuestario;
+                                repeat
+                                    JobLedgerEntry."Entry No." := LineNo;
+                                    LineNo += 1;
+                                until JobLedgerEntry.Insert();
+                                ImportedEntries += 1;
+                            end;
 
                         end; // Cerrar if NoCuenta <> ''
                     end; // Cerrar if (JobTaskNo <> '') and (Descripcion <> '')
@@ -3784,9 +3787,13 @@ Fila: Integer)
             GenJnlLine."Document No." := DocNo;
             GenJnlLine."Source Code" := rOr.Code;
             GenJnlLine."Account Type" := AcountType(EmpresaNombre, Employee."No.", 'Personal');
+            //Tiene que ser empleado, si o si
+            if GenJnlLine."Account Type" <> GenJnlLine."Account Type"::Employee then
+                error('El tipo de cuenta debe ser Employee para el personal %1', Employee."No.");
             GenJnlLine.Validate("Account Type");
             // Usar cuenta 465 (Personal/Cobro Nómina)
-            Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Personal');
+            Cuenta := Employee."No.";
+            GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Personal');
             if Cuenta = '' then
                 Cuenta := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Cobro Nómina');
             GenJnlLine."Account No." := Cuenta;

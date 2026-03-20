@@ -63,7 +63,7 @@ codeunit 50302 "Eventos-proyectos"
         ProyectoMovimientoPago."Base Amount Paid" := AmountToApply;
         ProyectoMovimientoPago."Posted Document No." := GLEntry."Document No.";
 
-        ProyectoMovimientoPago.Insert(true);
+        If ProyectoMovimientoPago.Insert(true) Then;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Batch", OnBeforeUpdateAndDeleteLines, '', false, false)]

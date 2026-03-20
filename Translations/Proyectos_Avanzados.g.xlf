@@ -3863,6 +3863,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension CompanyInfor - Control Permitir borrar grupos - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3873351432 - Action 479667089 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
+          <source>Genera un movimiento de pago (Proyecto Movimiento Pago) que relaciona el movimiento de empleado seleccionado con el movimiento de proyecto correspondiente. Seleccione uno o varios movimientos con Nº Proyecto informado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Action LiquidarMovimientoProyecto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3873351432 - Action 479667089 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
+          <source>Liquidar movimiento proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Action LiquidarMovimientoProyecto - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 3873351432 - Control 1908272084 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
           <source>Especifica el número del proyecto asociado a esta entrada del mayor de empleados.</source>
           <note from="Developer" annotates="general" priority="2"></note>
