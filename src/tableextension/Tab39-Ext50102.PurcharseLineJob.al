@@ -89,6 +89,16 @@ tableextension 50302 "PurcharseLine_Job" extends "Purchase Line" //39
                 end;
             end;
         }
+        //Producción
+        field(90006; Producción; Boolean)
+        {
+            Caption = 'Producción';
+        }
+        field(90007; "Job Planning Line No. Aux"; Integer)
+        {
+            Caption = 'Nº Línea Planificación Proyecto';
+            TableRelation = "Job Planning Line"."Line No.";
+        }
 
     }
     procedure SetWorkDescription(NewWorkDescription: Text)

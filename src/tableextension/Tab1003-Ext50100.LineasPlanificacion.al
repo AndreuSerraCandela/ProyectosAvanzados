@@ -152,6 +152,33 @@ tableextension 50300 "LineasPlanificacion" extends "Job Planning Line"//1003
             CalcFormula = sum("Purchase Line"."Outstanding Amount" where("Job No." = field("Job No."), "Job Task No." = field("Job Task No."), "Job Planning Line No." = field("Line No.")));
             Editable = false;
         }
+        field(50040; Producción; Boolean)
+        {
+            Caption = 'Producción';
+            DataClassification = CustomerContent;
+
+            trigger OnValidate()
+            begin
+                //ValidateDimensionProduccionOnPlanningLine(Rec);
+            end;
+        }
+        field(50041; "Dimensión producción"; Code[20])
+        {
+            ObsoleteState = Removed;
+            Caption = 'Nº Línea Planificación Proyecto';
+            DataClassification = ToBeClassified;
+            TableRelation = Dimension;
+            Editable = false;
+        }
+        field(50042; "Valor dimensión producción"; Code[20])
+        {
+            ObsoleteState = Removed;
+            Caption = 'Dimensión producción';
+            DataClassification = CustomerContent;
+            Editable = false;
+            ToolTip = 'Código del valor de dimensión de producción (según configuración de proyectos). Se rellena al marcar Producción.';
+            TableRelation = "Dimension Value".Code where("Dimension Code" = field("Dimensión producción"));
+        }
 
     }
 
@@ -159,6 +186,43 @@ tableextension 50300 "LineasPlanificacion" extends "Job Planning Line"//1003
     var
         myInt: Integer;
         WorkDescription: Text;
+
+    // trigger OnAfterInsert()
+    // var
+    //     JobsSetup: Record "Jobs Setup";
+    // begin
+    //     JobsSetup.Get();
+    //     if JobsSetup."Dim. Cód. Producción" <> '' then begin
+    //         "Dimensión producción" := JobsSetup."Dim. Cód. Producción";
+    //     end;
+    // end;
+
+    /// <summary>
+    /// Si Producción = true: valida Jobs Setup y que exista el valor de dimensión; guarda el código de valor en "Dimension producción".
+    /// Si Producción = false: vacía "Dimension producción".
+    /// </summary>
+    // local procedure ValidateDimensionProduccionOnPlanningLine(var JobPlanningLine: Record "Job Planning Line")
+    // var
+    //     JobsSetup: Record "Jobs Setup";
+    //     DimValue: Record "Dimension Value";
+    // begin
+    //     if not JobPlanningLine.Producción then begin
+    //         JobPlanningLine."Valor dimensión producción" := '';
+    //         exit;
+    //     end;
+
+    //     JobsSetup.Get();
+    //     if JobsSetup."Dim. Cód. Producción" = '' then
+    //         Error('Debe indicar el Cód. Dimensión Producción en Configuración de proyectos (Jobs Setup).');
+    //     if JobsSetup."Dim. Valor Producción" = '' then
+    //         Error('Debe indicar el Valor Dimensión Producción en Configuración de proyectos (Jobs Setup).');
+    //     if not DimValue.Get(JobsSetup."Dim. Cód. Producción", JobsSetup."Dim. Valor Producción") then
+    //         Error(
+    //           'El valor de dimensión %1 no existe para la dimensión %2. Revise la configuración de proyectos o cree el valor en Valores de dimensión.',
+    //           JobsSetup."Dim. Valor Producción", JobsSetup."Dim. Cód. Producción");
+    //     JobPlanningLine."Dimensión producción" := JobsSetup."Dim. Cód. Producción";
+    //     JobPlanningLine."Valor dimensión producción" := JobsSetup."Dim. Valor Producción";
+    // end;
 
     procedure GetWorkDescription(): Text
     var

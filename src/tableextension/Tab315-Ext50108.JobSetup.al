@@ -60,6 +60,26 @@ tableextension 50308 "JobSetup" extends "Jobs Setup" //315
             Caption = 'Item Template';
             TableRelation = "Item Templ.";
         }
+        field(50211; "Dim. Cód. Producción"; Code[20])
+        {
+            ObsoleteState = Removed;
+            Caption = 'Cód. Dimensión Producción';
+            DataClassification = CustomerContent;
+            TableRelation = Dimension;
+
+            // trigger OnValidate()
+            // begin
+            //     if "Dim. Cód. Producción" <> xRec."Dim. Cód. Producción" then
+            //         "Dim. Valor Producción" := '';
+            // end;
+        }
+        field(50212; "Dim. Valor Producción"; Code[20])
+        {
+            ObsoleteState = Removed;
+            Caption = 'Valor Dimensión Producción';
+            DataClassification = CustomerContent;
+            TableRelation = "Dimension Value".Code where("Dimension Code" = field("Dim. Cód. Producción"));
+        }
 
     }
 

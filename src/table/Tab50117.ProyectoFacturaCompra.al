@@ -165,6 +165,12 @@ table 50117 "Proyecto Movimiento Pago"
             TableRelation = "Job Ledger Entry"."Entry No.";
             Editable = false;
         }
+        field(20; Producción; Boolean)
+        {
+            Caption = 'Producción';
+            DataClassification = CustomerContent;
+            Editable = false;
+        }
     }
 
     keys

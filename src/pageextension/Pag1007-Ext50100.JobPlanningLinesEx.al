@@ -38,6 +38,19 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 ApplicationArea = all;
 
             }
+            field(Producción; Rec.Producción)
+            {
+                ApplicationArea = All;
+                Caption = 'Producción';
+                ToolTip = 'Indica si la línea de planificación corresponde a producción.';
+            }
+            // field("Dimension producción"; Rec."Valor dimensión producción")
+            // {
+
+            //     ApplicationArea = All;
+            //     Caption = 'Dimensión producción';
+            //     ToolTip = 'Código del valor de dimensión de producción definido en configuración de proyectos.';
+            // }
             field(Cod_Proveedor; rec.Cod_Proveedor)
             {
                 ApplicationArea = all;

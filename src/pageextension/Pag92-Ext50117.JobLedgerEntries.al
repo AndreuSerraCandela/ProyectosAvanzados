@@ -14,6 +14,12 @@ pageextension 50323 "JobLedgerEntriesExt" extends "Job Ledger Entries"
                 Caption = 'Nº Movimiento Empleado';
                 ToolTip = 'Especifica el número del movimiento de empleado asociado a esta entrada del mayor de proyectos.';
             }
+            field(Producción; Rec.Producción)
+            {
+                ApplicationArea = All;
+                Caption = 'Producción';
+                ToolTip = 'Indica si el movimiento está asociado a producción.';
+            }
             field("Budget Code"; Rec."Budget Code")
             {
                 ApplicationArea = All;

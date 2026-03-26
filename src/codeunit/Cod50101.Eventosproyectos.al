@@ -62,6 +62,7 @@ codeunit 50302 "Eventos-proyectos"
         ProyectoMovimientoPago."Amount Paid" := AmountToApply;
         ProyectoMovimientoPago."Base Amount Paid" := AmountToApply;
         ProyectoMovimientoPago."Posted Document No." := GLEntry."Document No.";
+        ProyectoMovimientoPago.Producción := JobLedgerEntry.Producción;
 
         If ProyectoMovimientoPago.Insert(true) Then;
     end;
@@ -392,6 +393,8 @@ codeunit 50302 "Eventos-proyectos"
         JobJnlLine."IGIC O IVA" := PurchLine."VAT %";
         JobJnlLine.IRPF := PurchLine."Retention Amount (IRPF)";
         JobJnlLine."Document Line No." := PurchLine."Line No.";
+        JobJnlLine."Job Planning Line No. Aux" := PurchLine."Job Planning Line No. Aux";
+        JobJnlLine."Producción" := PurchLine."Producción";
         JobJnlLine."NombreProveedor o Empleado" := PurchHeader."Buy-from Vendor No.";
 
 
@@ -403,6 +406,8 @@ codeunit 50302 "Eventos-proyectos"
     var
         ProyectoFacturaCompra: Record "Proyecto Movimiento Pago";
         jobledgerentry: Record "Job Ledger Entry";
+        JobPlanningLine: Record "Job Planning Line";
+        JobLink: Record "Job Usage Link";
     begin
         ProyectoFacturaCompra.SetRange("Document No.", JobJournalLine."Document No.");
         ProyectoFacturaCompra.SetRange("Line No.", JobJournalLine."Document Line No.");
@@ -420,8 +425,25 @@ codeunit 50302 "Eventos-proyectos"
         JobLedgerEntry."Importe IGIC O IVA" := JobJournalLine."Importe IGIC O IVA";
         JobLedgerEntry.IRPF := JobJournalLine.IRPF;
         JobLedgerEntry."Document Line No." := JobJournalLine."Document Line No.";
+        If JobJournalLine."Producción" then begin
+            JobLedgerEntry.Producción := true;
+        end else begin
+
+            if JobPlanningLine.Get(JobJournalLine."Job No.", JobJournalLine."Job Task No.", JobJournalLine."Job Planning Line No.") then
+                JobLedgerEntry.Producción := JobPlanningLine.Producción;
+            // AssignDimensionProduction(JobLedgerEntry, JobPlanningLine);
+        end;
+        JobLedgerEntry."Job Planning Line No. Aux" := JobJournalLine."Job Planning Line No. Aux";
 
         JobLedgerEntry.Modify(false);
+        if not JobLink.Get(JobJournalLine."Job No.", JobJournalLine."Job Task No.", JobJournalLine."Job Planning Line No. Aux", JobLedgerEntry."Entry No.") then begin
+            JobLink.Init();
+            JobLink."Job No." := JobJournalLine."Job No.";
+            JobLink."Job Task No." := JobJournalLine."Job Task No.";
+            JobLink."Line No." := JobJournalLine."Job Planning Line No. Aux";
+            JobLink."Entry No." := JobLedgerEntry."Entry No.";
+            JobLink.Insert(true);
+        end;
 
 
     end;
@@ -635,17 +657,17 @@ codeunit 50302 "Eventos-proyectos"
     end;
 
     //OnAfterSetPurchaseLineFilters
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Lines Instruction Mgt.", 'OnAfterSetPurchaseLineFilters', '', false, false)]
-    local procedure OnAfterSetPurchaseLineFilters(var PurchaseLine: Record "Purchase Line"; PurchaseHeader: Record "Purchase Header")
-    var
-        JobSetup: Record "Jobs Setup";
-    begin
-        /*   JobSetup.Get();
-           if JobSetup."Cód. Proyecto Obligatorio" then
-               PurchaseLine.SetFilter("Job No.", '<>%1', '');
-   */
+    //     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Lines Instruction Mgt.", 'OnAfterSetPurchaseLineFilters', '', false, false)]
+    //     local procedure OnAfterSetPurchaseLineFilters(var PurchaseLine: Record "Purchase Line"; PurchaseHeader: Record "Purchase Header")
+    //     var
+    //         JobSetup: Record "Jobs Setup";
+    //     begin
+    //         /*   JobSetup.Get();
+    //            if JobSetup."Cód. Proyecto Obligatorio" then
+    //                PurchaseLine.SetFilter("Job No.", '<>%1', '');
+    //    */
 
-    end;
+    //     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", 'OnAfterCopyToTempLines', '', false, false)]
     local procedure OnAfterCopyToTempLines(var TempPurchLine: Record "Purchase Line" temporary)
@@ -907,6 +929,80 @@ codeunit 50302 "Eventos-proyectos"
         TempBlob.CreateInStream(varInStream);
         exit(Base64.ToBase64(varInStream));
     end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Line", 'OnBeforeValidateJobPlanningLineNo', '', false, false)]
+    local procedure OnBeforeValidateJobPlanningLineNo(var PurchaseLine: Record "Purchase Line"; xPurchaseLine: Record "Purchase Line"; CurrentFieldNo: Integer; var IsHandled: Boolean);
+    var
+        JobPlanningLine: Record "Job Planning Line";
+    begin
+        JobPlanningLine.SetRange("Job No.", PurchaseLine."Job No.");
+        JobPlanningLine.SetRange("Job Task No.", PurchaseLine."Job Task No.");
+        case PurchaseLine.Type of
+            PurchaseLine.Type::"G/L Account":
+                JobPlanningLine.SetRange(Type, JobPlanningLine.Type::"G/L Account");
+            PurchaseLine.Type::Item:
+                JobPlanningLine.SetRange(Type, JobPlanningLine.Type::Item);
+        end;
+        JobPlanningLine.SetRange("No.", PurchaseLine."No.");
+        JobPlanningLine.SetRange("Usage Link", true);
+        JobPlanningLine.SetRange("System-Created Entry", false);
+
+        if PAGE.RunModal(0, JobPlanningLine) = ACTION::LookupOK then begin
+            PurchaseLine."Producción" := JobPlanningLine."Producción";
+            PurchaseLine."Job Planning Line No. Aux" := JobPlanningLine."Line No.";
+            PurchaseLine.Validate("Job Planning Line No.", 0);
+        end;
+        IsHandled := true;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Line", OnBeforeValidateEvent, 'Job Planning Line No.', false, false)]
+    local procedure OnBeforeEventValidateJobPlanningLineNo(var Rec: Record "Purchase Line"; xRec: Record "Purchase Line"; CurrFieldNo: Integer);
+    var
+        JobPlanningLine: Record "Job Planning Line";
+    begin
+        if Rec."Job Planning Line No." = 0 Then exit;
+        if CurrFieldNo = Rec.FieldNo("Job Planning Line No.") then begin
+            JobPlanningLine.Get(Rec."Job No.", Rec."Job Task No.", Rec."Job Planning Line No.");
+            Rec."Producción" := JobPlanningLine."Producción";
+            Rec."Job Planning Line No. Aux" := JobPlanningLine."Line No.";
+            Rec."Job Planning Line No." := 0;
+        end;
+    end;
+
+    //     internal procedure AssignDimensionProduction(var JobLedgerEntry: Record "Job Ledger Entry"; JobPlanningLine: Record "Job Planning Line")
+    //     var
+    //         JobsSetup: Record "Jobs Setup";
+    //         GlSetup: Record "General Ledger Setup";
+    //         DimensionValue: Record "Dimension Value";
+    // Dim:Integer;
+    //     begin
+    //         if JobLedgerEntry.Producción then begin
+    //         JobsSetup.Get();
+    //         if JobsSetup."Dim. Cód. Producción" = '' then
+    //             Error('Debe indicar el Cód. Dimensión Producción en Configuración de proyectos (Jobs Setup).');
+    //         if JobsSetup."Dim. Valor Producción" = '' then
+    //             Error('Debe indicar el Valor Dimensión Producción en Configuración de proyectos (Jobs Setup).');
+    //         if not DimensionValue.Get(JobsSetup."Dim. Cód. Producción", JobsSetup."Dim. Valor Producción") then
+    //             Error('El valor de dimensión %1 no existe para la dimensión %2. Revise la configuración de proyectos o cree el valor en Valores de dimensión.',
+    //                 JobsSetup."Dim. Valor Producción", JobsSetup."Dim. Cód. Producción");
+    //         GlSetup.Get();
+    //         If GlSetup."Global Dimension 1 Code"=JobsSetup."Dim. Cód. Producción" then
+    //           Dim:=1;
+    //         If GlSetup."Global Dimension 2 Code"=JobsSetup."Dim. Cód. Producción" then
+    //           Dim:=2;
+    //         If GlSetup."Shortcut Dimension 3 Code"=JobsSetup."Dim. Cód. Producción" then
+    //           Dim:=3;
+    //         If GlSetup."Shortcut Dimension 4 Code"=JobsSetup."Dim. Cód. Producción" then
+    //           Dim:=4;
+    //        ValidateShortcutDimCode(Dim, JobsSetup."Dim. Valor Producción", JobLedgerEntry);
+    //         end;
+    //     end;
+    //      procedure ValidateShortcutDimCode(FieldNumber: Integer; var ShortcutDimCode: Code[20];Var JobLedgerEntry: Record "Job Ledger Entry")
+    //     var
+    //       DimMgt: Codeunit "DimensionManagement";  
+    //     begin
+    //         DimMgt.ValidateShortcutDimValues(FieldNumber, ShortcutDimCode, JobLedgerEntry."Dimension Set ID");
+    //     end;
 
 
 

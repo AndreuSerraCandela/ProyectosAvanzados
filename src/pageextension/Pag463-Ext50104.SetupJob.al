@@ -38,6 +38,18 @@ pageextension 50304 "SetupJob" extends "Jobs Setup" //463
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Dimension Proyecto field.';
             }
+            // field("Dim. Cód. Producción"; Rec."Dim. Cód. Producción")
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Cód. Dimensión Producción';
+            //     ToolTip = 'Especifica el código de la dimensión utilizada para marcar movimientos o líneas de producción.';
+            // }
+            // field("Dim. Valor Producción"; Rec."Dim. Valor Producción")
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Valor Dimensión Producción';
+            //     ToolTip = 'Especifica el valor de dimensión asociado a producción (filtrado por el código de dimensión indicado).';
+            // }
             field("Dias a Sumar"; Rec."Dias a Sumar")
             {
                 ApplicationArea = All;

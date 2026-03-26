@@ -149,5 +149,16 @@ tableextension 50322 "JobLedgerEntryExt" extends "Job Ledger Entry" //169
             Editable = false;
             DecimalPlaces = 2 : 2;
         }
+        field(50039; Producción; Boolean)
+        {
+            Caption = 'Producción';
+            DataClassification = CustomerContent;
+        }
+        field(50040; "Job Planning Line No. Aux"; Integer)
+        {
+            Caption = 'Nº Línea Planificación Proyecto Auxiliar';
+            DataClassification = ToBeClassified;
+        }
+
     }
 }

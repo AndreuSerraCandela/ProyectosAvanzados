@@ -211,6 +211,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                         ProyectoMovimientoPago."Amount Paid" := AmountToApply;
                         ProyectoMovimientoPago."Base Amount Paid" := AmountToApply;
                         ProyectoMovimientoPago."Posted Document No." := EmployeeLedgerEntry."Document No.";
+                        ProyectoMovimientoPago.Producción := JobLedgerEntry.Producción;
                         ProyectoMovimientoPago.ValidatePaymentAmounts();
                         If ProyectoMovimientoPago.Insert(true) Then;
                     end;
@@ -266,6 +267,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                                 ProyectoFacturaCompra."Base Amount Paid" := ProjectPaymentAmount * PurchInvLine.Amount;
                                 ProyectoFacturaCompra."Job Entry No." := jobledgerentry."Entry No.";
                                 ProyectoFacturaCompra."Job Planning Line No." := PurchInvLine."Job Planning Line No.";
+                                ProyectoFacturaCompra.Producción := jobledgerentry.Producción;
                                 If ProyectoFacturaCompra.Insert(true) Then;
 
                                 Salir := true;
@@ -303,6 +305,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                                 ProyectoFacturaCompra."Base Amount Paid" := -ProjectPaymentAmount * PurchCrMemoLine.Amount;
                                 ProyectoFacturaCompra."Job Entry No." := jobledgerentry."Entry No.";
                                 ProyectoFacturaCompra."Job Planning Line No." := PurchCrMemoLine."Job Planning Line No.";
+                                ProyectoFacturaCompra.Producción := jobledgerentry.Producción;
                                 If ProyectoFacturaCompra.Insert(true) Then;
                                 Salir := true;
                             end;
@@ -339,6 +342,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                                 ProyectoFacturaCompra."Base Amount Paid" := -ProjectPaymentAmount * PurchInvLine.Amount;
                                 ProyectoFacturaCompra."Job Entry No." := jobledgerentry."Entry No.";
                                 ProyectoFacturaCompra."Job Planning Line No." := PurchInvLine."Job Planning Line No.";
+                                ProyectoFacturaCompra.Producción := jobledgerentry.Producción;
                                 If ProyectoFacturaCompra.Insert(true) Then;
                                 Salir := true;
                             end;
@@ -382,6 +386,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                 ProyectoFacturaCompra."Amount Paid" := -ProjectPaymentAmount * JobLedgerEntry."Bruto Factura";
                 ProyectoFacturaCompra."Base Amount Paid" := -ProjectPaymentAmount * JobLedgerEntry."Neto Factura";
                 ProyectoFacturaCompra."Job Entry No." := JobLedgerEntry."Entry No.";
+                ProyectoFacturaCompra.Producción := JobLedgerEntry.Producción;
                 If ProyectoFacturaCompra.Insert(true) Then;
                 Salir := true;
             until JobLedgerEntry.Next() = 0;
@@ -651,6 +656,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         JobUsageLink: Record "Job Usage Link";
         Employee: Record Employee;
         EntryNo: Integer;
+        Eventosproyectos: Codeunit "Eventos-proyectos";
     begin
         // Si ya tiene mov de empleado ligado, no duplicar
         if JobPlanningLine."Employee Entry No." <> 0 then
@@ -703,6 +709,8 @@ codeunit 50102 "Gestión Pagos Proyecto"
         JobLedgerEntry."Facturado Contra" := CopyStr(JobPlanningLine."Facturado Contra", 1, MaxStrLen(JobLedgerEntry."Facturado Contra"));
         JobLedgerEntry."FIC" := '';
         JobLedgerEntry."RegistroPresupuestario" := '';
+        JobLedgerEntry.Producción := JobPlanningLine.Producción;
+        //Eventosproyectos.AssignDimensionProduction(JobLedgerEntry, JobPlanningLine);
 
         JobLedgerEntry."Ledger Entry No." := EmployeeLedgerEntry."Entry No.";
         JobLedgerEntry."Employee Entry No." := EmployeeLedgerEntry."Entry No.";
@@ -818,12 +826,15 @@ codeunit 50102 "Gestión Pagos Proyecto"
         ProyectoMovimientoPago."Line No." := EmployeeLedgerEntryPayment."Entry No.";
         ProyectoMovimientoPago."Job No." := JobLedgerEntry."Job No.";
         ProyectoMovimientoPago."Job Task No." := JobLedgerEntry."Job Task No.";
+        //ProyectoMovimientoPago."Job Planning Line No." := EmplEntry."Job Planning Line No.";
         ProyectoMovimientoPago."Job Planning Line No." := JobLedgerEntry."Entry No.";
+        //Revisar
         ProyectoMovimientoPago."Entry No." := EmployeeLedgerEntryPayment."Entry No.";
         ProyectoMovimientoPago."Job Entry No." := JobLedgerEntry."Entry No.";
         ProyectoMovimientoPago."Amount Paid" := AmountToApply;
         ProyectoMovimientoPago."Base Amount Paid" := AmountToApply;
         ProyectoMovimientoPago."Posted Document No." := EmployeeLedgerEntryPayment."Document No.";
+        ProyectoMovimientoPago.Producción := JobLedgerEntry.Producción;
         ProyectoMovimientoPago.ValidatePaymentAmounts();
         If ProyectoMovimientoPago.Insert(true) Then;
     end;

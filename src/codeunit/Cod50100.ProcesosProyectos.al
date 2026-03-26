@@ -2113,6 +2113,14 @@ codeunit 50301 "ProcesosProyectos"
         RegistroProyectos: Record "Job Register";
         IdJobRegister: Integer;
         Desde: Integer;
+        Eventosproyectos: Codeunit "Eventos-proyectos";
+        ImporteProduccion: Decimal;
+        ImporteNA: Decimal;
+        DescripcionProduccion: Text[100];
+        EsDesdobleProduccion: Boolean;
+        BudgetNormal: Decimal;
+        JobPlanningLineProd: Record "Job Planning Line";
+        JobPlanningLineNormal: Record "Job Planning Line";
     begin
         rInf.Get();
         rInf.TestField("Cta Contable Mov");
@@ -2178,6 +2186,9 @@ codeunit 50301 "ProcesosProyectos"
                     CIFProveedor := '';
                     ClasificacionGasto := '';
                     ImportedEntriesPagado := 0;
+                    ImporteProduccion := 0;
+                    ImporteNA := 0;
+                    DescripcionProduccion := '';
                     // Buscar datos de esta fila
                     TempExcelBuffer.SetRange("Row No.", RowNo);
                     if TempExcelBuffer.FindSet() then
@@ -2250,6 +2261,14 @@ codeunit 50301 "ProcesosProyectos"
                                             if not Evaluate(FechaPago, TempExcelBuffer."Cell Value as Text") then
                                                 FechaPago := 0D;
                                     end;
+                                29: // Columna AC - IMPORTE PRODUCCIÓN
+                                    if not Evaluate(ImporteProduccion, TempExcelBuffer."Cell Value as Text") then
+                                        ImporteProduccion := 0;
+                                30: // Columna AD - IMPORTE N/A (resta del presupuesto línea normal)
+                                    if not Evaluate(ImporteNA, TempExcelBuffer."Cell Value as Text") then
+                                        ImporteNA := 0;
+                                31: // Columna AE - Descripción producción
+                                    DescripcionProduccion := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(DescripcionProduccion));
                             end;
                             If TempExcelBuffer.xlColID = '' Then TempExcelBuffer.Validate("Column No.");
                         //if TempExcelBuffer.xlColID = rInf."Cta Contable Mov" Then CtaCble := TempExcelBuffer."Cell Value as Text";
@@ -2422,6 +2441,18 @@ codeunit 50301 "ProcesosProyectos"
                                     end;
                             end;
 
+                            EsDesdobleProduccion := ImporteProduccion <> 0;
+                            if EsDesdobleProduccion then begin
+                                if DescripcionProduccion = '' then
+                                    Error('Si informa importe producción (col. AC), debe indicar la descripción de producción (col. AE).');
+                                if Budget < ImporteProduccion then
+                                    Error(
+                                      'El importe producción (col. AC) %1 no puede superar el presupuesto (col. N) %2.',
+                                      ImporteProduccion, Budget);
+                                // Línea normal: presupuesto (N) menos producción (AC). Col. AD (Importe N/A) se lee por si se usa en informes; no resta del presupuesto aquí.
+                                BudgetNormal := Budget - ImporteProduccion;
+                            end;
+
                             JobPlanningLine.Description := Descripcion;
                             JobPlanningLine.Quantity := 1;
                             if BrutoFactura <> 0 then begin
@@ -2429,14 +2460,29 @@ codeunit 50301 "ProcesosProyectos"
                                 // JobPlanningLine."Total Cost (LCY)" := BrutoFactura; // DFS DESCOMENTÉ POR LO DE LOS TOTALES
 
                             end;
-                            if Budget <> 0 then begin
-                                JobPlanningLine."Total Cost (LCY)" := Budget;
-                                JobPlanningLine."Unit Cost (LCY)" := Budget;
-                                JobPlanningLine."Total Cost" := Budget;
-                                JobPlanningLine."Unit Cost" := Budget;
-                                JobPlanningLine."Schedule Line" := true;
-
-                            end;
+                            if EsDesdobleProduccion then begin
+                                if BudgetNormal <> 0 then begin
+                                    JobPlanningLine."Total Cost (LCY)" := BudgetNormal;
+                                    JobPlanningLine."Unit Cost (LCY)" := BudgetNormal;
+                                    JobPlanningLine."Total Cost" := BudgetNormal;
+                                    JobPlanningLine."Unit Cost" := BudgetNormal;
+                                    JobPlanningLine."Schedule Line" := true;
+                                end else begin
+                                    JobPlanningLine."Total Cost (LCY)" := 0;
+                                    JobPlanningLine."Unit Cost (LCY)" := 0;
+                                    JobPlanningLine."Total Cost" := 0;
+                                    JobPlanningLine."Unit Cost" := 0;
+                                    JobPlanningLine."Schedule Line" := false;
+                                end;
+                                JobPlanningLine.Validate(Producción, false);
+                            end else
+                                if Budget <> 0 then begin
+                                    JobPlanningLine."Total Cost (LCY)" := Budget;
+                                    JobPlanningLine."Unit Cost (LCY)" := Budget;
+                                    JobPlanningLine."Total Cost" := Budget;
+                                    JobPlanningLine."Unit Cost" := Budget;
+                                    JobPlanningLine."Schedule Line" := true;
+                                end;
                             If FacturadoContra <> '' Then begin
                                 IcParter.SetRange("Inbox Details", FacturadoContra);
                                 if Not IcParter.FindFirst() then Error('No existe el socio %1', FacturadoContra);
@@ -2451,6 +2497,23 @@ codeunit 50301 "ProcesosProyectos"
                                 JobPlanningLine."Line No." := LineNo;
                                 LineNo += 10000;
                             until JobPlanningLine.Insert(true);
+
+                            if EsDesdobleProduccion then begin
+                                JobPlanningLineNormal := JobPlanningLine;
+                                JobPlanningLineProd := JobPlanningLineNormal;
+                                LineNo := JobPlanningLineNormal."Line No." + 10000;
+                                JobPlanningLineProd."Total Cost (LCY)" := ImporteProduccion;
+                                JobPlanningLineProd."Unit Cost (LCY)" := ImporteProduccion;
+                                JobPlanningLineProd."Total Cost" := ImporteProduccion;
+                                JobPlanningLineProd."Unit Cost" := ImporteProduccion;
+                                JobPlanningLineProd."Schedule Line" := true;
+                                JobPlanningLineProd.Description := DescripcionProduccion;
+                                JobPlanningLineProd.Validate(Producción, true);
+                                repeat
+                                    JobPlanningLineProd."Line No." := LineNo;
+                                    LineNo += 10000;
+                                until JobPlanningLineProd.Insert(true);
+                            end;
 
                             //end;
 
@@ -2486,7 +2549,13 @@ codeunit 50301 "ProcesosProyectos"
                                         //calcular en base al % del pruto sobre el importe pagado
                                         ProyectoMovimientoPago."Base Amount Paid" := ImportedEntriesPagado * NetoFactura / BrutoFactura;
 
-                                ProyectoMovimientoPago."Job Planning Line No." := JobPlanningLine."Line No.";
+                                // if EsDesdobleProduccion then begin
+                                //     ProyectoMovimientoPago."Job Planning Line No." := JobPlanningLineNormal."Line No.";
+                                //     ProyectoMovimientoPago.Producción := JobPlanningLineNormal.Producción;
+                                // end else begin
+                                //     ProyectoMovimientoPago."Job Planning Line No." := JobPlanningLine."Line No.";
+                                //     ProyectoMovimientoPago.Producción := JobPlanningLine.Producción;
+                                // end;
                                 repeat
                                     ProyectoMovimientoPago."Line No." := LineNo;
                                     LineNo += 10000;
@@ -2564,6 +2633,13 @@ codeunit 50301 "ProcesosProyectos"
                                 JobLedgerEntry."Facturado Contra" := FacturadoContra;
                                 JobLedgerEntry."FIC" := FIC;
                                 JobLedgerEntry."RegistroPresupuestario" := RegistroPresupuestario;
+                                // if EsDesdobleProduccion then begin
+                                //     JobLedgerEntry.Producción := JobPlanningLineNormal.Producción;
+                                //     Eventosproyectos.AssignDimensionProduction(JobLedgerEntry, JobPlanningLineNormal);
+                                // end else begin
+                                //     JobLedgerEntry.Producción := JobPlanningLine.Producción;
+                                //     Eventosproyectos.AssignDimensionProduction(JobLedgerEntry, JobPlanningLine);
+                                // end;
                                 repeat
                                     JobLedgerEntry."Entry No." := LineNo;
                                     LineNo += 1;

@@ -53,6 +53,12 @@ page 50125 "Pagos Proyecto"
                     ApplicationArea = All;
                     ToolTip = 'Especifica el número de línea de planificación del proyecto';
                 }
+                field(Producción; Rec.Producción)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Producción';
+                    ToolTip = 'Indica si el movimiento está asociado a producción.';
+                }
                 // field("Amount"; Rec."Amount")
                 // {
                 //     ApplicationArea = All;

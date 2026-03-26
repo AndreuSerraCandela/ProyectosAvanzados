@@ -92,6 +92,18 @@ tableextension 50323 "JobJournalLineExt" extends "Job Journal Line" //210
             Caption = 'Nº Línea Documento';
             DataClassification = ToBeClassified;
         }
+        //Producción
+        field(50038; "Producción"; Boolean)
+        {
+            Caption = 'Producción';
+            DataClassification = ToBeClassified;
+        }
+        //Job Line Aux
+        field(50039; "Job Planning Line No. Aux"; Integer)
+        {
+            Caption = 'Nº Línea Planificación Proyecto Auxiliar';
+            DataClassification = ToBeClassified;
+        }
 
 
     }
