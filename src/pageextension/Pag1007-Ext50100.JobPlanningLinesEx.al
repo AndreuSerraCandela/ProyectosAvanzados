@@ -118,12 +118,12 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
                 Caption = 'Importe Pagado';
                 ToolTip = 'Especifica el importe total pagado para esta línea de planificación del proyecto.';
             }
-            field("Base Amount Pending"; CalculaImportePendiente())
-            {
-                ApplicationArea = All;
-                Caption = 'Importe Pendiente';
-                ToolTip = 'Especifica el importe pendiente de pago para esta línea de planificación del proyecto.';
-            }
+            // field("Base Amount Pending"; CalculaImportePendiente())
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Importe Pendiente';
+            //     ToolTip = 'Especifica el importe pendiente de pago para esta línea de planificación del proyecto.';
+            // }
             field("Importe Comprometido"; Rec."Importe Comprometido")
             {
                 ApplicationArea = All;
@@ -137,6 +137,43 @@ pageextension 50300 "JobPlanningLinesEx" extends "Job Planning Lines" //1007
 
     actions
     {
+        modify("Linked Job Ledger E&ntries")
+        {
+            Visible = false;
+        }
+        addafter("Linked Job Ledger E&ntries")
+        {
+            action("Linked Job Ledger E&ntries2")
+            {
+                ApplicationArea = Suite;
+                Caption = 'Movimientos de proyecto &vinculados';
+                Image = JobLedger;
+                ShortCutKey = 'Ctrl+F7';
+                ToolTip = 'Muestra los movimientos de proyecto relacionados con esta línea de planificación.';
+
+                trigger OnAction()
+                var
+                    JobLedgerEntry: Record "Job Ledger Entry";
+                    JobUsageLink: Record "Job Usage Link";
+                    JobLedgerEntries: Page "Job Ledger Entries";
+                begin
+                    JobUsageLink.SetRange("Job No.", Rec."Job No.");
+                    JobUsageLink.SetRange("Job Task No.", Rec."Job Task No.");
+                    JobUsageLink.SetRange("Line No.", Rec."Line No.");
+                    if JobUsageLink.FindSet() then
+                        repeat
+                            JobLedgerEntry.Get(JobUsageLink."Entry No.");
+                            if JobLedgerEntry."Producción" = Rec."Producción" then
+                                JobLedgerEntry.Mark := true;
+                        until JobUsageLink.Next() = 0;
+
+                    JobLedgerEntry.MarkedOnly(true);
+                    Clear(JobLedgerEntries);
+                    JobLedgerEntries.SetTableView(JobLedgerEntry);
+                    JobLedgerEntries.Run();
+                end;
+            }
+        }
         addafter("Job - Planning Lines")
         {
             group("Function Compras")

@@ -4528,6 +4528,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobListExt - Action Pendiente de facturar - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Action 1241855103 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Muestra los movimientos de proyecto relacionados con esta línea de planificación.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Linked Job Ledger E&amp;ntries2 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2202750966 - Action 1241855103 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
+          <source>Movimientos de proyecto &amp;vinculados</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Action Linked Job Ledger E&amp;ntries2 - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Action 4049885189 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
           <source>Funciones Compra</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4637,16 +4647,6 @@
           <source>Importe Pagado</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Base Amount Paid - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 2202750966 - Control 3267049074 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
-          <source>Especifica el importe pendiente de pago para esta línea de planificación del proyecto.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Base Amount Pending - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="PageExtension 2202750966 - Control 3267049074 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
-          <source>Importe Pendiente</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">PageExtension JobPlanningLinesEx - Control Base Amount Pending - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 2202750966 - Control 936105910 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2097003905">
           <source>Specifies the value of the Cantidad en Oferta Compra field.</source>

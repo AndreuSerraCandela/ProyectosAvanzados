@@ -95,6 +95,7 @@ tableextension 50323 "JobJournalLineExt" extends "Job Journal Line" //210
         //Producción
         field(50038; "Producción"; Boolean)
         {
+
             Caption = 'Producción';
             DataClassification = ToBeClassified;
         }

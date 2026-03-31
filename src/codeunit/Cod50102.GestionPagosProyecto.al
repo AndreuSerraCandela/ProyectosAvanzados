@@ -247,7 +247,9 @@ codeunit 50102 "Gestión Pagos Proyecto"
                         until PurchInvLine.Next() = 0;
                     if TotalInvoiceAmount = 0 then
                         exit;
-                    ProjectPaymentAmount := abs(PurchInvLine."Amount Including VAT") / TotalInvoiceAmount;
+                    ProjectPaymentAmount := abs(PaymentAmount / TotalInvoiceAmount);
+                    If ProjectPaymentAmount > 0.95 then ProjectPaymentAmount := 1;
+                    If ProjectPaymentAmount > 1 then ProjectPaymentAmount := 1;
                     if PurchInvLine.FindFirst() then
                         repeat
                             jobledgerentry.SetRange("Entry Type", jobledgerentry."Entry Type"::Usage);
@@ -285,7 +287,9 @@ codeunit 50102 "Gestión Pagos Proyecto"
                         until PurchCrMemoLine.Next() = 0;
                     if TotalInvoiceAmount = 0 then
                         exit;
-                    ProjectPaymentAmount := abs(PurchCrMemoLine."Amount Including VAT") / TotalInvoiceAmount;
+                    ProjectPaymentAmount := abs(PaymentAmount / TotalInvoiceAmount);
+                    If ProjectPaymentAmount > 0.95 then ProjectPaymentAmount := 1;
+                    If ProjectPaymentAmount > 1 then ProjectPaymentAmount := 1;
                     if PurchCrMemoLine.FindFirst() then
                         repeat
                             jobledgerentry.SetRange("Entry Type", jobledgerentry."Entry Type"::Usage);
@@ -322,7 +326,9 @@ codeunit 50102 "Gestión Pagos Proyecto"
                         until PurchInvLine.Next() = 0;
                     if TotalInvoiceAmount = 0 then
                         exit;
-                    ProjectPaymentAmount := abs(PurchInvLine."Amount Including VAT") / TotalInvoiceAmount;
+                    ProjectPaymentAmount := abs(PaymentAmount / TotalInvoiceAmount);
+                    If ProjectPaymentAmount > 0.95 then ProjectPaymentAmount := 1;
+                    If ProjectPaymentAmount > 1 then ProjectPaymentAmount := 1;
                     if PurchInvLine.FindFirst() then
                         repeat
                             jobledgerentry.SetRange("Entry Type", jobledgerentry."Entry Type"::Usage);

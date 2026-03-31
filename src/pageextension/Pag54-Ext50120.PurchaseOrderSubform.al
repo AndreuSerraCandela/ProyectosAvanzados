@@ -31,6 +31,17 @@ pageextension 50320 PurchaseOrderSubform extends "Purchase Order Subform" //54
             end;
             // }
         }
+        addafter("Job Planning Line No.")
+        {
+            field("Job Planning Line No. Aux"; Rec."Job Planning Line No. Aux")
+            {
+                ApplicationArea = All;
+            }
+        }
+        modify("Job Planning Line No.")
+        {
+            Visible = false;
+        }
 
     }
     var
@@ -44,4 +55,21 @@ pageextension 50320 PurchaseOrderSubform extends "Purchase Order Subform" //54
             DescriptionEmphasize := '';
     end;
 
+}
+pageextension 50322 PurchaseOrderSubformEx extends "Purch. Invoice Subform"
+{
+    layout
+    {
+        addafter("Job Planning Line No.")
+        {
+            field("Job Planning Line No. Aux"; Rec."Job Planning Line No. Aux")
+            {
+                ApplicationArea = All;
+            }
+        }
+        modify("Job Planning Line No.")
+        {
+            Visible = false;
+        }
+    }
 }

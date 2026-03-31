@@ -96,8 +96,46 @@ tableextension 50302 "PurcharseLine_Job" extends "Purchase Line" //39
         }
         field(90007; "Job Planning Line No. Aux"; Integer)
         {
+
             Caption = 'Nº Línea Planificación Proyecto';
             TableRelation = "Job Planning Line"."Line No.";
+            trigger OnLookup()
+            var
+                JobPlanningLine: Record "Job Planning Line";
+            begin
+                JobPlanningLine.SetRange("Job No.", Rec."Job No.");
+                JobPlanningLine.SetRange("Job Task No.", Rec."Job Task No.");
+                case Rec.Type of
+                    Rec.Type::"G/L Account":
+                        JobPlanningLine.SetRange(Type, JobPlanningLine.Type::"G/L Account");
+                    Rec.Type::Item:
+                        JobPlanningLine.SetRange(Type, JobPlanningLine.Type::Item);
+                end;
+                JobPlanningLine.SetRange("No.", Rec."No.");
+                JobPlanningLine.SetRange("Usage Link", true);
+                JobPlanningLine.SetRange("System-Created Entry", false);
+
+                if PAGE.RunModal(0, JobPlanningLine) = ACTION::LookupOK then begin
+                    Rec."Producción" := JobPlanningLine."Producción";
+
+                    Rec."Job Planning Line No." := 0;
+                    Rec."Job Planning Line No. Aux" := JobPlanningLine."Line No.";
+                end;
+
+            end;
+
+            trigger OnValidate()
+            var
+                JobPlanningLine: Record "Job Planning Line";
+            begin
+
+
+                JobPlanningLine.Get(Rec."Job No.", Rec."Job Task No.", Rec."Job Planning Line No. Aux");
+                Rec."Producción" := JobPlanningLine."Producción";
+                Rec."Job Planning Line No. Aux" := JobPlanningLine."Line No.";
+                Rec."Job Planning Line No." := 0;
+
+            end;
         }
 
     }

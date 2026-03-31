@@ -433,8 +433,10 @@ codeunit 50302 "Eventos-proyectos"
                 JobLedgerEntry.Producción := JobPlanningLine.Producción;
             // AssignDimensionProduction(JobLedgerEntry, JobPlanningLine);
         end;
-        JobLedgerEntry."Job Planning Line No. Aux" := JobJournalLine."Job Planning Line No. Aux";
 
+        if JobJournalLine."Job Planning Line No. Aux" = 0 Then
+            JobJournalLine."Job Planning Line No. Aux" := JobPlanningLine."Line No.";
+        JobLedgerEntry."Job Planning Line No. Aux" := JobJournalLine."Job Planning Line No. Aux";
         JobLedgerEntry.Modify(false);
         if not JobLink.Get(JobJournalLine."Job No.", JobJournalLine."Job Task No.", JobJournalLine."Job Planning Line No. Aux", JobLedgerEntry."Entry No.") then begin
             JobLink.Init();
@@ -949,8 +951,9 @@ codeunit 50302 "Eventos-proyectos"
 
         if PAGE.RunModal(0, JobPlanningLine) = ACTION::LookupOK then begin
             PurchaseLine."Producción" := JobPlanningLine."Producción";
+
+            purchaseLine.Validate("Job Planning Line No.", 0);
             PurchaseLine."Job Planning Line No. Aux" := JobPlanningLine."Line No.";
-            PurchaseLine.Validate("Job Planning Line No.", 0);
         end;
         IsHandled := true;
     end;

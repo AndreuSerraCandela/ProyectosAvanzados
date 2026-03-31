@@ -2279,6 +2279,7 @@ codeunit 50301 "ProcesosProyectos"
                     end;
                     // Si hay Job Task No., crear o verificar Job Task
                     if (JobTaskNo <> '') and (Descripcion <> '') then begin
+                        ImportedEntries += 1;
                         if not JobTask.Get(JobNo, JobTaskNo) then begin
                             // Crear Job Task si no existe
                             JobTask.Init();
@@ -2644,7 +2645,7 @@ codeunit 50301 "ProcesosProyectos"
                                     JobLedgerEntry."Entry No." := LineNo;
                                     LineNo += 1;
                                 until JobLedgerEntry.Insert();
-                                ImportedEntries += 1;
+                                //ImportedEntries += 1;
                             end;
 
                         end; // Cerrar if NoCuenta <> ''
