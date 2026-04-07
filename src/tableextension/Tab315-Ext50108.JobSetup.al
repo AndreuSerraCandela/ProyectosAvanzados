@@ -80,6 +80,17 @@ tableextension 50308 "JobSetup" extends "Jobs Setup" //315
             DataClassification = CustomerContent;
             TableRelation = "Dimension Value".Code where("Dimension Code" = field("Dim. Cód. Producción"));
         }
+        //Tolerancia Pago de en decimal con 0 5 decimales
+        field(50213; "Tolerancia Pago"; Decimal)
+        {
+            ObsoleteState = Removed;
+            Caption = 'Tolerancia Pago';
+            ToolTip = 'Specifies the value of the Tolerancia Pago field. Ejemplo: 0.99999 para que se liquide el 100% de la factura';
+            DataClassification = ToBeClassified;
+            DecimalPlaces = 0 : 5;
+            MinValue = 0.9;
+            MaxValue = 1;
+        }
 
     }
 

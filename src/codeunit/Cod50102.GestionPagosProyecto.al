@@ -232,6 +232,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         jobledgerentry: Record "Job Ledger Entry";
         Salir: Boolean;
         JobEntrTemp: Record "Job Ledger Entry" temporary;
+        JobSetup: Record "Jobs Setup";
     begin
         Salir := false;
 
@@ -248,7 +249,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                     if TotalInvoiceAmount = 0 then
                         exit;
                     ProjectPaymentAmount := abs(PaymentAmount / TotalInvoiceAmount);
-                    If ProjectPaymentAmount > 0.95 then ProjectPaymentAmount := 1;
+                    If ProjectPaymentAmount > 0.9999 then ProjectPaymentAmount := 1;
                     If ProjectPaymentAmount > 1 then ProjectPaymentAmount := 1;
                     if PurchInvLine.FindFirst() then
                         repeat
@@ -288,7 +289,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                     if TotalInvoiceAmount = 0 then
                         exit;
                     ProjectPaymentAmount := abs(PaymentAmount / TotalInvoiceAmount);
-                    If ProjectPaymentAmount > 0.95 then ProjectPaymentAmount := 1;
+                    If ProjectPaymentAmount > 0.9999 then ProjectPaymentAmount := 1;
                     If ProjectPaymentAmount > 1 then ProjectPaymentAmount := 1;
                     if PurchCrMemoLine.FindFirst() then
                         repeat
@@ -327,7 +328,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                     if TotalInvoiceAmount = 0 then
                         exit;
                     ProjectPaymentAmount := abs(PaymentAmount / TotalInvoiceAmount);
-                    If ProjectPaymentAmount > 0.95 then ProjectPaymentAmount := 1;
+                    If ProjectPaymentAmount > 0.9999 then ProjectPaymentAmount := 1;
                     If ProjectPaymentAmount > 1 then ProjectPaymentAmount := 1;
                     if PurchInvLine.FindFirst() then
                         repeat
