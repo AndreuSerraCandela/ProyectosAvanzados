@@ -2,7 +2,7 @@
   "id": "4cc7c1f9-6c82-4ed1-9ad8-dc1681ea3de1",
   "name": "Proyectos_Avanzados",
   "publisher": "MaybeCloud",
-  "version": "1.0.3.26",
+  "version": "1.0.3.32",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -15,7 +15,7 @@
       "id": "b357807f-e6d7-4e6a-bf37-af840932e4bc",
       "name": "MayBe_Retenciones",
       "publisher": "MayBe Cloud",
-      "version": "1.1.0.18"
+      "version": "1.1.0.22"
       }
       
     ],

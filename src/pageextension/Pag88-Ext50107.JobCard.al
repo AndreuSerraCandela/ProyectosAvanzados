@@ -788,15 +788,22 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                                                 GenProdPostingGroup.Insert(true);
                                                                 If GenNegPostingGrup.FindFirst Then
                                                                     repeat
-                                                                        GenPostingSetup.Init;
-                                                                        GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
-                                                                        GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
-                                                                        //Dependiendo si es I=Ingreso o G=Gasto, se crea la cuenta de compra o venta
-                                                                        if IngresoGasto = 'G' then
-                                                                            GenPostingSetup."Purch. Account" := NoCuenta
-                                                                        else
-                                                                            GenPostingSetup."Sales Account" := NoCuenta;
-                                                                        GenPostingSetup.Insert();
+                                                                        if GenPostingSetup.Get(GenNegPostingGrup.Code, GenProdPostingGroup.Code) then begin
+                                                                            if IngresoGasto = 'G' then
+                                                                                GenPostingSetup."Purch. Account" := NoCuenta
+                                                                            else
+                                                                                GenPostingSetup."Sales Account" := NoCuenta;
+                                                                            GenPostingSetup.Modify(true);
+                                                                        end else begin
+                                                                            GenPostingSetup.Init;
+                                                                            GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
+                                                                            GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
+                                                                            if IngresoGasto = 'G' then
+                                                                                GenPostingSetup."Purch. Account" := NoCuenta
+                                                                            else
+                                                                                GenPostingSetup."Sales Account" := NoCuenta;
+                                                                            GenPostingSetup.Insert(true);
+                                                                        end;
                                                                     until GenNegPostingGrup.next = 0;
                                                             end;
                                                             Item.Modify(true);
@@ -817,14 +824,22 @@ pageextension 50307 "JobCard" extends "Job Card" //88
                                                         GenProdPostingGroup.Insert(true);
                                                         If GenNegPostingGrup.FindFirst Then
                                                             repeat
-                                                                GenPostingSetup.Init;
-                                                                GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
-                                                                GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
-                                                                if IngresoGasto = 'G' then
-                                                                    GenPostingSetup."Purch. Account" := NoCuenta
-                                                                else
-                                                                    GenPostingSetup."Sales Account" := NoCuenta;
-                                                                GenPostingSetup.Insert();
+                                                                if GenPostingSetup.Get(GenNegPostingGrup.Code, GenProdPostingGroup.Code) then begin
+                                                                    if IngresoGasto = 'G' then
+                                                                        GenPostingSetup."Purch. Account" := NoCuenta
+                                                                    else
+                                                                        GenPostingSetup."Sales Account" := NoCuenta;
+                                                                    GenPostingSetup.Modify(true);
+                                                                end else begin
+                                                                    GenPostingSetup.Init;
+                                                                    GenPostingSetup."Gen. Bus. Posting Group" := GenNegPostingGrup.Code;
+                                                                    GenPostingSetup."Gen. Prod. Posting Group" := GenProdPostingGroup.Code;
+                                                                    if IngresoGasto = 'G' then
+                                                                        GenPostingSetup."Purch. Account" := NoCuenta
+                                                                    else
+                                                                        GenPostingSetup."Sales Account" := NoCuenta;
+                                                                    GenPostingSetup.Insert(true);
+                                                                end;
                                                             until GenNegPostingGrup.next = 0;
                                                     end;
                                                     Item.Modify(true);

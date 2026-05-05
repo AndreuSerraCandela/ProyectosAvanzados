@@ -23,17 +23,18 @@
 
     },
     {
-      "name": "Andreu",
+      "name": "Sandbox",
       "request": "launch",
       "type": "al",
-      "tenant": "2ced0470-8346-4f24-97da-ec029d56d980",
       "environmentType": "Sandbox",
-      "environmentName": "sandbox",
-      "breakOnError": "All",
+      "environmentName": "Sandbox",
+      "startupObjectId": 22,
+      "startupObjectType": "Page",
+      "breakOnError": true,
       "launchBrowser": true,
-      "schemaUpdateMode": "Synchronize",
       "enableLongRunningSqlStatements": true,
-      "enableSqlInformationDebugger": true
+      "enableSqlInformationDebugger": true,
+      "schemaUpdateMode": "Synchronize"
   },
   {
     "name": "PardGroup",

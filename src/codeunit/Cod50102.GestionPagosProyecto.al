@@ -142,7 +142,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                     If PurchInvLine.Get(jobledgerentry."Document No.", jobledgerentry."Document Line No.") then begin
                         PurchInvLine.SetRange("Document No.", jobledgerentry."Document No.");
                         if PurchInvLine.FindFirst() then begin
-                            JobLedgerEntry."Bruto Factura" := PurchInvLine."Amount Including VAT";
+                            JobLedgerEntry."Bruto Factura" := PurchInvLine."Amount Including VAT" - PurchInvLine."Retention Amount (IRPF)";
                             JobLedgerEntry."IGIC O IVA" := PurchInvLine."VAT %";
                             JobLedgerEntry."Importe IGIC O IVA" := PurchInvLine."Amount Including VAT" - PurchInvLine.Amount;
                             JobLedgerEntry.IRPF := PurchInvLine."Retention Amount (IRPF)";
@@ -151,7 +151,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                         if PurchCrMemoLine.Get(jobledgerentry."Document No.", jobledgerentry."Document Line No.") then begin
                             PurchCrMemoLine.SetRange("Document No.", jobledgerentry."Document No.");
                             if PurchCrMemoLine.FindFirst() then
-                                JobLedgerEntry."Bruto Factura" := PurchCrMemoLine."Amount Including VAT";
+                                JobLedgerEntry."Bruto Factura" := PurchCrMemoLine."Amount Including VAT" - PurchCrMemoLine."Retention Amount (IRPF)";
                             JobLedgerEntry."IGIC O IVA" := PurchCrMemoLine."VAT %";
                             JobLedgerEntry."Importe IGIC O IVA" := PurchCrMemoLine."Amount Including VAT" - PurchCrMemoLine.Amount;
                             JobLedgerEntry.IRPF := PurchCrMemoLine."Retention Amount (IRPF)";
@@ -243,7 +243,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                     PurchInvLine.SetRange("Document No.", VendorLedgerEntry."Document No.");
                     if PurchInvLine.FindSet() then
                         repeat
-                            TotalInvoiceAmount += PurchInvLine."Amount Including VAT";
+                            TotalInvoiceAmount += PurchInvLine."Amount Including VAT" - PurchInvLine."Retention Amount (IRPF)";
 
                         until PurchInvLine.Next() = 0;
                     if TotalInvoiceAmount = 0 then
@@ -266,7 +266,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                                 ProyectoFacturaCompra."Job Planning Line No." := PurchInvLine."Job Planning Line No.";
                                 ProyectoFacturaCompra."Vendor No." := VendorLedgerEntry."Vendor No.";
                                 ProyectoFacturaCompra."Entry No." := VendorLedgerEntry."Entry No.";
-                                ProyectoFacturaCompra."Amount Paid" := ProjectPaymentAmount * PurchInvLine."Amount Including VAT";
+                                ProyectoFacturaCompra."Amount Paid" := ProjectPaymentAmount * (PurchInvLine."Amount Including VAT" - PurchInvLine."Retention Amount (IRPF)");
                                 ProyectoFacturaCompra."Base Amount Paid" := ProjectPaymentAmount * PurchInvLine.Amount;
                                 ProyectoFacturaCompra."Job Entry No." := jobledgerentry."Entry No.";
                                 ProyectoFacturaCompra."Job Planning Line No." := PurchInvLine."Job Planning Line No.";
@@ -284,7 +284,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                     PurchCrMemoLine.SetRange("Document No.", VendorLedgerEntry."Document No.");
                     if PurchCrMemoLine.FindSet() then
                         repeat
-                            TotalInvoiceAmount += PurchCrMemoLine."Amount Including VAT";
+                            TotalInvoiceAmount += PurchCrMemoLine."Amount Including VAT" - PurchCrMemoLine."Retention Amount (IRPF)";
                         until PurchCrMemoLine.Next() = 0;
                     if TotalInvoiceAmount = 0 then
                         exit;
@@ -306,7 +306,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                                 ProyectoFacturaCompra."Job Planning Line No." := PurchCrMemoLine."Job Planning Line No.";
                                 ProyectoFacturaCompra."Vendor No." := VendorLedgerEntry."Vendor No.";
                                 ProyectoFacturaCompra."Entry No." := VendorLedgerEntry."Entry No.";
-                                ProyectoFacturaCompra."Amount Paid" := -ProjectPaymentAmount * PurchCrMemoLine."Amount Including VAT";
+                                ProyectoFacturaCompra."Amount Paid" := -ProjectPaymentAmount * (PurchCrMemoLine."Amount Including VAT" - PurchCrMemoLine."Retention Amount (IRPF)");
                                 ProyectoFacturaCompra."Base Amount Paid" := -ProjectPaymentAmount * PurchCrMemoLine.Amount;
                                 ProyectoFacturaCompra."Job Entry No." := jobledgerentry."Entry No.";
                                 ProyectoFacturaCompra."Job Planning Line No." := PurchCrMemoLine."Job Planning Line No.";
@@ -322,7 +322,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                     PurchInvLine.SetRange("Document No.", VendorLedgerEntry."Document No.");
                     if PurchInvLine.FindSet() then
                         repeat
-                            TotalInvoiceAmount += PurchInvLine."Amount Including VAT";
+                            TotalInvoiceAmount += PurchInvLine."Amount Including VAT" - PurchInvLine."Retention Amount (IRPF)";
 
                         until PurchInvLine.Next() = 0;
                     if TotalInvoiceAmount = 0 then
@@ -345,7 +345,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
                                 ProyectoFacturaCompra."Job Planning Line No." := PurchInvLine."Job Planning Line No.";
                                 ProyectoFacturaCompra."Vendor No." := VendorLedgerEntry."Vendor No.";
                                 ProyectoFacturaCompra."Entry No." := VendorLedgerEntry."Entry No.";
-                                ProyectoFacturaCompra."Amount Paid" := -ProjectPaymentAmount * PurchInvLine."Amount Including VAT";
+                                ProyectoFacturaCompra."Amount Paid" := -ProjectPaymentAmount * (PurchInvLine."Amount Including VAT" - PurchInvLine."Retention Amount (IRPF)");
                                 ProyectoFacturaCompra."Base Amount Paid" := -ProjectPaymentAmount * PurchInvLine.Amount;
                                 ProyectoFacturaCompra."Job Entry No." := jobledgerentry."Entry No.";
                                 ProyectoFacturaCompra."Job Planning Line No." := PurchInvLine."Job Planning Line No.";

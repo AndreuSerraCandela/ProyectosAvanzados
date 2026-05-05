@@ -2309,6 +2309,7 @@ codeunit 50301 "ProcesosProyectos"
                             if Vendor.FindFirst() then begin
                                 // Si es proveedor, usar la cuenta contable del proveedor
                                 esProveedor := true;
+                                ProveedorEmpleado := Vendor."No.";
                                 Tipo := 'PRODUCTO';
                             end else Begin
                                 Employee.SetRange(Name, ProveedorEmpleado);
@@ -2321,9 +2322,11 @@ codeunit 50301 "ProcesosProyectos"
                                             esEmpleado := true;
                                         end;
                                     end;
-                                end;
+                                end else
+                                    ProveedorEmpleado := '';
                             end;
-                        end;
+                        end else
+                            Vendor.Init();
 
                         // // Si no se encontró cuenta, usar Budget Code como cuenta contable
                         // if NoCuenta = '' then begin
@@ -2442,6 +2445,7 @@ codeunit 50301 "ProcesosProyectos"
                                     end;
                             end;
 
+                            BudgetNormal := 0;
                             EsDesdobleProduccion := ImporteProduccion <> 0;
                             if EsDesdobleProduccion then begin
                                 if DescripcionProduccion = '' then
@@ -2476,6 +2480,7 @@ codeunit 50301 "ProcesosProyectos"
                                     JobPlanningLine."Schedule Line" := false;
                                 end;
                                 JobPlanningLine.Validate(Producción, false);
+
                             end else
                                 if Budget <> 0 then begin
                                     JobPlanningLine."Total Cost (LCY)" := Budget;
@@ -2483,6 +2488,7 @@ codeunit 50301 "ProcesosProyectos"
                                     JobPlanningLine."Total Cost" := Budget;
                                     JobPlanningLine."Unit Cost" := Budget;
                                     JobPlanningLine."Schedule Line" := true;
+                                    JobPlanningLine.Validate(Producción, false);
                                 end;
                             If FacturadoContra <> '' Then begin
                                 IcParter.SetRange("Inbox Details", FacturadoContra);
@@ -2494,10 +2500,12 @@ codeunit 50301 "ProcesosProyectos"
                                 JobPlanningLine.Validate("Cod_Proveedor", Vendor."No.");
                             end;
                             JobPlanningLine."Usage Link" := true;
-                            repeat
-                                JobPlanningLine."Line No." := LineNo;
-                                LineNo += 10000;
-                            until JobPlanningLine.Insert(true);
+                            If (JobPlanningLine."Total Cost (LCY)" <> 0) Then begin
+                                repeat
+                                    JobPlanningLine."Line No." := LineNo;
+                                    LineNo += 10000;
+                                until JobPlanningLine.Insert(true);
+                            end;
 
                             if EsDesdobleProduccion then begin
                                 JobPlanningLineNormal := JobPlanningLine;
@@ -2634,6 +2642,7 @@ codeunit 50301 "ProcesosProyectos"
                                 JobLedgerEntry."Facturado Contra" := FacturadoContra;
                                 JobLedgerEntry."FIC" := FIC;
                                 JobLedgerEntry."RegistroPresupuestario" := RegistroPresupuestario;
+                                JobLedgerEntry.Producción := EsDesdobleProduccion;
                                 // if EsDesdobleProduccion then begin
                                 //     JobLedgerEntry.Producción := JobPlanningLineNormal.Producción;
                                 //     Eventosproyectos.AssignDimensionProduction(JobLedgerEntry, JobPlanningLineNormal);

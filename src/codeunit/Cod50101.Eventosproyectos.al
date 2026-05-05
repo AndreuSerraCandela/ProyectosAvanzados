@@ -137,7 +137,7 @@ codeunit 50302 "Eventos-proyectos"
                 end;
                 If PurchaseInvLine."Line No." <> 0 then begin
                     Rec."Neto Factura" := PurchaseInvLine.Amount;
-                    Rec."Bruto Factura" := PurchaseInvLine."Amount Including VAT";
+                    Rec."Bruto Factura" := PurchaseInvLine."Amount Including VAT" - PurchaseInvLine."Retention Amount (IRPF)";
                     Rec."IGIC O IVA" := PurchaseInvLine."VAT %";
                     Rec."Importe IGIC O IVA" := PurchaseInvLine."Amount Including VAT" - PurchaseInvLine.Amount;
                     rec.IRPF := PurchaseInvLine."Retention Amount (IRPF)";
@@ -149,7 +149,7 @@ codeunit 50302 "Eventos-proyectos"
                 end;
                 if PurchaseCrMemoLine."Line No." <> 0 then begin
                     Rec."Neto Factura" := -PurchaseCrMemoLine.Amount;
-                    Rec."Bruto Factura" := -PurchaseCrMemoLine."Amount Including VAT";
+                    Rec."Bruto Factura" := -(PurchaseCrMemoLine."Amount Including VAT" - PurchaseCrMemoLine."Retention Amount (IRPF)");
                     Rec."IGIC O IVA" := (PurchaseCrMemoLine."VAT %");
                     Rec."Importe IGIC O IVA" := -(PurchaseCrMemoLine."Amount Including VAT" - PurchaseCrMemoLine.Amount);
                     rec.IRPF := -PurchaseCrMemoLine."Retention Amount (IRPF)";
@@ -388,7 +388,7 @@ codeunit 50302 "Eventos-proyectos"
 
         // ProyectoFacturaCompra.Insert(true);
         JobJnlLine."Neto Factura" := PurchLine.Amount;
-        JobJnlLine."Bruto Factura" := PurchLine."Amount Including VAT";
+        JobJnlLine."Bruto Factura" := PurchLine."Amount Including VAT" - PurchLine."Retention Amount (IRPF)";
         JobJnlLine."Importe IGIC O IVA" := PurchLine."Amount Including VAT" - PurchLine.Amount;
         JobJnlLine."IGIC O IVA" := PurchLine."VAT %";
         JobJnlLine.IRPF := PurchLine."Retention Amount (IRPF)";
