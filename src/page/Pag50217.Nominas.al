@@ -188,12 +188,13 @@ page 50217 "Nominas"
                     // Procesar cada empleado
                     rNomDet.SetRange(Fecha, Rec.Fecha);
                     rNomDet.SetRange(Departamento, Rec.Departamento);
-
+                    rNomDet.ModifyAll("Devengado Proyecto", 0);
+                    rNomDet.ModifyAll("SS Proyecto", 0);
                     if rNomDet.FindSet() then
                         repeat
                             if Employee.Get(rNomDet.Empleado) then begin
                                 ProcesosProyectos.CrearLineasDiarioNominas(
-                                    GenJnlLine, Employee, rNomDet, EmpresaNombre, Rec.Fecha, Doc, LINEA, rOr);
+                                    GenJnlLine, Employee, rNomDet, EmpresaNombre, Rec.Fecha, Doc, LINEA, rOr, rNomDet."SS Proyecto", rNomDet."Devengado Proyecto");
                             end;
                         until rNomDet.Next() = 0;
 

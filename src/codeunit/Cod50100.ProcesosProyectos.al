@@ -3758,6 +3758,23 @@ Fila: Integer)
             EmplLedgEntry."Global Dimension 2 Code" := GetProgramaNominas(Employee."No.");
     end;
 
+    procedure CalculaImporteDebe(Importe: Decimal; var ImporteSS: Decimal; var ImporteDevengado: Decimal; Cuenta: Code[20]): Decimal
+    begin
+        if CopyStr(Cuenta, 1, 3) = '642' then
+            ImporteSS += Importe;
+        if CopyStr(Cuenta, 1, 3) = '640' then
+            ImporteDevengado += Importe;
+        exit(Importe);
+    end;
+
+    procedure CalculaImporteHaber(Importe: Decimal; var ImporteSS: Decimal; var ImporteDevengado: Decimal; Cuenta: Code[20]): Decimal
+    begin
+        if CopyStr(Cuenta, 1, 3) = '642' then
+            ImporteSS -= Importe;
+        if CopyStr(Cuenta, 1, 3) = '640' then
+            ImporteDevengado -= Importe;
+        exit(Importe);
+    end;
     /// <summary>
     /// Crea las líneas de diario para una nómina
     /// </summary>
@@ -3769,7 +3786,7 @@ Fila: Integer)
         Fecha: Date;
         DocNo: Code[20];
         var LINEA: Integer;
-        rOr: Record "Source Code")
+        rOr: Record "Source Code"; var SSProyecto: Decimal; var DevengadoProyecto: Decimal)
     var
         Cuenta: Code[20];
         Devengado: Decimal;
@@ -3822,7 +3839,8 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Debit Amount", Devengado - Kms - DtoEspecie - Dieta);
+            GenJnlLine.Validate("Debit Amount", CalculaImporteDebe(Devengado - Kms - DtoEspecie - Dieta, SSProyecto, DevengadoProyecto, Cuenta));
+
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -3847,7 +3865,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Debit Amount", Kms);
+            GenJnlLine.Validate("Debit Amount", CalculaImporteDebe(Kms, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -3872,7 +3890,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Debit Amount", DtoEspecie);
+            GenJnlLine.Validate("Debit Amount", CalculaImporteDebe(DtoEspecie, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -3897,7 +3915,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Credit Amount", DtoEspecie);
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(DtoEspecie, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -3922,7 +3940,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Debit Amount", Dieta);
+            GenJnlLine.Validate("Debit Amount", CalculaImporteDebe(Dieta, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -3946,7 +3964,7 @@ Fila: Integer)
             GenJnlLine."Account No." := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Anticipos');
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Credit Amount", Anticipos);
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(Anticipos, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -3970,7 +3988,7 @@ Fila: Integer)
             GenJnlLine."Account No." := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Embargos');
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Credit Amount", Embargos);
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(Embargos, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -3996,7 +4014,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("debit Amount", Bonificacion);
+            GenJnlLine.Validate("debit Amount", CalculaImporteDebe(Bonificacion, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -4022,7 +4040,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Credit Amount", BonificacionFundae);
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(BonificacionFundae, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -4048,7 +4066,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Debit Amount", SSEmpresa);
+            GenJnlLine.Validate("Debit Amount", CalculaImporteDebe(SSEmpresa, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -4073,7 +4091,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Credit Amount", EnfermedadAccidente);
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(EnfermedadAccidente, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -4096,7 +4114,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Debit Amount", EnfermedadAccidente);
+            GenJnlLine.Validate("Debit Amount", CalculaImporteDebe(EnfermedadAccidente, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -4126,7 +4144,7 @@ Fila: Integer)
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
             // La cuenta 476 debe incluir SS Obrero + SS Empresa
-            GenJnlLine.Validate("Credit Amount", SSObrero + SSEmpresa + Bonificacion);
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(SSObrero + SSEmpresa + Bonificacion, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -4155,7 +4173,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Credit Amount", IRPF);
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(IRPF, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -4190,7 +4208,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Credit Amount", ImportePersonalLinea);
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(ImportePersonalLinea, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -4219,7 +4237,7 @@ Fila: Integer)
             GenJnlLine."Account No." := Cuenta;
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Credit Amount", AntDiet);
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(AntDiet, SSProyecto, DevengadoProyecto, Cuenta));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -4245,7 +4263,7 @@ Fila: Integer)
                 GenJnlLine."Account No." := Cuenta;
                 GenJnlLine.Validate("Account No.");
                 GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-                GenJnlLine.Validate("Debit Amount", AntDiet);
+                GenJnlLine.Validate("Debit Amount", CalculaImporteDebe(AntDiet, SSProyecto, DevengadoProyecto, Cuenta));
                 GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
                 GenJnlLine."Gen. Bus. Posting Group" := '';
                 GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -4294,8 +4312,8 @@ Fila: Integer)
         then
             exit;
 
-        ImporteSSEmpresa := NominaDetalle."SS empresa";
-        ImporteNomina := NominaDetalle.Coste - ImporteSSEmpresa;
+        ImporteSSEmpresa := NominaDetalle."SS Proyecto";
+        ImporteNomina := NominaDetalle."Devengado Proyecto";
 
         if (ImporteNomina = 0) and (ImporteSSEmpresa = 0) then
             exit;

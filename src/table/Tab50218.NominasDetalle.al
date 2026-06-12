@@ -385,6 +385,18 @@ table 50218 "Nominas Detalle"
                 ActualizarDimensionesEnEmpleado();
             end;
         }
+        field(483; "Devengado Proyecto"; Decimal)
+        {
+            Caption = 'Devengado Proyecto';
+            DataClassification = ToBeClassified;
+            AutoFormatType = 1;
+        }
+        field(484; "SS Proyecto"; Decimal)
+        {
+            Caption = 'SS Proyecto';
+            DataClassification = ToBeClassified;
+            AutoFormatType = 1;
+        }
     }
 
     keys
