@@ -1,6 +1,6 @@
 codeunit 50302 "Eventos-proyectos"
 {
-    Permissions = TableData "G/L Entry" = rimd, Tabledata "Job Ledger Entry" = rimd, TableData "Job Register" = rimd, TableData "Proyecto Movimiento Pago" = ri, TableData "Employee Ledger Entry" = r;
+    Permissions = TableData "G/L Entry" = rimd, Tabledata "Job Ledger Entry" = rimd, TableData "Job Register" = rimd, TableData "Proyecto Movimiento Pago" = ri, TableData "Employee Ledger Entry" = rim;
     trigger OnRun()
     begin
 
@@ -67,6 +67,49 @@ codeunit 50302 "Eventos-proyectos"
         If ProyectoMovimientoPago.Insert(true) Then;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", OnPostEmployeeOnBeforeEmployeeLedgerEntryInsert, '', false, false)]
+    local procedure OnPostEmployeeOnBeforeEmployeeLedgerEntryInsert(var GenJnlLine: Record "Gen. Journal Line"; var EmployeeLedgerEntry: Record "Employee Ledger Entry"; GLRegister: Record "G/L Register")
+    begin
+        EmployeeLedgerEntry."Tipo Mov. Empleado" := GenJnlLine."Tipo Mov. Empleado";
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", OnBeforeInitGLEntry, '', false, false)]
+    local procedure OnBeforeInitGLEntry(var GenJournalLine: Record "Gen. Journal Line"; var GLAccNo: Code[20]; SystemCreatedEntry: Boolean; Amount: Decimal; AmountAddCurr: Decimal; FADimAlreadyChecked: Boolean; var IsHandled: Boolean; var GLEntry: Record "G/L Entry"; UseAmountAddCurr: Boolean; NextEntryNo: Integer; NextTransactionNo: Integer)
+    var
+        Employee: Record Employee;
+        EmployeePostingGroup: Record "Employee Posting Group";
+
+    begin
+        If GenJournalLine."Tipo Mov. Empleado" = GenJournalLine."Tipo Mov. Empleado"::IRPF then begin
+            If Employee.Get(GenJournalLine."Account No.") Then
+                If EmployeePostingGroup.Get(Employee."Employee Posting Group") Then
+                    GLAccNo := EmployeePostingGroup."Cuenta IRPF";
+        end;
+        If GenJournalLine."Tipo Mov. Empleado" = GenJournalLine."Tipo Mov. Empleado"::"Seg. Social" then begin
+            If Employee.Get(GenJournalLine."Account No.") Then
+                If EmployeePostingGroup.Get(Employee."Employee Posting Group") Then
+                    GLAccNo := EmployeePostingGroup."Cuenta Seg Social";
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", OnBeforeCreateGLEntriesForTotalAmountsV19, '', false, false)]
+    local procedure OnBeforeCreateGLEntriesForTotalAmountsV19(var TempDimPostingBuffer: Record "Dimension Posting Buffer" temporary; GenJournalLine: Record "Gen. Journal Line"; var GLAccNo: Code[20]; var IsHandled: Boolean; AdjAmountBuf: array[4] of Decimal; SavedEntryNo: Integer)
+    var
+        Employee: Record Employee;
+        EmployeePostingGroup: Record "Employee Posting Group";
+    begin
+        If GenJournalLine."Tipo Mov. Empleado" = GenJournalLine."Tipo Mov. Empleado"::IRPF then begin
+            If Employee.Get(GenJournalLine."Account No.") Then
+                If EmployeePostingGroup.Get(Employee."Employee Posting Group") Then
+                    GLAccNo := EmployeePostingGroup."Cuenta IRPF";
+        end;
+        If GenJournalLine."Tipo Mov. Empleado" = GenJournalLine."Tipo Mov. Empleado"::"Seg. Social" then begin
+            If Employee.Get(GenJournalLine."Account No.") Then
+                If EmployeePostingGroup.Get(Employee."Employee Posting Group") Then
+                    GLAccNo := EmployeePostingGroup."Cuenta Seg Social";
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Batch", OnBeforeUpdateAndDeleteLines, '', false, false)]
     local procedure OnBeforeUpdateAndDeleteLines(var GenJournalLine: Record "Gen. Journal Line"; CommitIsSuppressed: Boolean; var IsHandled: Boolean)
     var
@@ -82,8 +125,20 @@ codeunit 50302 "Eventos-proyectos"
                 DocNo := GenJournalLine."Document No.";
                 Fecha := GenJournalLine."Posting Date";
                 ProcesosProyectos.CrearMovimientosEmpleadosDesdeDiario(DocNo, Fecha);
+                ProcesosProyectos.CrearMovimientosProyectoDesdeNomina(DocNo, Fecha);
             end;
 
+    end;
+
+    /// <summary>
+    /// Evita que el registro estándar del diario de nóminas cree Job Ledger Entry por cada línea contable.
+    /// Los movimientos de proyecto se generan en CrearMovimientosProyectoDesdeNomina (coste principal + SS empresa en tarea SS).
+    /// </summary>
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Post-Line", OnBeforePostGenJnlLine, '', false, false)]
+    local procedure OnBeforePostGenJnlLineNomina(var JobJournalLine: Record "Job Journal Line"; GenJournalLine: Record "Gen. Journal Line"; GLEntry: Record "G/L Entry"; var IsHandled: Boolean; var JobJnlPostLine: Codeunit "Job Jnl.-Post Line")
+    begin
+        if GenJournalLine."Source Code" = 'NOMINAS' then
+            IsHandled := true;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Job Create-Invoice", 'OnBeforeTestSalesHeader', '', false, false)]

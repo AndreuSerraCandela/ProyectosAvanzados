@@ -262,11 +262,11 @@ table 50117 "Proyecto Movimiento Pago"
             ProyectoMovimientoPago.Reset();
             ProyectoMovimientoPago.SetRange("Job Entry No.", "Job Entry No.");
             ProyectoMovimientoPago.CalcSums("Amount Paid");
-            TotalPaidJob := ProyectoMovimientoPago."Amount Paid" - xRec."Amount Paid" + Rec."Amount Paid";
+            TotalPaidJob := ABS(ProyectoMovimientoPago."Amount Paid" - xRec."Amount Paid" + Rec."Amount Paid");
 
             if not JobLedgerEntry.Get("Job Entry No.") then
                 Error('No existe el movimiento de proyecto Nº %1.', "Job Entry No.");
-            MaxAmountJob := JobLedgerEntry."Bruto Factura";
+            MaxAmountJob := ABS(JobLedgerEntry."Bruto Factura");
             if MaxAmountJob = 0 then
                 MaxAmountJob := Abs(JobLedgerEntry."Total Cost (LCY)");
             if TotalPaidJob > MaxAmountJob then
@@ -294,6 +294,24 @@ table 50117 "Proyecto Movimiento Pago"
                 Error('La suma de importes pagados (%1) para el Entry No. %2 no puede superar el importe del movimiento (%3).',
                     TotalPaidEntry, "Entry No.", MaxAmountEntry);
         end;
+    end;
+
+    procedure DevuelvePaymentAmounts(entryNo: Integer): Decimal
+    var
+        EmployeeLedgerEntry: Record "Employee Ledger Entry";
+        TotalEmployeeLedgerEntry: Record "Employee Ledger Entry";
+        AmountTotal: Decimal;
+    begin
+        EmployeeLedgerEntry.Get(entryNo);// 1) Suma de movimientos de pago para este Job Entry No. no puede superar el importe del movimiento de proyecto
+        TotalEmployeeLedgerEntry.SetRange("Employee No.", EmployeeLedgerEntry."Employee No.");
+        TotalEmployeeLedgerEntry.SetFilter("Entry No.", '<>%1', entryNo);
+        TotalEmployeeLedgerEntry.SetRange("Posting Date", EmployeeLedgerEntry."Posting Date");
+        if TotalEmployeeLedgerEntry.FindSet() then
+            repeat
+                TotalEmployeeLedgerEntry.CalcFields("Original Amount");
+                AmountTotal += TotalEmployeeLedgerEntry."Original Amount";
+            until TotalEmployeeLedgerEntry.Next() = 0;
+        exit(AmountTotal);
     end;
 
 

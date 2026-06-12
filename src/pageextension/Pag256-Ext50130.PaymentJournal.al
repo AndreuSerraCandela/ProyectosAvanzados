@@ -20,6 +20,11 @@ pageextension 50332 "Payment Journal Ext" extends "Payment Journal"
                 Caption = 'Nº Tarea Proyecto';
                 ToolTip = 'Especifica el número de la tarea del proyecto asociada a esta línea del diario de pagos.';
             }
+            field("Tipo Mov. Empleado"; Rec."Tipo Mov. Empleado")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Clasifica el movimiento de empleado: nómina, IRPF o Seguridad Social.', Comment = 'ESP="Clasifica el movimiento de empleado: nómina, IRPF o Seguridad Social."';
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ table 50215 "Nominas Configuración"
         {
             DataClassification = ToBeClassified;
             Caption = 'S.S Obrero';
-            TableRelation = "G/L Account";
+            TableRelation = if ("Account Type Seg Social" = CONST("G/L Account")) "G/L Account" else if ("Account Type Seg Social" = CONST("Employee")) Employee;
         }
         field(6; IRPF; Code[20])
         {
@@ -71,6 +71,18 @@ table 50215 "Nominas Configuración"
             TableRelation = "Bank Account";
         }
         field(3; "Account Type"; Enum "Gen. Journal Account Type")
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Account Type';
+
+        }
+        field(15; "Account Type IRPF"; Enum "Gen. Journal Account Type")
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Account Type';
+
+        }
+        field(16; "Account Type Seg Social"; Enum "Gen. Journal Account Type")
         {
             DataClassification = ToBeClassified;
             Caption = 'Account Type';
@@ -149,7 +161,7 @@ table 50215 "Nominas Configuración"
         {
             DataClassification = ToBeClassified;
             Caption = 'SS empresa 2';
-            TableRelation = "G/L Account";
+            TableRelation = if ("Account Type Seg Social" = CONST("G/L Account")) "G/L Account" else if ("Account Type Seg Social" = CONST("Employee")) Employee;
         }
         field(23; "Enfermedad Accidente 2"; Code[20])
         {
@@ -168,6 +180,12 @@ table 50215 "Nominas Configuración"
             DataClassification = ToBeClassified;
             Caption = 'Ant.diet';
             TableRelation = "G/L Account";
+        }
+        field(81; "Ant.diet Contrapartida"; Enum "Ant.diet Contrapartida Nóminas")
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Ant.diet Contrapartida';
+            InitValue = Anticipos;
         }
         field(25; Alquileres; Code[20])
         {

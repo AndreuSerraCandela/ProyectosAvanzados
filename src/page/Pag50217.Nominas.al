@@ -138,7 +138,7 @@ page 50217 "Nominas"
                 Image = Register;
                 Caption = 'Contabilizar';
                 ShortCutKey = 'F9';
-                ToolTip = 'Contabiliza las nóminas creando las líneas de diario y movimientos de empleado';
+                ToolTip = 'Genera las líneas del diario de nóminas. Al registrar el diario se crean los movimientos de empleado y de proyecto (coste total).';
 
                 trigger OnAction()
                 var
@@ -193,11 +193,7 @@ page 50217 "Nominas"
                         repeat
                             if Employee.Get(rNomDet.Empleado) then begin
                                 ProcesosProyectos.CrearLineasDiarioNominas(
-                                    GenJnlLine, Employee, EmpresaNombre, Rec.Fecha, Doc, LINEA, rOr,
-                                    rNomDet.Devengado, rNomDet."S.S Obrero", rNomDet.IRPF, rNomDet."SS empresa",
-                                    rNomDet."Enfermedad Accidente", rNomDet."Bonificación", rNomDet."Bonificación Fundae",
-                                    rNomDet.Anticipos, rNomDet.Embargos, rNomDet."Dto. Especie", rNomDet.Dieta,
-                                    rNomDet.Kms, rNomDet.Banco, rNomDet.Personal, rNomDet."Ant.diet");
+                                    GenJnlLine, Employee, rNomDet, EmpresaNombre, Rec.Fecha, Doc, LINEA, rOr);
                             end;
                         until rNomDet.Next() = 0;
 

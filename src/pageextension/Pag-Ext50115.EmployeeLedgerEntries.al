@@ -25,6 +25,11 @@ pageextension 50321 "EmployeeLedgerEntriesExt" extends "Employee Ledger Entries"
                 Caption = 'Nº Línea Planificación Proyecto';
                 ToolTip = 'Especifica el número de la línea de planificación del proyecto asociada a esta entrada del mayor de empleados.';
             }
+            field("Tipo Mov. Empleado"; Rec."Tipo Mov. Empleado")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Clasifica el movimiento: nómina, IRPF o Seguridad Social.', Comment = 'ESP="Clasifica el movimiento: nómina, IRPF o Seguridad Social."';
+            }
         }
     }
 

@@ -23,6 +23,11 @@ tableextension 50320 "EmployeeLedgerEntryExt" extends "Employee Ledger Entry" //
             DataClassification = ToBeClassified;
             TableRelation = "Job Planning Line"."Line No." where("Job No." = field("Job No."), "Job Task No." = field("Job Task No."));
         }
+        field(50100; "Tipo Mov. Empleado"; Enum "Tipo Mov. Empleado")
+        {
+            Caption = 'Tipo Mov. Empleado', Comment = 'ESP="Tipo Mov. Empleado"';
+            DataClassification = CustomerContent;
+        }
     }
 }
 

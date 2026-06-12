@@ -55,6 +55,16 @@ page 50215 "Configuración Nominas"
                         Caption = 'Dieta';
                         ApplicationArea = All;
                     }
+                    field("Ant.diet"; Rec."Ant.diet")
+                    {
+                        Caption = 'Ant.diet';
+                        ApplicationArea = All;
+                    }
+                    field("Ant.diet Contrapartida"; Rec."Ant.diet Contrapartida")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Sin contrapartida: no contabiliza Ant.diet. Anticipos: HABER Ant.diet y DEBE Anticipos. Personal: suma Ant.diet a la línea de Personal.';
+                    }
                 }
                 group(HaberGeneral)
                 {
@@ -64,10 +74,20 @@ page 50215 "Configuración Nominas"
                         Caption = 'Descuento Especie Haber';
                         ApplicationArea = All;
                     }
-                    field("S.S Obrero"; Rec."S.S Obrero")
+                    field("Account Type Seg Social"; Rec."Account Type Seg Social")
                     {
                         ApplicationArea = All;
-                        Caption = 'S.S Obrero';
+                        Caption = 'Account Type Seg Social';
+                    }
+                    field("S.S Social Acreedora"; Rec."S.S Obrero")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'S.S Social Acreedora';
+                    }
+                    field("Account Type IRPF"; Rec."Account Type IRPF")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Account Type IRPF';
                     }
                     field(IRPF; Rec.IRPF)
                     {
@@ -131,11 +151,17 @@ page 50215 "Configuración Nominas"
                         ApplicationArea = All;
                         Caption = 'Enfermedad Accidente';
                     }
-                    field("SS empresa 2"; Rec."SS empresa 2")
-                    {
-                        ApplicationArea = All;
-                        Caption = 'SS empresa 2';
-                    }
+                    // //Tipo de cuenta para la segunda SS empresa
+                    // field("Account Type SS empresa 2"; Rec."Account Type Seg Social")
+                    // {
+                    //     ApplicationArea = All;
+                    //     Caption = 'Account Type SS empresa 2';
+                    // }
+                    // field("SS empresa 2"; Rec."SS empresa 2")
+                    // {
+                    //     ApplicationArea = All;
+                    //     Caption = 'SS empresa 2';
+                    // }
                 }
             }
             group(Facturación)

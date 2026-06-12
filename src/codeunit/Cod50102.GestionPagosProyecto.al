@@ -173,11 +173,12 @@ codeunit 50102 "Gestión Pagos Proyecto"
         ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
         JobLedgerEntry: Record "Job Ledger Entry";
         AmountToApply: Decimal;
+        ImporteTotal: Decimal;
     begin
         if not EmployeeLedgerEntry.FindSet() then
             exit;
         repeat
-            if EmployeeLedgerEntry."Job No." <> '' then begin
+            if EmployeeLedgerEntry."Document Type" = EmployeeLedgerEntry."Document Type"::Payment then begin
                 // Evitar duplicados: ya existe un pago para este movimiento de empleado (Entry No. = Employee Ledger Entry = G/L Entry)
                 ProyectoMovimientoPago.Reset();
                 ProyectoMovimientoPago.SetRange("Document Type", ProyectoMovimientoPago."Document Type"::" ");
@@ -193,11 +194,15 @@ codeunit 50102 "Gestión Pagos Proyecto"
                         JobLedgerEntry.SetRange("Entry Type", JobLedgerEntry."Entry Type"::Usage);
                     end;
                     if JobLedgerEntry.FindFirst() then begin
+                        ImporteTotal := JobLedgerEntry."Bruto Factura";
                         // Importe a liquidar: valor absoluto del movimiento de empleado
                         EmployeeLedgerEntry.CalcFields("Original Amount");
                         AmountToApply := Abs(EmployeeLedgerEntry."Original Amount");
                         if AmountToApply = 0 then
                             AmountToApply := Abs(EmployeeLedgerEntry.Amount);
+                        If EmployeeLedgerEntry."Tipo Mov. Empleado" = EmployeeLedgerEntry."Tipo Mov. Empleado"::Nomina Then begin
+                            AmountToApply := ImporteTotal - ProyectoMovimientoPago.DevuelvePaymentAmounts(EmployeeLedgerEntry."Entry No.");
+                        end;
                         // Crear Proyecto Movimiento Pago (documento blanco = origen empleado)
                         ProyectoMovimientoPago.Init();
                         ProyectoMovimientoPago."Document Type" := ProyectoMovimientoPago."Document Type"::" ";
@@ -615,184 +620,43 @@ codeunit 50102 "Gestión Pagos Proyecto"
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Gen. Jnl.-Post Line", OnPostEmployeeOnAfterPostDtldEmplLedgEntries, '', false, false)]
     local procedure OnPostEmployeeOnAfterPostDtldEmplLedgEntries(GenJournalLine: Record "Gen. Journal Line"; var EmployeeLedgerEntry: Record "Employee Ledger Entry"; var DtldLedgEntryInserted: Boolean)
-    var
-        JobPlanningLine: Record "Job Planning Line";
-        Employee: Record Employee;
-        JobRegister: Record "Job Register";
-        Desde: Integer;
-        Hasta: Integer;
-        NumMov: Integer;
     begin
-        // 1) Si el movimiento de empleado tiene proyecto, crear/ligar mov de uso a la línea de planificación y actualizar Qty. Posted, etc.
-        if (EmployeeLedgerEntry."Document Type" = EmployeeLedgerEntry."Document Type"::" ") then begin
-            JobPlanningLine.SetRange(Type, JobPlanningLine.Type::Resource);
-            if not Employee.Get(EmployeeLedgerEntry."Employee No.") then
-                JobPlanningLine.SetRange("No.", Employee."Resource No.");
-            JobPlanningLine.SetRange("Planning Date", 0D, EmployeeLedgerEntry."Posting Date");
-            if JobPlanningLine.FindSet() then
-                repeat
-                    NumMov := CrearOEnlazarMovUsoALineaPlanificacion(EmployeeLedgerEntry, JobPlanningLine);
-                    if Desde = 0 then
-                        Desde := NumMov;
-                    Hasta := NumMov;
-                until JobPlanningLine.Next() = 0;
-            if Desde <> 0 then begin
-                If JobRegister.FindLast() then NumMov := JobRegister."No." + 1 else NumMov := 1;
-                JobRegister.Init();
-                JobRegister."No." := NumMov;
-                JobRegister."From Entry No." := Desde;
-                JobRegister."To Entry No." := Hasta;
-                JobRegister."Creation Date" := EmployeeLedgerEntry."Posting Date";
-                JobRegister."User ID" := UserId;
-                JobRegister.Insert(true);
-            end;
-        end;
-
-        // 2) Si la línea del diario es de pago, generar Proyecto Mov. Pago para todos los mov de proyecto de ese empleado no pagados con fecha <= del movimiento de empleado liquidado
+        // Los mov. de empleado no crean mov. de proyecto (eso lo hace la contabilización de nóminas por Coste).
+        // Al pagar en banco: Proyecto Mov. Pago solo para mov. de proyecto ya existentes ligados al mov. liquidado.
         if GenJournalLine."Document Type" = GenJournalLine."Document Type"::Payment then
-            GenerarProyectoMovPagoParaEmpleadoLiquidado(GenJournalLine, EmployeeLedgerEntry);
+            GenerarProyectoMovPagoParaEmpleadoLiquidado(EmployeeLedgerEntry);
     end;
 
     /// <summary>
-    /// Crea un mov de proyecto de uso ligado a la línea de planificación si Job Ledger Entry No. = 0.
-    /// Guarda el Job Ledger Entry No. en la línea de planificación y rellena Qty. Posted, Posted Total Cost mediante Job Usage Link.
+    /// Al liquidar el pago bancario, crea Proyecto Mov. Pago para cada mov. de proyecto
+    /// cuyo Employee Entry No. coincide con un mov. de empleado de nómina que se está liquidando.
     /// </summary>
-    local procedure CrearOEnlazarMovUsoALineaPlanificacion(EmployeeLedgerEntry: Record "Employee Ledger Entry"; var JobPlanningLine: Record "Job Planning Line"): Integer
-    var
-        JobLedgerEntry: Record "Job Ledger Entry";
-        JobUsageLink: Record "Job Usage Link";
-        Employee: Record Employee;
-        EntryNo: Integer;
-        Eventosproyectos: Codeunit "Eventos-proyectos";
-    begin
-        // Si ya tiene mov de empleado ligado, no duplicar
-        if JobPlanningLine."Employee Entry No." <> 0 then
-            exit(0);
-
-        if not Employee.Get(EmployeeLedgerEntry."Employee No.") then
-            exit(0);
-        if Employee."Resource No." = '' then
-            exit(0);
-
-        // Crear Job Ledger Entry (Usage) con la misma estructura que ProcesosProyectos, datos de la línea de planificación
-        JobLedgerEntry.Init();
-        EntryNo := GetNextJobLedgerEntryNo();
-        JobLedgerEntry."Job No." := JobPlanningLine."Job No.";
-        JobLedgerEntry."Job Task No." := JobPlanningLine."Job Task No.";
-        JobLedgerEntry."Entry Type" := JobLedgerEntry."Entry Type"::Usage;
-        JobLedgerEntry."Posting Date" := EmployeeLedgerEntry."Posting Date";
-
-        JobLedgerEntry.Type := JobLedgerEntry.Type::Resource;
-        JobLedgerEntry."No." := Employee."Resource No.";
-
-        JobLedgerEntry.Description := CopyStr(JobPlanningLine.Description, 1, MaxStrLen(JobLedgerEntry.Description));
-        JobLedgerEntry.Quantity := JobPlanningLine.Quantity;
-        if JobPlanningLine."Total Cost (LCY)" <> 0 then begin
-            JobLedgerEntry."Unit Cost (LCY)" := JobPlanningLine."Unit Cost (LCY)";
-            JobLedgerEntry."Total Cost (LCY)" := JobPlanningLine."Total Cost (LCY)";
-            JobLedgerEntry."Total Cost" := JobPlanningLine."Total Cost";
-            JobLedgerEntry."Unit Cost" := JobPlanningLine."Unit Cost";
-        end;
-
-        // Campos personalizados (desde línea de planificación / empleado)
-        JobLedgerEntry."Budget Code" := '';
-        JobLedgerEntry."Neto Factura" := JobPlanningLine."Total Cost (LCY)";
-        JobLedgerEntry."Base Amount Pending" := JobPlanningLine."Total Cost (LCY)";
-        JobLedgerEntry."Amount Pending" := JobPlanningLine."Line Amount";
-        JobLedgerEntry."IGIC O IVA" := 0;
-        JobLedgerEntry."Importe IGIC O IVA" := 0;
-        JobLedgerEntry.IRPF := 0;
-        JobLedgerEntry."Bruto Factura" := JobPlanningLine."Line Amount";
-        JobLedgerEntry."Fecha VTO" := 0D;
-        JobLedgerEntry."Estado" := '';
-
-        if EmployeeLedgerEntry."Document No." <> '' then begin
-            JobLedgerEntry."Document No." := CopyStr(EmployeeLedgerEntry."Document No.", 1, MaxStrLen(JobLedgerEntry."Document No."));
-            JobLedgerEntry."External Document No." := CopyStr(EmployeeLedgerEntry."Document No.", 1, MaxStrLen(JobLedgerEntry."External Document No."));
-        end;
-
-        JobLedgerEntry."Fecha Pago" := EmployeeLedgerEntry."Posting Date";
-        JobLedgerEntry."NombreProveedor o Empleado" := CopyStr(Employee.Name, 1, MaxStrLen(JobLedgerEntry."NombreProveedor o Empleado"));
-        JobLedgerEntry."Facturado Contra" := CopyStr(JobPlanningLine."Facturado Contra", 1, MaxStrLen(JobLedgerEntry."Facturado Contra"));
-        JobLedgerEntry."FIC" := '';
-        JobLedgerEntry."RegistroPresupuestario" := '';
-        JobLedgerEntry.Producción := JobPlanningLine.Producción;
-        //Eventosproyectos.AssignDimensionProduction(JobLedgerEntry, JobPlanningLine);
-
-        JobLedgerEntry."Ledger Entry No." := EmployeeLedgerEntry."Entry No.";
-        JobLedgerEntry."Employee Entry No." := EmployeeLedgerEntry."Entry No.";
-        repeat
-            JobLedgerEntry."Entry No." := EntryNo;
-            EntryNo += 1;
-        until JobLedgerEntry.Insert();
-
-        // Crear Job Usage Link para que la línea de planificación actualice Qty. Posted, Posted Total Cost
-        JobUsageLink.Init();
-        JobUsageLink."Job No." := JobPlanningLine."Job No.";
-        JobUsageLink."Job Task No." := JobPlanningLine."Job Task No.";
-        JobUsageLink."Line No." := JobPlanningLine."Line No.";
-        JobUsageLink."Entry No." := JobLedgerEntry."Entry No.";
-        JobUsageLink.Insert(true);
-
-        // Guardar Job Ledger Entry No. y Employee Entry No. en la línea de planificación
-        JobPlanningLine."Job Ledger Entry No." := JobLedgerEntry."Entry No.";
-        JobPlanningLine."Employee Entry No." := EmployeeLedgerEntry."Entry No.";
-        JobPlanningLine.Modify(true);
-        exit(JobLedgerEntry."Entry No.");
-    end;
-
-    local procedure GetNextJobLedgerEntryNo(): Integer
-    var
-        JobLedgerEntry: Record "Job Ledger Entry";
-    begin
-        if JobLedgerEntry.FindLast() then
-            exit(JobLedgerEntry."Entry No." + 1);
-        exit(1);
-    end;
-
-    /// <summary>
-    /// Genera Proyecto Mov. Pago para todos los mov de proyecto (JLE Usage) de ese empleado no pagados,
-    /// con fecha de registro igual o anterior al movimiento detallado de empleado que se liquida.
-    /// </summary>
-    local procedure GenerarProyectoMovPagoParaEmpleadoLiquidado(GenJournalLine: Record "Gen. Journal Line"; EmployeeLedgerEntryPayment: Record "Employee Ledger Entry")
+    local procedure GenerarProyectoMovPagoParaEmpleadoLiquidado(EmployeeLedgerEntryPayment: Record "Employee Ledger Entry")
     var
         DtldEmplLedgEntry: Record "Detailed Employee Ledger Entry";
         EmplLedgEntryLiquidado: Record "Employee Ledger Entry";
-        JobLedgerEntry: Record "Job Ledger Entry";
-        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
-        FechaLiquidacion: Date;
-        EmployeeNo: Code[20];
     begin
-        EmployeeNo := EmployeeLedgerEntryPayment."Employee No.";
-        if EmployeeNo = '' then
-            exit;
-
-        // Obtener la fecha del movimiento de empleado que se liquida (el documento al que aplica el pago)
-        FechaLiquidacion := 0D;
         DtldEmplLedgEntry.SetRange("Employee Ledger Entry No.", EmployeeLedgerEntryPayment."Entry No.");
         DtldEmplLedgEntry.SetRange("Entry Type", DtldEmplLedgEntry."Entry Type"::Application);
         if DtldEmplLedgEntry.FindSet() then
             repeat
                 if EmplLedgEntryLiquidado.Get(DtldEmplLedgEntry."Applied Empl. Ledger Entry No.") then
-                    if (FechaLiquidacion = 0D) or (EmplLedgEntryLiquidado."Posting Date" > FechaLiquidacion) then
-                        FechaLiquidacion := EmplLedgEntryLiquidado."Posting Date";
+                    CrearProyectoMovPagoPorEmpleadoLiquidado(EmplLedgEntryLiquidado, EmployeeLedgerEntryPayment);
             until DtldEmplLedgEntry.Next() = 0;
+    end;
 
-        if FechaLiquidacion = 0D then
-            FechaLiquidacion := EmployeeLedgerEntryPayment."Posting Date";
-
-        // Buscar Job Ledger Entries (Usage) de este empleado con fecha <= FechaLiquidacion y no pagados totalmente
+    local procedure CrearProyectoMovPagoPorEmpleadoLiquidado(EmplLedgEntryLiquidado: Record "Employee Ledger Entry"; EmployeeLedgerEntryPayment: Record "Employee Ledger Entry")
+    var
+        JobLedgerEntry: Record "Job Ledger Entry";
+    begin
         JobLedgerEntry.Reset();
         JobLedgerEntry.SetRange("Entry Type", JobLedgerEntry."Entry Type"::Usage);
-        JobLedgerEntry.SetRange("Posting Date", 0D, FechaLiquidacion);
-        JobLedgerEntry.SetRange(Type, JobLedgerEntry.Type::Resource);
-        JobLedgerEntry.SetRange("No.", EmployeeNo);
+        JobLedgerEntry.SetRange("Employee Entry No.", EmplLedgEntryLiquidado."Entry No.");
         if JobLedgerEntry.FindSet() then
             repeat
                 if EsJobLedgerEntryNoPagadoTotalmente(JobLedgerEntry) then
                     CrearProyectoMovimientoPagoDesdeJLE(JobLedgerEntry, EmployeeLedgerEntryPayment);
             until JobLedgerEntry.Next() = 0;
-
     end;
 
     local procedure EsJobLedgerEntryNoPagadoTotalmente(JobLedgerEntry: Record "Job Ledger Entry"): Boolean
@@ -810,6 +674,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
         EmplEntry: Record "Employee Ledger Entry";
         AmountToApply: Decimal;
+        AmountTotal: Decimal;
     begin
         ProyectoMovimientoPago.SetRange("Document Type", ProyectoMovimientoPago."Document Type"::" ");
         ProyectoMovimientoPago.SetRange("Entry No.", EmployeeLedgerEntryPayment."Entry No.");
@@ -817,6 +682,8 @@ codeunit 50102 "Gestión Pagos Proyecto"
         if ProyectoMovimientoPago.FindFirst() then
             exit;
 
+        if JobLedgerEntry."Employee Entry No." = 0 then
+            exit;
         if not EmplEntry.Get(JobLedgerEntry."Employee Entry No.") then
             exit;
 
@@ -826,7 +693,10 @@ codeunit 50102 "Gestión Pagos Proyecto"
             AmountToApply := Abs(JobLedgerEntry."Total Cost (LCY)");
         if AmountToApply <= 0 then
             exit;
-
+        AmountTotal := JobLedgerEntry."Bruto Factura";
+        if EmplEntry."Tipo Mov. Empleado" = EmplEntry."Tipo Mov. Empleado"::Nomina Then begin
+            AmountToApply := AmountTotal - ProyectoMovimientoPago.DevuelvePaymentAmounts(EmployeeLedgerEntryPayment."Entry No.");
+        end;
         ProyectoMovimientoPago.Init();
         ProyectoMovimientoPago."Document Type" := ProyectoMovimientoPago."Document Type"::" ";
         ProyectoMovimientoPago."Document No." := EmployeeLedgerEntryPayment."Document No.";

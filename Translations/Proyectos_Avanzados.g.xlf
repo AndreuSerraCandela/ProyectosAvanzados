@@ -368,6 +368,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Account Type - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 217841478 - Field 364523824 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Account Type</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Account Type IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 1911395725 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Account Type</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Account Type Seg Social - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 217841478 - Field 39582071 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Alquileres</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -377,6 +387,11 @@
           <source>Ant.diet</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Ant.diet - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 217841478 - Field 470170369 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ant.diet Contrapartida</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Configuración - Field Ant.diet Contrapartida - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 217841478 - Field 3782970832 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Anticipos</source>
@@ -658,6 +673,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Difª - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 3322554545 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dimension Set ID</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Dimension Set ID - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 4267762956 - Field 3176012351 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Dto. Especie</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -672,6 +692,16 @@
           <source>Empleado</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Empleado - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 3977046019 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº Movimiento Empleado</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Employee Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 3744927259 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº Mov. Empleado SS</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Employee Entry No. SS - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 4267762956 - Field 311272263 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Enfermedad Accidente</source>
@@ -692,6 +722,31 @@
           <source>IRPF</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2843000315 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº Movimiento Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Job Ledger Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2002211059 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº Mov. Proyecto SS</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Job Ledger Entry No. SS - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Job No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 561421623 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº Tarea</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Job Task No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 408473039 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº Tarea SS</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Job Task No. SS - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 4267762956 - Field 2343472183 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Kms</source>
@@ -732,6 +787,16 @@
           <source>S.S Obrero</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field S.S Obrero - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 1577567912 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shortcut Dimension 1 Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Shortcut Dimension 1 Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 1003760969 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shortcut Dimension 2 Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Shortcut Dimension 2 Code - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 4267762956 - Field 1602337943 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>SS empresa</source>
@@ -1773,6 +1838,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control DebeGeneral - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 988312646 - Control 604539987 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ant.diet</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Ant.diet - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 470170369 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sin contrapartida: no contabiliza Ant.diet. Anticipos: HABER Ant.diet y DEBE Anticipos. Personal: suma Ant.diet a la línea de Personal.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Ant.diet Contrapartida - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="Page 988312646 - Control 3280333178 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Descuento Especie Debe</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1803,6 +1878,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Account Type - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 988312646 - Control 364523824 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Account Type IRPF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Account Type IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 988312646 - Control 1911395725 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Account Type Seg Social</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Account Type Seg Social - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 988312646 - Control 3782970832 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Anticipos</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1828,10 +1913,10 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Personal - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 988312646 - Control 2228552027 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>S.S Obrero</source>
+        <trans-unit id="Page 988312646 - Control 305535431 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>S.S Social Acreedora</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control S.S Obrero - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control S.S Social Acreedora - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 988312646 - Control 4280832806 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Programa</source>
@@ -1887,11 +1972,6 @@
           <source>Enfermedad Accidente</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control Enfermedad Accidente - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 988312646 - Control 1614598489 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>SS empresa 2</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page Configuración Nominas - Control SS empresa 2 - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 988312646 - Action 2250476030 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Abre la lista de configuraciones de nóminas</source>
@@ -2959,7 +3039,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Page Nominas - Action Configurar - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 3154606627 - Action 3817966508 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Contabiliza las nóminas creando las líneas de diario y movimientos de empleado</source>
+          <source>Genera las líneas del diario de nóminas. Al registrar el diario se crean los movimientos de empleado y de proyecto (coste total).</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Nominas - Action Contabilizar - Property ToolTip</note>
         </trans-unit>
@@ -3648,6 +3728,101 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 3801212730 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Coste total del empleado (devengado + SS total - enfermedad/accidente). SS total incluye S.S Obrero y SS empresa. Se imputa al proyecto al registrar el diario.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Coste - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 3322554545 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Identificador del conjunto de dimensiones.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Dimension Set ID - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 3977046019 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Movimiento de empleado Nómina (Personal). Enlaza con el mov. de proyecto principal.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Employee Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 3744927259 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Movimiento de empleado Seg. Social. Enlaza con el mov. de proyecto SS empresa.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Employee Entry No. SS - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 2843000315 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Movimiento de proyecto principal (coste sin SS empresa).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Job Ledger Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 2002211059 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Movimiento de proyecto SS empresa (cuenta 642).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Job Ledger Entry No. SS - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 1908272084 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el número del proyecto asociado a la línea de nómina.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Job No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 561421623 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tarea del proyecto para el coste de nómina (devengado y resto de coste sin SS empresa).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Job Task No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 408473039 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tarea del proyecto para la imputación de SS empresa (cuenta 642). Vinculada al mov. de empleado Seg. Social.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Job Task No. SS - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 1577567912 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el código de la dimensión global vinculada al registro.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Shortcut Dimension 1 Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 1003760969 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el código de la dimensión global vinculada al registro.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control Shortcut Dimension 2 Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 2466161546 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el código de la dimensión global vinculada al registro.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control ShortcutDimCode3 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 3103858163 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el código de la dimensión global vinculada al registro.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control ShortcutDimCode4 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 3741554780 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el código de la dimensión global vinculada al registro.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control ShortcutDimCode5 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 84284101 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el código de la dimensión global vinculada al registro.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control ShortcutDimCode6 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 721980718 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el código de la dimensión global vinculada al registro.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control ShortcutDimCode7 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Control 1359677335 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Especifica el código de la dimensión global vinculada al registro.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Control ShortcutDimCode8 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Action 2173385693 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Ver o editar las dimensiones de la línea de nómina. Los cambios se actualizan en la ficha del empleado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Action Dimensions - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 4170705766 - Action 2173385693 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dimensiones</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Subform Nominas Detalle - Action Dimensions - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3581397397 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>WordDesription</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3878,6 +4053,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension CompanyInfor - Control Permitir borrar grupos - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3600170137 - Control 3231404135 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2517437994">
+          <source>Cuenta contable de IRPF para este grupo de registro de empleado.</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Cuenta contable de IRPF para este grupo de registro de empleado."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Employee Posting Groups Ext - Control Cuenta IRPF - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3600170137 - Control 3247274934 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2517437994">
+          <source>Cuenta contable de Seguridad Social para este grupo de registro de empleado.</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Cuenta contable de Seguridad Social para este grupo de registro de empleado."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Employee Posting Groups Ext - Control Cuenta Seg Social - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 3873351432 - Action 479667089 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
           <source>Genera un movimiento de pago (Proyecto Movimiento Pago) que relaciona el movimiento de empleado seleccionado con el movimiento de proyecto correspondiente. Seleccione uno o varios movimientos con Nº Proyecto informado.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3918,6 +4103,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Control Job Task No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3873351432 - Control 3893615013 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3398968351">
+          <source>Clasifica el movimiento: nómina, IRPF o Seguridad Social.</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Clasifica el movimiento: nómina, IRPF o Seguridad Social."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EmployeeLedgerEntriesExt - Control Tipo Mov. Empleado - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 2714918652 - NamedType 1235873716" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 2714918652">
           <source>¿Borrar %1 grupo(s) de registro de producto y sus configuraciones en Config. contabilidad general?</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -3942,6 +4132,11 @@
           <source>Borrar seleccionados y configuraciones</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension Gen Prod Posting Groups PA - Action Borrar seleccionados y configuraciones - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3905379818 - Control 3893615013 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2583272393">
+          <source>Clasifica el movimiento de empleado: nómina, IRPF o Seguridad Social.</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Clasifica el movimiento de empleado: nómina, IRPF o Seguridad Social."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension General Journal Ext - Control Tipo Mov. Empleado - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 3134381272 - Control 2165121140 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4219821699">
           <source>Specifies the value of the Mostrar en lineas de planif. field.</source>
@@ -4688,6 +4883,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension Payment Journal Ext - Control Job Task No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 144601934 - Control 3893615013 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3196174509">
+          <source>Clasifica el movimiento de empleado: nómina, IRPF o Seguridad Social.</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Clasifica el movimiento de empleado: nómina, IRPF o Seguridad Social."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Payment Journal Ext - Control Tipo Mov. Empleado - Property ToolTip</note>
+        </trans-unit>
         <trans-unit id="PageExtension 4048657685 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
           <source>Specifies the value of the No. Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4898,6 +5098,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension CompanyInf - Field Url Pdf - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 163966096 - Field 3231404135 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2743298303">
+          <source>Cuenta IRPF</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Cuenta IRPF"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Employee Posting Group Ext - Field Cuenta IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 163966096 - Field 3247274934 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2743298303">
+          <source>Cuenta Seg. Social</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Cuenta Seg Social"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Employee Posting Group Ext - Field Cuenta Seg Social - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 3197594902 - Field 1908272084 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1874461389">
           <source>Nº Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4913,10 +5123,20 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension EmployeeLedgerEntryExt - Field Job Task No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 3197594902 - Field 3893615013 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1874461389">
+          <source>Tipo Mov. Empleado</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Tipo Mov. Empleado"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EmployeeLedgerEntryExt - Field Tipo Mov. Empleado - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 71500435 - Field 561421623 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2825951060">
           <source>Nº Tarea Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension G/L Entry Ext - Field Job Task No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 2502354840 - Field 3893615013 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1806786327">
+          <source>Tipo Mov. Empleado</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Tipo Mov. Empleado"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Gen. Journal Line Ext - Field Tipo Mov. Empleado - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 3315447413 - Field 2165121140 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 4274826855">
           <source>Mostrar en lineas de planif.</source>
@@ -5563,6 +5783,21 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension Vendor Ledger Entry Ext - Field Project Payment Entry - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Enum 1720026742 - EnumValue 3782970832 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Anticipos</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Anticipos"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Ant.diet Contrapartida Nóminas - EnumValue Anticipos - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1720026742 - EnumValue 2758253868 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Personal</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Personal"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Ant.diet Contrapartida Nóminas - EnumValue Personal - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1720026742 - EnumValue 2975039206 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sin contrapartida</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Sin contrapartida"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Ant.diet Contrapartida Nóminas - EnumValue Sin contrapartida - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Enum 1205813099 - EnumValue 93591275 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Awarded as a guarantee</source>
           <note from="Developer" annotates="general" priority="2">ESP="Adjudicado en garantía"</note>
@@ -5627,6 +5862,21 @@
           <source>Completada</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Enum Status Task - EnumValue Completada - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3893615013 - EnumValue 2361878631 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IRPF</source>
+          <note from="Developer" annotates="general" priority="2">ESP="IRPF"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Tipo Mov. Empleado - EnumValue IRPF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3893615013 - EnumValue 236584182 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nómina</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Nómina"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Tipo Mov. Empleado - EnumValue Nomina - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3893615013 - EnumValue 1353198360 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Seg. Social</source>
+          <note from="Developer" annotates="general" priority="2">ESP="Seg. Social"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum Tipo Mov. Empleado - EnumValue Seg. Social - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 1956250123 - EnumValue 805643863 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Capítulo</source>

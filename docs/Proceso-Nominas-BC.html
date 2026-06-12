@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Proceso de nóminas en Business Central</title>
+<style>
+body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; line-height: 1.4; margin: 2cm; color: #222; }
+h1 { font-size: 18pt; color: #1a365d; border-bottom: 2px solid #1a365d; padding-bottom: 6px; }
+h2 { font-size: 14pt; color: #2c5282; margin-top: 24px; }
+h3 { font-size: 12pt; color: #2d3748; margin-top: 18px; }
+p { margin: 8px 0; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 10pt; }
+th, td { border: 1px solid #a0aec0; padding: 6px 8px; text-align: left; }
+th { background: #edf2f7; font-weight: bold; }
+.num { text-align: right; }
+pre, .formula { background: #f7fafc; border: 1px solid #e2e8f0; padding: 10px; font-family: Consolas, monospace; font-size: 10pt; }
+.flow { background: #f7fafc; border: 1px solid #e2e8f0; padding: 12px; font-family: Consolas, monospace; font-size: 9pt; white-space: pre; }
+.note { background: #fffaf0; border-left: 4px solid #dd6b20; padding: 10px; margin: 12px 0; }
+table.correlation-box { width: 100%; border-collapse: collapse; border: 2px solid #38a169; background: #f0fff4; margin: 16px 0; }
+table.correlation-box td.correlation-cell { padding: 14px; vertical-align: top; border: none; }
+table.correlation-box h3 { margin-top: 0; color: #276749; }
+table.correlation-box table.correlation-inner { width: 100%; margin: 8px 0; table-layout: fixed; }
+table.correlation-box table.correlation-inner th { background: #c6f6d5; }
+.summary { background: #ebf8ff; border-left: 4px solid #3182ce; padding: 12px; margin: 16px 0; font-style: italic; }
+ul { margin: 8px 0; }
+li { margin: 4px 0; }
+.checklist li { list-style-type: square; }
+</style>
+</head>
+<body>
+
+<h1>Proceso de nóminas en Business Central</h1>
+<p><strong>Documento de definición funcional</strong><br>
+<em>Borrador para validación por el equipo</em></p>
+
+<h2>Objetivo del documento</h2>
+<p>Este documento describe <strong>el proceso de nóminas en Business Central</strong>: importación, contabilización, movimientos de empleado y de proyecto, y liquidación por banco. Su finalidad es alinear criterios entre contabilidad, recursos humanos y gestión de proyectos antes de cerrar el desarrollo.</p>
+
+<h2>Principios del proceso</h2>
+
+<h3>1. El Excel como origen de los datos y referencia de cuadre</h3>
+<p>Toda nómina entra por <strong>importación de un Excel</strong>. El sistema toma los importes del fichero y espera que <strong>cuadren entre sí</strong> según las fórmulas indicadas en este documento.</p>
+<p><strong>Requisitos del fichero Excel:</strong></p>
+<ol>
+<li>Traiga <strong>una hoja por departamento/centro</strong> (en cada importación se elige <strong>una sola hoja</strong>).</li>
+<li>Traiga el <strong>CIF de la empresa</strong> correcto (si no coincide, no se importa).</li>
+<li>Incluya las <strong>columnas requeridas</strong> de la plantilla (empleado, devengado, SS, IRPF, etc.).</li>
+<li>Incluya al final de la hoja (o en hoja anexa) un <strong>ejemplo de cuadre del asiento</strong> por empleado y por totales — ver sección 3.</li>
+</ol>
+<p>Si los importes no cuadran, la contabilización se detiene hasta corregir el origen.</p>
+
+<h3>2. Tres registros distintos en cada contabilización</h3>
+<p>Al <strong>contabilizar</strong> una nómina, por cada empleado el sistema genera <strong>tres movimientos independientes</strong>:</p>
+<table>
+<tr><th>#</th><th>Qué es</th><th>Para qué sirve</th></tr>
+<tr><td>1</td><td><strong>Movimiento de contabilidad</strong> (diario NOMINAS)</td><td>El asiento contable real (cuentas 640, 476, 475, 465, etc.)</td></tr>
+<tr><td>2</td><td><strong>Movimiento de empleado</strong></td><td>Lo que la empresa <strong>debe pagar</strong> al trabajador (y, en su caso, IRPF y SS si van por cuenta de empleado)</td></tr>
+<tr><td>3</td><td><strong>Movimiento de proyecto</strong></td><td>El <strong>coste imputable al proyecto</strong> (no es lo mismo que el líquido a pagar)</td></tr>
+</table>
+<p>Cada uno cumple una función distinta y, en general, <strong>no comparte el mismo importe</strong>.</p>
+
+<h3>3. Vinculación entre movimiento de empleado y movimiento de proyecto</h3>
+<p>Para <strong>pagar la nómina por banco</strong> y liquidar correctamente el coste en el proyecto, es necesario que:</p>
+<ul>
+<li>Cada <strong>movimiento de empleado</strong> quede <strong>relacionado</strong> con su <strong>movimiento de proyecto</strong> correspondiente.</li>
+<li>Al registrar el pago, el sistema identifique <strong>qué movimiento de proyecto se está saldando</strong>.</li>
+</ul>
+<p>Esa relación se establece mediante el campo <strong>Employee Entry No.</strong> (nº mov. empleado) en el movimiento de proyecto.</p>
+<div class="note">Esta vinculación es la base para generar automáticamente el <strong>Proyecto Movimiento Pago</strong> al liquidar el empleado.</div>
+
+<h2>1. Flujo completo (de principio a fin)</h2>
+<div class="flow">Excel  →  Importar (1 hoja)  →  Revisar en pantalla Nóminas
+                                        ↓
+                              Contabilizar nómina
+                                        ↓
+                    ┌───────────────────┼───────────────────┐
+                    ↓                   ↓                   ↓
+            Diario contable      Mov. empleado(s)      Mov. proyecto
+            (NOMINAS)            (Personal, etc.)    (por partida + tarea)
+                    ↓                   ↓                   ↓
+            Cuentas contables    Pendiente de pago    Coste imputado
+                                        ↓
+                              Pago bancario (diario pagos)
+                                        ↓
+                         Proyecto Movimiento Pago
+                    (enlaza pago ↔ mov. proyecto)</div>
+
+<h2>2. Columnas del Excel y cómo se calculan los campos clave</h2>
+
+<h3>2.1 Columnas que se importan del Excel (por empleado)</h3>
+<table>
+<tr><th>Columna Excel (plantilla)</th><th>Campo en sistema</th><th>¿Se contabiliza?</th></tr>
+<tr><td>Código empleado (col. B)</td><td>Empleado</td><td>—</td></tr>
+<tr><td>T. Bruto / Devengado</td><td>Devengado</td><td>Sí (DEBE)</td></tr>
+<tr><td>S.S. Obrero</td><td>S.S Obrero</td><td>Sí (HABER, en 476)</td></tr>
+<tr><td>I.R.P.F.</td><td>IRPF</td><td>Sí (HABER)</td></tr>
+<tr><td>S.S. Empresa</td><td>SS empresa</td><td>Sí (DEBE + HABER en 476)</td></tr>
+<tr><td>Enfermedad / Accidente</td><td>Enfermedad Accidente</td><td>Sí (contrapartidas)</td></tr>
+<tr><td>Bonificación</td><td>Bonificación</td><td>Sí (HABER)</td></tr>
+<tr><td>Bonificación Fundae</td><td>Bonificación Fundae</td><td>Sí (HABER)</td></tr>
+<tr><td>Anticipos</td><td>Anticipos</td><td>Sí (HABER)</td></tr>
+<tr><td>Embargos</td><td>Embargos</td><td>Sí (HABER)</td></tr>
+<tr><td>Kms</td><td>Kms</td><td>Sí (DEBE aparte)</td></tr>
+<tr><td>Dieta</td><td>Dieta</td><td>Sí (DEBE aparte)</td></tr>
+<tr><td>Dto. Especie</td><td>Dto. Especie</td><td>Sí (DEBE + HABER)</td></tr>
+<tr><td>Ant.diet</td><td>Ant.diet</td><td>Sí (HABER + DEBE anticipos)</td></tr>
+<tr><td>Banco</td><td>Banco</td><td>Control (no asiento directo)</td></tr>
+<tr><td>Nº Proyecto / Nº Tarea (por partida)</td><td>Job No. / Job Task No.</td><td>Imputación a proyecto</td></tr>
+</table>
+<p><em>Otras columnas informativas (P.P.Ex, MEJORA V, COMIDA, etc.) se guardan pero hoy no generan asiento.</em></p>
+
+<h3>2.2 Fórmulas que el sistema calcula (deben cuadrar con el Excel)</h3>
+<p>El sistema aplica estas fórmulas de forma automática. El Excel de origen debe ser coherente con ellas para que el cuadre sea correcto.</p>
+
+<p><strong>SS total (Seguridad Social total: obrero + empresa)</strong></p>
+<div class="formula">SS total = S.S Obrero + SS empresa − Bonificación − Bonificación Fundae</div>
+<p><em>Incluye la cuota del trabajador y la de la empresa, menos bonificaciones.</em></p>
+
+<p><strong>Personal (líquido a percibir / lo que va a cuenta 465)</strong></p>
+<div class="formula">Personal = Devengado − S.S Obrero − IRPF − Anticipos − Embargos</div>
+<p><em>Este es el importe que el trabajador tiene pendiente de cobrar. La S.S Obrero ya está descontada del devengado.</em></p>
+
+<p><strong>TC1 (cuota Seguridad Social a ingresar a la TGSS)</strong></p>
+<div class="formula">TC1 = SS total − Enfermedad Accidente</div>
+<p><em>Equivale a: S.S Obrero + SS empresa − Bonificación − Bonificación Fundae − Enfermedad Accidente.</em></p>
+
+<p><strong>Coste proyecto (campo de control; no es una sola partida contable)</strong></p>
+<div class="formula">Coste = Devengado + SS total − Enfermedad Accidente</div>
+<p><em>Referencia del coste total del empleado. No se contabiliza como una línea del diario: sirve para comprobar que la suma de las partidas imputadas a proyecto coincide con el coste esperado.</em></p>
+
+<p><strong>Imputación a proyecto (configurable por partida)</strong></p>
+<p>Se puede decidir <strong>qué partidas de la nómina generan movimiento de proyecto</strong> (devengado, SS empresa, SS obrero, etc.). Por cada partida imputada:</p>
+<ul>
+<li>Se indica <strong>Nº Proyecto</strong> y <strong>Nº Tarea</strong> (obligatorio en cada línea).</li>
+<li>Se genera un <strong>movimiento de proyecto</strong> por partida, con el importe de esa partida.</li>
+<li>La <strong>suma</strong> de los importes imputados debe coincidir con el <strong>Coste</strong> de control (o con el criterio acordado para ese empleado).</li>
+</ul>
+
+<p><strong>Diferencia de control (Banco vs Personal)</strong></p>
+<div class="formula">Difª = Banco − Personal</div>
+<p><em>Debe ser 0. Si no es 0, el importe del banco no coincide con el líquido calculado.</em></p>
+
+<h2>3. Ejemplo de cuadre del asiento (plantilla de validación)</h2>
+<p>Se recomienda incluir en el Excel un bloque como el siguiente (por empleado y por totales) para verificar el cuadre <strong>antes</strong> de la importación.</p>
+
+<h3>Ejemplo empleado EMP001 — Nómina enero</h3>
+<p><strong>Datos de entrada (columnas Excel):</strong></p>
+<table>
+<tr><th>Concepto</th><th class="num">Importe</th></tr>
+<tr><td>Devengado</td><td class="num">3.000,00</td></tr>
+<tr><td>S.S Obrero</td><td class="num">200,00</td></tr>
+<tr><td>IRPF</td><td class="num">400,00</td></tr>
+<tr><td>SS empresa</td><td class="num">600,00</td></tr>
+<tr><td>Bonificación</td><td class="num">0,00</td></tr>
+<tr><td>Bonificación Fundae</td><td class="num">0,00</td></tr>
+<tr><td>Enfermedad Accidente</td><td class="num">0,00</td></tr>
+<tr><td>Anticipos</td><td class="num">0,00</td></tr>
+<tr><td>Embargos</td><td class="num">0,00</td></tr>
+<tr><td>Banco</td><td class="num">2.400,00</td></tr>
+</table>
+
+<p><strong>Cálculos (deben coincidir):</strong></p>
+<table>
+<tr><th>Campo</th><th>Cálculo</th><th class="num">Resultado</th></tr>
+<tr><td>SS total</td><td>200 + 600 − 0 − 0</td><td class="num">800,00</td></tr>
+<tr><td>Personal</td><td>3.000 − 200 − 400 − 0 − 0</td><td class="num"><strong>2.400,00</strong></td></tr>
+<tr><td>TC1</td><td>800 − 0</td><td class="num">800,00</td></tr>
+<tr><td>Coste proyecto (control)</td><td>3.000 + 800 − 0</td><td class="num"><strong>3.800,00</strong></td></tr>
+<tr><td>Difª</td><td>2.400 − 2.400</td><td class="num"><strong>0,00</strong> ✓</td></tr>
+</table>
+
+<p><strong>Imputación a proyecto (ejemplo: dos partidas, dos tareas):</strong></p>
+<table>
+<tr><th>Partida</th><th class="num">Importe</th><th>Proyecto</th><th>Tarea</th></tr>
+<tr><td>Devengado</td><td class="num">3.000,00</td><td>PRY-001</td><td>1.1</td></tr>
+<tr><td>SS total</td><td class="num">800,00</td><td>PRY-001</td><td>1.2</td></tr>
+<tr><td><strong>Total imputado</strong></td><td class="num"><strong>3.800,00</strong></td><td colspan="2">= Coste de control ✓</td></tr>
+</table>
+
+<p><strong>Asiento contable que debe cuadrar (DEBE = HABER):</strong></p>
+<table>
+<tr><th>Cuenta / concepto</th><th class="num">DEBE</th><th class="num">HABER</th></tr>
+<tr><td>Devengado (640…)</td><td class="num">3.000,00</td><td class="num"></td></tr>
+<tr><td>SS empresa (642…)</td><td class="num">600,00</td><td class="num"></td></tr>
+<tr><td>Organismos SS / 476 (SS Obrero + SS empresa)</td><td class="num"></td><td class="num">800,00</td></tr>
+<tr><td>IRPF (4751…)</td><td class="num"></td><td class="num">400,00</td></tr>
+<tr><td>Personal / 465 (empleado)</td><td class="num"></td><td class="num">2.400,00</td></tr>
+<tr><td><strong>TOTALES</strong></td><td class="num"><strong>3.600,00</strong></td><td class="num"><strong>3.600,00</strong></td></tr>
+</table>
+<p><strong>Comprobación:</strong> DEBE = HABER → el asiento cuadra.</p>
+
+<h2>4. Qué genera cada partida: contabilidad, empleado y proyecto</h2>
+
+<h3>4.1 Movimiento de CONTABILIDAD (diario NOMINAS)</h3>
+<table>
+<tr><th>Partida</th><th>Mov. contable</th><th>DEBE / HABER</th></tr>
+<tr><td>Devengado (neto de Kms/Dieta/Especie)</td><td>Sí</td><td>DEBE</td></tr>
+<tr><td>Kms</td><td>Sí</td><td>DEBE</td></tr>
+<tr><td>Dieta</td><td>Sí</td><td>DEBE</td></tr>
+<tr><td>Dto. Especie</td><td>Sí</td><td>DEBE + HABER</td></tr>
+<tr><td>SS empresa</td><td>Sí</td><td>DEBE</td></tr>
+<tr><td>Enfermedad Accidente</td><td>Sí</td><td>HABER + DEBE (contrapartida)</td></tr>
+<tr><td>SS Obrero + SS empresa (476)</td><td>Sí</td><td>HABER</td></tr>
+<tr><td>IRPF</td><td>Sí</td><td>HABER</td></tr>
+<tr><td>Anticipos</td><td>Sí</td><td>HABER</td></tr>
+<tr><td>Embargos</td><td>Sí</td><td>HABER</td></tr>
+<tr><td>Bonificación / Fundae</td><td>Sí</td><td>HABER</td></tr>
+<tr><td>Ant.diet</td><td>Sí</td><td>HABER + DEBE (anticipos)</td></tr>
+<tr><td><strong>Personal</strong></td><td>Sí</td><td>HABER (cuenta empleado 465)</td></tr>
+</table>
+<p><em>El campo <strong>Coste</strong> no genera línea en el diario; solo las partidas configuradas generan mov. de proyecto.</em></p>
+
+<h3>4.2 Movimiento de EMPLEADO</h3>
+<table>
+<tr><th>Partida</th><th>¿Genera mov. empleado?</th><th>Tipo Mov. Empleado</th><th class="num">Importe</th></tr>
+<tr><td><strong>Personal</strong> (líquido nómina)</td><td><strong>Sí</strong></td><td>Nómina</td><td class="num">Personal</td></tr>
+<tr><td>IRPF</td><td>Sí*</td><td>IRPF</td><td class="num">IRPF</td></tr>
+<tr><td>SS (476)</td><td>Sí*</td><td>Seg. Social</td><td class="num">SS total (= S.S Obrero + SS empresa − bonificaciones)</td></tr>
+</table>
+<p><em>* Si en configuración la cuenta está definida como tipo <strong>Empleado</strong>. Si es cuenta contable (G/L), no genera mov. empleado.</em></p>
+<p><strong>Nota:</strong> el movimiento de empleado de tipo <strong>Nómina</strong> refleja el importe <strong>Personal</strong> (líquido a percibir), no el Coste ni el Devengado íntegro.</p>
+
+<h3>4.3 Movimiento de PROYECTO</h3>
+<p>No existe una única partida fija: <strong>se configura qué conceptos de la nómina se imputan al proyecto</strong>. Cada partida seleccionada genera su propio movimiento de proyecto.</p>
+<table>
+<tr><th>Partida (ejemplo)</th><th>¿A proyecto?</th><th class="num">Importe</th><th>Proyecto / Tarea</th></tr>
+<tr><td>Devengado</td><td>Configurable</td><td class="num">Devengado (o neto)</td><td>Proyecto + <strong>Tarea obligatoria</strong></td></tr>
+<tr><td>SS empresa</td><td>Configurable</td><td class="num">SS empresa</td><td>Proyecto + <strong>Tarea obligatoria</strong></td></tr>
+<tr><td>S.S Obrero</td><td>Configurable</td><td class="num">S.S Obrero</td><td>Proyecto + <strong>Tarea obligatoria</strong></td></tr>
+<tr><td>SS total</td><td>Configurable</td><td class="num">SS total</td><td>Proyecto + <strong>Tarea obligatoria</strong></td></tr>
+<tr><td>… otras</td><td>Configurable</td><td class="num">Importe partida</td><td>Proyecto + <strong>Tarea obligatoria</strong></td></tr>
+<tr><td><strong>Personal</strong></td><td><strong>No</strong></td><td class="num">—</td><td>Va a mov. empleado, no a coste directo</td></tr>
+<tr><td><strong>Coste</strong> (campo control)</td><td><strong>No</strong> (no es partida)</td><td class="num">Suma de control</td><td>Verifica cuadre de imputaciones</td></tr>
+</table>
+<ol>
+<li>Puede haber <strong>varios movimientos de proyecto por empleado</strong> (uno por cada partida imputada).</li>
+<li>Cada movimiento lleva <strong>Nº Proyecto</strong> y <strong>Nº Tarea</strong>; sin tarea no se imputa.</li>
+<li>La suma de importes imputados debe <strong>cuadrar con el Coste</strong> de control (o el criterio definido).</li>
+<li>Los mov. de empleado <strong>no generan</strong> mov. de proyecto por sí solos; la imputación se hace al contabilizar según configuración.</li>
+</ol>
+
+<h2>5. Relación entre movimiento de empleado y movimiento de proyecto</h2>
+
+<p>La correlación entre registros <strong>no es opcional</strong>: cada movimiento de proyecto debe indicar en el campo <strong>Employee Entry No.</strong> el <strong>nº de entrada (Entry No.)</strong> del movimiento de empleado con el que se relaciona. Así, al pagar por banco y generar los <strong>Proyecto Movimiento Pago</strong>, el sistema puede emparejar unos con otros sin ambigüedad.</p>
+
+<table class="correlation-box" style="width:100%; border-collapse:collapse; border:2px solid #38a169; background-color:#f0fff4;">
+<tr><td class="correlation-cell" style="padding:14px;">
+<h3>Cuadro de correlación (ejemplo empleado EMP001 — nómina enero)</h3>
+<p>Tras contabilizar, quedan registrados los movimientos siguientes. La columna <strong>Employee Entry No.</strong> en el mov. de proyecto es la clave de enlace.</p>
+<table class="correlation-inner" style="width:100%;">
+<tr>
+<th>Tipo registro</th>
+<th>Concepto / partida</th>
+<th>Nº Entry<br>(propio)</th>
+<th class="num">Importe</th>
+<th>Employee Entry No.<br>(enlace)</th>
+<th>Correlaciona con</th>
+<th>Proyecto / Tarea</th>
+</tr>
+<tr>
+<td><strong>Mov. empleado</strong></td>
+<td>Nómina (Personal)</td>
+<td><strong>12345</strong></td>
+<td class="num">2.400,00</td>
+<td>—</td>
+<td>JLE 50001 y JLE 50002</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Mov. proyecto</strong></td>
+<td>Devengado</td>
+<td><strong>50001</strong></td>
+<td class="num">3.000,00</td>
+<td><strong>12345</strong></td>
+<td>Mov. empleado 12345 (Nómina)</td>
+<td>PRY-001 / 1.1</td>
+</tr>
+<tr>
+<td><strong>Mov. proyecto</strong></td>
+<td>SS total</td>
+<td><strong>50002</strong></td>
+<td class="num">800,00</td>
+<td><strong>12345</strong></td>
+<td>Mov. empleado 12345 (Nómina)</td>
+<td>PRY-001 / 1.2</td>
+</tr>
+<tr>
+<td><strong>Mov. empleado</strong> <em>(opcional)</em></td>
+<td>IRPF</td>
+<td>12346</td>
+<td class="num">400,00</td>
+<td>—</td>
+<td>JLE con Employee Entry No. = 12346 <em>(si hay partida imputada)</em></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Mov. empleado</strong> <em>(opcional)</em></td>
+<td>Seg. Social</td>
+<td>12347</td>
+<td class="num">800,00</td>
+<td>—</td>
+<td>JLE con Employee Entry No. = 12347 <em>(si hay partida imputada)</em></td>
+<td>—</td>
+</tr>
+</table>
+<p><strong>Regla de correlación:</strong></p>
+<ol>
+<li>Al contabilizar, cada <strong>mov. de proyecto</strong> guarda en <strong>Employee Entry No.</strong> el <strong>Entry No.</strong> del <strong>mov. de empleado</strong> que le corresponde (en el ejemplo, los dos JLE apuntan al mov. de nómina 12345).</li>
+<li>Puede haber <strong>varios mov. de proyecto</strong> para un mismo mov. de empleado (una fila JLE por cada partida imputada).</li>
+<li>La suma de importes de los JLE vinculados a un mov. de empleado debe <strong>cuadrar</strong> con el criterio de coste acordado (en el ejemplo: 3.000 + 800 = Coste 3.800).</li>
+</ol>
+</td></tr>
+</table>
+
+<h3>Al contabilizar</h3>
+<ul>
+<li><strong>Mov. empleado (Nómina):</strong> Entry No. = 12345, Importe = Personal, Tipo = Nómina</li>
+<li><strong>Mov. proyecto (por partida):</strong> uno o varios registros; cada uno con su Entry No. (50001, 50002…), importe de la partida, Proyecto + <strong>Tarea</strong>, y <strong>Employee Entry No. = 12345</strong></li>
+</ul>
+
+<h3>Al pagar por banco</h3>
+<ol>
+<li>Se registra un <strong>pago</strong> que liquida el mov. de empleado (Nómina, IRPF o Seg. Social, según el caso).</li>
+<li>El sistema busca <strong>todos los mov. de proyecto</strong> con el mismo <strong>Employee Entry No.</strong> que el mov. liquidado.</li>
+<li>Crea un <strong>Proyecto Movimiento Pago</strong> por cada mov. de proyecto, de forma que los importes pagados <strong>cuadren</strong> con la liquidación del empleado.</li>
+</ol>
+<p>La coherencia entre pago e imputación se garantiza porque cada mov. de proyecto está vinculado al mov. de empleado que, al liquidarse, dispara su correspondiente Proyecto Movimiento Pago.</p>
+
+<table class="correlation-box" style="width:100%; border-collapse:collapse; border:2px solid #38a169; background-color:#f0fff4;">
+<tr><td class="correlation-cell" style="padding:14px;">
+<h3>Cuadro de correlación al pagar (mismo ejemplo EMP001)</h3>
+<table class="correlation-inner" style="width:100%;">
+<tr>
+<th>Paso</th>
+<th>Qué se liquida</th>
+<th>Entry No. mov. empleado</th>
+<th>Qué busca el sistema</th>
+<th>Qué genera</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Pago bancario del <strong>Personal</strong> (nómina)</td>
+<td><strong>12345</strong></td>
+<td>Todos los <strong>mov. de proyecto</strong> con Employee Entry No. = <strong>12345</strong> (JLE 50001 y 50002)</td>
+<td>Un <strong>Proyecto Movimiento Pago</strong> por cada JLE encontrado</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Pago de <strong>IRPF</strong> <em>(si aplica)</em></td>
+<td>12346</td>
+<td>Mov. de proyecto con Employee Entry No. = <strong>12346</strong></td>
+<td>Proyecto Movimiento Pago por cada JLE vinculado</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Pago de <strong>Seg. Social</strong> <em>(si aplica)</em></td>
+<td>12347</td>
+<td>Mov. de proyecto con Employee Entry No. = <strong>12347</strong></td>
+<td>Proyecto Movimiento Pago por cada JLE vinculado</td>
+</tr>
+</table>
+<p><strong>En resumen:</strong> el <strong>Employee Entry No.</strong> del mov. de proyecto identifica de forma unívoca el mov. de empleado que, al liquidarse en banco, dispara la generación del Proyecto Movimiento Pago. Sin ese enlace, el sistema no puede correlacionar pago e imputación de coste.</p>
+</td></tr>
+</table>
+
+<h2>6. Puntos pendientes de validación</h2>
+<p>Agradeceríamos vuestra confirmación sobre los siguientes aspectos, con el fin de cerrar el diseño del proceso:</p>
+
+<h3>A) Excel y cuadre</h3>
+<ul class="checklist">
+<li>¿El Excel incluirá el bloque de ejemplo de cuadre (sección 3) en cada hoja?</li>
+<li>¿Quién valida que Difª = 0 (Banco = Personal) antes de importar?</li>
+<li>¿Una importación = una hoja = un departamento?</li>
+</ul>
+
+<h3>B) Proyecto, partidas y tareas</h3>
+<ul class="checklist">
+<li>¿Qué partidas se imputan a proyecto? (devengado, SS empresa, SS obrero, SS total, otras)</li>
+<li>¿Cada partida lleva siempre <strong>tarea</strong> propia? Indicad el criterio (ej. devengado → tarea A, SS → tarea B).</li>
+<li>¿La suma de partidas imputadas debe coincidir siempre con el campo <strong>Coste</strong> de control?</li>
+</ul>
+
+<h3>C) Movimientos de empleado</h3>
+<ul class="checklist">
+<li>¿Solo Personal genera mov. empleado, o también IRPF y SS?</li>
+<li>¿Las cuentas de IRPF y SS serán tipo Empleado o Cuenta contable?</li>
+</ul>
+
+<h3>D) Pago</h3>
+<ul class="checklist">
+<li>¿Un pago bancario liquida solo la nómina (Personal) o también IRPF/SS por separado?</li>
+<li>¿Al pagar, se liquidan todos los mov. de proyecto vinculados al mov. de empleado (Employee Entry No.)?</li>
+</ul>
+
+<h2>7. Resumen en una frase</h2>
+<div class="summary">
+El Excel trae las cifras y debe cuadrar; al contabilizar se generan contabilidad, movimientos de empleado e imputaciones a proyecto (por partida y tarea configuradas); al pagar, el vínculo Employee Entry No. permite liquidar cada mov. de proyecto de forma coherente con el pago.
+</div>
+
+<p><em>Con vuestras respuestas a la sección 6 podremos finalizar el desarrollo e incorporar las modificaciones pendientes.</em></p>
+
+</body>
+</html>
