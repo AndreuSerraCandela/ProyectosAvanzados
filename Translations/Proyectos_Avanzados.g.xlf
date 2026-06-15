@@ -658,6 +658,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Devengado - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 2636505228 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Devengado Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field Devengado Proyecto - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 4267762956 - Field 1214341023 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Dieta</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -802,6 +807,11 @@
           <source>SS empresa</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field SS empresa - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 4267762956 - Field 155903731 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>SS Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Nominas Detalle - Field SS Proyecto - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 4267762956 - Field 657295790 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>SS total</source>

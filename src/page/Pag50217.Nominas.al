@@ -152,6 +152,8 @@ page 50217 "Nominas"
                     Doc: Code[20];
                     LINEA: Integer;
                     EmpresaNombre: Text[30];
+                    SSProyecto: Decimal;
+                    DevengadoProyecto: Decimal;
                 begin
                     if Rec.Contabilizado then
                         if not Confirm('La nómina ya está contabilizada. ¿Desea volver a contabilizar?', false) then
@@ -193,8 +195,13 @@ page 50217 "Nominas"
                     if rNomDet.FindSet() then
                         repeat
                             if Employee.Get(rNomDet.Empleado) then begin
+                                SSProyecto := 0;
+                                DevengadoProyecto := 0;
                                 ProcesosProyectos.CrearLineasDiarioNominas(
-                                    GenJnlLine, Employee, rNomDet, EmpresaNombre, Rec.Fecha, Doc, LINEA, rOr, rNomDet."SS Proyecto", rNomDet."Devengado Proyecto");
+                                    GenJnlLine, Employee, rNomDet, EmpresaNombre, Rec.Fecha, Doc, LINEA, rOr, SSProyecto, DevengadoProyecto);
+                                rNomDet."SS Proyecto" := SSProyecto;
+                                rNomDet."Devengado Proyecto" := DevengadoProyecto;
+                                rNomDet.Modify();
                             end;
                         until rNomDet.Next() = 0;
 
