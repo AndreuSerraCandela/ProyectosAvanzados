@@ -3964,7 +3964,7 @@ Fila: Integer)
             GenJnlLine."Account No." := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Anticipos');
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(Anticipos, SSProyecto, DevengadoProyecto, Cuenta));
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(Anticipos, SSProyecto, DevengadoProyecto, GenJnlLine."Account No."));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
@@ -3988,7 +3988,7 @@ Fila: Integer)
             GenJnlLine."Account No." := GetCuentaConceptoNominas(EmpresaNombre, Employee."No.", 'Embargos');
             GenJnlLine.Validate("Account No.");
             GenJnlLine.Description := CopyStr('Nómina ' + ObtenerMesEspanol(Fecha), 1, 50);
-            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(Embargos, SSProyecto, DevengadoProyecto, Cuenta));
+            GenJnlLine.Validate("Credit Amount", CalculaImporteHaber(Embargos, SSProyecto, DevengadoProyecto, GenJnlLine."Account No."));
             GenJnlLine."Gen. Posting Type" := GenJnlLine."Gen. Posting Type"::" ";
             GenJnlLine."Gen. Bus. Posting Group" := '';
             GenJnlLine."Gen. Prod. Posting Group" := '';
