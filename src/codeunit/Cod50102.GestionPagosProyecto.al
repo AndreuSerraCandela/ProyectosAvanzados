@@ -753,6 +753,10 @@ codeunit 50102 "Gestión Pagos Proyecto"
         ProyectoMovimientoPago."Base Amount Paid" := AmountToApply;
         ProyectoMovimientoPago."Posted Document No." := EmployeeLedgerEntryPayment."Document No.";
         ProyectoMovimientoPago.Producción := JobLedgerEntry.Producción;
+
+        JobLedgerEntry."Amount Pending" -= ProyectoMovimientoPago."Amount Paid";
+        JobLedgerEntry."Base Amount Pending" -= ProyectoMovimientoPago."Base Amount Paid";
+        JobLedgerEntry.Modify();
         //ProyectoMovimientoPago.ValidatePaymentAmounts();
         If ProyectoMovimientoPago.Insert(true) Then;
     end;

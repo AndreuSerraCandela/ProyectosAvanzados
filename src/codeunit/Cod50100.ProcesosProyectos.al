@@ -3027,6 +3027,27 @@ codeunit 50301 "ProcesosProyectos"
                 SSEmpresa := TextoADecimalInvariante(LeerTextoCeldaExcel(ExcelBuff, Fila, ColSSEmpresa), false);
     end;
 
+    local procedure LeerProyectoTareasFilaNomina(
+        var ExcelBuff: Record "Excel Buffer" temporary;
+        Fila: Integer;
+        ColJobNo: Integer;
+        ColJobTask640: Integer;
+        ColJobTask642: Integer;
+        var JobNo: Code[20];
+        var JobTaskNo: Code[20];
+        var JobTaskNoSS: Code[20])
+    begin
+        JobNo := '';
+        JobTaskNo := '';
+        JobTaskNoSS := '';
+        if ColJobNo > 0 then
+            JobNo := CopyStr(DelChr(LeerTextoCeldaExcel(ExcelBuff, Fila, ColJobNo), '=', ' '), 1, MaxStrLen(JobNo));
+        if ColJobTask640 > 0 then
+            JobTaskNo := CopyStr(DelChr(LeerTextoCeldaExcel(ExcelBuff, Fila, ColJobTask640), '=', ' '), 1, MaxStrLen(JobTaskNo));
+        if ColJobTask642 > 0 then
+            JobTaskNoSS := CopyStr(DelChr(LeerTextoCeldaExcel(ExcelBuff, Fila, ColJobTask642), '=', ' '), 1, MaxStrLen(JobTaskNoSS));
+    end;
+
     local procedure TextoContieneDigitos(Texto: Text): Boolean
     var
         i: Integer;
@@ -3189,7 +3210,10 @@ codeunit 50301 "ProcesosProyectos"
         var ColIndemni: Integer;
         var ColAntDiet: Integer;
         var ColAnticipos: Integer;
-        var ColEmbargos: Integer)
+        var ColEmbargos: Integer;
+        var ColJobNo: Integer;
+        var ColJobTask640: Integer;
+        var ColJobTask642: Integer)
     var
         j: Integer;
         As: Text;
@@ -3215,11 +3239,20 @@ codeunit 50301 "ProcesosProyectos"
         ColAntDiet := 0;
         ColAnticipos := 0;
         ColEmbargos := 0;
+        ColJobNo := 0;
+        ColJobTask640 := 0;
+        ColJobTask642 := 0;
 
         for j := 1 to 48 do begin
             As := NormalizarEncabezadoNomina(LeerTextoCeldaExcel(ExcelBuff, FilaEncabezados, j));
             if As <> '' then
-                if StrPos(As, 'DIETASANT') > 0 then
+                if StrPos(As, 'TAREA640') > 0 then
+                    ColJobTask640 := j
+                else if StrPos(As, 'TAREA642') > 0 then
+                    ColJobTask642 := j
+                else if (StrPos(As, 'NPROYECTO') > 0) or ((StrPos(As, 'PROYECTO') > 0) and (StrPos(As, 'TAREA') = 0)) then
+                    ColJobNo := j
+                else if StrPos(As, 'DIETASANT') > 0 then
                     ColAntDiet := j
                 else if StrPos(As, 'DIETASEXE') > 0 then
                     ColDietas := j
@@ -3335,6 +3368,9 @@ codeunit 50301 "ProcesosProyectos"
         PLFlex: Decimal;
         Indemni: Decimal;
         AntDiet: Decimal;
+        JobNo: Code[20];
+        JobTaskNo: Code[20];
+        JobTaskNoSS: Code[20];
         Nose: Variant;
         As: Text;
         Importe: Decimal;
@@ -3365,6 +3401,9 @@ codeunit 50301 "ProcesosProyectos"
         ColAntDiet: Integer;
         ColAnticipos: Integer;
         ColEmbargos: Integer;
+        ColJobNo: Integer;
+        ColJobTask640: Integer;
+        ColJobTask642: Integer;
         j: Integer;
         CifEncontrado: Boolean;
         ContadorNominas: Integer;
@@ -3470,7 +3509,8 @@ codeunit 50301 "ProcesosProyectos"
             ColDevengado, ColSSObrero, ColIRPF, ColSSEmpresa, ColCosteEmpresa,
             ColEnfermedadAccidente, ColBonificacion, ColBonificacionFundae, ColBanco,
             ColKms, ColDieta, ColPPEx, ColMejoraV, ColComida, ColDietas, ColPPVaca,
-            ColPLFlex, ColIndemni, ColAntDiet, ColAnticipos, ColEmbargos);
+            ColPLFlex, ColIndemni, ColAntDiet, ColAnticipos, ColEmbargos,
+            ColJobNo, ColJobTask640, ColJobTask642);
 
         if ColDevengado = 0 then
             Error('No se encontró la columna T. BRUTO en la fila %1 del Excel.', FilaEncabezados);
@@ -3503,6 +3543,9 @@ codeunit 50301 "ProcesosProyectos"
                     Devengado, SSObrero, IRPF, SSEmpresa, EnfermedadAccidente,
                     Bonificacion, BonificacionFundae, Anticipos, Embargos,
                     Dieta, Kms, Banco, PPEx, MejoraV, Comida, Dietas, PPVaca, PLFlex, Indemni, AntDiet);
+                LeerProyectoTareasFilaNomina(
+                    ExcelBuff, i, ColJobNo, ColJobTask640, ColJobTask642,
+                    JobNo, JobTaskNo, JobTaskNoSS);
 
                 if FilaTieneImportesNomina(Devengado, Banco, SSObrero, IRPF, SSEmpresa) then begin
                     if not Employee.Get(CodigoEmpleado) then
@@ -3522,7 +3565,8 @@ codeunit 50301 "ProcesosProyectos"
                             Devengado, SSObrero, IRPF, SSEmpresa, EnfermedadAccidente,
                             Bonificacion, BonificacionFundae, Anticipos, Embargos,
                             DtoEspecie, Dieta, Kms, Banco,
-                            PPEx, MejoraV, Comida, Dietas, PPVaca, PLFlex, Indemni, AntDiet);
+                            PPEx, MejoraV, Comida, Dietas, PPVaca, PLFlex, Indemni, AntDiet,
+                            JobNo, JobTaskNo, JobTaskNoSS);
                         ContadorNominas += 1;
                     end;
                 end;
@@ -3617,7 +3661,10 @@ Fila: Integer)
         PPVaca: Decimal;
         PLFlex: Decimal;
         Indemni: Decimal;
-        AntDiet: Decimal)
+        AntDiet: Decimal;
+        JobNo: Code[20];
+        JobTaskNo: Code[20];
+        JobTaskNoSS: Code[20])
     var
         rNomDet: Record "Nominas Detalle";
     begin
@@ -3654,6 +3701,7 @@ Fila: Integer)
             rNomDet."PL. FLEX" := PLFlex;
             rNomDet.Indemni := Indemni;
             rNomDet."Ant.diet" := AntDiet;
+            AsignarProyectoTareasNominaDetalle(rNomDet, JobNo, JobTaskNo, JobTaskNoSS);
             rNomDet.Validate(Devengado);
             rNomDet.Validate("S.S Obrero");
             rNomDet.Validate(IRPF);
@@ -3693,6 +3741,7 @@ Fila: Integer)
             rNomDet."PL. FLEX" := PLFlex;
             rNomDet.Indemni := Indemni;
             rNomDet."Ant.diet" := AntDiet;
+            AsignarProyectoTareasNominaDetalle(rNomDet, JobNo, JobTaskNo, JobTaskNoSS);
             // Calcular campos calculados usando Validate para que se ejecuten los triggers
             rNomDet.Validate(Devengado);
             rNomDet.Validate("S.S Obrero");
@@ -3709,6 +3758,16 @@ Fila: Integer)
             rNomDet.Validate(Banco);
             rNomDet.Insert(true);
         end;
+    end;
+
+    local procedure AsignarProyectoTareasNominaDetalle(var NominaDetalle: Record "Nominas Detalle"; JobNo: Code[20]; JobTaskNo: Code[20]; JobTaskNoSS: Code[20])
+    begin
+        if JobNo <> '' then
+            NominaDetalle.Validate("Job No.", JobNo);
+        if JobTaskNo <> '' then
+            NominaDetalle.Validate("Job Task No.", JobTaskNo);
+        if JobTaskNoSS <> '' then
+            NominaDetalle.Validate("Job Task No. SS", JobTaskNoSS);
     end;
 
     local procedure CuentaRequiereDimensionesNomina(Cuenta: Code[20]): Boolean
