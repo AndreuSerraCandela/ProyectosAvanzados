@@ -815,10 +815,11 @@ page 50118 "Pendiente facturar"
                     trigger OnAction()
                     var
                         DemandOverview: Page "Demand Overview";
+                        DemantOrderSourceType: Enum "Demand Order Source Type";
                     begin
                         DemandOverview.SetCalculationParameter(true);
 
-                        DemandOverview.Initialize(0D, 3, Rec."Job No.", '', '');
+                        DemandOverview.SetParameters(0D, DemantOrderSourceType::"Job Demand", Rec."Job No.", '', '');// .Initialize(0D, 3, Rec."Job No.", '', '');
                         DemandOverview.RunModal();
                     end;
                 }
