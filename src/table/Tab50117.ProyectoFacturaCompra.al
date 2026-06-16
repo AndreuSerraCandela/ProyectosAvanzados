@@ -296,25 +296,6 @@ table 50117 "Proyecto Movimiento Pago"
         end;
     end;
 
-    procedure DevuelvePaymentAmounts(entryNo: Integer): Decimal
-    var
-        EmployeeLedgerEntry: Record "Employee Ledger Entry";
-        TotalEmployeeLedgerEntry: Record "Employee Ledger Entry";
-        AmountTotal: Decimal;
-    begin
-        EmployeeLedgerEntry.Get(entryNo);// 1) Suma de movimientos de pago para este Job Entry No. no puede superar el importe del movimiento de proyecto
-        TotalEmployeeLedgerEntry.SetRange("Employee No.", EmployeeLedgerEntry."Employee No.");
-        TotalEmployeeLedgerEntry.SetFilter("Entry No.", '<>%1', entryNo);
-        TotalEmployeeLedgerEntry.SetRange("Posting Date", EmployeeLedgerEntry."Posting Date");
-        if TotalEmployeeLedgerEntry.FindSet() then
-            repeat
-                TotalEmployeeLedgerEntry.CalcFields("Original Amount");
-                AmountTotal += TotalEmployeeLedgerEntry."Original Amount";
-            until TotalEmployeeLedgerEntry.Next() = 0;
-        exit(AmountTotal);
-    end;
-
-
 
     local procedure GetCurrencyCode(): Code[10]
     var

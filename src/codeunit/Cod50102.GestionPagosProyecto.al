@@ -178,7 +178,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         if not EmployeeLedgerEntry.FindSet() then
             exit;
         repeat
-            if EmployeeLedgerEntry."Document Type" = EmployeeLedgerEntry."Document Type"::Payment then begin
+            if true then begin
                 // Evitar duplicados: ya existe un pago para este movimiento de empleado (Entry No. = Employee Ledger Entry = G/L Entry)
                 ProyectoMovimientoPago.Reset();
                 ProyectoMovimientoPago.SetRange("Document Type", ProyectoMovimientoPago."Document Type"::" ");
@@ -201,7 +201,11 @@ codeunit 50102 "Gestión Pagos Proyecto"
                         if AmountToApply = 0 then
                             AmountToApply := Abs(EmployeeLedgerEntry.Amount);
                         If EmployeeLedgerEntry."Tipo Mov. Empleado" = EmployeeLedgerEntry."Tipo Mov. Empleado"::Nomina Then begin
-                            AmountToApply := ImporteTotal - ProyectoMovimientoPago.DevuelvePaymentAmounts(EmployeeLedgerEntry."Entry No.");
+                            AmountToApply := ImporteTotal - Irpf(EmployeeLedgerEntry);
+
+                        end;
+                        if EmployeeLedgerEntry."Tipo Mov. Empleado" = EmployeeLedgerEntry."Tipo Mov. Empleado"::IRPF Then begin
+                            AmountToApply := Irpf(EmployeeLedgerEntry);
                         end;
                         // Crear Proyecto Movimiento Pago (documento blanco = origen empleado)
                         ProyectoMovimientoPago.Init();
@@ -640,8 +644,23 @@ codeunit 50102 "Gestión Pagos Proyecto"
         DtldEmplLedgEntry.SetRange("Entry Type", DtldEmplLedgEntry."Entry Type"::Application);
         if DtldEmplLedgEntry.FindSet() then
             repeat
-                if EmplLedgEntryLiquidado.Get(DtldEmplLedgEntry."Applied Empl. Ledger Entry No.") then
+                If DtldEmplLedgEntry."Applied Empl. Ledger Entry No." <> EmployeeLedgerEntryPayment."Entry No." then begin
+
+
+                    if EmplLedgEntryLiquidado.Get(DtldEmplLedgEntry."Applied Empl. Ledger Entry No.") then
+                        CrearProyectoMovPagoPorEmpleadoLiquidado(EmplLedgEntryLiquidado, EmployeeLedgerEntryPayment);
+                end;
+            until DtldEmplLedgEntry.Next() = 0;
+        DtldEmplLedgEntry.SetFilter("Employee Ledger Entry No.", '<>%1', EmployeeLedgerEntryPayment."Entry No.");
+        DtldEmplLedgEntry.SetRange("Applied Empl. Ledger Entry No.", EmployeeLedgerEntryPayment."Entry No.");
+        DtldEmplLedgEntry.SetRange("Entry Type", DtldEmplLedgEntry."Entry Type"::Application);
+        if DtldEmplLedgEntry.FindSet() then
+            repeat
+
+
+                if EmplLedgEntryLiquidado.Get(DtldEmplLedgEntry."Employee Ledger Entry No.") then
                     CrearProyectoMovPagoPorEmpleadoLiquidado(EmplLedgEntryLiquidado, EmployeeLedgerEntryPayment);
+
             until DtldEmplLedgEntry.Next() = 0;
     end;
 
@@ -652,27 +671,48 @@ codeunit 50102 "Gestión Pagos Proyecto"
         JobLedgerEntry.Reset();
         JobLedgerEntry.SetRange("Entry Type", JobLedgerEntry."Entry Type"::Usage);
         JobLedgerEntry.SetRange("Employee Entry No.", EmplLedgEntryLiquidado."Entry No.");
+        //Ojo, aqui hay un problema, el mov de irpf no estará en el proyecto, será uno menos
+        If EmplLedgEntryLiquidado."Tipo Mov. Empleado" = EmplLedgEntryLiquidado."Tipo Mov. Empleado"::IRPF Then
+            JobLedgerEntry.SetRange("Employee Entry No.", MovNomina(EmplLedgEntryLiquidado));
+
         if JobLedgerEntry.FindSet() then
             repeat
-                if EsJobLedgerEntryNoPagadoTotalmente(JobLedgerEntry) then
-                    CrearProyectoMovimientoPagoDesdeJLE(JobLedgerEntry, EmployeeLedgerEntryPayment);
+                CrearProyectoMovimientoPagoDesdeJLE(JobLedgerEntry, EmployeeLedgerEntryPayment, EmplLedgEntryLiquidado);
             until JobLedgerEntry.Next() = 0;
     end;
 
-    local procedure EsJobLedgerEntryNoPagadoTotalmente(JobLedgerEntry: Record "Job Ledger Entry"): Boolean
-    var
-        ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
-    begin
-        // Al tratarse de empleados, no se paga parcialmente, por tanto  si hay un mov de pago para este mov proyewcto, ya es eufucuenteç
 
-        ProyectoMovimientoPago.SetRange("Job Entry No.", JobLedgerEntry."Entry No.");
-        exit(not ProyectoMovimientoPago.FindFirst());
+
+    local procedure Irpf(EmployeeLedgerEntryPayment: Record "Employee Ledger Entry"): Decimal
+    var
+        EmplEntry: Record "Employee Ledger Entry";
+    begin
+        EmplEntry.SetRange("Employee No.", EmployeeLedgerEntryPayment."Employee No.");
+        EmplEntry.SetRange("Document No.", EmployeeLedgerEntryPayment."Document No.");
+        EmplEntry.SetRange("Posting Date", EmployeeLedgerEntryPayment."Posting Date");
+        EmplEntry.SetRange("Tipo Mov. Empleado", EmplEntry."Tipo Mov. Empleado"::IRPF);
+        EmplEntry.FindFirst();
+        EmplEntry.CalcFields("Amount");
+        Exit(Abs(EmplEntry.Amount));
     end;
 
-    local procedure CrearProyectoMovimientoPagoDesdeJLE(JobLedgerEntry: Record "Job Ledger Entry"; EmployeeLedgerEntryPayment: Record "Employee Ledger Entry")
+    local procedure MovNomina(EmployeeLedgerEntryPayment: Record "Employee Ledger Entry"): Decimal
+    var
+        EmplEntry: Record "Employee Ledger Entry";
+    begin
+        EmplEntry.SetRange("Employee No.", EmployeeLedgerEntryPayment."Employee No.");
+        EmplEntry.SetRange("Document No.", EmployeeLedgerEntryPayment."Document No.");
+        EmplEntry.SetRange("Posting Date", EmployeeLedgerEntryPayment."Posting Date");
+        EmplEntry.SetRange("Tipo Mov. Empleado", EmplEntry."Tipo Mov. Empleado"::Nomina);
+        EmplEntry.FindFirst();
+        ;
+        Exit(EmplEntry."Entry No.");
+
+    end;
+
+    local procedure CrearProyectoMovimientoPagoDesdeJLE(JobLedgerEntry: Record "Job Ledger Entry"; EmployeeLedgerEntryPayment: Record "Employee Ledger Entry"; EmplEntryLiquidado: Record "Employee Ledger Entry")
     var
         ProyectoMovimientoPago: Record "Proyecto Movimiento Pago";
-        EmplEntry: Record "Employee Ledger Entry";
         AmountToApply: Decimal;
         AmountTotal: Decimal;
     begin
@@ -684,8 +724,6 @@ codeunit 50102 "Gestión Pagos Proyecto"
 
         if JobLedgerEntry."Employee Entry No." = 0 then
             exit;
-        if not EmplEntry.Get(JobLedgerEntry."Employee Entry No.") then
-            exit;
 
         if JobLedgerEntry."Bruto Factura" <> 0 then
             AmountToApply := JobLedgerEntry."Bruto Factura"
@@ -694,8 +732,11 @@ codeunit 50102 "Gestión Pagos Proyecto"
         if AmountToApply <= 0 then
             exit;
         AmountTotal := JobLedgerEntry."Bruto Factura";
-        if EmplEntry."Tipo Mov. Empleado" = EmplEntry."Tipo Mov. Empleado"::Nomina Then begin
-            AmountToApply := AmountTotal - ProyectoMovimientoPago.DevuelvePaymentAmounts(EmployeeLedgerEntryPayment."Entry No.");
+        if EmplEntryLiquidado."Tipo Mov. Empleado" = EmplEntryLiquidado."Tipo Mov. Empleado"::Nomina Then begin
+            AmountToApply := AmountTotal - Irpf(EmplEntryLiquidado);
+        end;
+        if EmplEntryLiquidado."Tipo Mov. Empleado" = EmplEntryLiquidado."Tipo Mov. Empleado"::IRPF Then begin
+            AmountToApply := Irpf(EmplEntryLiquidado);
         end;
         ProyectoMovimientoPago.Init();
         ProyectoMovimientoPago."Document Type" := ProyectoMovimientoPago."Document Type"::" ";
@@ -712,7 +753,7 @@ codeunit 50102 "Gestión Pagos Proyecto"
         ProyectoMovimientoPago."Base Amount Paid" := AmountToApply;
         ProyectoMovimientoPago."Posted Document No." := EmployeeLedgerEntryPayment."Document No.";
         ProyectoMovimientoPago.Producción := JobLedgerEntry.Producción;
-        ProyectoMovimientoPago.ValidatePaymentAmounts();
+        //ProyectoMovimientoPago.ValidatePaymentAmounts();
         If ProyectoMovimientoPago.Insert(true) Then;
     end;
 
