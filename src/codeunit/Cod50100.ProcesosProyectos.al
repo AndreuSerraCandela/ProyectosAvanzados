@@ -5454,4 +5454,222 @@ Fila: Integer)
             end;
         exit(DimMgt.GetDimensionSetID(TempDimSetEntry));
     end;
+
+    /// <summary>
+    /// Calcula tipo/régimen de operación IVA, cláusula IVA y motivo de exención SII (E1, E2...).
+    /// Usado en Mov. IVA y en Libros de facturas emitidas/recibidas.
+    /// </summary>
+    procedure CalcularTipoOperacion(VATEntry: Record "VAT Entry"): Text[50]
+    begin
+        case VATEntry.Type of
+            VATEntry.Type::Purchase:
+                exit('Iva deducible');
+            VATEntry.Type::Sale:
+                exit('Iva Devengado');
+            else
+                exit('');
+        end;
+    end;
+
+    procedure CalcularRegimenOperacion(VATEntry: Record "VAT Entry"; esreport: Boolean): Text[100]
+    begin
+        if EsISP(VATEntry) then
+            If esreport then exit('ISP') else exit('Inversión del sujeto pasivo (ISP)');
+        if EsNoSujetaLocalizacion(VATEntry) then
+            If esreport then exit('NS') else exit('Operaciones no sujetas por reglas de localización');
+        if EsRegimenGeneral(VATEntry) then
+            If esreport then exit('RG') else exit('Régimen General');
+        exit('');
+    end;
+
+    procedure ObtenerClausulaIVA(VATEntry: Record "VAT Entry"): Code[20]
+    var
+        SalesInvLine: Record "Sales Invoice Line";
+        SalesCrMemoLine: Record "Sales Cr.Memo Line";
+        ClausulaCode: Code[20];
+    begin
+        // En ventas la cláusula puede ir en la línea; en compras no existe el campo
+        // y hay que tomarla de Config. registro IVA.
+        if VATEntry.Type = VATEntry.Type::Sale then
+            if VATEntry."Document No." <> '' then begin
+                if BuscarClausulaEnLineasVenta(SalesInvLine, VATEntry) then
+                    exit(SalesInvLine."VAT Clause Code");
+                SalesCrMemoLine.SetRange("Document No.", VATEntry."Document No.");
+                SalesCrMemoLine.SetRange("VAT Bus. Posting Group", VATEntry."VAT Bus. Posting Group");
+                SalesCrMemoLine.SetRange("VAT Prod. Posting Group", VATEntry."VAT Prod. Posting Group");
+                SalesCrMemoLine.SetFilter("VAT Clause Code", '<>%1', '');
+                if SalesCrMemoLine.FindFirst() then
+                    exit(SalesCrMemoLine."VAT Clause Code");
+            end;
+
+        ClausulaCode := ObtenerClausulaDesdeConfigIVA(VATEntry);
+        if ClausulaCode <> '' then
+            exit(ClausulaCode);
+
+        exit('');
+    end;
+
+    procedure ObtenerMotivoExencion(VATEntry: Record "VAT Entry"): Text[30]
+    var
+        VATClause: Record "VAT Clause";
+        ClausulaCode: Code[20];
+        Motivo: Text;
+    begin
+        ClausulaCode := ObtenerClausulaIVA(VATEntry);
+        if ClausulaCode = '' then
+            exit('');
+        if not VATClause.Get(ClausulaCode) then
+            exit('');
+        Motivo := Format(VATClause."SII Exemption Code");
+        exit(ExtraerCodigoExencion(Motivo));
+    end;
+
+    local procedure BuscarClausulaEnLineasVenta(var SalesInvLine: Record "Sales Invoice Line"; VATEntry: Record "VAT Entry"): Boolean
+    begin
+        SalesInvLine.SetRange("Document No.", VATEntry."Document No.");
+        SalesInvLine.SetRange("VAT Bus. Posting Group", VATEntry."VAT Bus. Posting Group");
+        SalesInvLine.SetRange("VAT Prod. Posting Group", VATEntry."VAT Prod. Posting Group");
+        SalesInvLine.SetFilter("VAT Clause Code", '<>%1', '');
+        exit(SalesInvLine.FindFirst());
+    end;
+
+    local procedure ObtenerClausulaDesdeConfigIVA(VATEntry: Record "VAT Entry"): Code[20]
+    var
+        VATPostingSetup: Record "VAT Posting Setup";
+    begin
+        if not VATPostingSetup.Get(VATEntry."VAT Bus. Posting Group", VATEntry."VAT Prod. Posting Group") then
+            exit('');
+        exit(VATPostingSetup."VAT Clause Code");
+    end;
+
+    local procedure EsISP(VATEntry: Record "VAT Entry"): Boolean
+    begin
+        if VATEntry."VAT Calculation Type" = VATEntry."VAT Calculation Type"::"Reverse Charge VAT" then
+            exit(true);
+        if ObtenerCodigoEsquemaEspecialSII(VATEntry) = '09' then
+            exit(true);
+        exit(false);
+    end;
+
+    local procedure EsNoSujetaLocalizacion(VATEntry: Record "VAT Entry"): Boolean
+    var
+        VatBusGroup: Text;
+        CodigoEsquema: Code[10];
+    begin
+        CodigoEsquema := ObtenerCodigoEsquemaEspecialSII(VATEntry);
+        if CodigoEsquema = '08' then
+            exit(true);
+
+        if VATEntry."No Taxable Type" = VATEntry."No Taxable Type"::"Non Taxable Due To Localization Rules" then
+            exit(true);
+
+        if VATEntry."VAT Calculation Type" = VATEntry."VAT Calculation Type"::"No Taxable VAT" then
+            exit(true);
+
+        if (VATEntry."VAT %" = 0) and (VATEntry.Amount = 0) then begin
+            VatBusGroup := UpperCase(VATEntry."VAT Bus. Posting Group");
+            if (StrPos(VatBusGroup, 'CAN') > 0) or
+               (StrPos(VatBusGroup, 'INT') > 0) or
+               (StrPos(VatBusGroup, 'UE') > 0) or
+               (StrPos(VatBusGroup, 'NOS') > 0)
+            then
+                exit(true);
+        end;
+        exit(false);
+    end;
+
+    local procedure EsRegimenGeneral(VATEntry: Record "VAT Entry"): Boolean
+    var
+        VatBusGroup: Text;
+    begin
+        if VATEntry."VAT Calculation Type" <> VATEntry."VAT Calculation Type"::"Normal VAT" then
+            exit(false);
+        if VATEntry."VAT %" <= 0 then
+            exit(false);
+
+        VatBusGroup := UpperCase(VATEntry."VAT Bus. Posting Group");
+        if VatBusGroup = '' then
+            exit(true);
+        if StrPos(VatBusGroup, 'NAC') > 0 then
+            exit(true);
+        if (StrPos(VatBusGroup, 'CAN') = 0) and
+           (StrPos(VatBusGroup, 'INT') = 0) and
+           (StrPos(VatBusGroup, 'UE') = 0) and
+           (StrPos(VatBusGroup, 'NOS') = 0)
+        then
+            exit(true);
+        exit(false);
+    end;
+
+    local procedure ObtenerCodigoEsquemaEspecialSII(VATEntry: Record "VAT Entry"): Code[10]
+    var
+        SalesInvHeader: Record "Sales Invoice Header";
+        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
+        PurchInvHeader: Record "Purch. Inv. Header";
+        PurchCrMemoHeader: Record "Purch. Cr. Memo Hdr.";
+    begin
+        if VATEntry."Document No." = '' then
+            exit('');
+
+        case VATEntry.Type of
+            VATEntry.Type::Sale:
+                begin
+                    if SalesInvHeader.Get(VATEntry."Document No.") then
+                        exit(ExtraerCodigoEsquema(Format(SalesInvHeader."Special Scheme Code")));
+                    if SalesCrMemoHeader.Get(VATEntry."Document No.") then
+                        exit(ExtraerCodigoEsquema(Format(SalesCrMemoHeader."Special Scheme Code")));
+                end;
+            VATEntry.Type::Purchase:
+                begin
+                    if PurchInvHeader.Get(VATEntry."Document No.") then
+                        exit(ExtraerCodigoEsquema(Format(PurchInvHeader."Special Scheme Code")));
+                    if PurchCrMemoHeader.Get(VATEntry."Document No.") then
+                        exit(ExtraerCodigoEsquema(Format(PurchCrMemoHeader."Special Scheme Code")));
+                end;
+        end;
+        exit('');
+    end;
+
+    local procedure ExtraerCodigoEsquema(TextoEsquema: Text): Code[10]
+    var
+        Digitos: Text;
+        i: Integer;
+        Car: Text[1];
+    begin
+        for i := 1 to StrLen(TextoEsquema) do begin
+            Car := CopyStr(TextoEsquema, i, 1);
+            if Car in ['0' .. '9'] then
+                Digitos += Car
+            else
+                if Digitos <> '' then
+                    break;
+        end;
+        exit(CopyStr(Digitos, 1, 2));
+    end;
+
+    local procedure ExtraerCodigoExencion(TextoExencion: Text): Text[30]
+    var
+        Resultado: Text;
+        i: Integer;
+        Car: Text[1];
+    begin
+        TextoExencion := UpperCase(DelChr(TextoExencion, '<', ' '));
+        if TextoExencion = '' then
+            exit('');
+
+        if CopyStr(TextoExencion, 1, 1) = 'E' then begin
+            Resultado := 'E';
+            for i := 2 to StrLen(TextoExencion) do begin
+                Car := CopyStr(TextoExencion, i, 1);
+                if Car in ['0' .. '9'] then
+                    Resultado += Car
+                else
+                    break;
+            end;
+            if StrLen(Resultado) > 1 then
+                exit(CopyStr(Resultado, 1, 30));
+        end;
+
+        exit(CopyStr(DelChr(TextoExencion, '=', ' '), 1, 10));
+    end;
 }

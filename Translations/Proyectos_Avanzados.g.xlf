@@ -5038,6 +5038,46 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control No.Serie Almacen de Proyecto - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 3601464250 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>Código de cláusula IVA del documento origen.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control ClausulaIVA - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 3601464250 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>Cláusula IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control ClausulaIVA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 1654944109 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>Código de exención SII de la cláusula IVA (E1, E2, E4...).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control MotivoExencion - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 1654944109 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>Motivo de exención</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control MotivoExencion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 462295036 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>Compra = IVA deducible; Venta = IVA Devengado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control TipoOperacion - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 462295036 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>Tipo de Operación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control TipoOperacion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 3664454118 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>Régimen: ISP, Operaciones no sujetas por reglas de localización, o Régimen General.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control TipoOperacion2 - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 3664454118 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>Tipo de Operación2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control TipoOperacion2 - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 2362642556 - Control 3598112252 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4055858012">
           <source>Indica si el proveedor es inversor.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -5922,6 +5962,66 @@
           <source>De inicio a inicio</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Enum TipoFecha - EnumValue De inicio a inicio - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 78030854 - ReportColumn 2352832795 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 1820866212">
+          <source>Cláusula IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Purchase Invoice Book Ext - ReportColumn Clausula_IVA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 78030854 - ReportColumn 1606139088 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 1820866212">
+          <source>Motivo de exención</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Purchase Invoice Book Ext - ReportColumn Motivo_Exencion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 78030854 - ReportColumn 3385955494 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 1820866212">
+          <source>Tipo de Operación2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Purchase Invoice Book Ext - ReportColumn Tipo_Operacion_2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 78030854 - ReportColumn 1259262334 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 1820866212">
+          <source>Cláusula IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Purchase Invoice Book Ext - ReportColumn Clausula_IVA_NoTax - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 78030854 - ReportColumn 3959231809 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 1820866212">
+          <source>Motivo de exención</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Purchase Invoice Book Ext - ReportColumn Motivo_Exencion_NoTax - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 78030854 - ReportColumn 2252537523 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 1820866212">
+          <source>Tipo de Operación2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Purchase Invoice Book Ext - ReportColumn Tipo_Operacion_2_NoTax - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 2233548003 - ReportColumn 2352832795 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 2399418596">
+          <source>Cláusula IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Sales Invoice Book Ext - ReportColumn Clausula_IVA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 2233548003 - ReportColumn 1606139088 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 2399418596">
+          <source>Motivo de exención</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Sales Invoice Book Ext - ReportColumn Motivo_Exencion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 2233548003 - ReportColumn 3385955494 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 2399418596">
+          <source>Tipo de Operación2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Sales Invoice Book Ext - ReportColumn Tipo_Operacion_2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 2233548003 - ReportColumn 1259262334 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 2399418596">
+          <source>Cláusula IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Sales Invoice Book Ext - ReportColumn Clausula_IVA_NoTax - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 2233548003 - ReportColumn 3959231809 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 2399418596">
+          <source>Motivo de exención</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Sales Invoice Book Ext - ReportColumn Motivo_Exencion_NoTax - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="ReportExtension 2233548003 - ReportColumn 2252537523 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Report 2399418596">
+          <source>Tipo de Operación2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">ReportExtension Sales Invoice Book Ext - ReportColumn Tipo_Operacion_2_NoTax - Property Caption</note>
         </trans-unit>
       </group>
     </body>
