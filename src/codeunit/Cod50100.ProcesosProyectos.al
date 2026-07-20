@@ -5472,13 +5472,44 @@ Fila: Integer)
     end;
 
     procedure CalcularRegimenOperacion(VATEntry: Record "VAT Entry"; esreport: Boolean): Text[100]
+    var
+        SalesInvoiceHeader: Record "Sales Invoice Header";
+        PurchInvHeader: Record "Purch. Inv. Header";
+        PurchCrMemoHeader: Record "Purch. Cr. Memo Hdr.";
+        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
+
     begin
+        If esreport then begin
+            case VATEntry.Type of
+                VATEntry.Type::Sale:
+                    begin
+                        if VATEntry."Document Type" = VATEntry."Document Type"::Invoice then begin
+                            if SalesInvoiceHeader.Get(VATEntry."Document No.") then
+                                exit(Format(SalesInvoiceHeader."Invoice Type"));
+                        end else
+                            if SalesCrMemoHeader.Get(VATEntry."Document No.") then
+                                exit(Format(SalesCrMemoHeader."Invoice Type"));
+                    end;
+                VATEntry.Type::Purchase:
+                    begin
+                        if VATEntry."Document Type" = VATEntry."Document Type"::Invoice then begin
+                            if PurchInvHeader.Get(VATEntry."Document No.") then
+                                exit(Format(PurchInvHeader."Invoice Type"));
+                        end else
+                            if PurchCrMemoHeader.Get(VATEntry."Document No.") then
+                                exit(Format(PurchCrMemoHeader."Invoice Type"));
+                    end;
+
+                else
+                    exit('');
+            end;
+        end;
         if EsISP(VATEntry) then
-            If esreport then exit('ISP') else exit('Inversión del sujeto pasivo (ISP)');
+            exit('Inversión del sujeto pasivo (ISP)');
         if EsNoSujetaLocalizacion(VATEntry) then
-            If esreport then exit('NS') else exit('Operaciones no sujetas por reglas de localización');
+            exit('Operaciones no sujetas por reglas de localización');
         if EsRegimenGeneral(VATEntry) then
-            If esreport then exit('RG') else exit('Régimen General');
+            exit('Régimen General');
         exit('');
     end;
 
@@ -5490,17 +5521,6 @@ Fila: Integer)
     begin
         // En ventas la cláusula puede ir en la línea; en compras no existe el campo
         // y hay que tomarla de Config. registro IVA.
-        if VATEntry.Type = VATEntry.Type::Sale then
-            if VATEntry."Document No." <> '' then begin
-                if BuscarClausulaEnLineasVenta(SalesInvLine, VATEntry) then
-                    exit(SalesInvLine."VAT Clause Code");
-                SalesCrMemoLine.SetRange("Document No.", VATEntry."Document No.");
-                SalesCrMemoLine.SetRange("VAT Bus. Posting Group", VATEntry."VAT Bus. Posting Group");
-                SalesCrMemoLine.SetRange("VAT Prod. Posting Group", VATEntry."VAT Prod. Posting Group");
-                SalesCrMemoLine.SetFilter("VAT Clause Code", '<>%1', '');
-                if SalesCrMemoLine.FindFirst() then
-                    exit(SalesCrMemoLine."VAT Clause Code");
-            end;
 
         ClausulaCode := ObtenerClausulaDesdeConfigIVA(VATEntry);
         if ClausulaCode <> '' then
@@ -5539,7 +5559,14 @@ Fila: Integer)
     begin
         if not VATPostingSetup.Get(VATEntry."VAT Bus. Posting Group", VATEntry."VAT Prod. Posting Group") then
             exit('');
-        exit(VATPostingSetup."VAT Clause Code");
+        case VATEntry.Type of
+            VATEntry.Type::Sale:
+                exit(format(VATPostingSetup."Sales Special Scheme Code"));
+            VATEntry.Type::Purchase:
+                exit(format(VATPostingSetup."Purch. Special Scheme Code"));
+            else
+                exit('');
+        end;
     end;
 
     local procedure EsISP(VATEntry: Record "VAT Entry"): Boolean
