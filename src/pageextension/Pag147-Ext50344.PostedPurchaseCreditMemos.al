@@ -1,10 +1,9 @@
-pageextension 50310 "Posted Purchase Invoices List" extends "Posted Purchase Invoices" //146
+pageextension 50344 "Posted Purch. Cr. Memos Ext" extends "Posted Purchase Credit Memos" //147
 {
     layout
     {
         addlast(Control1)
         {
-
             field("No. Proyecto"; Rec."No. Proyecto")
             {
                 ApplicationArea = All;

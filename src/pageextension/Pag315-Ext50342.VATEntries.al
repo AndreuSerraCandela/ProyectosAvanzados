@@ -7,6 +7,20 @@ pageextension 50342 "VAT Entries Ext" extends "VAT Entries"
     {
         addlast(Control1)
         {
+            field(CIFClienteProveedor; CIFTxt)
+            {
+                ApplicationArea = Basic, Suite;
+                Caption = 'CIF';
+                Editable = false;
+                ToolTip = 'NIF/CIF del cliente (venta) o proveedor (compra).';
+            }
+            field(NombreClienteProveedor; NombreTxt)
+            {
+                ApplicationArea = Basic, Suite;
+                Caption = 'Nombre cliente/proveedor';
+                Editable = false;
+                ToolTip = 'Nombre del cliente (venta) o proveedor (compra).';
+            }
             field(TipoOperacion; TipoOperacionTxt)
             {
                 ApplicationArea = Basic, Suite;
@@ -42,6 +56,8 @@ pageextension 50342 "VAT Entries Ext" extends "VAT Entries"
     var
         ProcesosProyectos: Codeunit ProcesosProyectos;
     begin
+        CIFTxt := ProcesosProyectos.ObtenerCIFClienteProveedor(Rec);
+        NombreTxt := ProcesosProyectos.ObtenerNombreClienteProveedor(Rec);
         TipoOperacionTxt := ProcesosProyectos.CalcularTipoOperacion(Rec);
         TipoOperacion2Txt := ProcesosProyectos.CalcularRegimenOperacion(Rec, false);
         ClausulaIVATxt := ProcesosProyectos.ObtenerClausulaIVA(Rec);
@@ -49,6 +65,8 @@ pageextension 50342 "VAT Entries Ext" extends "VAT Entries"
     end;
 
     var
+        CIFTxt: Text[20];
+        NombreTxt: Text[100];
         TipoOperacionTxt: Text[50];
         TipoOperacion2Txt: Text[100];
         ClausulaIVATxt: Code[20];

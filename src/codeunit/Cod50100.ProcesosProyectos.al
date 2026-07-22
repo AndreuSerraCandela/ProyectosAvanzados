@@ -5524,6 +5524,42 @@ Fila: Integer)
         exit(ExtraerCodigoExencion(Motivo));
     end;
 
+    procedure ObtenerNombreClienteProveedor(VATEntry: Record "VAT Entry"): Text[100]
+    var
+        Customer: Record Customer;
+        Vendor: Record Vendor;
+    begin
+        if VATEntry."Bill-to/Pay-to No." = '' then
+            exit('');
+        case VATEntry.Type of
+            VATEntry.Type::Sale:
+                if Customer.Get(VATEntry."Bill-to/Pay-to No.") then
+                    exit(Customer.Name);
+            VATEntry.Type::Purchase:
+                if Vendor.Get(VATEntry."Bill-to/Pay-to No.") then
+                    exit(Vendor.Name);
+        end;
+        exit('');
+    end;
+
+    procedure ObtenerCIFClienteProveedor(VATEntry: Record "VAT Entry"): Text[20]
+    var
+        Customer: Record Customer;
+        Vendor: Record Vendor;
+    begin
+        if VATEntry."Bill-to/Pay-to No." = '' then
+            exit('');
+        case VATEntry.Type of
+            VATEntry.Type::Sale:
+                if Customer.Get(VATEntry."Bill-to/Pay-to No.") then
+                    exit(Customer."VAT Registration No.");
+            VATEntry.Type::Purchase:
+                if Vendor.Get(VATEntry."Bill-to/Pay-to No.") then
+                    exit(Vendor."VAT Registration No.");
+        end;
+        exit('');
+    end;
+
     local procedure BuscarClausulaEnLineasVenta(var SalesInvLine: Record "Sales Invoice Line"; VATEntry: Record "VAT Entry"): Boolean
     begin
         SalesInvLine.SetRange("Document No.", VATEntry."Document No.");
