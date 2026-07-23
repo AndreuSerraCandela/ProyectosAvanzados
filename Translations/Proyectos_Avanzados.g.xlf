@@ -338,6 +338,141 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Job Status History - Field User ID - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 1510126576 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Libro IVA Buffer</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 658925558 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Base Imponible</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Base Imponible - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 3792756061 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cliente/Proveedor</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Bill-to/Pay-to No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 3776184530 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cláusula IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Clausula IVA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 4067075841 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Concepto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Concepto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 3144616520 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cuota</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Cuota - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 486908828 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº documento</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Document No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 2363328873 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tipo documento</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Document Type - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 883711285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº mov. IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 2697169833 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha Factura</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Fecha Factura - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 1108060341 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha Operación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Fecha Operacion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 4095313195 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Invoice Type</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Invoice Type - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 1965089653 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Motivo de exención</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Motivo Exencion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 2087566680 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nº Orden</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field N Orden - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 3906887684 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>N. Referencia</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field N Referencia - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 3685298555 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>N.I.F.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field NIF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 814966011 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Expedidor/Destinatario</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Nombre - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 3244523558 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nombre hoja Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Nombre Hoja Excel - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 419855484 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Núm. Fact.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Num Factura - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 3710982960 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha registro</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Posting Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 2570579941 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Retención IRPF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Retencion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 2494870027 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cód. de esquema especial</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Special Scheme Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 672807252 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tipo de Operación</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Tipo Operacion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 2934612286 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tipo de Operación2</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Tipo Operacion2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 375589057 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Total Fra.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field Total Fra - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 1246077090 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>% IVA/IGIC</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field VAT % - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1510126576 - Field 1295845409 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tipo mov. IVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Libro IVA Buffer - Field VAT Entry Type - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 1378147549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Naturaleza Contable</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1553,6 +1688,26 @@
           <note from="Developer" annotates="general" priority="2">The Sales Invoice Header 103001 does not exist in the system anymore. A printed copy of the document was created before deletion.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text012</note>
         </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 3506465423 - NamedType 1789922929" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: No se encontró proveedor (código %2 / CIF %3 / nombre %4).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasCompraDesdeExcel - NamedType ErrProveedor</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 3506465423 - NamedType 3895902192" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: El proyecto %2 no existe o no está informado en la columna U.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasCompraDesdeExcel - NamedType ErrProyecto</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 3506465423 - NamedType 218205607" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: Indique una cuenta de gasto válida (columna L o cuenta por defecto).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasCompraDesdeExcel - NamedType ErrCuenta</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 3506465423 - NamedType 3335429618" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: No se encontró configuración de IVA para el proveedor %2 con %% IVA %3.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasCompraDesdeExcel - NamedType ErrVat</note>
+        </trans-unit>
         <trans-unit id="Codeunit 3200460114 - Method 3059483201 - NamedType 1854085928" size-unit="char" translate="yes" xml:space="preserve">
           <source>Fila %1: No se encontró cliente con CIF %2.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -2567,6 +2722,141 @@
           <source>&amp;Movimientos de Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Job Task Lines Subform Ext - Action Job Ledger E&amp;ntries - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Libro de Facturas Emitidas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Control 3600430923 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Filtros</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Control Filtros - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Control 1135162134 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha de registro inicial del período.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Control FechaDesde - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Control 1135162134 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha desde</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Control FechaDesde - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Control 1391008298 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha de registro final del período.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Control FechaHasta - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Control 1391008298 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha hasta</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Control FechaHasta - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Control 814966011 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Destinatario</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Control Nombre - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Control 3244523558 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Hoja Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Control Nombre Hoja Excel - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Control 2494870027 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cód. de esquema especial</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Control Special Scheme Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Action 3030349210 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Carga los movimientos de IVA de venta del período indicado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Action Actualizar - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Action 3030349210 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Actualizar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Action Actualizar - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Action 562798140 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exporta el libro a Excel con una hoja por Tipo de Operación2.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Action ExportarExcel - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Action 562798140 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exportar a Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Action ExportarExcel - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2804583735 - Action 3383493608 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Proceso</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Emitidas - Action Category_Process - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Libro de Facturas Recibidas</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Control 3600430923 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Filtros</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Control Filtros - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Control 1135162134 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha de registro inicial del período.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Control FechaDesde - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Control 1135162134 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha desde</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Control FechaDesde - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Control 1391008298 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha de registro final del período.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Control FechaHasta - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Control 1391008298 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fecha hasta</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Control FechaHasta - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Control 3244523558 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Hoja Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Control Nombre Hoja Excel - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Control 2494870027 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cód. de esquema especial</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Control Special Scheme Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Action 3030349210 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Carga los movimientos de IVA de compra del período indicado.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Action Actualizar - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Action 3030349210 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Actualizar</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Action Actualizar - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Action 562798140 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exporta el libro a Excel con una hoja por Tipo de Operación2.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Action ExportarExcel - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Action 562798140 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exportar a Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Action ExportarExcel - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3950756129 - Action 3383493608 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Proceso</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page Libro Facturas Recibidas - Action Category_Process - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 2886409203 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Lista Configuración Nominas</source>
@@ -4898,6 +5188,21 @@
           <note from="Developer" annotates="general" priority="2">ESP="Clasifica el movimiento de empleado: nómina, IRPF o Seguridad Social."</note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension Payment Journal Ext - Control Tipo Mov. Empleado - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 1619801856 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4135951594">
+          <source>Specifies the value of the No. Proyecto field.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Purch. Cr. Memos Ext - Control No. Proyecto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1619801856 - Control 617267791 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4135951594">
+          <source>NIF/CIF del proveedor.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Purch. Cr. Memos Ext - Control VAT Registration No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1619801856 - Control 617267791 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4135951594">
+          <source>CIF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Purch. Cr. Memos Ext - Control VAT Registration No. - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 4048657685 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4048657685">
           <source>Specifies the value of the No. Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -4913,10 +5218,50 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Purchase Invoices List - Control No. Proyecto - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3952545662 - Control 617267791 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 407220332">
+          <source>NIF/CIF del proveedor.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Purchase Invoices List - Control VAT Registration No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3952545662 - Control 617267791 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 407220332">
+          <source>CIF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Purchase Invoices List - Control VAT Registration No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2208077792 - Control 617267791 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2557560783">
+          <source>NIF/CIF del cliente.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Sales Credit Memos Ext - Control VAT Registration No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2208077792 - Control 617267791 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2557560783">
+          <source>CIF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Sales Credit Memos Ext - Control VAT Registration No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2957779558 - Control 617267791 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3434938165">
+          <source>NIF/CIF del cliente.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Sales Invoices Ext - Control VAT Registration No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2957779558 - Control 617267791 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3434938165">
+          <source>CIF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Posted Sales Invoices Ext - Control VAT Registration No. - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 2737177474 - Control 2797495759 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2420212404">
           <source>Specifies the value of the Cod. Oferta de Proyecto field.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension PostedSalesInvoiceMyb - Control Cod. Oferta de Proyecto - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 134457572 - Action 2989506953 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4037192291">
+          <source>Importa facturas de compra desde la plantilla Excel (Proyecto, Proveedor, CIF, Base, IVA, IRPF, dims...).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Purchase Invoices Carga Excel - Action CargarFacturasCompraDesdeExcel - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 134457572 - Action 2989506953 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4037192291">
+          <source>Cargar facturas desde Excel</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension Purchase Invoices Carga Excel - Action CargarFacturasCompraDesdeExcel - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 783370822 - Control 2410433474 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2437096118">
           <source>Specifies the value of the No. Proyecto field.</source>
@@ -5038,6 +5383,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension SetupJob - Control No.Serie Almacen de Proyecto - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 911454174 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>NIF/CIF del cliente (venta) o proveedor (compra).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control CIFClienteProveedor - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 911454174 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>CIF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control CIFClienteProveedor - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 519427812 - Control 3601464250 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
           <source>Código de cláusula IVA del documento origen.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -5057,6 +5412,16 @@
           <source>Motivo de exención</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control MotivoExencion - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 1541973193 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>Nombre del cliente (venta) o proveedor (compra).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control NombreClienteProveedor - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 519427812 - Control 1541973193 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
+          <source>Nombre cliente/proveedor</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension VAT Entries Ext - Control NombreClienteProveedor - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 519427812 - Control 462295036 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2248515987">
           <source>Compra = IVA deducible; Venta = IVA Devengado.</source>
@@ -5732,6 +6097,11 @@
           <source>No.Proyecto</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension LocatiionPAvanzados - Field No proyecto - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 729837370 - Field 2410433474 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2271228953">
+          <source>No. Proyecto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Purch. Cr. Memo Hdr. Ext - Field No. Proyecto - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1592379974 - Field 2410433474 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1592379974">
           <source>No. Proyecto</source>

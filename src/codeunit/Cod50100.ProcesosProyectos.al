@@ -5418,6 +5418,370 @@ Fila: Integer)
     end;
 
     /// <summary>
+    /// Importa facturas de compra desde plantilla Excel (hoja tipo COSTE REAL).
+    /// Fila 2 = encabezados. Desde fila 3:
+    /// A=Tarea, B=Facturado contra, C=OP, D=Fecha fra, E=Nº factura, F=CIF,
+    /// G=Nº línea, H=Cód. proveedor BC, I=Proveedor/Empleado, J=Descripción, K=Base,
+    /// L=Cód. IVA BC (grupo IVA producto o cuenta gasto), M=Impuesto, N=Cód. IRPF BC,
+    /// O=IRPF, P=Total, Q=Fecha vto, R=Departamento, S=Empresa,
+    /// T=Línea (dim), U=Proyecto, V=Submedio (dim), W=Territorio (dim).
+    /// </summary>
+    procedure ImportarFacturasCompraDesdeExcel()
+    var
+        TempExcelBuffer: Record "Excel Buffer" temporary;
+        PurchaseHeader: Record "Purchase Header";
+        PurchaseLine: Record "Purchase Line";
+        Vendor: Record Vendor;
+        Job: Record Job;
+        JobTask: Record "Job Task";
+        GLAccount: Record "G/L Account";
+        VatPostingSetup: Record "VAT Posting Setup";
+        InStream: InStream;
+        FileName: Text;
+        SheetName: Text;
+        RowNo: Integer;
+        LineNo: Integer;
+        Importadas: Integer;
+        Omitidas: Integer;
+        Fecha: Date;
+        FechaVto: Date;
+        BaseImponible: Decimal;
+        ImporteIVA: Decimal;
+        ImporteIRPF: Decimal;
+        TotalFra: Decimal;
+        PctIVA: Decimal;
+        ProyectoNo: Code[20];
+        TareaNo: Code[20];
+        NumeroFactura: Text[35];
+        CIFProveedor: Text[20];
+        CodProveedor: Code[20];
+        NombreProveedor: Text[100];
+        Descripcion: Text[100];
+        CodIVA: Code[20];
+        Departamento: Code[20];
+        EmpresaDim: Code[20];
+        FacturadoContra: Text[100];
+        CuentaGasto: Code[20];
+        CuentaGastoDefecto: Code[20];
+        Dimensiones: array[8] of Code[20];
+        FiltrarEmpresa: Boolean;
+        ErrProveedor: Label 'Fila %1: No se encontró proveedor (código %2 / CIF %3 / nombre %4).';
+        ErrProyecto: Label 'Fila %1: El proyecto %2 no existe o no está informado en la columna U.';
+        ErrCuenta: Label 'Fila %1: Indique una cuenta de gasto válida (columna L o cuenta por defecto).';
+        ErrVat: Label 'Fila %1: No se encontró configuración de IVA para el proveedor %2 con %% IVA %3.';
+    begin
+        TempExcelBuffer.DeleteAll();
+        if not UploadIntoStream('Seleccionar plantilla Excel de facturas de compra', '', 'Archivos Excel (*.xlsx)|*.xlsx|Todos (*.*)|*.*', FileName, InStream) then
+            exit;
+
+        CuentaGastoDefecto := '';
+        if not Confirm('A continuación elija la cuenta de gasto por defecto para las líneas (si la columna L no trae una cuenta contable).', true) then
+            exit;
+        if Page.RunModal(Page::"G/L Account List", GLAccount) in [Action::LookupOK, Action::OK] then
+            CuentaGastoDefecto := GLAccount."No."
+        else
+            if not Confirm('No se eligió cuenta de gasto por defecto. Solo se importarán filas con cuenta válida en la columna L (BC IVA). ¿Continuar?', false) then
+                exit;
+
+        FiltrarEmpresa := Confirm(
+            '¿Filtrar por empresa? Solo se importarán filas si CompanyName ("%1") contiene el valor de la columna B (Facturado contra).',
+            false, CompanyName);
+
+        SheetName := TempExcelBuffer.SelectSheetsNameStream(InStream);
+        if SheetName = '' then
+            exit;
+        TempExcelBuffer.OpenBookStream(InStream, SheetName);
+        TempExcelBuffer.ReadSheet();
+
+        Importadas := 0;
+        Omitidas := 0;
+        if not TempExcelBuffer.FindSet() then
+            exit;
+
+        repeat
+            RowNo := TempExcelBuffer."Row No.";
+            if RowNo > 2 then begin
+                Fecha := 0D;
+                FechaVto := 0D;
+                BaseImponible := 0;
+                ImporteIVA := 0;
+                ImporteIRPF := 0;
+                TotalFra := 0;
+                PctIVA := 0;
+                ProyectoNo := '';
+                TareaNo := '';
+                NumeroFactura := '';
+                CIFProveedor := '';
+                CodProveedor := '';
+                NombreProveedor := '';
+                Descripcion := '';
+                CodIVA := '';
+                Departamento := '';
+                EmpresaDim := '';
+                FacturadoContra := '';
+                Clear(Dimensiones);
+
+                TempExcelBuffer.SetRange("Row No.", RowNo);
+                if TempExcelBuffer.FindSet() then
+                    repeat
+                        case TempExcelBuffer."Column No." of
+                            1: // A - Tarea
+                                if not EsCeldaExcelInvalida(TempExcelBuffer."Cell Value as Text") then
+                                    TareaNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(TareaNo));
+                            2:
+                                FacturadoContra := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(FacturadoContra));
+                            4:
+                                if TempExcelBuffer."Cell Value as Text" <> '' then
+                                    if not Evaluate(Fecha, TempExcelBuffer."Cell Value as Text") then
+                                        Fecha := 0D;
+                            5:
+                                NumeroFactura := CopyStr(DelChr(TempExcelBuffer."Cell Value as Text", '<>', ' '), 1, MaxStrLen(NumeroFactura));
+                            6:
+                                if not EsCeldaExcelInvalida(TempExcelBuffer."Cell Value as Text") then
+                                    CIFProveedor := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(CIFProveedor));
+                            8:
+                                if not EsCeldaExcelInvalida(TempExcelBuffer."Cell Value as Text") then
+                                    CodProveedor := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(CodProveedor));
+                            9:
+                                NombreProveedor := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(NombreProveedor));
+                            10:
+                                Descripcion := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Descripcion));
+                            11:
+                                if not Evaluate(BaseImponible, TempExcelBuffer."Cell Value as Text") then
+                                    BaseImponible := 0;
+                            12:
+                                if not EsCeldaExcelInvalida(TempExcelBuffer."Cell Value as Text") then
+                                    CodIVA := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(CodIVA));
+                            13:
+                                if not Evaluate(ImporteIVA, TempExcelBuffer."Cell Value as Text") then
+                                    ImporteIVA := 0;
+                            15:
+                                if not Evaluate(ImporteIRPF, TempExcelBuffer."Cell Value as Text") then
+                                    ImporteIRPF := 0;
+                            16:
+                                if not Evaluate(TotalFra, TempExcelBuffer."Cell Value as Text") then
+                                    TotalFra := 0;
+                            17:
+                                if TempExcelBuffer."Cell Value as Text" <> '' then
+                                    if not Evaluate(FechaVto, TempExcelBuffer."Cell Value as Text") then
+                                        FechaVto := 0D;
+                            18:
+                                if not EsCeldaExcelInvalida(TempExcelBuffer."Cell Value as Text") then
+                                    Departamento := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Departamento));
+                            19:
+                                if not EsCeldaExcelInvalida(TempExcelBuffer."Cell Value as Text") then
+                                    EmpresaDim := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(EmpresaDim));
+                            20: // T - Línea (dim)
+                                if not EsCeldaExcelInvalida(TempExcelBuffer."Cell Value as Text") then
+                                    Dimensiones[3] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[3]));
+                            21: // U - Proyecto
+                                if not EsCeldaExcelInvalida(TempExcelBuffer."Cell Value as Text") then
+                                    ProyectoNo := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(ProyectoNo));
+                            22: // V - Submedio (dim)
+                                if not EsCeldaExcelInvalida(TempExcelBuffer."Cell Value as Text") then
+                                    Dimensiones[4] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[4]));
+                            23: // W - Territorio (dim)
+                                if not EsCeldaExcelInvalida(TempExcelBuffer."Cell Value as Text") then
+                                    Dimensiones[5] := CopyStr(TempExcelBuffer."Cell Value as Text", 1, MaxStrLen(Dimensiones[5]));
+                        end;
+                    until TempExcelBuffer.Next() = 0;
+                TempExcelBuffer.SetRange("Row No.");
+
+                if (BaseImponible = 0) and (TotalFra = 0) then
+                    Omitidas += 1
+                else
+                    if FiltrarEmpresa and not CoincideEmpresaPlantillaCompra(FacturadoContra) then
+                        Omitidas += 1
+                    else begin
+                        if not BuscarProveedorPlantillaCompra(CodProveedor, CIFProveedor, NombreProveedor, Vendor) then
+                            Error(ErrProveedor, RowNo, CodProveedor, CIFProveedor, NombreProveedor);
+
+                        if ProyectoNo = '' then
+                            Error(ErrProyecto, RowNo, ProyectoNo);
+                        if not Job.Get(ProyectoNo) then
+                            Error(ErrProyecto, RowNo, ProyectoNo);
+
+                        if (TareaNo <> '') and not JobTask.Get(ProyectoNo, TareaNo) then
+                            Error('Fila %1: La tarea %2 (columna A) no existe en el proyecto %3.', RowNo, TareaNo, ProyectoNo);
+
+                        CuentaGasto := '';
+                        if (CodIVA <> '') and GLAccount.Get(CodIVA) then
+                            CuentaGasto := CodIVA
+                        else
+                            CuentaGasto := CuentaGastoDefecto;
+                        if CuentaGasto = '' then
+                            Error(ErrCuenta, RowNo);
+
+                        if (BaseImponible <> 0) and (ImporteIVA <> 0) then
+                            PctIVA := Round(ImporteIVA / BaseImponible * 100, 0.01)
+                        else
+                            PctIVA := 0;
+
+                        PurchaseHeader.Reset();
+                        PurchaseHeader.SetRange("Document Type", PurchaseHeader."Document Type"::Invoice);
+                        PurchaseHeader.SetRange("Buy-from Vendor No.", Vendor."No.");
+                        PurchaseHeader.SetRange("Vendor Invoice No.", CopyStr(NumeroFactura, 1, MaxStrLen(PurchaseHeader."Vendor Invoice No.")));
+                        PurchaseHeader.SetRange("No. Proyecto", ProyectoNo);
+                        if not PurchaseHeader.FindFirst() then begin
+                            PurchaseHeader.Init();
+                            PurchaseHeader."Document Type" := PurchaseHeader."Document Type"::Invoice;
+                            PurchaseHeader."No." := '';
+                            PurchaseHeader.Insert(true);
+                            PurchaseHeader.Validate("Buy-from Vendor No.", Vendor."No.");
+                            if Fecha <> 0D then begin
+                                PurchaseHeader.Validate("Posting Date", Fecha);
+                                PurchaseHeader.Validate("Document Date", Fecha);
+                            end;
+                            PurchaseHeader.Validate("Vendor Invoice No.", CopyStr(NumeroFactura, 1, MaxStrLen(PurchaseHeader."Vendor Invoice No.")));
+                            PurchaseHeader.Validate("No. Proyecto", ProyectoNo);
+                            if FechaVto <> 0D then
+                                PurchaseHeader.Validate("Due Date", FechaVto);
+                            PurchaseHeader.Modify(true);
+                        end;
+
+                        PurchaseLine.Reset();
+                        PurchaseLine.SetRange("Document Type", PurchaseHeader."Document Type");
+                        PurchaseLine.SetRange("Document No.", PurchaseHeader."No.");
+                        if PurchaseLine.FindLast() then
+                            LineNo := PurchaseLine."Line No." + 10000
+                        else
+                            LineNo := 10000;
+
+                        PurchaseLine.Init();
+                        PurchaseLine."Document Type" := PurchaseHeader."Document Type";
+                        PurchaseLine."Document No." := PurchaseHeader."No.";
+                        PurchaseLine."Line No." := LineNo;
+                        PurchaseLine.Insert(true);
+                        PurchaseLine.Validate(Type, PurchaseLine.Type::"G/L Account");
+                        PurchaseLine.Validate("No.", CuentaGasto);
+                        if Descripcion <> '' then
+                            PurchaseLine.Description := Descripcion;
+                        PurchaseLine.Validate(Quantity, 1);
+                        PurchaseLine.Validate("Direct Unit Cost", BaseImponible);
+
+                        VatPostingSetup.Reset();
+                        VatPostingSetup.SetRange("VAT Bus. Posting Group", Vendor."VAT Bus. Posting Group");
+                        if (CodIVA <> '') and (CodIVA <> CuentaGasto) then
+                            VatPostingSetup.SetRange("VAT Prod. Posting Group", CodIVA);
+                        VatPostingSetup.SetRange("VAT %", PctIVA);
+                        if not VatPostingSetup.FindFirst() then begin
+                            VatPostingSetup.Reset();
+                            VatPostingSetup.SetRange("VAT Bus. Posting Group", Vendor."VAT Bus. Posting Group");
+                            VatPostingSetup.SetRange("VAT %", PctIVA);
+                            if not VatPostingSetup.FindFirst() then
+                                Error(ErrVat, RowNo, Vendor."No.", PctIVA);
+                        end;
+                        PurchaseLine.Validate("VAT Prod. Posting Group", VatPostingSetup."VAT Prod. Posting Group");
+
+                        if ProyectoNo <> '' then
+                            PurchaseLine.Validate("Job No.", ProyectoNo);
+                        if TareaNo <> '' then
+                            PurchaseLine.Validate("Job Task No.", TareaNo);
+
+                        if ImporteIRPF <> 0 then
+                            PurchaseLine.Validate("Retention Amount (IRPF)", ImporteIRPF);
+
+                        Dimensiones[1] := Departamento;
+                        Dimensiones[2] := EmpresaDim;
+                        if (Dimensiones[1] <> '') or (Dimensiones[2] <> '') or (Dimensiones[3] <> '') or
+                           (Dimensiones[4] <> '') or (Dimensiones[5] <> '')
+                        then
+                            PurchaseLine.Validate("Dimension Set ID", GetDimSetIDFromDimensionesArray(Dimensiones));
+
+                        PurchaseLine.Modify(true);
+                        Importadas += 1;
+                    end;
+            end;
+        until TempExcelBuffer.Next() = 0;
+
+        Message('Importación de compras finalizada. Líneas importadas: %1. Filas omitidas: %2.', Importadas, Omitidas);
+    end;
+
+    local procedure EsCeldaExcelInvalida(Valor: Text): Boolean
+    var
+        V: Text;
+    begin
+        V := UpperCase(DelChr(Valor, '<>', ' '));
+        exit(
+            (V = '') or
+            (V = '#N/A') or
+            (V = '#REF!') or
+            (V = '#VALUE!') or
+            (V = '#NAME?') or
+            (CopyStr(V, 1, 1) = '#'));
+    end;
+
+    /// <summary>
+    /// Columna B (p. ej. "002") debe estar contenida en CompanyName
+    /// (p. ej. "002 AF PICTURES PRODUCTIONS, S.L.").
+    /// </summary>
+    local procedure CoincideEmpresaPlantillaCompra(FacturadoContra: Text): Boolean
+    var
+        ExcelTxt: Text;
+        NombreEmpresa: Text;
+    begin
+        ExcelTxt := UpperCase(DelChr(FacturadoContra, '<>', ' '));
+        if ExcelTxt = '' then
+            exit(true);
+
+        NombreEmpresa := UpperCase(DelChr(CompanyName, '<>', ' '));
+        if NombreEmpresa = '' then
+            exit(false);
+
+        if StrPos(NombreEmpresa, ExcelTxt) > 0 then
+            exit(true);
+        if StrPos(ExcelTxt, NombreEmpresa) > 0 then
+            exit(true);
+
+        exit(false);
+    end;
+
+    local procedure BuscarProveedorPlantillaCompra(CodProveedor: Code[20]; CIFProveedor: Text[20]; NombreProveedor: Text[100]; var Vendor: Record Vendor): Boolean
+    var
+        CodDesdeNombre: Code[20];
+    begin
+        Clear(Vendor);
+        if CodProveedor <> '' then
+            if Vendor.Get(CodProveedor) then
+                exit(true);
+
+        CodDesdeNombre := ExtraerCodigoEntreParentesis(NombreProveedor);
+        if CodDesdeNombre <> '' then
+            if Vendor.Get(CodDesdeNombre) then
+                exit(true);
+
+        if CIFProveedor <> '' then begin
+            Vendor.Reset();
+            Vendor.SetRange("VAT Registration No.", CIFProveedor);
+            if Vendor.FindFirst() then
+                exit(true);
+        end;
+
+        if NombreProveedor <> '' then begin
+            Vendor.Reset();
+            Vendor.SetFilter(Name, '%1', '@*' + CopyStr(NombreProveedor, 1, 50) + '*');
+            if Vendor.FindFirst() then
+                exit(true);
+        end;
+
+        exit(false);
+    end;
+
+    local procedure ExtraerCodigoEntreParentesis(Texto: Text): Code[20]
+    var
+        Pos1: Integer;
+        Pos2: Integer;
+        Codigo: Text;
+    begin
+        Pos1 := StrPos(Texto, '(');
+        Pos2 := StrPos(Texto, ')');
+        if (Pos1 = 0) or (Pos2 <= Pos1) then
+            exit('');
+        Codigo := DelChr(CopyStr(Texto, Pos1 + 1, Pos2 - Pos1 - 1), '<>', ' ');
+        exit(CopyStr(Codigo, 1, 20));
+    end;
+
+    /// <summary>
     /// Construye un Dimension Set ID a partir del array de códigos de valor de dimensión (Dimensiones[1]..[8]).
     /// Los códigos de dimensión se toman de General Ledger Setup: [1]=Global Dim 1, [2]=Global Dim 2, [3]=Shortcut Dim 3, [4]=Shortcut Dim 4.
     /// </summary>
