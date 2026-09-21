@@ -1688,25 +1688,35 @@
           <note from="Developer" annotates="general" priority="2">The Sales Invoice Header 103001 does not exist in the system anymore. A printed copy of the document was created before deletion.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - NamedType Text012</note>
         </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 2465480393 - NamedType 3335429618" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: No se encontró configuración de IVA para el proveedor %2 con %% IVA %3.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method AplicarIVAPlantillaCompra - NamedType ErrVat</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 1873284598 - NamedType 3626167370" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: No se pudo determinar el %% de retención IRPF (columnas O/P).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method AplicarRetencionPlantillaCompra - NamedType ErrRetencion</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3200460114 - Method 3215767352 - NamedType 247827017" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fila %1: TIPO CUENTA (I) no reconocido: %2.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method AplicarTipoLineaPlantillaCompra - NamedType ErrTipoCuenta</note>
+        </trans-unit>
         <trans-unit id="Codeunit 3200460114 - Method 3506465423 - NamedType 1789922929" size-unit="char" translate="yes" xml:space="preserve">
           <source>Fila %1: No se encontró proveedor (código %2 / CIF %3 / nombre %4).</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasCompraDesdeExcel - NamedType ErrProveedor</note>
         </trans-unit>
         <trans-unit id="Codeunit 3200460114 - Method 3506465423 - NamedType 3895902192" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Fila %1: El proyecto %2 no existe o no está informado en la columna U.</source>
+          <source>Fila %1: El proyecto %2 no existe o no está informado en la columna A.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasCompraDesdeExcel - NamedType ErrProyecto</note>
         </trans-unit>
         <trans-unit id="Codeunit 3200460114 - Method 3506465423 - NamedType 218205607" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Fila %1: Indique una cuenta de gasto válida (columna L o cuenta por defecto).</source>
+          <source>Fila %1: Indique TIPO CUENTA (I) y NUM CUENTA (J), o elija una cuenta de gasto por defecto al inicio.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasCompraDesdeExcel - NamedType ErrCuenta</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 3200460114 - Method 3506465423 - NamedType 3335429618" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Fila %1: No se encontró configuración de IVA para el proveedor %2 con %% IVA %3.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit ProcesosProyectos - Method ImportarFacturasCompraDesdeExcel - NamedType ErrVat</note>
         </trans-unit>
         <trans-unit id="Codeunit 3200460114 - Method 3059483201 - NamedType 1854085928" size-unit="char" translate="yes" xml:space="preserve">
           <source>Fila %1: No se encontró cliente con CIF %2.</source>
@@ -5254,7 +5264,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension PostedSalesInvoiceMyb - Control Cod. Oferta de Proyecto - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="PageExtension 134457572 - Action 2989506953 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4037192291">
-          <source>Importa facturas de compra desde la plantilla Excel (Proyecto, Proveedor, CIF, Base, IVA, IRPF, dims...).</source>
+          <source>Importa facturas de compra desde la plantilla Excel BEPREMIERE (Proyecto, Tarea, Proveedor, Cuenta/Producto, IVA, IRPF, dims...).</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension Purchase Invoices Carga Excel - Action CargarFacturasCompraDesdeExcel - Property ToolTip</note>
         </trans-unit>
